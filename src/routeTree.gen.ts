@@ -10,33 +10,86 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
+import { Route as ConsultationsIdSubmitRouteImport } from './routes/consultations.$id.submit'
+import { Route as ConsultationsIdNeedsRouteImport } from './routes/consultations.$id.needs'
+import { Route as ConsultationsIdDraftRouteImport } from './routes/consultations.$id.draft'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsultationsIdRoute = ConsultationsIdRouteImport.update({
+  id: '/consultations/$id',
+  path: '/consultations/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsultationsIdSubmitRoute = ConsultationsIdSubmitRouteImport.update({
+  id: '/submit',
+  path: '/submit',
+  getParentRoute: () => ConsultationsIdRoute,
+} as any)
+const ConsultationsIdNeedsRoute = ConsultationsIdNeedsRouteImport.update({
+  id: '/needs',
+  path: '/needs',
+  getParentRoute: () => ConsultationsIdRoute,
+} as any)
+const ConsultationsIdDraftRoute = ConsultationsIdDraftRouteImport.update({
+  id: '/draft',
+  path: '/draft',
+  getParentRoute: () => ConsultationsIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/consultations/$id': typeof ConsultationsIdRouteWithChildren
+  '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
+  '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
+  '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/consultations/$id': typeof ConsultationsIdRouteWithChildren
+  '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
+  '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
+  '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/consultations/$id': typeof ConsultationsIdRouteWithChildren
+  '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
+  '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
+  '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/consultations/$id'
+    | '/consultations/$id/draft'
+    | '/consultations/$id/needs'
+    | '/consultations/$id/submit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/consultations/$id'
+    | '/consultations/$id/draft'
+    | '/consultations/$id/needs'
+    | '/consultations/$id/submit'
+  id:
+    | '__root__'
+    | '/'
+    | '/consultations/$id'
+    | '/consultations/$id/draft'
+    | '/consultations/$id/needs'
+    | '/consultations/$id/submit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsultationsIdRoute: typeof ConsultationsIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +101,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/consultations/$id': {
+      id: '/consultations/$id'
+      path: '/consultations/$id'
+      fullPath: '/consultations/$id'
+      preLoaderRoute: typeof ConsultationsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consultations/$id/submit': {
+      id: '/consultations/$id/submit'
+      path: '/submit'
+      fullPath: '/consultations/$id/submit'
+      preLoaderRoute: typeof ConsultationsIdSubmitRouteImport
+      parentRoute: typeof ConsultationsIdRoute
+    }
+    '/consultations/$id/needs': {
+      id: '/consultations/$id/needs'
+      path: '/needs'
+      fullPath: '/consultations/$id/needs'
+      preLoaderRoute: typeof ConsultationsIdNeedsRouteImport
+      parentRoute: typeof ConsultationsIdRoute
+    }
+    '/consultations/$id/draft': {
+      id: '/consultations/$id/draft'
+      path: '/draft'
+      fullPath: '/consultations/$id/draft'
+      preLoaderRoute: typeof ConsultationsIdDraftRouteImport
+      parentRoute: typeof ConsultationsIdRoute
+    }
   }
 }
 
+interface ConsultationsIdRouteChildren {
+  ConsultationsIdDraftRoute: typeof ConsultationsIdDraftRoute
+  ConsultationsIdNeedsRoute: typeof ConsultationsIdNeedsRoute
+  ConsultationsIdSubmitRoute: typeof ConsultationsIdSubmitRoute
+}
+
+const ConsultationsIdRouteChildren: ConsultationsIdRouteChildren = {
+  ConsultationsIdDraftRoute: ConsultationsIdDraftRoute,
+  ConsultationsIdNeedsRoute: ConsultationsIdNeedsRoute,
+  ConsultationsIdSubmitRoute: ConsultationsIdSubmitRoute,
+}
+
+const ConsultationsIdRouteWithChildren = ConsultationsIdRoute._addFileChildren(
+  ConsultationsIdRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsultationsIdRoute: ConsultationsIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
