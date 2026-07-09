@@ -37,7 +37,7 @@ function DraftView() {
     <AppShell
       breadcrumbs={[
         { label: "Dashboard", to: "/" },
-        { label: c.pupilRef, to: "/consultations/$id" as string },
+        { label: c.pupilRef, to: `/consultations/${c.id}` },
         { label: "Draft response" },
       ]}
       actions={
