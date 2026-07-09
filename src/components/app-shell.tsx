@@ -68,9 +68,9 @@ export function AppShell({
             {(breadcrumbs ?? [{ label: "Dashboard" }]).map((b, i, arr) => (
               <span key={i} className="flex items-center gap-2">
                 {b.to ? (
-                  <Link to={b.to} className="hover:text-foreground">
+                  <a href={b.to} className="hover:text-foreground">
                     {b.label}
-                  </Link>
+                  </a>
                 ) : (
                   <span className={i === arr.length - 1 ? "text-foreground font-medium" : ""}>
                     {b.label}
