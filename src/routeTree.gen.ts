@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
+import { Route as ConsultationsIdIndexRouteImport } from './routes/consultations.$id.index'
 import { Route as ConsultationsIdSubmitRouteImport } from './routes/consultations.$id.submit'
 import { Route as ConsultationsIdNeedsRouteImport } from './routes/consultations.$id.needs'
 import { Route as ConsultationsIdDraftRouteImport } from './routes/consultations.$id.draft'
@@ -24,6 +25,11 @@ const ConsultationsIdRoute = ConsultationsIdRouteImport.update({
   id: '/consultations/$id',
   path: '/consultations/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ConsultationsIdIndexRoute = ConsultationsIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConsultationsIdRoute,
 } as any)
 const ConsultationsIdSubmitRoute = ConsultationsIdSubmitRouteImport.update({
   id: '/submit',
@@ -47,13 +53,14 @@ export interface FileRoutesByFullPath {
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
+  '/consultations/$id/': typeof ConsultationsIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/consultations/$id': typeof ConsultationsIdRouteWithChildren
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
+  '/consultations/$id': typeof ConsultationsIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,6 +69,7 @@ export interface FileRoutesById {
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
+  '/consultations/$id/': typeof ConsultationsIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -71,13 +79,14 @@ export interface FileRouteTypes {
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
+    | '/consultations/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/consultations/$id'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
+    | '/consultations/$id'
   id:
     | '__root__'
     | '/'
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
+    | '/consultations/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -107,6 +117,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/consultations/$id'
       preLoaderRoute: typeof ConsultationsIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/consultations/$id/': {
+      id: '/consultations/$id/'
+      path: '/'
+      fullPath: '/consultations/$id/'
+      preLoaderRoute: typeof ConsultationsIdIndexRouteImport
+      parentRoute: typeof ConsultationsIdRoute
     }
     '/consultations/$id/submit': {
       id: '/consultations/$id/submit'
@@ -136,12 +153,14 @@ interface ConsultationsIdRouteChildren {
   ConsultationsIdDraftRoute: typeof ConsultationsIdDraftRoute
   ConsultationsIdNeedsRoute: typeof ConsultationsIdNeedsRoute
   ConsultationsIdSubmitRoute: typeof ConsultationsIdSubmitRoute
+  ConsultationsIdIndexRoute: typeof ConsultationsIdIndexRoute
 }
 
 const ConsultationsIdRouteChildren: ConsultationsIdRouteChildren = {
   ConsultationsIdDraftRoute: ConsultationsIdDraftRoute,
   ConsultationsIdNeedsRoute: ConsultationsIdNeedsRoute,
   ConsultationsIdSubmitRoute: ConsultationsIdSubmitRoute,
+  ConsultationsIdIndexRoute: ConsultationsIdIndexRoute,
 }
 
 const ConsultationsIdRouteWithChildren = ConsultationsIdRoute._addFileChildren(

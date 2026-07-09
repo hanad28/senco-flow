@@ -3,7 +3,7 @@ import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone } from "@/lib/consultations-store";
 import { FileText, Sparkles, ArrowRight, AlertTriangle, Calendar, User2, Building2 } from "lucide-react";
 
-export const Route = createFileRoute("/consultations/$id")({
+export const Route = createFileRoute("/consultations/$id/")({
   head: ({ params }) => ({
     meta: [
       { title: `${params.id.toUpperCase()} — Consultation — EHCP Response` },
