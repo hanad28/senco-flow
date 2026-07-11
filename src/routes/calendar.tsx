@@ -12,7 +12,7 @@ export const Route = createFileRoute("/calendar")({
   component: () => (
     <ComingSoon
       title="Calendar"
-      description="A chronological view of every open consultation's 15 working-day statutory deadline, with reminders at T-5, T-2, and overdue."
+      description="A chronological view of every open consultation's 15 working-day statutory deadline."
       icon={Calendar}
     />
   ),

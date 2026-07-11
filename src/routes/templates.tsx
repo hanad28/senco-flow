@@ -12,7 +12,7 @@ export const Route = createFileRoute("/templates")({
   component: () => (
     <ComingSoon
       title="Templates"
-      description="Reusable boilerplate for response letters — standard statutory phrasing, cost tables, and escalation language that can be dropped into a draft response."
+      description="Reusable boilerplate for response letters — standard statutory phrasing that can be dropped into a draft response."
       icon={ClipboardList}
     />
   ),
