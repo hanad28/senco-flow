@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, type NeedCapability } from "@/lib/consultations-store";
-import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft, Info } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/needs")({
   head: ({ params }) => ({
