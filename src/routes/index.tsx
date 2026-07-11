@@ -109,7 +109,7 @@ function Dashboard() {
             </thead>
             <tbody>
               {rows.map((c) => {
-                const tone = deadlineTone(c.deadlineWorkingDays);
+                const tone = deadlineTone(c.daysLeft);
                 const isSubmitted = c.status === "Submitted";
                 return (
                   <tr key={c.id} className="border-t hover:bg-muted/20 transition-colors">
