@@ -46,9 +46,10 @@ export function AppShell({
             <div className="min-w-0">
               <div className="text-sm font-semibold truncate">{profile.schoolName}</div>
               <div className="text-xs text-sidebar-foreground/60 truncate">
-                {profile.sendcoRole.includes("SENDCO") || profile.sendcoRole.includes("SENCO")
-                  ? profile.sendcoName
-                  : `SENDCO — ${profile.sendcoName}`}
+                {profile.sendcoName}
+              </div>
+              <div className="text-[11px] text-sidebar-foreground/50 truncate">
+                {profile.sendcoRole}
               </div>
             </div>
           </div>
