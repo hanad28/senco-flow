@@ -132,9 +132,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <SchoolProfileProvider>
-        <ConsultationsProvider>
-          <Outlet />
-        </ConsultationsProvider>
+        <TemplatesProvider>
+          <ConsultationsProvider>
+            <Outlet />
+          </ConsultationsProvider>
+        </TemplatesProvider>
       </SchoolProfileProvider>
     </QueryClientProvider>
   );
