@@ -57,11 +57,15 @@ function DraftView() {
             <Link to="/consultations/$id/needs" params={{ id: c.id }} className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <ArrowLeft className="h-3 w-3" /> Back to needs
             </Link>
-            <h1 className="text-2xl font-semibold tracking-tight mt-2">Response draft</h1>
+            <h1 className="text-2xl font-semibold tracking-tight mt-2">Response draft — Section F provision</h1>
             <p className="text-sm text-muted-foreground mt-1">
               For {c.pupilRef} · {c.localAuthority} · received {formatDate(c.receivedOn)}
             </p>
           </div>
+          <MatchScore
+            full={c.needs.filter((n) => n.capability === "full").length}
+            total={c.needs.length}
+          />
           <div className="inline-flex rounded-md border bg-surface p-1">
             <button
               onClick={() => setView("edit")}
