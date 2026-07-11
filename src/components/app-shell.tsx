@@ -1,13 +1,14 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutGrid, Inbox, FileCheck2, ClipboardList, HelpCircle, Bell } from "lucide-react";
+import { LayoutGrid, ClipboardList, Calendar, BarChart3, Settings, HelpCircle, Bell } from "lucide-react";
 import type { ReactNode } from "react";
 
 const nav = [
-  { to: "/", label: "Dashboard", icon: LayoutGrid, exact: true },
-  { to: "/", label: "Inbox", icon: Inbox },
-  { to: "/", label: "Submitted", icon: FileCheck2 },
-  { to: "/", label: "Templates", icon: ClipboardList },
-];
+  { to: "/", label: "Dashboard", icon: LayoutGrid },
+  { to: "/templates", label: "Templates", icon: ClipboardList },
+  { to: "/calendar", label: "Calendar", icon: Calendar },
+  { to: "/reports", label: "Reports", icon: BarChart3 },
+  { to: "/settings", label: "Settings", icon: Settings },
+] as const;
 
 export function AppShell({
   children,
@@ -19,6 +20,11 @@ export function AppShell({
   actions?: ReactNode;
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const isActive = (to: string) => {
+    if (to === "/") return pathname === "/" || pathname.startsWith("/consultations");
+    return pathname === to || pathname.startsWith(to + "/");
+  };
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
@@ -35,12 +41,12 @@ export function AppShell({
           </div>
         </div>
         <nav className="flex-1 px-3 py-4 space-y-0.5">
-          {nav.map((item, i) => {
-            const active = i === 0 && pathname === "/";
+          {nav.map((item) => {
+            const active = isActive(item.to);
             const Icon = item.icon;
             return (
               <Link
-                key={i}
+                key={item.to}
                 to={item.to}
                 className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
                   active

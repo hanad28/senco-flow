@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, type NeedCapability } from "@/lib/consultations-store";
-import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft, Info } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/needs")({
   head: ({ params }) => ({
@@ -55,11 +55,19 @@ function NeedsView() {
             <Link to="/consultations/$id" params={{ id: c.id }} className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <ArrowLeft className="h-3 w-3" /> Back to consultation
             </Link>
-            <h1 className="text-2xl font-semibold tracking-tight mt-2">Consolidated needs</h1>
+            <h1 className="text-2xl font-semibold tracking-tight mt-2">Consolidated needs — Section B</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              {c.needs.length} needs extracted from {c.documents.length} documents. Confirm what the school can provide.
+              {c.needs.length} needs extracted from {c.documents.length} documents. Confirm the Section F provision the school can deliver against each.
             </p>
           </div>
+          <MatchScore full={counts.full} total={c.needs.length} />
+        </div>
+
+        <div className="rounded-md border bg-muted/20 px-4 py-3 flex items-start gap-2 text-xs text-muted-foreground">
+          <Info className="h-4 w-4 mt-0.5 shrink-0 text-info" />
+          <span>
+            A child's needs often span more than one developmental area — communication, cognition, sensory or SEMH needs frequently overlap. Treat the categories below as a working structure, not a fixed classification.
+          </span>
         </div>
 
         <div className="grid grid-cols-3 gap-3">
@@ -117,6 +125,24 @@ function SummaryChip({ label, count, tone }: { label: string; count: number; ton
     <div className={`border rounded-lg px-4 py-3 ${cls}`}>
       <div className="text-2xl font-semibold leading-none">{count}</div>
       <div className="text-xs mt-1 opacity-90">{label}</div>
+    </div>
+  );
+}
+
+export function MatchScore({ full, total }: { full: number; total: number }) {
+  const pct = total === 0 ? 0 : Math.round((full / total) * 100);
+  const tone = pct >= 70 ? "ok" : pct >= 40 ? "warn" : "urgent";
+  const cls = {
+    ok: "bg-ok/10 border-ok/30 text-ok",
+    warn: "bg-warn/15 border-warn/40 text-warn-foreground",
+    urgent: "bg-urgent/10 border-urgent/30 text-urgent",
+  }[tone];
+  return (
+    <div className={`shrink-0 rounded-lg border px-5 py-3 text-right ${cls}`}>
+      <div className="text-3xl font-semibold leading-none tabular-nums">{pct}%</div>
+      <div className="text-[11px] mt-1 opacity-90">
+        needs matched in full ({full}/{total})
+      </div>
     </div>
   );
 }

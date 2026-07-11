@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone } from "@/lib/consultations-store";
+import { workingDaysRemaining } from "@/lib/working-days";
 import { FileText, Sparkles, ArrowRight, AlertTriangle, Calendar, User2, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/")({
@@ -19,7 +20,14 @@ function ConsultationDetail() {
   const c = get(id);
   if (!c) throw notFound();
 
-  const tone = deadlineTone(c.deadlineWorkingDays);
+  const daysLeft = workingDaysRemaining(c.receivedOn);
+  const tone = deadlineTone(daysLeft);
+  const deadlineLabel =
+    daysLeft < 0
+      ? `Overdue by ${Math.abs(daysLeft)} working day${Math.abs(daysLeft) === 1 ? "" : "s"}`
+      : daysLeft === 0
+        ? "Response due today"
+        : `${daysLeft} working day${daysLeft === 1 ? "" : "s"} until response due`;
 
   return (
     <AppShell
@@ -63,7 +71,7 @@ function ConsultationDetail() {
             >
               <div className="flex items-center gap-2 font-semibold">
                 {tone === "urgent" && <AlertTriangle className="h-4 w-4" />}
-                {c.deadlineWorkingDays} working day{c.deadlineWorkingDays === 1 ? "" : "s"} until response due
+                {deadlineLabel}
               </div>
               <div className="text-xs opacity-80 mt-0.5">Statutory 15 working-day window</div>
             </div>
@@ -83,17 +91,21 @@ function ConsultationDetail() {
               </header>
               <ul className="divide-y">
                 {c.documents.map((d) => (
-                  <li key={d.id} className="flex items-center gap-4 px-5 py-3 hover:bg-muted/20">
-                    <div className="h-10 w-10 rounded bg-primary/5 border border-primary/10 grid place-items-center text-primary">
+                  <li key={d.id} className="flex items-start gap-4 px-5 py-3 hover:bg-muted/20">
+                    <div className="h-10 w-10 mt-0.5 rounded bg-primary/5 border border-primary/10 grid place-items-center text-primary shrink-0">
                       <FileText className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium truncate">{d.name}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {d.kind} · {d.author} · {formatDate(d.date)} · {d.pages} pp.
+                      <div className="text-sm font-medium">
+                        {d.author}
+                        <span className="text-muted-foreground font-normal"> · {professionForKind(d.kind)}</span>
                       </div>
+                      <div className="text-xs text-muted-foreground mt-0.5">
+                        Advice dated {formatDate(d.date)} · {d.pages} pp.
+                      </div>
+                      <div className="text-xs text-muted-foreground/80 mt-1 truncate">{d.name}</div>
                     </div>
-                    <button className="text-xs text-muted-foreground hover:text-foreground">Open</button>
+                    <button className="text-xs text-muted-foreground hover:text-foreground shrink-0">Open</button>
                   </li>
                 ))}
               </ul>
@@ -108,14 +120,14 @@ function ConsultationDetail() {
                 </div>
                 <div>
                   <h2 className="font-semibold text-sm">AI summary</h2>
-                  <p className="text-[11px] text-muted-foreground">Generated across all received documents</p>
+                  <p className="text-[11px] text-muted-foreground">Section B (needs) &amp; Section F (provision required)</p>
                 </div>
               </header>
               <div className="p-5 text-sm leading-relaxed text-foreground/90">
                 {c.summary}
               </div>
               <div className="px-5 pb-5 pt-2 border-t border-primary/10 text-[11px] text-muted-foreground">
-                Draft — always verify against source reports.
+                Draft — always verify against source reports. This response informs a future Section I placement decision; no placement is yet in place.
               </div>
             </section>
 
@@ -138,4 +150,25 @@ function ConsultationDetail() {
       </div>
     </AppShell>
   );
+}
+
+function professionForKind(kind: string): string {
+  switch (kind) {
+    case "EP":
+      return "Educational Psychologist";
+    case "SaLT":
+      return "Speech and Language Therapy";
+    case "OT":
+      return "Occupational Therapy";
+    case "Health":
+      return "Health (CAMHS / Paediatrics)";
+    case "Parental":
+      return "Parent / Carer views";
+    case "School":
+      return "SENCO — school information";
+    case "LA":
+      return "Local Authority — covering letter";
+    default:
+      return kind;
+  }
 }

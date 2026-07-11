@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, type NeedCapability } from "@/lib/consultations-store";
+import { MatchScore } from "./consultations.$id.needs";
 import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/draft")({
@@ -56,11 +57,15 @@ function DraftView() {
             <Link to="/consultations/$id/needs" params={{ id: c.id }} className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <ArrowLeft className="h-3 w-3" /> Back to needs
             </Link>
-            <h1 className="text-2xl font-semibold tracking-tight mt-2">Response draft</h1>
+            <h1 className="text-2xl font-semibold tracking-tight mt-2">Response draft — Section F provision</h1>
             <p className="text-sm text-muted-foreground mt-1">
               For {c.pupilRef} · {c.localAuthority} · received {formatDate(c.receivedOn)}
             </p>
           </div>
+          <MatchScore
+            full={c.needs.filter((n) => n.capability === "full").length}
+            total={c.needs.length}
+          />
           <div className="inline-flex rounded-md border bg-surface p-1">
             <button
               onClick={() => setView("edit")}
@@ -148,7 +153,9 @@ function LetterPreview({ c }: { c: ReturnType<ReturnType<typeof useConsultations
       <p className="mt-4">Dear {c.caseOfficer.split(".")[1]?.trim() ?? c.caseOfficer},</p>
       <p className="mt-4">
         Thank you for consulting Millbrook Primary School regarding the above pupil. We have reviewed the assessment
-        documentation and set out below our response against each identified need.
+        documentation and set out below our response to each of the needs identified in Section B, together with the
+        Section F provision we are able to make. This response is offered to inform the local authority's Section I
+        placement decision.
       </p>
       <ol className="mt-6 space-y-5 list-decimal pl-5">
         {c.needs.map((n) => (

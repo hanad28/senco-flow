@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, type ConsultationStatus } from "@/lib/consultations-store";
+import { workingDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -26,8 +27,13 @@ function Dashboard() {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All">("All");
 
+  const withDeadlines = useMemo(
+    () => consultations.map((c) => ({ ...c, daysLeft: workingDaysRemaining(c.receivedOn) })),
+    [consultations],
+  );
+
   const rows = useMemo(() => {
-    return consultations
+    return withDeadlines
       .filter((c) =>
         (statusFilter === "All" || c.status === statusFilter) &&
         (query === "" ||
@@ -35,12 +41,12 @@ function Dashboard() {
           c.localAuthority.toLowerCase().includes(query.toLowerCase())),
       )
       .slice()
-      .sort((a, b) => a.deadlineWorkingDays - b.deadlineWorkingDays);
-  }, [consultations, query, statusFilter]);
+      .sort((a, b) => a.daysLeft - b.daysLeft);
+  }, [withDeadlines, query, statusFilter]);
 
-  const urgentCount = consultations.filter((c) => c.status !== "Submitted" && c.deadlineWorkingDays <= 2).length;
-  const openCount = consultations.filter((c) => c.status !== "Submitted").length;
-  const submittedCount = consultations.filter((c) => c.status === "Submitted").length;
+  const urgentCount = withDeadlines.filter((c) => c.status !== "Submitted" && c.daysLeft <= 2).length;
+  const openCount = withDeadlines.filter((c) => c.status !== "Submitted").length;
+  const submittedCount = withDeadlines.filter((c) => c.status === "Submitted").length;
 
   return (
     <AppShell breadcrumbs={[{ label: "Dashboard" }]}>
@@ -103,7 +109,7 @@ function Dashboard() {
             </thead>
             <tbody>
               {rows.map((c) => {
-                const tone = deadlineTone(c.deadlineWorkingDays);
+                const tone = deadlineTone(c.daysLeft);
                 const isSubmitted = c.status === "Submitted";
                 return (
                   <tr key={c.id} className="border-t hover:bg-muted/20 transition-colors">
@@ -120,7 +126,7 @@ function Dashboard() {
                       {isSubmitted ? (
                         <span className="text-muted-foreground text-xs">Response submitted</span>
                       ) : (
-                        <DeadlinePill days={c.deadlineWorkingDays} tone={tone} />
+                        <DeadlinePill days={c.daysLeft} tone={tone} />
                       )}
                     </td>
                     <td className="px-4 py-4">
@@ -180,10 +186,16 @@ function DeadlinePill({ days, tone }: { days: number; tone: "urgent" | "warn" | 
     warn: "bg-warn text-warn-foreground",
     ok: "bg-ok/15 text-ok border border-ok/30",
   }[tone];
+  const label =
+    days < 0
+      ? `Overdue by ${Math.abs(days)} working day${Math.abs(days) === 1 ? "" : "s"}`
+      : days === 0
+        ? "Due today"
+        : `${days} working day${days === 1 ? "" : "s"}`;
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold ${styles}`}>
       {tone === "urgent" && <AlertTriangle className="h-3 w-3" />}
-      {days} working day{days === 1 ? "" : "s"}
+      {label}
     </span>
   );
 }
