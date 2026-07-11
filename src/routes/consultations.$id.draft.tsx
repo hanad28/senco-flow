@@ -1,10 +1,13 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, type NeedCapability } from "@/lib/consultations-store";
-import { useSchoolProfile } from "@/lib/school-profile-store";
+import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
+import { useTemplates } from "@/lib/templates-store";
+import { EvidencePickerDialog } from "./templates";
+import { findVagueness, VAGUENESS_EXPLANATION } from "@/lib/vagueness";
 import { MatchScore } from "./consultations.$id.needs";
-import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil } from "lucide-react";
+import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil, Sparkles, AlertTriangle, X } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/draft")({
   head: ({ params }) => ({
@@ -34,6 +37,9 @@ function DraftView() {
   if (!c) throw notFound();
 
   const [view, setView] = useState<"edit" | "letter">("edit");
+  const [pickerNeedId, setPickerNeedId] = useState<string | null>(null);
+
+  const pickerNeed = c.needs.find((n) => n.id === pickerNeedId) ?? null;
 
   return (
     <AppShell
@@ -99,13 +105,20 @@ function DraftView() {
                   </span>
                 </header>
                 <div className="p-5 space-y-3">
-                  <label className="text-xs font-medium text-muted-foreground">School response</label>
+                  <div className="flex items-center justify-between gap-3">
+                    <label className="text-xs font-medium text-muted-foreground">School response</label>
+                    <TemplateInsertMenu
+                      capability={n.capability}
+                      onInsert={(text) => setDraftResponse(c.id, n.id, text)}
+                    />
+                  </div>
                   <textarea
                     value={n.draftResponse}
                     onChange={(e) => setDraftResponse(c.id, n.id, e.target.value)}
                     rows={4}
                     className="w-full rounded-md border bg-surface p-3 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring/40"
                   />
+                  <VaguenessHints text={n.draftResponse} />
                   <div className="flex items-center justify-between flex-wrap gap-3">
                     <div className="flex items-center flex-wrap gap-2">
                       {n.evidence.map((e) => (
@@ -118,7 +131,7 @@ function DraftView() {
                       )}
                     </div>
                     <button
-                      onClick={() => addEvidence(c.id, n.id, `Evidence-${Math.floor(Math.random() * 900 + 100)}.pdf`)}
+                      onClick={() => setPickerNeedId(n.id)}
                       className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
                     >
                       <Paperclip className="h-3 w-3" /> Attach evidence
@@ -132,7 +145,146 @@ function DraftView() {
           <LetterPreview c={c} />
         )}
       </div>
+
+      <EvidencePickerDialog
+        open={pickerNeed !== null}
+        onClose={() => setPickerNeedId(null)}
+        excludeNames={pickerNeed?.evidence ?? []}
+        onPick={(doc) => {
+          if (pickerNeed) addEvidence(c.id, pickerNeed.id, doc.name);
+          setPickerNeedId(null);
+        }}
+      />
     </AppShell>
+  );
+}
+
+// Compact dropdown of template snippets applicable to this need's capability.
+function TemplateInsertMenu({
+  capability,
+  onInsert,
+}: {
+  capability: NeedCapability;
+  onInsert: (text: string) => void;
+}) {
+  const { snippets } = useTemplates();
+  const { profile } = useSchoolProfile();
+  const [open, setOpen] = useState(false);
+
+  const grouped = useMemo(() => {
+    return domainOrder.map((d) => {
+      const items =
+        capability === "full"
+          ? profile.provision[d].map((it) => ({
+              id: it.id,
+              title: firstSentence(it.description) || "Provision entry",
+              text: it.description,
+            }))
+          : snippets
+              .filter((s) => s.domain === d && s.capability === capability)
+              .map((s) => ({ id: s.id, title: s.title, text: s.text }));
+      return { domain: d, items };
+    });
+  }, [snippets, profile.provision, capability]);
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1.5 h-7 px-2.5 rounded-md border bg-surface text-xs font-medium hover:bg-accent"
+      >
+        <Sparkles className="h-3 w-3" /> Insert from template
+      </button>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 top-full mt-1 z-50 w-96 max-h-96 overflow-y-auto rounded-md border bg-surface shadow-lg">
+            <div className="px-3 py-2 border-b flex items-center justify-between">
+              <span className="text-xs font-medium">
+                Snippets — {capabilityLabel[capability].toLowerCase()}
+              </span>
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Close"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+            <div className="p-2 space-y-3">
+              {grouped.map((g) => (
+                <div key={g.domain}>
+                  <div className="text-[11px] font-medium text-muted-foreground px-1 pb-1">
+                    {domainLabel[g.domain as NeedDomain]}
+                  </div>
+                  {g.items.length === 0 ? (
+                    <div className="text-[11px] text-muted-foreground px-1 py-1">
+                      No snippets.
+                    </div>
+                  ) : (
+                    g.items.map((it) => (
+                      <button
+                        key={it.id}
+                        onClick={() => {
+                          onInsert(it.text);
+                          setOpen(false);
+                        }}
+                        className="w-full text-left rounded-md hover:bg-accent px-2 py-1.5"
+                      >
+                        <div className="text-xs font-medium truncate">{it.title}</div>
+                        <div className="text-[11px] text-muted-foreground line-clamp-2">
+                          {it.text}
+                        </div>
+                      </button>
+                    ))
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function firstSentence(text: string) {
+  const m = text.match(/^[^.,;]{4,80}/);
+  return m ? m[0].trim() : text.slice(0, 60);
+}
+
+// Non-blocking, soft prompt: lists flagged phrases below the textarea.
+function VaguenessHints({ text }: { text: string }) {
+  const matches = useMemo(() => findVagueness(text), [text]);
+  if (matches.length === 0) return null;
+  // De-duplicate by rule so the same phrase doesn't repeat.
+  const seen = new Set<string>();
+  const unique = matches.filter((m) => {
+    if (seen.has(m.rule)) return false;
+    seen.add(m.rule);
+    return true;
+  });
+  return (
+    <div className="flex items-start gap-2 rounded-md border border-warn/40 bg-warn/10 px-3 py-2 text-[11px] text-warn-foreground">
+      <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+      <div className="space-y-1">
+        <div className="font-medium">Vague wording — consider tightening</div>
+        <div className="flex flex-wrap gap-1.5">
+          {unique.map((m) => (
+            <span
+              key={m.rule}
+              title={`"${m.phrase}" — ${VAGUENESS_EXPLANATION}`}
+              className="rounded bg-warn/25 px-1.5 py-0.5 cursor-help underline decoration-dotted underline-offset-2"
+            >
+              {m.phrase}
+            </span>
+          ))}
+        </div>
+        <div className="opacity-80">
+          Section F should state type, frequency, duration and who delivers the provision.
+        </div>
+      </div>
+    </div>
   );
 }
 
