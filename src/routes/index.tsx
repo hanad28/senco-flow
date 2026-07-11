@@ -186,10 +186,16 @@ function DeadlinePill({ days, tone }: { days: number; tone: "urgent" | "warn" | 
     warn: "bg-warn text-warn-foreground",
     ok: "bg-ok/15 text-ok border border-ok/30",
   }[tone];
+  const label =
+    days < 0
+      ? `Overdue by ${Math.abs(days)} working day${Math.abs(days) === 1 ? "" : "s"}`
+      : days === 0
+        ? "Due today"
+        : `${days} working day${days === 1 ? "" : "s"}`;
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold ${styles}`}>
       {tone === "urgent" && <AlertTriangle className="h-3 w-3" />}
-      {days} working day{days === 1 ? "" : "s"}
+      {label}
     </span>
   );
 }
