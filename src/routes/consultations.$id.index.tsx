@@ -91,17 +91,21 @@ function ConsultationDetail() {
               </header>
               <ul className="divide-y">
                 {c.documents.map((d) => (
-                  <li key={d.id} className="flex items-center gap-4 px-5 py-3 hover:bg-muted/20">
-                    <div className="h-10 w-10 rounded bg-primary/5 border border-primary/10 grid place-items-center text-primary">
+                  <li key={d.id} className="flex items-start gap-4 px-5 py-3 hover:bg-muted/20">
+                    <div className="h-10 w-10 mt-0.5 rounded bg-primary/5 border border-primary/10 grid place-items-center text-primary shrink-0">
                       <FileText className="h-5 w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium truncate">{d.name}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {d.kind} · {d.author} · {formatDate(d.date)} · {d.pages} pp.
+                      <div className="text-sm font-medium">
+                        {d.author}
+                        <span className="text-muted-foreground font-normal"> · {professionForKind(d.kind)}</span>
                       </div>
+                      <div className="text-xs text-muted-foreground mt-0.5">
+                        Advice dated {formatDate(d.date)} · {d.pages} pp.
+                      </div>
+                      <div className="text-xs text-muted-foreground/80 mt-1 truncate">{d.name}</div>
                     </div>
-                    <button className="text-xs text-muted-foreground hover:text-foreground">Open</button>
+                    <button className="text-xs text-muted-foreground hover:text-foreground shrink-0">Open</button>
                   </li>
                 ))}
               </ul>
