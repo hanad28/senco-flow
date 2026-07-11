@@ -126,7 +126,7 @@ function Dashboard() {
                       {isSubmitted ? (
                         <span className="text-muted-foreground text-xs">Response submitted</span>
                       ) : (
-                        <DeadlinePill days={c.deadlineWorkingDays} tone={tone} />
+                        <DeadlinePill days={c.daysLeft} tone={tone} />
                       )}
                     </td>
                     <td className="px-4 py-4">
