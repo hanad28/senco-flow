@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, type ConsultationStatus } from "@/lib/consultations-store";
 import { workingDaysRemaining } from "@/lib/working-days";
-import { Search, ArrowUpDown, AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
+import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,10 +22,42 @@ const statusStyles: Record<ConsultationStatus, string> = {
   Submitted: "bg-ok/10 text-ok border-ok/20",
 };
 
+type SortKey = "pupilRef" | "localAuthority" | "receivedOn" | "daysLeft" | "status";
+type SortDir = "asc" | "desc";
+
+function SortHeader({
+  label,
+  sortKey,
+  activeKey,
+  dir,
+  onSort,
+}: {
+  label: string;
+  sortKey: SortKey;
+  activeKey: SortKey;
+  dir: SortDir;
+  onSort: (key: SortKey) => void;
+}) {
+  const active = sortKey === activeKey;
+  const Icon = active ? (dir === "asc" ? ArrowUp : ArrowDown) : ArrowUpDown;
+  return (
+    <th className="px-4 py-3 font-medium">
+      <button
+        onClick={() => onSort(sortKey)}
+        className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+      >
+        {label} <Icon className="h-3 w-3" />
+      </button>
+    </th>
+  );
+}
+
 function Dashboard() {
   const { consultations } = useConsultations();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All">("All");
+  const [sortKey, setSortKey] = useState<SortKey>("daysLeft");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const withDeadlines = useMemo(
     () => consultations.map((c) => ({ ...c, daysLeft: workingDaysRemaining(c.receivedOn) })),
@@ -41,8 +73,32 @@ function Dashboard() {
           c.localAuthority.toLowerCase().includes(query.toLowerCase())),
       )
       .slice()
-      .sort((a, b) => a.daysLeft - b.daysLeft);
-  }, [withDeadlines, query, statusFilter]);
+      .sort((a, b) => {
+        const dir = sortDir === "asc" ? 1 : -1;
+        let comparison = 0;
+        if (sortKey === "pupilRef") {
+          comparison = a.pupilRef.localeCompare(b.pupilRef);
+        } else if (sortKey === "localAuthority") {
+          comparison = a.localAuthority.localeCompare(b.localAuthority);
+        } else if (sortKey === "receivedOn") {
+          comparison = new Date(a.receivedOn).getTime() - new Date(b.receivedOn).getTime();
+        } else if (sortKey === "daysLeft") {
+          comparison = a.daysLeft - b.daysLeft;
+        } else if (sortKey === "status") {
+          comparison = a.status.localeCompare(b.status);
+        }
+        return comparison * dir;
+      });
+  }, [withDeadlines, query, statusFilter, sortKey, sortDir]);
+
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
+    }
+  };
 
   const urgentCount = withDeadlines.filter((c) => c.status !== "Submitted" && c.daysLeft <= 2).length;
   const openCount = withDeadlines.filter((c) => c.status !== "Submitted").length;
@@ -95,15 +151,11 @@ function Dashboard() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground bg-muted/20">
-                <th className="px-4 py-3 font-medium">Pupil</th>
-                <th className="px-4 py-3 font-medium">Local authority</th>
-                <th className="px-4 py-3 font-medium">Received</th>
-                <th className="px-4 py-3 font-medium">
-                  <span className="inline-flex items-center gap-1">
-                    Deadline <ArrowUpDown className="h-3 w-3" />
-                  </span>
-                </th>
-                <th className="px-4 py-3 font-medium">Status</th>
+                <SortHeader label="Pupil" sortKey="pupilRef" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Local authority" sortKey="localAuthority" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Received" sortKey="receivedOn" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Deadline" sortKey="daysLeft" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Status" sortKey="status" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
                 <th className="px-4 py-3" />
               </tr>
             </thead>

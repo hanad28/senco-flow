@@ -61,10 +61,15 @@ export function AppShell({
           })}
         </nav>
         <div className="px-3 py-4 border-t border-sidebar-border">
-          <div className="flex items-center gap-2 px-3 py-2 text-xs text-sidebar-foreground/60">
+          <a
+            href="https://www.gov.uk/government/publications/send-code-of-practice-0-to-25"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-2 text-xs text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors"
+          >
             <HelpCircle className="h-4 w-4" />
             <span>Statutory guidance</span>
-          </div>
+          </a>
         </div>
       </aside>
 

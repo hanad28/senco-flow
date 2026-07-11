@@ -12,7 +12,7 @@ export const Route = createFileRoute("/settings")({
   component: () => (
     <ComingSoon
       title="Settings"
-      description="School profile, staff, notification preferences, and integrations with the local authority's case management system."
+      description="School profile, staff/capacity, and standard provision offer, used to keep response drafts and reports consistent."
       icon={Settings}
     />
   ),
