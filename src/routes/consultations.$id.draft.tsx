@@ -137,11 +137,12 @@ function DraftView() {
 }
 
 function LetterPreview({ c }: { c: ReturnType<ReturnType<typeof useConsultations>["get"]> & object }) {
+  const { profile } = useSchoolProfile();
   return (
     <article className="bg-surface border rounded-lg p-10 leading-relaxed text-sm shadow-sm max-w-3xl mx-auto">
       <div className="text-right text-xs text-muted-foreground">
-        Millbrook Primary School<br />
-        14 Willow Lane, London N1 4AA<br />
+        {profile.schoolName}<br />
+        {profile.schoolAddress}<br />
         {formatDate(new Date().toISOString())}
       </div>
       <div className="mt-8">
@@ -153,7 +154,7 @@ function LetterPreview({ c }: { c: ReturnType<ReturnType<typeof useConsultations
       </h2>
       <p className="mt-4">Dear {c.caseOfficer.split(".")[1]?.trim() ?? c.caseOfficer},</p>
       <p className="mt-4">
-        Thank you for consulting Millbrook Primary School regarding the above pupil. We have reviewed the assessment
+        Thank you for consulting {profile.schoolName} regarding the above pupil. We have reviewed the assessment
         documentation and set out below our response to each of the needs identified in Section B, together with the
         Section F provision we are able to make. This response is offered to inform the local authority's Section I
         placement decision.
@@ -173,8 +174,8 @@ function LetterPreview({ c }: { c: ReturnType<ReturnType<typeof useConsultations
       </p>
       <div className="mt-8">
         Yours sincerely,<br />
-        <span className="font-medium">S. Ahmed</span><br />
-        SENCO, Millbrook Primary School
+        <span className="font-medium">{profile.sendcoName}</span><br />
+        {profile.sendcoRole}, {profile.schoolName}
       </div>
     </article>
   );
