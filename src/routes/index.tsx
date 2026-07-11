@@ -25,6 +25,33 @@ const statusStyles: Record<ConsultationStatus, string> = {
 type SortKey = "pupilRef" | "localAuthority" | "receivedOn" | "daysLeft" | "status";
 type SortDir = "asc" | "desc";
 
+function SortHeader({
+  label,
+  sortKey,
+  activeKey,
+  dir,
+  onSort,
+}: {
+  label: string;
+  sortKey: SortKey;
+  activeKey: SortKey;
+  dir: SortDir;
+  onSort: (key: SortKey) => void;
+}) {
+  const active = sortKey === activeKey;
+  const Icon = active ? (dir === "asc" ? ArrowUp : ArrowDown) : ArrowUpDown;
+  return (
+    <th className="px-4 py-3 font-medium">
+      <button
+        onClick={() => onSort(sortKey)}
+        className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+      >
+        {label} <Icon className="h-3 w-3" />
+      </button>
+    </th>
+  );
+}
+
 function Dashboard() {
   const { consultations } = useConsultations();
   const [query, setQuery] = useState("");
