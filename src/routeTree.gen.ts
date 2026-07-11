@@ -9,6 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
 import { Route as ConsultationsIdIndexRouteImport } from './routes/consultations.$id.index'
@@ -16,6 +20,26 @@ import { Route as ConsultationsIdSubmitRouteImport } from './routes/consultation
 import { Route as ConsultationsIdNeedsRouteImport } from './routes/consultations.$id.needs'
 import { Route as ConsultationsIdDraftRouteImport } from './routes/consultations.$id.draft'
 
+const TemplatesRoute = TemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -49,6 +73,10 @@ const ConsultationsIdDraftRoute = ConsultationsIdDraftRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/templates': typeof TemplatesRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
@@ -57,6 +85,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/templates': typeof TemplatesRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
@@ -65,6 +97,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/reports': typeof ReportsRoute
+  '/settings': typeof SettingsRoute
+  '/templates': typeof TemplatesRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
@@ -75,6 +111,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/calendar'
+    | '/reports'
+    | '/settings'
+    | '/templates'
     | '/consultations/$id'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
@@ -83,6 +123,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/calendar'
+    | '/reports'
+    | '/settings'
+    | '/templates'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
@@ -90,6 +134,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/calendar'
+    | '/reports'
+    | '/settings'
+    | '/templates'
     | '/consultations/$id'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
@@ -99,11 +147,43 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
+  ReportsRoute: typeof ReportsRoute
+  SettingsRoute: typeof SettingsRoute
+  TemplatesRoute: typeof TemplatesRoute
   ConsultationsIdRoute: typeof ConsultationsIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/templates': {
+      id: '/templates'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -169,6 +249,10 @@ const ConsultationsIdRouteWithChildren = ConsultationsIdRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
+  ReportsRoute: ReportsRoute,
+  SettingsRoute: SettingsRoute,
+  TemplatesRoute: TemplatesRoute,
   ConsultationsIdRoute: ConsultationsIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
