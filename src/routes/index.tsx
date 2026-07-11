@@ -124,15 +124,11 @@ function Dashboard() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground bg-muted/20">
-                <th className="px-4 py-3 font-medium">Pupil</th>
-                <th className="px-4 py-3 font-medium">Local authority</th>
-                <th className="px-4 py-3 font-medium">Received</th>
-                <th className="px-4 py-3 font-medium">
-                  <span className="inline-flex items-center gap-1">
-                    Deadline <ArrowUpDown className="h-3 w-3" />
-                  </span>
-                </th>
-                <th className="px-4 py-3 font-medium">Status</th>
+                <SortHeader label="Pupil" sortKey="pupilRef" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Local authority" sortKey="localAuthority" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Received" sortKey="receivedOn" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Deadline" sortKey="daysLeft" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortHeader label="Status" sortKey="status" activeKey={sortKey} dir={sortDir} onSort={handleSort} />
                 <th className="px-4 py-3" />
               </tr>
             </thead>
