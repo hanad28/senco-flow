@@ -22,10 +22,15 @@ const statusStyles: Record<ConsultationStatus, string> = {
   Submitted: "bg-ok/10 text-ok border-ok/20",
 };
 
+type SortKey = "pupilRef" | "localAuthority" | "receivedOn" | "daysLeft" | "status";
+type SortDir = "asc" | "desc";
+
 function Dashboard() {
   const { consultations } = useConsultations();
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All">("All");
+  const [sortKey, setSortKey] = useState<SortKey>("daysLeft");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const withDeadlines = useMemo(
     () => consultations.map((c) => ({ ...c, daysLeft: workingDaysRemaining(c.receivedOn) })),
@@ -41,8 +46,32 @@ function Dashboard() {
           c.localAuthority.toLowerCase().includes(query.toLowerCase())),
       )
       .slice()
-      .sort((a, b) => a.daysLeft - b.daysLeft);
-  }, [withDeadlines, query, statusFilter]);
+      .sort((a, b) => {
+        const dir = sortDir === "asc" ? 1 : -1;
+        let comparison = 0;
+        if (sortKey === "pupilRef") {
+          comparison = a.pupilRef.localeCompare(b.pupilRef);
+        } else if (sortKey === "localAuthority") {
+          comparison = a.localAuthority.localeCompare(b.localAuthority);
+        } else if (sortKey === "receivedOn") {
+          comparison = new Date(a.receivedOn).getTime() - new Date(b.receivedOn).getTime();
+        } else if (sortKey === "daysLeft") {
+          comparison = a.daysLeft - b.daysLeft;
+        } else if (sortKey === "status") {
+          comparison = a.status.localeCompare(b.status);
+        }
+        return comparison * dir;
+      });
+  }, [withDeadlines, query, statusFilter, sortKey, sortDir]);
+
+  const handleSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
+    }
+  };
 
   const urgentCount = withDeadlines.filter((c) => c.status !== "Submitted" && c.daysLeft <= 2).length;
   const openCount = withDeadlines.filter((c) => c.status !== "Submitted").length;
