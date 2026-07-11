@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, type NeedCapability } from "@/lib/consultations-store";
+import { MatchScore } from "./consultations.$id.needs";
 import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/draft")({
