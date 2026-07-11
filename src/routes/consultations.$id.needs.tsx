@@ -128,3 +128,21 @@ function SummaryChip({ label, count, tone }: { label: string; count: number; ton
     </div>
   );
 }
+
+export function MatchScore({ full, total }: { full: number; total: number }) {
+  const pct = total === 0 ? 0 : Math.round((full / total) * 100);
+  const tone = pct >= 70 ? "ok" : pct >= 40 ? "warn" : "urgent";
+  const cls = {
+    ok: "bg-ok/10 border-ok/30 text-ok",
+    warn: "bg-warn/15 border-warn/40 text-warn-foreground",
+    urgent: "bg-urgent/10 border-urgent/30 text-urgent",
+  }[tone];
+  return (
+    <div className={`shrink-0 rounded-lg border px-5 py-3 text-right ${cls}`}>
+      <div className="text-3xl font-semibold leading-none tabular-nums">{pct}%</div>
+      <div className="text-[11px] mt-1 opacity-90">
+        needs matched in full ({full}/{total})
+      </div>
+    </div>
+  );
+}
