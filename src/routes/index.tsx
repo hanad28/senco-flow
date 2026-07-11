@@ -27,8 +27,13 @@ function Dashboard() {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All">("All");
 
+  const withDeadlines = useMemo(
+    () => consultations.map((c) => ({ ...c, daysLeft: workingDaysRemaining(c.receivedOn) })),
+    [consultations],
+  );
+
   const rows = useMemo(() => {
-    return consultations
+    return withDeadlines
       .filter((c) =>
         (statusFilter === "All" || c.status === statusFilter) &&
         (query === "" ||
@@ -36,12 +41,12 @@ function Dashboard() {
           c.localAuthority.toLowerCase().includes(query.toLowerCase())),
       )
       .slice()
-      .sort((a, b) => a.deadlineWorkingDays - b.deadlineWorkingDays);
-  }, [consultations, query, statusFilter]);
+      .sort((a, b) => a.daysLeft - b.daysLeft);
+  }, [withDeadlines, query, statusFilter]);
 
-  const urgentCount = consultations.filter((c) => c.status !== "Submitted" && c.deadlineWorkingDays <= 2).length;
-  const openCount = consultations.filter((c) => c.status !== "Submitted").length;
-  const submittedCount = consultations.filter((c) => c.status === "Submitted").length;
+  const urgentCount = withDeadlines.filter((c) => c.status !== "Submitted" && c.daysLeft <= 2).length;
+  const openCount = withDeadlines.filter((c) => c.status !== "Submitted").length;
+  const submittedCount = withDeadlines.filter((c) => c.status === "Submitted").length;
 
   return (
     <AppShell breadcrumbs={[{ label: "Dashboard" }]}>
