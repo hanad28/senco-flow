@@ -71,7 +71,7 @@ function ConsultationDetail() {
             >
               <div className="flex items-center gap-2 font-semibold">
                 {tone === "urgent" && <AlertTriangle className="h-4 w-4" />}
-                {c.deadlineWorkingDays} working day{c.deadlineWorkingDays === 1 ? "" : "s"} until response due
+                {deadlineLabel}
               </div>
               <div className="text-xs opacity-80 mt-0.5">Statutory 15 working-day window</div>
             </div>
