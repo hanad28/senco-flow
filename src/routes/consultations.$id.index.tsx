@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone } from "@/lib/consultations-store";
+import { workingDaysRemaining } from "@/lib/working-days";
 import { FileText, Sparkles, ArrowRight, AlertTriangle, Calendar, User2, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/")({
