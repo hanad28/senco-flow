@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ConsultationsProvider } from "../lib/consultations-store";
 import { SchoolProfileProvider } from "../lib/school-profile-store";
+import { TemplatesProvider } from "../lib/templates-store";
 
 function NotFoundComponent() {
   return (
