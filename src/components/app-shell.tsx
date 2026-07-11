@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { LayoutGrid, ClipboardList, Calendar, BarChart3, Settings, HelpCircle, Bell } from "lucide-react";
 import type { ReactNode } from "react";
+import { useSchoolProfile } from "@/lib/school-profile-store";
 
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutGrid },
@@ -20,6 +21,14 @@ export function AppShell({
   actions?: ReactNode;
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { profile } = useSchoolProfile();
+  const initials = profile.schoolName
+    .split(/\s+/)
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   const isActive = (to: string) => {
     if (to === "/") return pathname === "/" || pathname.startsWith("/consultations");
@@ -32,11 +41,15 @@ export function AppShell({
         <div className="px-5 py-6 border-b border-sidebar-border">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-md bg-sidebar-primary text-sidebar-primary-foreground grid place-items-center text-sm font-semibold tracking-tight">
-              MP
+              {initials || "MP"}
             </div>
             <div className="min-w-0">
-              <div className="text-sm font-semibold truncate">Millbrook Primary</div>
-              <div className="text-xs text-sidebar-foreground/60 truncate">SENCO — S. Ahmed</div>
+              <div className="text-sm font-semibold truncate">{profile.schoolName}</div>
+              <div className="text-xs text-sidebar-foreground/60 truncate">
+                {profile.sendcoRole.includes("SENDCO") || profile.sendcoRole.includes("SENCO")
+                  ? profile.sendcoName
+                  : `SENDCO — ${profile.sendcoName}`}
+              </div>
             </div>
           </div>
         </div>
