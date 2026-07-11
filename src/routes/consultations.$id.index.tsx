@@ -120,14 +120,14 @@ function ConsultationDetail() {
                 </div>
                 <div>
                   <h2 className="font-semibold text-sm">AI summary</h2>
-                  <p className="text-[11px] text-muted-foreground">Generated across all received documents</p>
+                  <p className="text-[11px] text-muted-foreground">Section B (needs) &amp; Section F (provision required)</p>
                 </div>
               </header>
               <div className="p-5 text-sm leading-relaxed text-foreground/90">
                 {c.summary}
               </div>
               <div className="px-5 pb-5 pt-2 border-t border-primary/10 text-[11px] text-muted-foreground">
-                Draft — always verify against source reports.
+                Draft — always verify against source reports. This response informs a future Section I placement decision; no placement is yet in place.
               </div>
             </section>
 
