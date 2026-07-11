@@ -151,3 +151,24 @@ function ConsultationDetail() {
     </AppShell>
   );
 }
+
+function professionForKind(kind: string): string {
+  switch (kind) {
+    case "EP":
+      return "Educational Psychologist";
+    case "SaLT":
+      return "Speech and Language Therapy";
+    case "OT":
+      return "Occupational Therapy";
+    case "Health":
+      return "Health (CAMHS / Paediatrics)";
+    case "Parental":
+      return "Parent / Carer views";
+    case "School":
+      return "SENCO — school information";
+    case "LA":
+      return "Local Authority — covering letter";
+    default:
+      return kind;
+  }
+}
