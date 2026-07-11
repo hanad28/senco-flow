@@ -153,7 +153,9 @@ function LetterPreview({ c }: { c: ReturnType<ReturnType<typeof useConsultations
       <p className="mt-4">Dear {c.caseOfficer.split(".")[1]?.trim() ?? c.caseOfficer},</p>
       <p className="mt-4">
         Thank you for consulting Millbrook Primary School regarding the above pupil. We have reviewed the assessment
-        documentation and set out below our response against each identified need.
+        documentation and set out below our response to each of the needs identified in Section B, together with the
+        Section F provision we are able to make. This response is offered to inform the local authority's Section I
+        placement decision.
       </p>
       <ol className="mt-6 space-y-5 list-decimal pl-5">
         {c.needs.map((n) => (
