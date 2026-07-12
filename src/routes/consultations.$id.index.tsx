@@ -20,14 +20,14 @@ function ConsultationDetail() {
   const c = get(id);
   if (!c) throw notFound();
 
-  const daysLeft = workingDaysRemaining(c.receivedOn);
+  const daysLeft = calendarDaysRemaining(c.receivedOn);
   const tone = deadlineTone(daysLeft);
   const deadlineLabel =
     daysLeft < 0
-      ? `Overdue by ${Math.abs(daysLeft)} working day${Math.abs(daysLeft) === 1 ? "" : "s"}`
+      ? `Overdue by ${Math.abs(daysLeft)} day${Math.abs(daysLeft) === 1 ? "" : "s"}`
       : daysLeft === 0
         ? "Response due today"
-        : `${daysLeft} working day${daysLeft === 1 ? "" : "s"} until response due`;
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} until response due`;
 
   return (
     <AppShell
