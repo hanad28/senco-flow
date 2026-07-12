@@ -115,7 +115,7 @@ function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <StatCard icon={<AlertTriangle className="h-4 w-4" />} tone="urgent" label="Due within 2 working days" value={urgentCount} />
+          <StatCard icon={<AlertTriangle className="h-4 w-4" />} tone="urgent" label="Due within 2 days" value={urgentCount} />
           <StatCard icon={<Clock className="h-4 w-4" />} tone="info" label="Open consultations" value={openCount} />
           <StatCard icon={<CheckCircle2 className="h-4 w-4" />} tone="ok" label="Submitted this term" value={submittedCount} />
         </div>
