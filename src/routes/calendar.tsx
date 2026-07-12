@@ -76,9 +76,9 @@ function CalendarPage() {
     const map = new Map<string, Entry[]>();
     for (const c of consultations) {
       if (!showSubmitted && c.status === "Submitted") continue;
-      const dl = deadlineDate(c.receivedOn);
+      const dl = calendarDeadlineDate(c.receivedOn);
       const key = isoKey(dl);
-      const daysLeft = workingDaysRemaining(c.receivedOn, TODAY);
+      const daysLeft = calendarDaysRemaining(c.receivedOn, TODAY);
       const entry: Entry = { consultation: c, daysLeft, tone: deadlineTone(daysLeft) };
       const arr = map.get(key) ?? [];
       arr.push(entry);
