@@ -1,5 +1,7 @@
-No changes required.
+Deadline calculation is calendar-day based.
 
-The working-days calculation matches the statutory framing (day 1 = the working day after receipt; deadline day counted as a remaining day; weekends skipped, bank holidays not modelled), and the manual check against Pupil C (3 working days remaining, deadline Wed 15 Jul 2026) and Pupil B (7 working days remaining, deadline Tue 21 Jul 2026) as of today (Sat 11 Jul 2026) matches what the algorithm produces.
+The statutory response window is 15 calendar days from receipt (day 1 = the day after receipt; the received day itself doesn't count). Weekends and bank holidays count toward the total and are NOT excluded.
 
-The "Statutory guidance" sidebar footer stays as-is per your instruction — noted that it's a decorative leftover with no route or handler, and can be removed or wired to the SEND Code of Practice later if you change your mind.
+The working-day helpers (`addWorkingDays`, `workingDaysBetween`, `workingDaysRemaining`) and the 2026 England & Wales bank holiday list remain in `src/lib/working-days.ts` for possible future use, but are intentionally not consumed by the deadline calculation. All deadline UI (Dashboard, Consultation detail, Calendar, Review & Submit) reads from `calendarDaysRemaining` / `calendarDeadlineDate`, which are pure calendar-day arithmetic off each consultation's `receivedOn`.
+
+The seeded `deadlineWorkingDays` field on consultations has been removed — the deadline is derived dynamically from `receivedOn` at render time.
