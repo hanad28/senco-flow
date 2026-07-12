@@ -77,7 +77,7 @@ function SubmitView() {
               </div>
               <div>
                 <dt className="text-xs text-muted-foreground">Response window</dt>
-                <dd className="mt-0.5">Within 15 working days</dd>
+                <dd className="mt-0.5">Within 15 days</dd>
               </div>
             </dl>
           </div>
