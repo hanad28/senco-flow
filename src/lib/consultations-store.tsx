@@ -139,6 +139,7 @@ const hist = (
   })),
 });
 
+const seedConsultations: Consultation[] = [
 
   {
     id: "c-2401",
