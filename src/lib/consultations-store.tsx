@@ -429,3 +429,13 @@ export function deadlineTone(days: number): "urgent" | "warn" | "ok" {
   if (days <= 5) return "warn";
   return "ok";
 }
+
+// ---------- "This term" boundary ----------
+// The current academic term is the UK summer term 2026. Start date is the
+// Monday after the Easter break. Reports and the Dashboard's "Submitted this
+// term" stat share this single definition.
+export const TERM_START_ISO = "2026-04-20";
+
+export function isThisTerm(iso: string): boolean {
+  return iso >= TERM_START_ISO;
+}
