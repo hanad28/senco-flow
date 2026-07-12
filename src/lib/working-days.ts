@@ -1,7 +1,20 @@
-// Working-day helpers. Excludes weekends (Sat/Sun). Bank holidays are out of
-// scope for the prototype.
+// Working-day helpers. Excludes weekends (Sat/Sun) and 2026 England &
+// Wales bank holidays (hardcoded — prototype scope).
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+// England & Wales bank holidays for 2026 (source: gov.uk). Fixed list for the
+// prototype — no calculation for other years.
+const BANK_HOLIDAYS_2026 = new Set<string>([
+  "2026-01-01", // New Year's Day
+  "2026-04-03", // Good Friday
+  "2026-04-06", // Easter Monday
+  "2026-05-04", // Early May bank holiday
+  "2026-05-25", // Spring bank holiday
+  "2026-08-31", // Summer bank holiday
+  "2026-12-25", // Christmas Day
+  "2026-12-28", // Boxing Day (substitute)
+]);
 
 function startOfDay(d: Date): Date {
   const x = new Date(d);
@@ -9,9 +22,24 @@ function startOfDay(d: Date): Date {
   return x;
 }
 
+function toIsoDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 function isWeekend(d: Date): boolean {
   const day = d.getDay();
   return day === 0 || day === 6;
+}
+
+function isBankHoliday(d: Date): boolean {
+  return BANK_HOLIDAYS_2026.has(toIsoDate(d));
+}
+
+function isNonWorking(d: Date): boolean {
+  return isWeekend(d) || isBankHoliday(d);
 }
 
 /** Add N working days to an ISO date, returning a Date at 00:00 local. */
@@ -20,7 +48,7 @@ export function addWorkingDays(fromIso: string, n: number): Date {
   let added = 0;
   while (added < n) {
     d.setTime(d.getTime() + MS_PER_DAY);
-    if (!isWeekend(d)) added += 1;
+    if (!isNonWorking(d)) added += 1;
   }
   return d;
 }
@@ -38,9 +66,14 @@ export function workingDaysBetween(from: Date, to: Date): number {
   const cursor = new Date(a);
   while (cursor.getTime() !== b.getTime()) {
     cursor.setTime(cursor.getTime() + sign * MS_PER_DAY);
-    if (!isWeekend(cursor)) count += sign;
+    if (!isNonWorking(cursor)) count += sign;
   }
   return count;
+}
+
+/** Statutory 15-working-day deadline date for a consultation received on `receivedOnIso`. */
+export function deadlineDate(receivedOnIso: string): Date {
+  return addWorkingDays(receivedOnIso, 15);
 }
 
 /**
