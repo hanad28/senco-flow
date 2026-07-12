@@ -233,6 +233,104 @@ const seedConsultations: Consultation[] = [
     ],
     needs: seedNeeds("e"),
   },
+  // ---------- Historical (already-submitted) consultations ----------
+  // These power aggregates on Reports and appear in Calendar's "show submitted"
+  // toggle and Dashboard's Submitted status filter. Documents omitted by design.
+  hist(
+    "c-2406", "Pupil F", "Year 3", "Camden LA", "R. Owusu",
+    "2026-04-25", "2026-05-08",
+    "Pupil F (Y3) — dyslexia and mild sensory processing needs. Response confirmed structured literacy and daily sensory circuit.",
+    [
+      ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
+      ["Small-group social skills intervention", "partial", "communication"],
+      ["Daily sensory circuit before registration", "full", "sensory"],
+    ],
+  ),
+  hist(
+    "c-2407", "Pupil G", "Year 6", "Hackney LA", "L. Hassan",
+    "2026-05-02", "2026-05-19",
+    "Pupil G (Y6) — SEMH with school avoidance. Named key adult and reintegration plan agreed; SaLT input outside school scope.",
+    [
+      ["Named key adult and daily meet-and-greet", "full", "semh"],
+      ["Direct weekly SaLT input, 30 min", "cannot", "communication"],
+      ["Precision teaching for number facts, 5×10 min weekly", "full", "cognition"],
+    ],
+  ),
+  hist(
+    "c-2408", "Pupil H", "Year 1", "Islington LA", "T. Bright",
+    "2026-05-14", "2026-05-27",
+    "Pupil H (Y1) — global developmental delay. Fine-motor programme and phonics intervention agreed.",
+    [
+      ["OT-devised fine-motor programme, 4×15 min weekly", "partial", "sensory"],
+      ["Read Write Inc. phonics, 4×20 min weekly", "full", "cognition"],
+    ],
+  ),
+  hist(
+    "c-2409", "Pupil I", "Year 8", "Southwark LA", "M. Reyes",
+    "2026-05-20", "2026-06-02",
+    "Pupil I (Y8) — ASD with anxiety around transitions. Graduated timetable and ELSA sessions agreed.",
+    [
+      ["ELSA 1:1 sessions, weekly for 6-week blocks", "full", "semh"],
+      ["Structured transitions plan with key adult", "partial", "semh"],
+      ["Lego Therapy social communication group, weekly", "full", "communication"],
+    ],
+  ),
+  hist(
+    "c-2410", "Pupil J", "Year 10", "Lambeth LA", "A. Cole",
+    "2026-05-28", "2026-06-12",
+    "Pupil J (Y10) — moderate learning difficulty. Exam access arrangements and small-group maths intervention agreed.",
+    [
+      ["Numicon small-group maths intervention, 3×30 min weekly", "full", "cognition"],
+      ["Low-stimulus room for exam access arrangements", "partial", "sensory"],
+    ],
+  ),
+  hist(
+    "c-2411", "Pupil K", "Year 5", "Camden LA", "R. Owusu",
+    "2026-06-01", "2026-06-20",
+    "Pupil K (Y5) — SLCN and specific literacy difficulty. Response late owing to half-term staffing gap. Direct weekly SaLT declined.",
+    [
+      ["Weekly direct SaLT, 30 min", "cannot", "communication"],
+      ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
+      ["Zones of Regulation and named key adult", "partial", "semh"],
+    ],
+  ),
+  hist(
+    "c-2412", "Pupil L", "Year 2", "Hackney LA", "L. Hassan",
+    "2026-06-15", "2026-06-28",
+    "Pupil L (Y2) — moderate learning difficulty with fine-motor needs. Full provision agreed within existing SEN budget.",
+    [
+      ["Precision teaching for spelling, 5×10 min weekly", "full", "cognition"],
+      ["OT-devised fine-motor programme, 4×15 min weekly", "full", "sensory"],
+    ],
+  ),
+  hist(
+    "c-2413", "Pupil M", "Year 4", "Islington LA", "T. Bright",
+    "2026-02-10", "2026-02-24",
+    "Pupil M (Y4) — communication and interaction needs alongside emerging SEMH. Full provision agreed.",
+    [
+      ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
+      ["SaLT-devised individual programme via trained TA, 3×15 min weekly", "full", "communication"],
+      ["ELSA 1:1 sessions, weekly for 6-week blocks", "partial", "semh"],
+    ],
+  ),
+  hist(
+    "c-2414", "Pupil N", "Year 7", "Southwark LA", "M. Reyes",
+    "2026-03-02", "2026-03-20",
+    "Pupil N (Y7) — sensory and physical needs; late response owing to LA information gap. OT input outside school scope.",
+    [
+      ["Weekly on-site OT input, 45 min", "cannot", "sensory"],
+      ["Numicon small-group maths intervention, 3×30 min weekly", "partial", "cognition"],
+    ],
+  ),
+  hist(
+    "c-2415", "Pupil O", "Year 9", "Camden LA", "R. Owusu",
+    "2026-03-15", "2026-03-29",
+    "Pupil O (Y9) — SEMH with anxiety-based non-attendance. Reintegration plan and ELSA blocks agreed.",
+    [
+      ["Named key adult and daily meet-and-greet", "full", "semh"],
+      ["Precision teaching for spelling and number facts, 5×10 min weekly", "full", "cognition"],
+    ],
+  ),
 ];
 
 type Ctx = {
