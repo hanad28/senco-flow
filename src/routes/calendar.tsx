@@ -19,7 +19,7 @@ export const Route = createFileRoute("/calendar")({
       {
         name: "description",
         content:
-          "Chronological view of every open consultation's 15 working-day statutory deadline.",
+          "Chronological view of every open consultation's 15-day statutory deadline.",
       },
     ],
   }),
