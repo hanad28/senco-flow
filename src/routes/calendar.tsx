@@ -8,8 +8,8 @@ import {
   type Consultation,
 } from "@/lib/consultations-store";
 import {
-  deadlineDate,
-  workingDaysRemaining,
+  calendarDeadlineDate,
+  calendarDaysRemaining,
 } from "@/lib/working-days";
 
 export const Route = createFileRoute("/calendar")({
