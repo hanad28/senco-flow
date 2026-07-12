@@ -102,7 +102,44 @@ const seedNeeds = (prefix: string): NeedItem[] => [
   },
 ];
 
-const seedConsultations: Consultation[] = [
+// Compact factory for the historical (already-submitted) seed data used by
+// the Reports and Calendar screens. Documents are intentionally omitted —
+// aggregates only need pupil/LA/dates/needs.
+type HistNeed = [title: string, capability: NeedCapability, domain: NeedDomain];
+const hist = (
+  id: string,
+  pupilRef: string,
+  yearGroup: string,
+  localAuthority: string,
+  caseOfficer: string,
+  receivedOn: string,
+  submittedOn: string,
+  summary: string,
+  needs: HistNeed[],
+): Consultation => ({
+  id,
+  pupilRef,
+  yearGroup,
+  localAuthority,
+  caseOfficer,
+  receivedOn,
+  submittedOn,
+  status: "Submitted",
+  summary,
+  documents: [],
+  needs: needs.map(([title, capability, domain], i) => ({
+    id: `${id}-n${i + 1}`,
+    title,
+    source: "Historical record",
+    detail: "",
+    capability,
+    domain,
+    draftResponse: "",
+    evidence: [],
+  })),
+});
+
+
   {
     id: "c-2401",
     pupilRef: "Pupil A",
@@ -184,6 +221,7 @@ const seedConsultations: Consultation[] = [
     localAuthority: "Lambeth LA",
     caseOfficer: "A. Cole",
     receivedOn: "2026-06-10",
+    submittedOn: "2026-07-02",
     status: "Submitted",
     summary:
       "Pupil E (Y5) — moderate learning difficulty with associated speech needs. Response submitted 2 July confirming full provision within existing SEN budget with 6 hours of TA support redirected.",
