@@ -1,5 +1,5 @@
-// Working-day helpers. Excludes weekends (Sat/Sun). Bank holidays are out of
-// scope for the prototype.
+// Working-day helpers. Excludes weekends (Sat/Sun) and 2026 England &
+// Wales bank holidays (hardcoded — prototype scope).
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
