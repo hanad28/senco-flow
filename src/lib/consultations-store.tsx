@@ -200,6 +200,7 @@ type Ctx = {
   setCapability: (id: string, needId: string, capability: NeedCapability) => void;
   setDraftResponse: (id: string, needId: string, text: string) => void;
   addEvidence: (id: string, needId: string, filename: string) => void;
+  removeEvidence: (id: string, needId: string, filename: string) => void;
 };
 
 const ConsultationsContext = createContext<Ctx | null>(null);
@@ -242,7 +243,24 @@ export function ConsultationsProvider({ children }: { children: ReactNode }) {
               ? {
                   ...c,
                   needs: c.needs.map((n) =>
-                    n.id === needId ? { ...n, evidence: [...n.evidence, filename] } : n,
+                    n.id === needId && !n.evidence.includes(filename)
+                      ? { ...n, evidence: [...n.evidence, filename] }
+                      : n,
+                  ),
+                }
+              : c,
+          ),
+        ),
+      removeEvidence: (id, needId, filename) =>
+        setConsultations((cs) =>
+          cs.map((c) =>
+            c.id === id
+              ? {
+                  ...c,
+                  needs: c.needs.map((n) =>
+                    n.id === needId
+                      ? { ...n, evidence: n.evidence.filter((e) => e !== filename) }
+                      : n,
                   ),
                 }
               : c,
