@@ -109,7 +109,6 @@ function DraftView() {
                     <label className="text-xs font-medium text-muted-foreground">School response</label>
                     <TemplateInsertMenu
                       capability={n.capability}
-                      currentText={n.draftResponse}
                       onInsert={(text) => {
                         const existing = n.draftResponse.trim();
                         const separator = existing ? "\n\n" : "";
