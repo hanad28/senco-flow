@@ -3,15 +3,43 @@
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+// England & Wales bank holidays for 2026 (source: gov.uk). Fixed list for the
+// prototype — no calculation for other years.
+const BANK_HOLIDAYS_2026 = new Set<string>([
+  "2026-01-01", // New Year's Day
+  "2026-04-03", // Good Friday
+  "2026-04-06", // Easter Monday
+  "2026-05-04", // Early May bank holiday
+  "2026-05-25", // Spring bank holiday
+  "2026-08-31", // Summer bank holiday
+  "2026-12-25", // Christmas Day
+  "2026-12-28", // Boxing Day (substitute)
+]);
+
 function startOfDay(d: Date): Date {
   const x = new Date(d);
   x.setHours(0, 0, 0, 0);
   return x;
 }
 
+function toIsoDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 function isWeekend(d: Date): boolean {
   const day = d.getDay();
   return day === 0 || day === 6;
+}
+
+function isBankHoliday(d: Date): boolean {
+  return BANK_HOLIDAYS_2026.has(toIsoDate(d));
+}
+
+function isNonWorking(d: Date): boolean {
+  return isWeekend(d) || isBankHoliday(d);
 }
 
 /** Add N working days to an ISO date, returning a Date at 00:00 local. */
