@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import type { NeedDomain } from "@/lib/school-profile-store";
 
 export type ConsultationStatus = "New" | "Reviewing" | "Drafting" | "Submitted";
 export type NeedCapability = "full" | "partial" | "cannot";
@@ -9,6 +10,7 @@ export type NeedItem = {
   source: string;
   detail: string;
   capability: NeedCapability;
+  domain: NeedDomain;
   draftResponse: string;
   evidence: string[];
 };
@@ -29,6 +31,7 @@ export type Consultation = {
   localAuthority: string;
   caseOfficer: string;
   receivedOn: string; // ISO
+  submittedOn?: string; // ISO — set for Submitted consultations
   // Deadline is derived from receivedOn at render time via calendarDaysRemaining.
   status: ConsultationStatus;
   summary: string;
