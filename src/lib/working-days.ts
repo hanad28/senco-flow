@@ -66,9 +66,14 @@ export function workingDaysBetween(from: Date, to: Date): number {
   const cursor = new Date(a);
   while (cursor.getTime() !== b.getTime()) {
     cursor.setTime(cursor.getTime() + sign * MS_PER_DAY);
-    if (!isWeekend(cursor)) count += sign;
+    if (!isNonWorking(cursor)) count += sign;
   }
   return count;
+}
+
+/** Statutory 15-working-day deadline date for a consultation received on `receivedOnIso`. */
+export function deadlineDate(receivedOnIso: string): Date {
+  return addWorkingDays(receivedOnIso, 15);
 }
 
 /**
