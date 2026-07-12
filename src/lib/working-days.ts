@@ -48,7 +48,7 @@ export function addWorkingDays(fromIso: string, n: number): Date {
   let added = 0;
   while (added < n) {
     d.setTime(d.getTime() + MS_PER_DAY);
-    if (!isWeekend(d)) added += 1;
+    if (!isNonWorking(d)) added += 1;
   }
   return d;
 }
