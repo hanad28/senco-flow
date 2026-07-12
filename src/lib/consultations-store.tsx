@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import type { NeedDomain } from "@/lib/school-profile-store";
 
 export type ConsultationStatus = "New" | "Reviewing" | "Drafting" | "Submitted";
 export type NeedCapability = "full" | "partial" | "cannot";
@@ -9,6 +10,7 @@ export type NeedItem = {
   source: string;
   detail: string;
   capability: NeedCapability;
+  domain: NeedDomain;
   draftResponse: string;
   evidence: string[];
 };
@@ -29,6 +31,7 @@ export type Consultation = {
   localAuthority: string;
   caseOfficer: string;
   receivedOn: string; // ISO
+  submittedOn?: string; // ISO — set for Submitted consultations
   // Deadline is derived from receivedOn at render time via calendarDaysRemaining.
   status: ConsultationStatus;
   summary: string;
@@ -44,6 +47,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Pupil presents with significant delay in phonological processing and decoding. Recommends targeted structured literacy intervention delivered 1:1.",
     capability: "full",
+    domain: "cognition",
     draftResponse:
       "The school can meet this need in full. We deliver a structured literacy programme (Read Write Inc.) 1:1 with a trained TA for 4×20 minute sessions per week, tracked half-termly against reading age.",
     evidence: ["Provision map 2025-26.pdf", "TA timetable — RWI.pdf"],
@@ -55,6 +59,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Pupil requires scheduled proprioceptive input and access to a low-stimulus space to prevent dysregulation during the school day.",
     capability: "partial",
+    domain: "sensory",
     draftResponse:
       "The school can meet this need in part. A sensory circuit is available at breaktimes and a quiet room can be accessed on request. Timetabled 45-minute breaks would require additional TA capacity, which we would be able to provide with the funding uplift identified in Section F.",
     evidence: ["Sensory room photos.pdf"],
@@ -66,6 +71,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Direct weekly therapy from a qualified SaLT for a minimum of 30 minutes, plus a programme of activities delivered by trained school staff.",
     capability: "cannot",
+    domain: "communication",
     draftResponse:
       "The school is not currently able to meet this need. We do not commission direct SaLT provision on site. We can deliver a therapist-devised programme via a trained TA, but weekly direct therapy would need to be commissioned by the local authority.",
     evidence: [],
@@ -77,6 +83,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Parents report pupil is unable to complete extended writing tasks in the main classroom due to noise sensitivity.",
     capability: "full",
+    domain: "cognition",
     draftResponse:
       "The school can meet this need in full. The learning support base is available for all extended tasks and formal assessments, with a member of support staff present.",
     evidence: [],
@@ -88,13 +95,52 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Pupil would benefit from a structured social communication group of no more than 4 peers, delivered weekly across the school year.",
     capability: "partial",
+    domain: "communication",
     draftResponse:
       "The school runs a Lego Therapy group weekly with up to 6 pupils. We can prioritise a place for this pupil, though group size exceeds the recommendation of 4.",
     evidence: ["Lego Therapy — group plan.pdf"],
   },
 ];
 
+// Compact factory for the historical (already-submitted) seed data used by
+// the Reports and Calendar screens. Documents are intentionally omitted —
+// aggregates only need pupil/LA/dates/needs.
+type HistNeed = [title: string, capability: NeedCapability, domain: NeedDomain];
+const hist = (
+  id: string,
+  pupilRef: string,
+  yearGroup: string,
+  localAuthority: string,
+  caseOfficer: string,
+  receivedOn: string,
+  submittedOn: string,
+  summary: string,
+  needs: HistNeed[],
+): Consultation => ({
+  id,
+  pupilRef,
+  yearGroup,
+  localAuthority,
+  caseOfficer,
+  receivedOn,
+  submittedOn,
+  status: "Submitted",
+  summary,
+  documents: [],
+  needs: needs.map(([title, capability, domain], i) => ({
+    id: `${id}-n${i + 1}`,
+    title,
+    source: "Historical record",
+    detail: "",
+    capability,
+    domain,
+    draftResponse: "",
+    evidence: [],
+  })),
+});
+
 const seedConsultations: Consultation[] = [
+
   {
     id: "c-2401",
     pupilRef: "Pupil A",
@@ -176,6 +222,7 @@ const seedConsultations: Consultation[] = [
     localAuthority: "Lambeth LA",
     caseOfficer: "A. Cole",
     receivedOn: "2026-06-10",
+    submittedOn: "2026-07-02",
     status: "Submitted",
     summary:
       "Pupil E (Y5) — moderate learning difficulty with associated speech needs. Response submitted 2 July confirming full provision within existing SEN budget with 6 hours of TA support redirected.",
@@ -186,6 +233,104 @@ const seedConsultations: Consultation[] = [
     ],
     needs: seedNeeds("e"),
   },
+  // ---------- Historical (already-submitted) consultations ----------
+  // These power aggregates on Reports and appear in Calendar's "show submitted"
+  // toggle and Dashboard's Submitted status filter. Documents omitted by design.
+  hist(
+    "c-2406", "Pupil F", "Year 3", "Camden LA", "R. Owusu",
+    "2026-04-25", "2026-05-08",
+    "Pupil F (Y3) — dyslexia and mild sensory processing needs. Response confirmed structured literacy and daily sensory circuit.",
+    [
+      ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
+      ["Small-group social skills intervention", "partial", "communication"],
+      ["Daily sensory circuit before registration", "full", "sensory"],
+    ],
+  ),
+  hist(
+    "c-2407", "Pupil G", "Year 6", "Hackney LA", "L. Hassan",
+    "2026-05-02", "2026-05-19",
+    "Pupil G (Y6) — SEMH with school avoidance. Named key adult and reintegration plan agreed; SaLT input outside school scope.",
+    [
+      ["Named key adult and daily meet-and-greet", "full", "semh"],
+      ["Direct weekly SaLT input, 30 min", "cannot", "communication"],
+      ["Precision teaching for number facts, 5×10 min weekly", "full", "cognition"],
+    ],
+  ),
+  hist(
+    "c-2408", "Pupil H", "Year 1", "Islington LA", "T. Bright",
+    "2026-05-14", "2026-05-27",
+    "Pupil H (Y1) — global developmental delay. Fine-motor programme and phonics intervention agreed.",
+    [
+      ["OT-devised fine-motor programme, 4×15 min weekly", "partial", "sensory"],
+      ["Read Write Inc. phonics, 4×20 min weekly", "full", "cognition"],
+    ],
+  ),
+  hist(
+    "c-2409", "Pupil I", "Year 8", "Southwark LA", "M. Reyes",
+    "2026-05-20", "2026-06-02",
+    "Pupil I (Y8) — ASD with anxiety around transitions. Graduated timetable and ELSA sessions agreed.",
+    [
+      ["ELSA 1:1 sessions, weekly for 6-week blocks", "full", "semh"],
+      ["Structured transitions plan with key adult", "partial", "semh"],
+      ["Lego Therapy social communication group, weekly", "full", "communication"],
+    ],
+  ),
+  hist(
+    "c-2410", "Pupil J", "Year 10", "Lambeth LA", "A. Cole",
+    "2026-05-28", "2026-06-12",
+    "Pupil J (Y10) — moderate learning difficulty. Exam access arrangements and small-group maths intervention agreed.",
+    [
+      ["Numicon small-group maths intervention, 3×30 min weekly", "full", "cognition"],
+      ["Low-stimulus room for exam access arrangements", "partial", "sensory"],
+    ],
+  ),
+  hist(
+    "c-2411", "Pupil K", "Year 5", "Camden LA", "R. Owusu",
+    "2026-06-01", "2026-06-20",
+    "Pupil K (Y5) — SLCN and specific literacy difficulty. Response late owing to half-term staffing gap. Direct weekly SaLT declined.",
+    [
+      ["Weekly direct SaLT, 30 min", "cannot", "communication"],
+      ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
+      ["Zones of Regulation and named key adult", "partial", "semh"],
+    ],
+  ),
+  hist(
+    "c-2412", "Pupil L", "Year 2", "Hackney LA", "L. Hassan",
+    "2026-06-15", "2026-06-28",
+    "Pupil L (Y2) — moderate learning difficulty with fine-motor needs. Full provision agreed within existing SEN budget.",
+    [
+      ["Precision teaching for spelling, 5×10 min weekly", "full", "cognition"],
+      ["OT-devised fine-motor programme, 4×15 min weekly", "full", "sensory"],
+    ],
+  ),
+  hist(
+    "c-2413", "Pupil M", "Year 4", "Islington LA", "T. Bright",
+    "2026-02-10", "2026-02-24",
+    "Pupil M (Y4) — communication and interaction needs alongside emerging SEMH. Full provision agreed.",
+    [
+      ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
+      ["SaLT-devised individual programme via trained TA, 3×15 min weekly", "full", "communication"],
+      ["ELSA 1:1 sessions, weekly for 6-week blocks", "partial", "semh"],
+    ],
+  ),
+  hist(
+    "c-2414", "Pupil N", "Year 7", "Southwark LA", "M. Reyes",
+    "2026-03-02", "2026-03-20",
+    "Pupil N (Y7) — sensory and physical needs; late response owing to LA information gap. OT input outside school scope.",
+    [
+      ["Weekly on-site OT input, 45 min", "cannot", "sensory"],
+      ["Numicon small-group maths intervention, 3×30 min weekly", "partial", "cognition"],
+    ],
+  ),
+  hist(
+    "c-2415", "Pupil O", "Year 9", "Camden LA", "R. Owusu",
+    "2026-03-15", "2026-03-29",
+    "Pupil O (Y9) — SEMH with anxiety-based non-attendance. Reintegration plan and ELSA blocks agreed.",
+    [
+      ["Named key adult and daily meet-and-greet", "full", "semh"],
+      ["Precision teaching for spelling and number facts, 5×10 min weekly", "full", "cognition"],
+    ],
+  ),
 ];
 
 type Ctx = {
@@ -283,4 +428,14 @@ export function deadlineTone(days: number): "urgent" | "warn" | "ok" {
   if (days <= 2) return "urgent";
   if (days <= 5) return "warn";
   return "ok";
+}
+
+// ---------- "This term" boundary ----------
+// The current academic term is the UK summer term 2026. Start date is the
+// Monday after the Easter break. Reports and the Dashboard's "Submitted this
+// term" stat share this single definition.
+export const TERM_START_ISO = "2026-04-20";
+
+export function isThisTerm(iso: string): boolean {
+  return iso >= TERM_START_ISO;
 }
