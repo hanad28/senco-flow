@@ -56,9 +56,9 @@ function isoKey(d: Date) {
 
 function deadlineLabel(days: number) {
   if (days < 0)
-    return `Overdue by ${Math.abs(days)} working day${Math.abs(days) === 1 ? "" : "s"}`;
+    return `Overdue by ${Math.abs(days)} day${Math.abs(days) === 1 ? "" : "s"}`;
   if (days === 0) return "Due today";
-  return `${days} working day${days === 1 ? "" : "s"}`;
+  return `${days} day${days === 1 ? "" : "s"}`;
 }
 
 type Entry = {
