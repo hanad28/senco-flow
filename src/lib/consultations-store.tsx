@@ -29,7 +29,7 @@ export type Consultation = {
   localAuthority: string;
   caseOfficer: string;
   receivedOn: string; // ISO
-  deadlineWorkingDays: number; // remaining
+  // Deadline is derived from receivedOn at render time via calendarDaysRemaining.
   status: ConsultationStatus;
   summary: string;
   documents: DocumentItem[];
