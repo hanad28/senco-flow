@@ -29,7 +29,7 @@ export type Consultation = {
   localAuthority: string;
   caseOfficer: string;
   receivedOn: string; // ISO
-  deadlineWorkingDays: number; // remaining
+  // Deadline is derived from receivedOn at render time via calendarDaysRemaining.
   status: ConsultationStatus;
   summary: string;
   documents: DocumentItem[];
@@ -102,7 +102,6 @@ const seedConsultations: Consultation[] = [
     localAuthority: "Camden LA",
     caseOfficer: "R. Owusu",
     receivedOn: "2026-07-01",
-    deadlineWorkingDays: 2,
     status: "Reviewing",
     summary:
       "Pupil A (Y4) presents with a specific learning difficulty affecting literacy, alongside emerging sensory processing needs and mild social communication difficulties. The EP identifies four primary areas of need: literacy (decoding & spelling), sensory regulation, expressive language, and peer interaction. All reports converge on the need for structured, low-arousal learning environments and consistent adult support. No safeguarding concerns raised. Parental views align with professional recommendations.",
@@ -123,7 +122,6 @@ const seedConsultations: Consultation[] = [
     localAuthority: "Hackney LA",
     caseOfficer: "L. Hassan",
     receivedOn: "2026-06-30",
-    deadlineWorkingDays: 1,
     status: "Drafting",
     summary:
       "Pupil B (Y7) has a diagnosis of ASD with significant anxiety around transitions. Assessment identifies needs across communication, emotional regulation, and access to curriculum. EP recommends a graduated timetable and named key adult.",
@@ -142,7 +140,6 @@ const seedConsultations: Consultation[] = [
     localAuthority: "Islington LA",
     caseOfficer: "T. Bright",
     receivedOn: "2026-06-24",
-    deadlineWorkingDays: 6,
     status: "New",
     summary:
       "Pupil C (Y2) — global developmental delay with associated speech and motor needs. Provision to date has been via SEN Support. Reports recommend a step-up to EHCP-level provision including daily fine-motor programme and small-group phonics.",
@@ -161,7 +158,6 @@ const seedConsultations: Consultation[] = [
     localAuthority: "Southwark LA",
     caseOfficer: "M. Reyes",
     receivedOn: "2026-06-18",
-    deadlineWorkingDays: 9,
     status: "New",
     summary:
       "Pupil D (Y9) — SEMH needs with a history of school avoidance. Reports emphasise the importance of a consistent key adult, low-arousal environment, and a phased reintegration plan.",
@@ -180,7 +176,6 @@ const seedConsultations: Consultation[] = [
     localAuthority: "Lambeth LA",
     caseOfficer: "A. Cole",
     receivedOn: "2026-06-10",
-    deadlineWorkingDays: 12,
     status: "Submitted",
     summary:
       "Pupil E (Y5) — moderate learning difficulty with associated speech needs. Response submitted 2 July confirming full provision within existing SEN budget with 6 hours of TA support redirected.",

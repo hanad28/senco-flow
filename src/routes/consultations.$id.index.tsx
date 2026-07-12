@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone } from "@/lib/consultations-store";
-import { workingDaysRemaining } from "@/lib/working-days";
+import { calendarDaysRemaining } from "@/lib/working-days";
 import { FileText, Sparkles, ArrowRight, AlertTriangle, Calendar, User2, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/")({
@@ -20,14 +20,14 @@ function ConsultationDetail() {
   const c = get(id);
   if (!c) throw notFound();
 
-  const daysLeft = workingDaysRemaining(c.receivedOn);
+  const daysLeft = calendarDaysRemaining(c.receivedOn);
   const tone = deadlineTone(daysLeft);
   const deadlineLabel =
     daysLeft < 0
-      ? `Overdue by ${Math.abs(daysLeft)} working day${Math.abs(daysLeft) === 1 ? "" : "s"}`
+      ? `Overdue by ${Math.abs(daysLeft)} day${Math.abs(daysLeft) === 1 ? "" : "s"}`
       : daysLeft === 0
         ? "Response due today"
-        : `${daysLeft} working day${daysLeft === 1 ? "" : "s"} until response due`;
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} until response due`;
 
   return (
     <AppShell
@@ -73,7 +73,7 @@ function ConsultationDetail() {
                 {tone === "urgent" && <AlertTriangle className="h-4 w-4" />}
                 {deadlineLabel}
               </div>
-              <div className="text-xs opacity-80 mt-0.5">Statutory 15 working-day window</div>
+              <div className="text-xs opacity-80 mt-0.5">Statutory 15-day response window (minimum)</div>
             </div>
           )}
         </div>

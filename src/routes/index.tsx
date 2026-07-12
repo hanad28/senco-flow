@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, type ConsultationStatus } from "@/lib/consultations-store";
-import { workingDaysRemaining } from "@/lib/working-days";
+import { calendarDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -60,7 +60,7 @@ function Dashboard() {
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const withDeadlines = useMemo(
-    () => consultations.map((c) => ({ ...c, daysLeft: workingDaysRemaining(c.receivedOn) })),
+    () => consultations.map((c) => ({ ...c, daysLeft: calendarDaysRemaining(c.receivedOn) })),
     [consultations],
   );
 
@@ -115,7 +115,7 @@ function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <StatCard icon={<AlertTriangle className="h-4 w-4" />} tone="urgent" label="Due within 2 working days" value={urgentCount} />
+          <StatCard icon={<AlertTriangle className="h-4 w-4" />} tone="urgent" label="Due within 2 days" value={urgentCount} />
           <StatCard icon={<Clock className="h-4 w-4" />} tone="info" label="Open consultations" value={openCount} />
           <StatCard icon={<CheckCircle2 className="h-4 w-4" />} tone="ok" label="Submitted this term" value={submittedCount} />
         </div>
@@ -240,10 +240,10 @@ function DeadlinePill({ days, tone }: { days: number; tone: "urgent" | "warn" | 
   }[tone];
   const label =
     days < 0
-      ? `Overdue by ${Math.abs(days)} working day${Math.abs(days) === 1 ? "" : "s"}`
+      ? `Overdue by ${Math.abs(days)} day${Math.abs(days) === 1 ? "" : "s"}`
       : days === 0
         ? "Due today"
-        : `${days} working day${days === 1 ? "" : "s"}`;
+        : `${days} day${days === 1 ? "" : "s"}`;
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold ${styles}`}>
       {tone === "urgent" && <AlertTriangle className="h-3 w-3" />}

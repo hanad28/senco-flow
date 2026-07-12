@@ -85,3 +85,30 @@ export function workingDaysRemaining(receivedOnIso: string, today: Date = new Da
   const deadline = addWorkingDays(receivedOnIso, 15);
   return workingDaysBetween(startOfDay(today), deadline);
 }
+
+// ---------- Calendar-day helpers (used for the statutory 15-day deadline) ----------
+// The statutory response window is 15 calendar days from receipt. Day 1 is the
+// day AFTER receipt (matching the earlier working-day convention); weekends
+// and bank holidays count toward the total.
+
+/** Add N calendar days to an ISO date, returning a Date at 00:00 local. */
+export function addCalendarDays(fromIso: string, n: number): Date {
+  const d = startOfDay(new Date(fromIso));
+  d.setDate(d.getDate() + n);
+  return d;
+}
+
+/** Statutory 15-calendar-day deadline date for a consultation received on `receivedOnIso`. */
+export function calendarDeadlineDate(receivedOnIso: string): Date {
+  return addCalendarDays(receivedOnIso, 15);
+}
+
+/**
+ * Calendar days remaining until the statutory 15-day deadline.
+ * Positive = days left, 0 = due today, negative = overdue.
+ */
+export function calendarDaysRemaining(receivedOnIso: string, today: Date = new Date()): number {
+  const deadline = addCalendarDays(receivedOnIso, 15);
+  const a = startOfDay(today);
+  return Math.round((deadline.getTime() - a.getTime()) / MS_PER_DAY);
+}

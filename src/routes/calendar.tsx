@@ -8,8 +8,8 @@ import {
   type Consultation,
 } from "@/lib/consultations-store";
 import {
-  deadlineDate,
-  workingDaysRemaining,
+  calendarDeadlineDate,
+  calendarDaysRemaining,
 } from "@/lib/working-days";
 
 export const Route = createFileRoute("/calendar")({
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/calendar")({
       {
         name: "description",
         content:
-          "Chronological view of every open consultation's 15 working-day statutory deadline.",
+          "Chronological view of every open consultation's 15-day statutory deadline.",
       },
     ],
   }),
@@ -56,9 +56,9 @@ function isoKey(d: Date) {
 
 function deadlineLabel(days: number) {
   if (days < 0)
-    return `Overdue by ${Math.abs(days)} working day${Math.abs(days) === 1 ? "" : "s"}`;
+    return `Overdue by ${Math.abs(days)} day${Math.abs(days) === 1 ? "" : "s"}`;
   if (days === 0) return "Due today";
-  return `${days} working day${days === 1 ? "" : "s"}`;
+  return `${days} day${days === 1 ? "" : "s"}`;
 }
 
 type Entry = {
@@ -76,9 +76,9 @@ function CalendarPage() {
     const map = new Map<string, Entry[]>();
     for (const c of consultations) {
       if (!showSubmitted && c.status === "Submitted") continue;
-      const dl = deadlineDate(c.receivedOn);
+      const dl = calendarDeadlineDate(c.receivedOn);
       const key = isoKey(dl);
-      const daysLeft = workingDaysRemaining(c.receivedOn, TODAY);
+      const daysLeft = calendarDaysRemaining(c.receivedOn, TODAY);
       const entry: Entry = { consultation: c, daysLeft, tone: deadlineTone(daysLeft) };
       const arr = map.get(key) ?? [];
       arr.push(entry);
@@ -112,8 +112,7 @@ function CalendarPage() {
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Calendar</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Every open consultation's 15 working-day statutory deadline, by month.
-              Weekends and 2026 bank holidays are excluded from the count.
+              Every open consultation's 15-day statutory deadline, by month.
             </p>
           </div>
           <label className="inline-flex items-center gap-2 text-sm bg-surface border rounded-md px-3 h-9">
@@ -228,9 +227,9 @@ function CalendarPage() {
 
         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
           <span className="font-medium text-foreground">Legend:</span>
-          <LegendSwatch className="bg-urgent" label="Overdue / due within 2 working days" />
-          <LegendSwatch className="bg-warn" label="Due within 3–5 working days" />
-          <LegendSwatch className="bg-ok/25 border border-ok/40" label="6+ working days" />
+          <LegendSwatch className="bg-urgent" label="Overdue / due within 2 days" />
+          <LegendSwatch className="bg-warn" label="Due within 3–5 days" />
+          <LegendSwatch className="bg-ok/25 border border-ok/40" label="6+ days" />
           <LegendSwatch className="bg-muted border" label="Submitted" />
         </div>
       </div>
