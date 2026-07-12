@@ -32,7 +32,7 @@ const capabilityClass: Record<NeedCapability, string> = {
 
 function DraftView() {
   const { id } = Route.useParams();
-  const { get, setDraftResponse, addEvidence } = useConsultations();
+  const { get, setDraftResponse, addEvidence, removeEvidence } = useConsultations();
   const c = get(id);
   if (!c) throw notFound();
 
@@ -109,7 +109,12 @@ function DraftView() {
                     <label className="text-xs font-medium text-muted-foreground">School response</label>
                     <TemplateInsertMenu
                       capability={n.capability}
-                      onInsert={(text) => setDraftResponse(c.id, n.id, text)}
+                      currentText={n.draftResponse}
+                      onInsert={(text) => {
+                        const existing = n.draftResponse.trim();
+                        const separator = existing ? "\n\n" : "";
+                        setDraftResponse(c.id, n.id, existing + separator + text);
+                      }}
                     />
                   </div>
                   <textarea
@@ -122,8 +127,17 @@ function DraftView() {
                   <div className="flex items-center justify-between flex-wrap gap-3">
                     <div className="flex items-center flex-wrap gap-2">
                       {n.evidence.map((e) => (
-                        <span key={e} className="inline-flex items-center gap-1.5 px-2 py-1 rounded border bg-muted/40 text-xs">
+                        <span key={e} className="inline-flex items-center gap-1.5 px-2 py-1 rounded border bg-muted/40 text-xs group">
                           <FileText className="h-3 w-3" /> {e}
+                          <button
+                            type="button"
+                            onClick={() => removeEvidence(c.id, n.id, e)}
+                            aria-label={`Remove ${e}`}
+                            className="ml-1 text-muted-foreground hover:text-urgent rounded-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                            title="Remove evidence"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
                         </span>
                       ))}
                       {n.evidence.length === 0 && (
