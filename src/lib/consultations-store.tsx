@@ -47,6 +47,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Pupil presents with significant delay in phonological processing and decoding. Recommends targeted structured literacy intervention delivered 1:1.",
     capability: "full",
+    domain: "cognition",
     draftResponse:
       "The school can meet this need in full. We deliver a structured literacy programme (Read Write Inc.) 1:1 with a trained TA for 4×20 minute sessions per week, tracked half-termly against reading age.",
     evidence: ["Provision map 2025-26.pdf", "TA timetable — RWI.pdf"],
@@ -58,6 +59,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Pupil requires scheduled proprioceptive input and access to a low-stimulus space to prevent dysregulation during the school day.",
     capability: "partial",
+    domain: "sensory",
     draftResponse:
       "The school can meet this need in part. A sensory circuit is available at breaktimes and a quiet room can be accessed on request. Timetabled 45-minute breaks would require additional TA capacity, which we would be able to provide with the funding uplift identified in Section F.",
     evidence: ["Sensory room photos.pdf"],
@@ -69,6 +71,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Direct weekly therapy from a qualified SaLT for a minimum of 30 minutes, plus a programme of activities delivered by trained school staff.",
     capability: "cannot",
+    domain: "communication",
     draftResponse:
       "The school is not currently able to meet this need. We do not commission direct SaLT provision on site. We can deliver a therapist-devised programme via a trained TA, but weekly direct therapy would need to be commissioned by the local authority.",
     evidence: [],
@@ -80,6 +83,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Parents report pupil is unable to complete extended writing tasks in the main classroom due to noise sensitivity.",
     capability: "full",
+    domain: "cognition",
     draftResponse:
       "The school can meet this need in full. The learning support base is available for all extended tasks and formal assessments, with a member of support staff present.",
     evidence: [],
@@ -91,6 +95,7 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     detail:
       "Pupil would benefit from a structured social communication group of no more than 4 peers, delivered weekly across the school year.",
     capability: "partial",
+    domain: "communication",
     draftResponse:
       "The school runs a Lego Therapy group weekly with up to 6 pupils. We can prioritise a place for this pupil, though group size exceeds the recommendation of 4.",
     evidence: ["Lego Therapy — group plan.pdf"],
