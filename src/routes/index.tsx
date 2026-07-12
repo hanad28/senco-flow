@@ -60,7 +60,7 @@ function Dashboard() {
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const withDeadlines = useMemo(
-    () => consultations.map((c) => ({ ...c, daysLeft: workingDaysRemaining(c.receivedOn) })),
+    () => consultations.map((c) => ({ ...c, daysLeft: calendarDaysRemaining(c.receivedOn) })),
     [consultations],
   );
 
