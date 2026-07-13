@@ -135,7 +135,9 @@ function RootComponent() {
       <SchoolProfileProvider>
         <TemplatesProvider>
           <ConsultationsProvider>
-            <Outlet />
+            <SearchProvider>
+              <Outlet />
+            </SearchProvider>
           </ConsultationsProvider>
         </TemplatesProvider>
       </SchoolProfileProvider>
