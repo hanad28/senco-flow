@@ -106,13 +106,21 @@ function SubmitView() {
             </dl>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               to="/"
               className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90"
             >
               Back to dashboard
             </Link>
+            <button
+              onClick={onDownload}
+              disabled={downloading}
+              className="inline-flex items-center gap-2 h-10 px-5 rounded-md border bg-surface text-sm font-medium hover:bg-accent disabled:opacity-60"
+            >
+              <Download className="h-4 w-4" />
+              {downloading ? "Preparing…" : "Download .docx"}
+            </button>
             <Link
               to="/consultations/$id"
               params={{ id: c.id }}
