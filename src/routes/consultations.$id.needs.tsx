@@ -22,7 +22,7 @@ const options: { value: NeedCapability; label: string; icon: React.ReactNode; cl
 
 function NeedsView() {
   const { id } = Route.useParams();
-  const { get, setCapability, setStatus, logActivity } = useConsultations();
+  const { get, setCapability, setCannotRationale, setStatus, logActivity } = useConsultations();
   const c = get(id);
   if (!c) throw notFound();
 
