@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouterState } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
 import { useTemplates, type EvidenceDoc } from "@/lib/templates-store";
@@ -35,36 +36,47 @@ type Tab = "templates" | "evidence";
 function TemplatesPage() {
   const [tab, setTab] = useState<Tab>("templates");
   const [highlightedEvidence, setHighlightedEvidence] = useState<string | null>(null);
+  const [highlightedSnippet, setHighlightedSnippet] = useState<string | null>(null);
   const evidenceRefs = useRef<Record<string, HTMLLIElement | null>>({});
+  const snippetRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const jumpToEvidence = (id: string) => {
     setTab("evidence");
     setHighlightedEvidence(id);
-    requestAnimationFrame(() => {
+    // Wait for tab render to attach refs.
+    window.setTimeout(() => {
       const el = evidenceRefs.current[id];
       el?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
-    window.setTimeout(() => setHighlightedEvidence(null), 2400);
+    }, 50);
+    window.setTimeout(() => setHighlightedEvidence(null), 2600);
   };
 
-  // Deep-link via URL hash: "#tab=evidence&highlight=<id>" or "#tab=templates".
-  // Global search sets this when jumping to a template/evidence result.
+  const jumpToSnippet = (id: string) => {
+    setTab("templates");
+    setHighlightedSnippet(id);
+    window.setTimeout(() => {
+      const el = snippetRefs.current[id];
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+    window.setTimeout(() => setHighlightedSnippet(null), 2600);
+  };
+
+  // Deep-link via URL hash: "#tab=evidence&highlight=<id>", "#tab=templates&snippet=<id>",
+  // or plain "#tab=<name>". React to router state so navigations from within Templates work too.
+  const routerHash = useRouterState({ select: (s) => s.location.hash });
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const applyHash = () => {
-      const raw = window.location.hash.replace(/^#/, "");
-      if (!raw) return;
-      const params = new URLSearchParams(raw);
-      const t = params.get("tab");
-      if (t === "evidence" || t === "templates") setTab(t);
-      const h = params.get("highlight");
-      if (h) jumpToEvidence(h);
-    };
-    applyHash();
-    window.addEventListener("hashchange", applyHash);
-    return () => window.removeEventListener("hashchange", applyHash);
+    const raw = (routerHash ?? (typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : ""))
+      .replace(/^#/, "");
+    if (!raw) return;
+    const params = new URLSearchParams(raw);
+    const t = params.get("tab");
+    if (t === "evidence" || t === "templates") setTab(t);
+    const h = params.get("highlight");
+    if (h) jumpToEvidence(h);
+    const s = params.get("snippet");
+    if (s) jumpToSnippet(s);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [routerHash]);
 
   return (
     <AppShell breadcrumbs={[{ label: "Templates" }]}>
@@ -86,7 +98,11 @@ function TemplatesPage() {
         </div>
 
         {tab === "templates" ? (
-          <TemplatesTab onJumpToEvidence={jumpToEvidence} />
+          <TemplatesTab
+            onJumpToEvidence={jumpToEvidence}
+            highlightedId={highlightedSnippet}
+            itemRefs={snippetRefs}
+          />
         ) : (
           <EvidenceTab highlightedId={highlightedEvidence} itemRefs={evidenceRefs} />
         )}
@@ -136,7 +152,15 @@ const capabilityMeta: Record<NeedCapability, { label: string; icon: React.ReactN
   },
 };
 
-function TemplatesTab({ onJumpToEvidence }: { onJumpToEvidence: (id: string) => void }) {
+function TemplatesTab({
+  onJumpToEvidence,
+  highlightedId,
+  itemRefs,
+}: {
+  onJumpToEvidence: (id: string) => void;
+  highlightedId: string | null;
+  itemRefs: React.MutableRefObject<Record<string, HTMLDivElement | null>>;
+}) {
   const { profile } = useSchoolProfile();
   const { snippets, getEvidence } = useTemplates();
 
@@ -189,10 +213,15 @@ function TemplatesTab({ onJumpToEvidence }: { onJumpToEvidence: (id: string) => 
                 {partial.map((s) => (
                   <SnippetCard
                     key={s.id}
+                    id={s.id}
                     title={s.title}
                     text={s.text}
                     evidence={s.evidenceId ? getEvidence(s.evidenceId) : undefined}
                     onEvidenceClick={onJumpToEvidence}
+                    highlighted={highlightedId === s.id}
+                    itemRef={(el) => {
+                      itemRefs.current[s.id] = el;
+                    }}
                   />
                 ))}
               </OutcomeGroup>
@@ -201,10 +230,15 @@ function TemplatesTab({ onJumpToEvidence }: { onJumpToEvidence: (id: string) => 
                 {cannot.map((s) => (
                   <SnippetCard
                     key={s.id}
+                    id={s.id}
                     title={s.title}
                     text={s.text}
                     evidence={s.evidenceId ? getEvidence(s.evidenceId) : undefined}
                     onEvidenceClick={onJumpToEvidence}
+                    highlighted={highlightedId === s.id}
+                    itemRef={(el) => {
+                      itemRefs.current[s.id] = el;
+                    }}
                   />
                 ))}
               </OutcomeGroup>
@@ -247,15 +281,21 @@ function EmptyRow({ children }: { children: React.ReactNode }) {
 }
 
 function SnippetCard({
+  id,
   title,
   text,
   evidence,
   onEvidenceClick,
+  highlighted,
+  itemRef,
 }: {
+  id?: string;
   title: string;
   text: string;
   evidence?: EvidenceDoc;
   onEvidenceClick?: (id: string) => void;
+  highlighted?: boolean;
+  itemRef?: (el: HTMLDivElement | null) => void;
 }) {
   const [copied, setCopied] = useState(false);
   const onCopy = async () => {
@@ -268,7 +308,13 @@ function SnippetCard({
     }
   };
   return (
-    <div className="rounded-md border bg-surface p-3">
+    <div
+      ref={itemRef}
+      data-snippet-id={id}
+      className={`rounded-md border bg-surface p-3 transition-colors ${
+        highlighted ? "ring-2 ring-primary/50 bg-primary/5" : ""
+      }`}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="text-xs font-medium text-muted-foreground">{title}</div>
         <button
