@@ -79,11 +79,22 @@ function Dashboard() {
   );
 
   const rows = useMemo(() => {
+    const q = query.trim().toLowerCase();
     return withDeadlines
       .filter((c) =>
         statusFilter === "All" ||
         (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter),
       )
+      .filter((c) => {
+        if (!q) return true;
+        return (
+          c.pupilRef.toLowerCase().includes(q) ||
+          c.localAuthority.toLowerCase().includes(q) ||
+          c.caseOfficer.toLowerCase().includes(q) ||
+          c.yearGroup.toLowerCase().includes(q) ||
+          c.status.toLowerCase().includes(q)
+        );
+      })
       .slice()
       .sort((a, b) => {
         const dir = sortDir === "asc" ? 1 : -1;
@@ -101,7 +112,7 @@ function Dashboard() {
         }
         return comparison * dir;
       });
-  }, [withDeadlines, statusFilter, sortKey, sortDir]);
+  }, [withDeadlines, statusFilter, query, sortKey, sortDir]);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
