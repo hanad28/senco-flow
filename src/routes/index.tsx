@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
 import { calendarDaysRemaining } from "@/lib/working-days";
-import { useSearchOverlay } from "@/lib/search-store";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
 const PAGE_SIZE = 10;
@@ -69,8 +68,8 @@ function SortHeader({
 
 function Dashboard() {
   const { consultations } = useConsultations();
-  const { openSearch } = useSearchOverlay();
   const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All" | "Open">("Open");
+  const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("daysLeft");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
@@ -80,11 +79,22 @@ function Dashboard() {
   );
 
   const rows = useMemo(() => {
+    const q = query.trim().toLowerCase();
     return withDeadlines
       .filter((c) =>
         statusFilter === "All" ||
         (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter),
       )
+      .filter((c) => {
+        if (!q) return true;
+        return (
+          c.pupilRef.toLowerCase().includes(q) ||
+          c.localAuthority.toLowerCase().includes(q) ||
+          c.caseOfficer.toLowerCase().includes(q) ||
+          c.yearGroup.toLowerCase().includes(q) ||
+          c.status.toLowerCase().includes(q)
+        );
+      })
       .slice()
       .sort((a, b) => {
         const dir = sortDir === "asc" ? 1 : -1;
@@ -102,7 +112,7 @@ function Dashboard() {
         }
         return comparison * dir;
       });
-  }, [withDeadlines, statusFilter, sortKey, sortDir]);
+  }, [withDeadlines, statusFilter, query, sortKey, sortDir]);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -116,7 +126,7 @@ function Dashboard() {
   const [page, setPage] = useState(1);
   useEffect(() => {
     setPage(1);
-  }, [statusFilter]);
+  }, [statusFilter, query]);
   const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const pageRows = useMemo(
@@ -151,17 +161,16 @@ function Dashboard() {
 
         <div className="bg-surface border rounded-lg overflow-hidden">
           <div className="flex flex-wrap items-center gap-3 px-4 py-3 border-b bg-muted/30">
-            <button
-              type="button"
-              onClick={() => openSearch()}
-              className="relative flex-1 min-w-[220px] h-9 pl-9 pr-3 rounded-md border bg-surface text-sm text-muted-foreground text-left hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-ring/40 flex items-center justify-between"
-            >
+            <div className="relative flex-1 min-w-[220px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <span>Search consultations, templates, evidence…</span>
-              <kbd className="inline-flex items-center rounded border bg-muted/40 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
-                ⌘K
-              </kbd>
-            </button>
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Filter by pupil, LA, case officer, year, status…"
+                className="w-full h-9 pl-9 pr-3 rounded-md border bg-surface text-sm outline-none focus:ring-2 focus:ring-ring/40"
+              />
+            </div>
             <div className="flex gap-1">
               {(["Open", "New", "Reviewing", "Drafting", "Submitted", "All"] as const).map((s) => (
                 <button

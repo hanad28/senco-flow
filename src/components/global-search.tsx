@@ -85,7 +85,7 @@ export function GlobalSearchOverlay() {
         id: s.id,
         title: s.title,
         subtitle: `${domainLabel[s.domain]} · ${capabilityLabel[s.capability]}`,
-        to: { pathname: "/templates", hash: "tab=templates" },
+        to: { pathname: "/templates", hash: `tab=templates&snippet=${s.id}` },
       }));
 
     const er: EvidenceResult[] = evidence
@@ -122,7 +122,10 @@ export function GlobalSearchOverlay() {
     if (r.kind === "consultation") {
       navigate({ to: r.to.pathname, params: r.to.params });
     } else {
-      navigate({ to: r.to.pathname, hash: r.to.hash });
+      // Nonce guarantees the hash changes even when re-selecting the same result
+      // (so the Templates page's hash effect re-fires and re-scrolls/re-highlights).
+      const hash = `${r.to.hash}&n=${Date.now()}`;
+      navigate({ to: r.to.pathname, hash });
     }
   };
 
