@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ConsultationsProvider } from "../lib/consultations-store";
 import { SchoolProfileProvider } from "../lib/school-profile-store";
 import { TemplatesProvider } from "../lib/templates-store";
+import { SearchProvider } from "../lib/search-store";
 
 function NotFoundComponent() {
   return (
