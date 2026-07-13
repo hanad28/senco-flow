@@ -33,7 +33,8 @@ const capabilityClass: Record<NeedCapability, string> = {
 
 function DraftView() {
   const { id } = Route.useParams();
-  const { get, setDraftResponse, addEvidence, removeEvidence, logActivity } = useConsultations();
+  const { get, setDraftResponse, setCannotRationale, addEvidence, removeEvidence, logActivity } = useConsultations();
+  const { profile } = useSchoolProfile();
   const c = get(id);
   if (!c) throw notFound();
 
@@ -42,8 +43,38 @@ function DraftView() {
 
   const pickerNeed = c.needs.find((n) => n.id === pickerNeedId) ?? null;
 
+  const missingRationale = c.needs.filter(
+    (n) => n.capability === "cannot" && !(n.cannotRationale ?? "").trim(),
+  );
+  const canProceed = missingRationale.length === 0;
+
   return (
     <AppShell
+      breadcrumbs={[
+        { label: "Dashboard", to: "/" },
+        { label: c.pupilRef, to: `/consultations/${c.id}` },
+        { label: "Draft response" },
+      ]}
+      actions={
+        canProceed ? (
+          <Link
+            to="/consultations/$id/submit"
+            params={{ id: c.id }}
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90"
+          >
+            Review & submit <ArrowRight className="h-4 w-4" />
+          </Link>
+        ) : (
+          <span
+            title={`Add a rationale for ${missingRationale.length} “Cannot meet” need${missingRationale.length === 1 ? "" : "s"} before proceeding.`}
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-muted text-muted-foreground text-sm font-medium cursor-not-allowed"
+            aria-disabled="true"
+          >
+            Review & submit <ArrowRight className="h-4 w-4" />
+          </span>
+        )
+      }
+    >
       breadcrumbs={[
         { label: "Dashboard", to: "/" },
         { label: c.pupilRef, to: `/consultations/${c.id}` },
