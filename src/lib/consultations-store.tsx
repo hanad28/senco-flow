@@ -111,6 +111,8 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     draftResponse:
       "The school is not currently able to meet this need. We do not commission direct SaLT provision on site. We can deliver a therapist-devised programme via a trained TA, but weekly direct therapy would need to be commissioned by the local authority.",
     evidence: [],
+    cannotRationale:
+      "Direct weekly on-site SaLT is not commissioned by the school. Current SaLT capacity (0.5 day/week, shared across the SEND cohort) cannot absorb an additional 30 min direct 1:1 slot; this provision would need to be commissioned by the LA.",
   },
   {
     id: `${prefix}-n4`,
