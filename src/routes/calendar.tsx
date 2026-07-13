@@ -76,6 +76,8 @@ function CalendarPage() {
   const { consultations } = useConsultations();
   const [cursor, setCursor] = useState<Date>(startOfMonth(TODAY));
   const [showSubmitted, setShowSubmitted] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerYear, setPickerYear] = useState<number>(TODAY.getFullYear());
 
   const entriesByDay = useMemo(() => {
     const map = new Map<string, Entry[]>();
