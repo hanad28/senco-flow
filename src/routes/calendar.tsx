@@ -3,6 +3,11 @@ import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   useConsultations,
   deadlineTone,
   type Consultation,
