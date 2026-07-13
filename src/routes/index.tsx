@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
 import { calendarDaysRemaining } from "@/lib/working-days";
+import { useSearchOverlay } from "@/lib/search-store";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
