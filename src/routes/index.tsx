@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
 import { calendarDaysRemaining } from "@/lib/working-days";
-import { useSearchOverlay } from "@/lib/search-store";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
 const PAGE_SIZE = 10;
