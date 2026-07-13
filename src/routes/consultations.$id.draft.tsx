@@ -1,13 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
-import { useConsultations, formatDate, type NeedCapability } from "@/lib/consultations-store";
+import { useConsultations, formatDate, type NeedCapability, type Consultation } from "@/lib/consultations-store";
 import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
-import { useTemplates } from "@/lib/templates-store";
+import { useTemplates, fillTemplateTokens } from "@/lib/templates-store";
 import { EvidencePickerDialog } from "./templates";
 import { findVagueness, VAGUENESS_EXPLANATION } from "@/lib/vagueness";
 import { MatchScore } from "./consultations.$id.needs";
-import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil, Sparkles, AlertTriangle, X } from "lucide-react";
+import { downloadResponseLetter } from "@/lib/letter-export";
+import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil, Sparkles, AlertTriangle, X, Download } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/draft")({
   head: ({ params }) => ({
