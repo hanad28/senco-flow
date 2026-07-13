@@ -161,17 +161,16 @@ function Dashboard() {
 
         <div className="bg-surface border rounded-lg overflow-hidden">
           <div className="flex flex-wrap items-center gap-3 px-4 py-3 border-b bg-muted/30">
-            <button
-              type="button"
-              onClick={() => openSearch()}
-              className="relative flex-1 min-w-[220px] h-9 pl-9 pr-3 rounded-md border bg-surface text-sm text-muted-foreground text-left hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-ring/40 flex items-center justify-between"
-            >
+            <div className="relative flex-1 min-w-[220px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <span>Search consultations, templates, evidence…</span>
-              <kbd className="inline-flex items-center rounded border bg-muted/40 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
-                ⌘K
-              </kbd>
-            </button>
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Filter by pupil, LA, case officer, year, status…"
+                className="w-full h-9 pl-9 pr-3 rounded-md border bg-surface text-sm outline-none focus:ring-2 focus:ring-ring/40"
+              />
+            </div>
             <div className="flex gap-1">
               {(["Open", "New", "Reviewing", "Drafting", "Submitted", "All"] as const).map((s) => (
                 <button
