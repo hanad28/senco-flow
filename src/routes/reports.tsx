@@ -333,7 +333,7 @@ function ReportsPage() {
                 <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground bg-muted/20">
                   <th className="px-4 py-3 font-medium">Domain</th>
                   <th className="px-4 py-3 font-medium">Cohort baseline</th>
-                  <th className="px-4 py-3 font-medium">Incoming needs</th>
+                  <th className="px-4 py-3 font-medium">Needs in flight (open + submitted)</th>
                   <th className="px-4 py-3 font-medium">Part / cannot</th>
                   <th className="px-4 py-3 font-medium">Signal</th>
                 </tr>
@@ -343,7 +343,9 @@ function ReportsPage() {
                   <tr key={r.domain} className="border-t">
                     <td className="px-4 py-3 font-medium">{domainLabel[r.domain]}</td>
                     <td className="px-4 py-3 text-muted-foreground">{r.baseline} pupils</td>
-                    <td className="px-4 py-3 text-muted-foreground">{r.incoming}</td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {r.incoming} ({r.submittedIncoming} submitted + {r.openIncoming} open)
+                    </td>
                     <td className="px-4 py-3 text-muted-foreground">
                       {r.partial + r.cannot} of {r.incoming}{" "}
                       {r.incoming > 0 && (
