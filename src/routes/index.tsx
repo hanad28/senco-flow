@@ -240,6 +240,57 @@ function Dashboard() {
               )}
             </tbody>
           </table>
+
+          {rows.length > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t bg-muted/20 text-xs text-muted-foreground">
+              <div>
+                Showing <span className="font-medium text-foreground">{rangeStart}</span>–
+                <span className="font-medium text-foreground">{rangeEnd}</span> of{" "}
+                <span className="font-medium text-foreground">{rows.length}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="h-8 w-8 grid place-items-center rounded-md border bg-surface hover:bg-accent/60 disabled:opacity-40 disabled:pointer-events-none"
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                {pageItems.map((item, idx) =>
+                  typeof item === "number" ? (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => setPage(item)}
+                      aria-current={item === currentPage ? "page" : undefined}
+                      className={`h-8 min-w-8 px-2 rounded-md border text-xs font-medium transition-colors ${
+                        item === currentPage
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-surface text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ) : (
+                    <span key={`${item}-${idx}`} className="h-8 px-1 grid place-items-center text-muted-foreground">
+                      …
+                    </span>
+                  ),
+                )}
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="h-8 w-8 grid place-items-center rounded-md border bg-surface hover:bg-accent/60 disabled:opacity-40 disabled:pointer-events-none"
+                  aria-label="Next page"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </AppShell>
