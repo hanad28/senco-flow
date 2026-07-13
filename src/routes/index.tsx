@@ -191,7 +191,7 @@ function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((c) => {
+              {pageRows.map((c) => {
                 const tone = deadlineTone(c.daysLeft);
                 const isSubmitted = c.status === "Submitted";
                 return (
