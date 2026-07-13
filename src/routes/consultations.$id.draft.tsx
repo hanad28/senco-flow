@@ -32,7 +32,7 @@ const capabilityClass: Record<NeedCapability, string> = {
 
 function DraftView() {
   const { id } = Route.useParams();
-  const { get, setDraftResponse, addEvidence, removeEvidence } = useConsultations();
+  const { get, setDraftResponse, addEvidence, removeEvidence, logActivity } = useConsultations();
   const c = get(id);
   if (!c) throw notFound();
 
@@ -109,10 +109,11 @@ function DraftView() {
                     <label className="text-xs font-medium text-muted-foreground">School response</label>
                     <TemplateInsertMenu
                       capability={n.capability}
-                      onInsert={(text) => {
+                      onInsert={(text, title) => {
                         const existing = n.draftResponse.trim();
                         const separator = existing ? "\n\n" : "";
                         setDraftResponse(c.id, n.id, existing + separator + text);
+                        logActivity(c.id, "template_inserted", `“${title}” → “${n.title.slice(0, 50)}”`);
                       }}
                     />
                   </div>
@@ -178,7 +179,7 @@ function TemplateInsertMenu({
   onInsert,
 }: {
   capability: NeedCapability;
-  onInsert: (text: string) => void;
+  onInsert: (text: string, title: string) => void;
 }) {
   const { snippets } = useTemplates();
   const { profile } = useSchoolProfile();
@@ -239,7 +240,7 @@ function TemplateInsertMenu({
                       <button
                         key={it.id}
                         onClick={() => {
-                          onInsert(it.text);
+                          onInsert(it.text, it.title);
                           setOpen(false);
                         }}
                         className="w-full text-left rounded-md hover:bg-accent px-2 py-1.5"
