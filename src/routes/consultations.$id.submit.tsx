@@ -30,11 +30,33 @@ const capabilityDot: Record<NeedCapability, string> = {
 function SubmitView() {
   const { id } = Route.useParams();
   const { get, setStatus } = useConsultations();
+  const { profile } = useSchoolProfile();
   const navigate = useNavigate();
   const c = get(id);
   if (!c) throw notFound();
 
   const [submitted, setSubmitted] = useState(c.status === "Submitted");
+  const [downloading, setDownloading] = useState(false);
+
+  const missingRationale = c.needs.filter(
+    (n) => n.capability === "cannot" && !(n.cannotRationale ?? "").trim(),
+  );
+
+  const school = {
+    schoolName: profile.schoolName,
+    schoolAddress: profile.schoolAddress,
+    sendcoName: profile.sendcoName,
+    sendcoRole: profile.sendcoRole,
+  };
+
+  const onDownload = async () => {
+    setDownloading(true);
+    try {
+      await downloadResponseLetter(c, school);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   if (submitted) {
     return (
