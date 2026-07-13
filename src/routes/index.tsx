@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
-import { useConsultations, formatDate, deadlineTone, type ConsultationStatus } from "@/lib/consultations-store";
+import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
 
@@ -102,7 +102,9 @@ function Dashboard() {
 
   const urgentCount = withDeadlines.filter((c) => c.status !== "Submitted" && c.daysLeft <= 2).length;
   const openCount = withDeadlines.filter((c) => c.status !== "Submitted").length;
-  const submittedCount = withDeadlines.filter((c) => c.status === "Submitted").length;
+  const submittedCount = withDeadlines.filter(
+    (c) => c.status === "Submitted" && c.submittedOn && isThisTerm(c.submittedOn),
+  ).length;
 
   return (
     <AppShell breadcrumbs={[{ label: "Dashboard" }]}>

@@ -128,6 +128,11 @@ function ReportsPage() {
     return domainOrder.map((d) => {
       // Incoming = needs across ALL consultations (open + submitted) in this domain.
       const incoming = consultations.flatMap((c) => c.needs).filter((n) => n.domain === d);
+      const submittedIncoming = consultations
+        .filter((c) => c.status === "Submitted")
+        .flatMap((c) => c.needs)
+        .filter((n) => n.domain === d).length;
+      const openIncoming = incoming.length - submittedIncoming;
       const cannot = incoming.filter((n) => n.capability === "cannot").length;
       const partial = incoming.filter((n) => n.capability === "partial").length;
       const baseline = profile.cohort[d] ?? 0;
@@ -139,6 +144,8 @@ function ReportsPage() {
         domain: d,
         baseline,
         incoming: incoming.length,
+        submittedIncoming,
+        openIncoming,
         cannot,
         partial,
         gapRatio,
@@ -257,7 +264,7 @@ function ReportsPage() {
         {/* Needs met by domain */}
         <Section
           title="Needs (Section B) met by provision offered (Section F)"
-          subtitle={`Full / part / cannot split per statutory domain — ${termLabel.toLowerCase()}.`}
+          subtitle={`Full / part / cannot split per statutory domain — ${termLabel.toLowerCase()}, submitted responses only.`}
         >
           <p className="text-xs text-muted-foreground mb-3">
             Note: needs often span more than one domain — they have been assigned to a
@@ -326,7 +333,7 @@ function ReportsPage() {
                 <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground bg-muted/20">
                   <th className="px-4 py-3 font-medium">Domain</th>
                   <th className="px-4 py-3 font-medium">Cohort baseline</th>
-                  <th className="px-4 py-3 font-medium">Incoming needs</th>
+                  <th className="px-4 py-3 font-medium">Needs in flight (open + submitted)</th>
                   <th className="px-4 py-3 font-medium">Part / cannot</th>
                   <th className="px-4 py-3 font-medium">Signal</th>
                 </tr>
@@ -336,7 +343,9 @@ function ReportsPage() {
                   <tr key={r.domain} className="border-t">
                     <td className="px-4 py-3 font-medium">{domainLabel[r.domain]}</td>
                     <td className="px-4 py-3 text-muted-foreground">{r.baseline} pupils</td>
-                    <td className="px-4 py-3 text-muted-foreground">{r.incoming}</td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {r.incoming} ({r.submittedIncoming} submitted + {r.openIncoming} open)
+                    </td>
                     <td className="px-4 py-3 text-muted-foreground">
                       {r.partial + r.cannot} of {r.incoming}{" "}
                       {r.incoming > 0 && (
