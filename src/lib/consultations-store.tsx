@@ -448,6 +448,7 @@ type Ctx = {
   setStatus: (id: string, status: ConsultationStatus) => void;
   setCapability: (id: string, needId: string, capability: NeedCapability) => void;
   setDraftResponse: (id: string, needId: string, text: string) => void;
+  setCannotRationale: (id: string, needId: string, text: string) => void;
   addEvidence: (id: string, needId: string, filename: string) => void;
   removeEvidence: (id: string, needId: string, filename: string) => void;
   logActivity: (id: string, action: ActivityAction, detail?: string) => void;
