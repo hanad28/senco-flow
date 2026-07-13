@@ -102,7 +102,9 @@ function Dashboard() {
 
   const urgentCount = withDeadlines.filter((c) => c.status !== "Submitted" && c.daysLeft <= 2).length;
   const openCount = withDeadlines.filter((c) => c.status !== "Submitted").length;
-  const submittedCount = withDeadlines.filter((c) => c.status === "Submitted").length;
+  const submittedCount = withDeadlines.filter(
+    (c) => c.status === "Submitted" && c.submittedOn && isThisTerm(c.submittedOn),
+  ).length;
 
   return (
     <AppShell breadcrumbs={[{ label: "Dashboard" }]}>
