@@ -189,36 +189,53 @@ function CalendarPage() {
                       {day.getDate()}
                     </span>
                   </div>
-                  {entries.map((e) => (
-                    <Link
-                      key={e.consultation.id}
-                      to="/consultations/$id"
-                      params={{ id: e.consultation.id }}
-                      className={`block rounded-md px-2 py-1 text-[11px] leading-tight transition-colors ${
-                        e.consultation.status === "Submitted"
-                          ? "bg-muted text-muted-foreground border hover:bg-muted/80"
-                          : toneCellStyles[e.tone]
-                      }`}
-                      title={`${e.consultation.pupilRef} — ${e.consultation.localAuthority}`}
-                    >
-                      <div className="font-semibold truncate">
-                        {e.consultation.pupilRef}
-                      </div>
-                      <div className="truncate opacity-90">
-                        {e.consultation.localAuthority}
-                      </div>
-                      <div className="flex items-center gap-1 mt-0.5 font-medium">
-                        {e.tone === "urgent" && e.consultation.status !== "Submitted" && (
-                          <AlertTriangle className="h-2.5 w-2.5 shrink-0" />
-                        )}
-                        <span className="truncate">
-                          {e.consultation.status === "Submitted"
-                            ? "Submitted"
-                            : deadlineLabel(e.daysLeft)}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
+                  {entries.map((e) => {
+                    const submittedShort = e.consultation.submittedOn
+                      ? new Date(e.consultation.submittedOn).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "short",
+                        })
+                      : null;
+                    const deadlineShort = calendarDeadlineDate(
+                      e.consultation.receivedOn,
+                    ).toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
+                    return (
+                      <Link
+                        key={e.consultation.id}
+                        to="/consultations/$id"
+                        params={{ id: e.consultation.id }}
+                        className={`block rounded-md px-2 py-1 text-[11px] leading-tight transition-colors ${
+                          e.consultation.status === "Submitted"
+                            ? "bg-muted text-muted-foreground border hover:bg-muted/80"
+                            : toneCellStyles[e.tone]
+                        }`}
+                        title={
+                          e.consultation.status === "Submitted" && submittedShort
+                            ? `${e.consultation.pupilRef} — ${e.consultation.localAuthority} · Deadline ${deadlineShort}, submitted ${submittedShort}`
+                            : `${e.consultation.pupilRef} — ${e.consultation.localAuthority}`
+                        }
+                      >
+                        <div className="font-semibold truncate">
+                          {e.consultation.pupilRef}
+                        </div>
+                        <div className="truncate opacity-90">
+                          {e.consultation.localAuthority}
+                        </div>
+                        <div className="flex items-center gap-1 mt-0.5 font-medium">
+                          {e.tone === "urgent" && e.consultation.status !== "Submitted" && (
+                            <AlertTriangle className="h-2.5 w-2.5 shrink-0" />
+                          )}
+                          <span className="truncate">
+                            {e.consultation.status === "Submitted"
+                              ? submittedShort
+                                ? `Submitted ${submittedShort}`
+                                : "Submitted"
+                              : deadlineLabel(e.daysLeft)}
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               );
             })}
