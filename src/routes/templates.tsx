@@ -1,6 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouterState } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRouterState } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
 import { useTemplates, type EvidenceDoc } from "@/lib/templates-store";
