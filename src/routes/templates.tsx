@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
 import { useTemplates, type EvidenceDoc } from "@/lib/templates-store";
@@ -46,6 +46,25 @@ function TemplatesPage() {
     });
     window.setTimeout(() => setHighlightedEvidence(null), 2400);
   };
+
+  // Deep-link via URL hash: "#tab=evidence&highlight=<id>" or "#tab=templates".
+  // Global search sets this when jumping to a template/evidence result.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const applyHash = () => {
+      const raw = window.location.hash.replace(/^#/, "");
+      if (!raw) return;
+      const params = new URLSearchParams(raw);
+      const t = params.get("tab");
+      if (t === "evidence" || t === "templates") setTab(t);
+      const h = params.get("highlight");
+      if (h) jumpToEvidence(h);
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AppShell breadcrumbs={[{ label: "Templates" }]}>

@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
 import { calendarDaysRemaining } from "@/lib/working-days";
+import { useSearchOverlay } from "@/lib/search-store";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -54,7 +55,7 @@ function SortHeader({
 
 function Dashboard() {
   const { consultations } = useConsultations();
-  const [query, setQuery] = useState("");
+  const { openSearch } = useSearchOverlay();
   const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All" | "Open">("Open");
   const [sortKey, setSortKey] = useState<SortKey>("daysLeft");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
@@ -67,11 +68,8 @@ function Dashboard() {
   const rows = useMemo(() => {
     return withDeadlines
       .filter((c) =>
-        (statusFilter === "All" ||
-          (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter)) &&
-        (query === "" ||
-          c.pupilRef.toLowerCase().includes(query.toLowerCase()) ||
-          c.localAuthority.toLowerCase().includes(query.toLowerCase())),
+        statusFilter === "All" ||
+        (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter),
       )
       .slice()
       .sort((a, b) => {
@@ -90,7 +88,7 @@ function Dashboard() {
         }
         return comparison * dir;
       });
-  }, [withDeadlines, query, statusFilter, sortKey, sortDir]);
+  }, [withDeadlines, statusFilter, sortKey, sortDir]);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -125,15 +123,17 @@ function Dashboard() {
 
         <div className="bg-surface border rounded-lg overflow-hidden">
           <div className="flex flex-wrap items-center gap-3 px-4 py-3 border-b bg-muted/30">
-            <div className="relative flex-1 min-w-[220px]">
+            <button
+              type="button"
+              onClick={() => openSearch()}
+              className="relative flex-1 min-w-[220px] h-9 pl-9 pr-3 rounded-md border bg-surface text-sm text-muted-foreground text-left hover:bg-accent/60 focus:outline-none focus:ring-2 focus:ring-ring/40 flex items-center justify-between"
+            >
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search pupil or local authority"
-                className="w-full h-9 pl-9 pr-3 rounded-md border bg-surface text-sm outline-none focus:ring-2 focus:ring-ring/40"
-              />
-            </div>
+              <span>Search consultations, templates, evidence…</span>
+              <kbd className="inline-flex items-center rounded border bg-muted/40 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                ⌘K
+              </kbd>
+            </button>
             <div className="flex gap-1">
               {(["Open", "New", "Reviewing", "Drafting", "Submitted", "All"] as const).map((s) => (
                 <button
