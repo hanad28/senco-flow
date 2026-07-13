@@ -561,7 +561,9 @@ export function formatDate(iso: string) {
 
 export function formatDateTime(iso: string) {
   const d = new Date(iso);
-  return `${d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}, ${d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false })}`;
+  const dateOpts: Intl.DateTimeFormatOptions = { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" };
+  const timeOpts: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC" };
+  return `${d.toLocaleDateString("en-GB", dateOpts)}, ${d.toLocaleTimeString("en-GB", timeOpts)}`;
 }
 
 export function deadlineTone(days: number): "urgent" | "warn" | "ok" {
