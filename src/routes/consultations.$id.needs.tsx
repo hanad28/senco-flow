@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, type NeedCapability } from "@/lib/consultations-store";
-import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft, Info } from "lucide-react";
+import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft, Info, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/needs")({
   head: ({ params }) => ({
@@ -22,7 +22,7 @@ const options: { value: NeedCapability; label: string; icon: React.ReactNode; cl
 
 function NeedsView() {
   const { id } = Route.useParams();
-  const { get, setCapability, setStatus, logActivity } = useConsultations();
+  const { get, setCapability, setCannotRationale, setStatus, logActivity } = useConsultations();
   const c = get(id);
   if (!c) throw notFound();
 
@@ -114,6 +114,26 @@ function NeedsView() {
                       );
                     })}
                   </div>
+
+                  {n.capability === "cannot" && (
+                    <div className="mt-3 rounded-md border border-urgent/40 bg-urgent/5 p-3 space-y-1.5">
+                      <label className="flex items-center gap-1.5 text-xs font-semibold text-urgent">
+                        <AlertTriangle className="h-3.5 w-3.5" />
+                        Rationale — required
+                      </label>
+                      <textarea
+                        value={n.cannotRationale ?? ""}
+                        onChange={(e) => setCannotRationale(c.id, n.id, e.target.value)}
+                        rows={2}
+                        required
+                        aria-invalid={(n.cannotRationale ?? "").trim().length === 0 || undefined}
+                        placeholder="Briefly explain why the school cannot meet this need."
+                        className={`w-full rounded-md border bg-surface p-2.5 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring/40 ${
+                          (n.cannotRationale ?? "").trim().length === 0 ? "border-urgent/50" : ""
+                        }`}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </li>

@@ -1,13 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
-import { useConsultations, formatDate, type NeedCapability } from "@/lib/consultations-store";
+import { useConsultations, formatDate, type NeedCapability, type Consultation } from "@/lib/consultations-store";
 import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
-import { useTemplates } from "@/lib/templates-store";
+import { useTemplates, fillTemplateTokens } from "@/lib/templates-store";
 import { EvidencePickerDialog } from "./templates";
 import { findVagueness, VAGUENESS_EXPLANATION } from "@/lib/vagueness";
 import { MatchScore } from "./consultations.$id.needs";
-import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil, Sparkles, AlertTriangle, X } from "lucide-react";
+import { downloadResponseLetter } from "@/lib/letter-export";
+import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil, Sparkles, AlertTriangle, X, Download } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/draft")({
   head: ({ params }) => ({
@@ -32,7 +33,8 @@ const capabilityClass: Record<NeedCapability, string> = {
 
 function DraftView() {
   const { id } = Route.useParams();
-  const { get, setDraftResponse, addEvidence, removeEvidence, logActivity } = useConsultations();
+  const { get, setDraftResponse, setCannotRationale, addEvidence, removeEvidence, logActivity } = useConsultations();
+  const { profile } = useSchoolProfile();
   const c = get(id);
   if (!c) throw notFound();
 
@@ -40,6 +42,11 @@ function DraftView() {
   const [pickerNeedId, setPickerNeedId] = useState<string | null>(null);
 
   const pickerNeed = c.needs.find((n) => n.id === pickerNeedId) ?? null;
+
+  const missingRationale = c.needs.filter(
+    (n) => n.capability === "cannot" && !(n.cannotRationale ?? "").trim(),
+  );
+  const canProceed = missingRationale.length === 0;
 
   return (
     <AppShell
@@ -49,13 +56,23 @@ function DraftView() {
         { label: "Draft response" },
       ]}
       actions={
-        <Link
-          to="/consultations/$id/submit"
-          params={{ id: c.id }}
-          className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90"
-        >
-          Review & submit <ArrowRight className="h-4 w-4" />
-        </Link>
+        canProceed ? (
+          <Link
+            to="/consultations/$id/submit"
+            params={{ id: c.id }}
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90"
+          >
+            Review & submit <ArrowRight className="h-4 w-4" />
+          </Link>
+        ) : (
+          <span
+            title={`Add a rationale for ${missingRationale.length} “Cannot meet” need${missingRationale.length === 1 ? "" : "s"} before proceeding.`}
+            className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-muted text-muted-foreground text-sm font-medium cursor-not-allowed"
+            aria-disabled="true"
+          >
+            Review & submit <ArrowRight className="h-4 w-4" />
+          </span>
+        )
       }
     >
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-6">
@@ -89,6 +106,20 @@ function DraftView() {
           </div>
         </div>
 
+        {missingRationale.length > 0 && (
+          <div className="flex items-start gap-3 rounded-lg border border-urgent/40 bg-urgent/10 px-4 py-3 text-sm text-urgent">
+            <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+            <div>
+              <div className="font-semibold">
+                Rationale required for {missingRationale.length} “Cannot meet” need{missingRationale.length === 1 ? "" : "s"}
+              </div>
+              <div className="text-xs opacity-90 mt-0.5">
+                A short written rationale must be provided for each need the school cannot meet before the response can be submitted.
+              </div>
+            </div>
+          </div>
+        )}
+
         {view === "edit" ? (
           <ol className="space-y-4">
             {c.needs.map((n, i) => (
@@ -109,6 +140,7 @@ function DraftView() {
                     <label className="text-xs font-medium text-muted-foreground">School response</label>
                     <TemplateInsertMenu
                       capability={n.capability}
+                      tokens={{ pupil: c.pupilRef, yearGroup: c.yearGroup, localAuthority: c.localAuthority }}
                       onInsert={(text, title) => {
                         const existing = n.draftResponse.trim();
                         const separator = existing ? "\n\n" : "";
@@ -124,6 +156,12 @@ function DraftView() {
                     className="w-full rounded-md border bg-surface p-3 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring/40"
                   />
                   <VaguenessHints text={n.draftResponse} />
+                  {n.capability === "cannot" && (
+                    <CannotRationaleField
+                      value={n.cannotRationale ?? ""}
+                      onChange={(v) => setCannotRationale(c.id, n.id, v)}
+                    />
+                  )}
                   <div className="flex items-center justify-between flex-wrap gap-3">
                     <div className="flex items-center flex-wrap gap-2">
                       {n.evidence.map((e) => (
@@ -176,9 +214,11 @@ function DraftView() {
 // Compact dropdown of template snippets applicable to this need's capability.
 function TemplateInsertMenu({
   capability,
+  tokens,
   onInsert,
 }: {
   capability: NeedCapability;
+  tokens: { pupil: string; yearGroup: string; localAuthority: string };
   onInsert: (text: string, title: string) => void;
 }) {
   const { snippets } = useTemplates();
@@ -240,14 +280,15 @@ function TemplateInsertMenu({
                       <button
                         key={it.id}
                         onClick={() => {
-                          onInsert(it.text, it.title);
+                          const filled = fillTemplateTokens(it.text, tokens);
+                          onInsert(filled, it.title);
                           setOpen(false);
                         }}
                         className="w-full text-left rounded-md hover:bg-accent px-2 py-1.5"
                       >
                         <div className="text-xs font-medium truncate">{it.title}</div>
                         <div className="text-[11px] text-muted-foreground line-clamp-2">
-                          {it.text}
+                          {fillTemplateTokens(it.text, tokens)}
                         </div>
                       </button>
                     ))
@@ -302,47 +343,127 @@ function VaguenessHints({ text }: { text: string }) {
   );
 }
 
-function LetterPreview({ c }: { c: ReturnType<ReturnType<typeof useConsultations>["get"]> & object }) {
-  const { profile } = useSchoolProfile();
+function CannotRationaleField({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const missing = value.trim().length === 0;
   return (
-    <article className="bg-surface border rounded-lg p-10 leading-relaxed text-sm shadow-sm max-w-3xl mx-auto">
-      <div className="text-right text-xs text-muted-foreground">
-        {profile.schoolName}<br />
-        {profile.schoolAddress}<br />
-        {formatDate(new Date().toISOString())}
-      </div>
-      <div className="mt-8">
-        <div className="font-medium">{c.caseOfficer}</div>
-        <div className="text-muted-foreground">{c.localAuthority}</div>
-      </div>
-      <h2 className="mt-8 font-semibold">
-        Re: EHC needs assessment consultation — {c.pupilRef} ({c.yearGroup})
-      </h2>
-      <p className="mt-4">Dear {c.caseOfficer.split(".")[1]?.trim() ?? c.caseOfficer},</p>
-      <p className="mt-4">
-        Thank you for consulting {profile.schoolName} regarding the above pupil. We have reviewed the assessment
-        documentation and set out below our response to each of the needs identified in Section B, together with the
-        Section F provision we are able to make. This response is offered to inform the local authority's Section I
-        placement decision.
+    <div
+      className={`rounded-md border p-3 space-y-2 ${
+        missing ? "border-urgent/40 bg-urgent/5" : "border-warn/40 bg-warn/5"
+      }`}
+    >
+      <label className="flex items-center gap-1.5 text-xs font-semibold text-urgent">
+        <AlertTriangle className="h-3.5 w-3.5" />
+        Rationale — required for “Cannot meet”
+      </label>
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={2}
+        required
+        aria-invalid={missing || undefined}
+        placeholder="e.g. Direct weekly SaLT is not commissioned by the school; would need to be arranged by the LA."
+        className={`w-full rounded-md border bg-surface p-2.5 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring/40 ${
+          missing ? "border-urgent/50" : ""
+        }`}
+      />
+      <p className="text-[11px] text-muted-foreground">
+        Explain briefly why the school cannot meet this need. LAs are most likely to challenge these; a clear rationale prevents rework.
       </p>
-      <ol className="mt-6 space-y-5 list-decimal pl-5">
-        {c.needs.map((n) => (
-          <li key={n.id}>
-            <div className="font-medium">{n.title}</div>
-            <div className="text-xs text-muted-foreground mt-0.5">{capabilityLabel[n.capability]}</div>
-            <p className="mt-2 text-foreground/90">{n.draftResponse}</p>
-          </li>
-        ))}
-      </ol>
-      <p className="mt-8">
-        We remain committed to working with the local authority and the family to ensure the pupil's needs are met.
-        Please do not hesitate to contact us should you require any further information.
-      </p>
-      <div className="mt-8">
-        Yours sincerely,<br />
-        <span className="font-medium">{profile.sendcoName}</span><br />
-        {profile.sendcoRole}, {profile.schoolName}
+    </div>
+  );
+}
+
+function LetterPreview({ c }: { c: Consultation }) {
+  const { profile } = useSchoolProfile();
+  const [downloading, setDownloading] = useState(false);
+  const school = {
+    schoolName: profile.schoolName,
+    schoolAddress: profile.schoolAddress,
+    sendcoName: profile.sendcoName,
+    sendcoRole: profile.sendcoRole,
+  };
+
+  const onDownload = async () => {
+    setDownloading(true);
+    try {
+      await downloadResponseLetter(c, school);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-3">
+      <div className="flex items-center justify-end gap-2 print:hidden">
+        <button
+          onClick={() => window.print()}
+          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-md border bg-surface text-xs font-medium hover:bg-accent"
+        >
+          <FileText className="h-3.5 w-3.5" /> Print
+        </button>
+        <button
+          onClick={onDownload}
+          disabled={downloading}
+          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 disabled:opacity-60"
+        >
+          <Download className="h-3.5 w-3.5" />
+          {downloading ? "Preparing…" : "Download .docx"}
+        </button>
       </div>
-    </article>
+      <article
+        id="response-letter"
+        className="bg-surface border rounded-lg p-10 leading-relaxed text-sm shadow-sm print:border-0 print:shadow-none print:p-0"
+      >
+        <div className="text-right text-xs text-muted-foreground">
+          {profile.schoolName}<br />
+          {profile.schoolAddress}<br />
+          {formatDate(new Date().toISOString())}
+        </div>
+        <div className="mt-8">
+          <div className="font-medium">{c.caseOfficer}</div>
+          <div className="text-muted-foreground">{c.localAuthority}</div>
+        </div>
+        <h2 className="mt-8 font-semibold">
+          Re: EHC needs assessment consultation — {c.pupilRef} ({c.yearGroup})
+        </h2>
+        <p className="mt-4">Dear {c.caseOfficer.split(".")[1]?.trim() ?? c.caseOfficer},</p>
+        <p className="mt-4">
+          Thank you for consulting {profile.schoolName} regarding the above pupil. We have reviewed the assessment
+          documentation and set out below our response to each of the needs identified in Section B, together with the
+          Section F provision we are able to make. This response is offered to inform the local authority's Section I
+          placement decision.
+        </p>
+        <ol className="mt-6 space-y-5 list-decimal pl-5">
+          {c.needs.map((n) => (
+            <li key={n.id}>
+              <div className="font-medium">{n.title}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{capabilityLabel[n.capability]}</div>
+              <p className="mt-2 text-foreground/90">{n.draftResponse}</p>
+              {n.capability === "cannot" && n.cannotRationale && n.cannotRationale.trim().length > 0 && (
+                <p className="mt-1 text-foreground/90">
+                  <span className="font-medium">Rationale: </span>
+                  {n.cannotRationale}
+                </p>
+              )}
+            </li>
+          ))}
+        </ol>
+        <p className="mt-8">
+          We remain committed to working with the local authority and the family to ensure the pupil's needs are met.
+          Please do not hesitate to contact us should you require any further information.
+        </p>
+        <div className="mt-8">
+          Yours sincerely,<br />
+          <span className="font-medium">{profile.sendcoName}</span><br />
+          {profile.sendcoRole}, {profile.schoolName}
+        </div>
+      </article>
+    </div>
   );
 }

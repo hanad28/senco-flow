@@ -21,10 +21,11 @@ export type ActivityEntry = {
 
 let __actSeq = 0;
 function actEntry(dateIso: string, hh: number, mm: number, action: ActivityAction, detail?: string): ActivityEntry {
-  const d = new Date(dateIso + "T00:00:00");
-  d.setHours(hh, mm, 0, 0);
+  // Use UTC so SSR and client produce identical timestamps (avoids hydration mismatch).
+  const [y, m, day] = dateIso.split("-").map(Number);
+  const t = Date.UTC(y, (m ?? 1) - 1, day ?? 1, hh, mm, 0, 0);
   __actSeq += 1;
-  return { id: `act-${d.getTime()}-${__actSeq}`, timestamp: d.toISOString(), action, detail };
+  return { id: `act-${t}-${__actSeq}`, timestamp: new Date(t).toISOString(), action, detail };
 }
 function addDaysIso(iso: string, n: number): string {
   const d = new Date(iso + "T00:00:00");
@@ -44,6 +45,9 @@ export type NeedItem = {
   domain: NeedDomain;
   draftResponse: string;
   evidence: string[];
+  // Required rationale when capability === "cannot". Optional here so
+  // historical/seed data need not carry it; validated at submit time.
+  cannotRationale?: string;
 };
 
 export type DocumentItem = {
@@ -107,6 +111,8 @@ const seedNeeds = (prefix: string): NeedItem[] => [
     draftResponse:
       "The school is not currently able to meet this need. We do not commission direct SaLT provision on site. We can deliver a therapist-devised programme via a trained TA, but weekly direct therapy would need to be commissioned by the local authority.",
     evidence: [],
+    cannotRationale:
+      "Direct weekly on-site SaLT is not commissioned by the school. Current SaLT capacity (0.5 day/week, shared across the SEND cohort) cannot absorb an additional 30 min direct 1:1 slot; this provision would need to be commissioned by the LA.",
   },
   {
     id: `${prefix}-n4`,
@@ -444,6 +450,7 @@ type Ctx = {
   setStatus: (id: string, status: ConsultationStatus) => void;
   setCapability: (id: string, needId: string, capability: NeedCapability) => void;
   setDraftResponse: (id: string, needId: string, text: string) => void;
+  setCannotRationale: (id: string, needId: string, text: string) => void;
   addEvidence: (id: string, needId: string, filename: string) => void;
   removeEvidence: (id: string, needId: string, filename: string) => void;
   logActivity: (id: string, action: ActivityAction, detail?: string) => void;
@@ -499,6 +506,15 @@ export function ConsultationsProvider({ children }: { children: ReactNode }) {
               activity: appendActivity(c.activity ?? [], { action: nextActivityAction, detail }),
             };
           }),
+        );
+      },
+      setCannotRationale: (id, needId, text) => {
+        setConsultations((cs) =>
+          cs.map((c) =>
+            c.id === id
+              ? { ...c, needs: c.needs.map((n) => (n.id === needId ? { ...n, cannotRationale: text } : n)) }
+              : c,
+          ),
         );
       },
       addEvidence: (id, needId, filename) => {
@@ -560,7 +576,9 @@ export function formatDate(iso: string) {
 
 export function formatDateTime(iso: string) {
   const d = new Date(iso);
-  return `${d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}, ${d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false })}`;
+  const dateOpts: Intl.DateTimeFormatOptions = { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" };
+  const timeOpts: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC" };
+  return `${d.toLocaleDateString("en-GB", dateOpts)}, ${d.toLocaleTimeString("en-GB", timeOpts)}`;
 }
 
 export function deadlineTone(days: number): "urgent" | "warn" | "ok" {
