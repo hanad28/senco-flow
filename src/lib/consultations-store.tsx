@@ -45,6 +45,9 @@ export type NeedItem = {
   domain: NeedDomain;
   draftResponse: string;
   evidence: string[];
+  // Required rationale when capability === "cannot". Optional here so
+  // historical/seed data need not carry it; validated at submit time.
+  cannotRationale?: string;
 };
 
 export type DocumentItem = {
