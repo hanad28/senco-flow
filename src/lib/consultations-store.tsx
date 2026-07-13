@@ -1,5 +1,36 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import type { NeedDomain } from "@/lib/school-profile-store";
+
+// ---------- Activity log ----------
+export type ActivityAction =
+  | "received"
+  | "document_opened"
+  | "needs_reviewed"
+  | "draft_started"
+  | "draft_edited"
+  | "evidence_attached"
+  | "template_inserted"
+  | "submitted";
+
+export type ActivityEntry = {
+  id: string;
+  timestamp: string; // ISO datetime
+  action: ActivityAction;
+  detail?: string;
+};
+
+let __actSeq = 0;
+function actEntry(dateIso: string, hh: number, mm: number, action: ActivityAction, detail?: string): ActivityEntry {
+  const d = new Date(dateIso + "T00:00:00");
+  d.setHours(hh, mm, 0, 0);
+  __actSeq += 1;
+  return { id: `act-${d.getTime()}-${__actSeq}`, timestamp: d.toISOString(), action, detail };
+}
+function addDaysIso(iso: string, n: number): string {
+  const d = new Date(iso + "T00:00:00");
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+}
 
 export type ConsultationStatus = "New" | "Reviewing" | "Drafting" | "Submitted";
 export type NeedCapability = "full" | "partial" | "cannot";
@@ -37,6 +68,7 @@ export type Consultation = {
   summary: string;
   documents: DocumentItem[];
   needs: NeedItem[];
+  activity?: ActivityEntry[];
 };
 
 const seedNeeds = (prefix: string): NeedItem[] => [
@@ -116,6 +148,7 @@ const hist = (
   submittedOn: string,
   summary: string,
   needs: HistNeed[],
+  activityOverride?: ActivityEntry[],
 ): Consultation => ({
   id,
   pupilRef,
@@ -137,6 +170,13 @@ const hist = (
     draftResponse: "",
     evidence: [],
   })),
+  activity: activityOverride ?? [
+    actEntry(receivedOn, 9, 15, "received", "Consultation received from " + localAuthority),
+    actEntry(addDaysIso(receivedOn, 2), 10, 0, "needs_reviewed", `Confirmed provision against ${needs.length} needs`),
+    actEntry(addDaysIso(receivedOn, 4), 11, 30, "draft_started"),
+    actEntry(addDaysIso(receivedOn, 6), 15, 0, "draft_edited", "Response text refined across all needs"),
+    actEntry(submittedOn, 9, 30, "submitted", `Response sent to ${localAuthority}`),
+  ],
 });
 
 const seedConsultations: Consultation[] = [
@@ -293,6 +333,14 @@ const seedConsultations: Consultation[] = [
       ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
       ["Zones of Regulation and named key adult", "partial", "semh"],
     ],
+    [
+      actEntry("2026-06-01", 9, 15, "received", "Consultation received from Camden LA"),
+      actEntry("2026-06-03", 10, 30, "needs_reviewed", "Confirmed provision against 3 needs"),
+      actEntry("2026-06-05", 14, 0, "draft_started"),
+      actEntry("2026-06-08", 16, 45, "draft_edited", "Draft paused — half-term staffing gap"),
+      actEntry("2026-06-19", 15, 30, "draft_edited", "Draft resumed and finalised after half-term"),
+      actEntry("2026-06-20", 10, 15, "submitted", "Response sent to Camden LA (5 days late — half-term staffing gap)"),
+    ],
   ),
   hist(
     "c-2412", "Pupil L", "Year 2", "Hackney LA", "L. Hassan",
@@ -343,6 +391,53 @@ const seedConsultations: Consultation[] = [
   ),
 ];
 
+// Seed activity for active (non-submitted) consultations. Historical entries
+// already carry a full trail via hist(). For active ones, seed a minimal
+// plausible trail based on current status so the timeline isn't blank on
+// first render.
+function seedActiveActivity(c: Consultation): ActivityEntry[] {
+  if (c.activity && c.activity.length > 0) return c.activity;
+  const entries: ActivityEntry[] = [
+    actEntry(c.receivedOn, 9, 10, "received", `Consultation received from ${c.localAuthority}`),
+  ];
+  if (c.status === "Reviewing" || c.status === "Drafting") {
+    entries.push(actEntry(addDaysIso(c.receivedOn, 1), 11, 20, "document_opened", "Reviewed received reports"));
+    entries.push(actEntry(addDaysIso(c.receivedOn, 2), 14, 45, "needs_reviewed", `Confirmed provision against ${c.needs.length} needs`));
+  }
+  if (c.status === "Drafting") {
+    entries.push(actEntry(addDaysIso(c.receivedOn, 3), 10, 15, "draft_started"));
+  }
+  return entries;
+}
+
+const seedNormalised: Consultation[] = seedConsultations.map((c) => ({
+  ...c,
+  activity: seedActiveActivity(c),
+}));
+
+// Dedup window: repeated same (action, detail) within 10 min collapses into
+// a single entry with updated timestamp — avoids per-keystroke spam.
+const DEDUP_MS = 10 * 60 * 1000;
+
+function appendActivity(list: ActivityEntry[], entry: Omit<ActivityEntry, "id" | "timestamp"> & { timestamp?: string }): ActivityEntry[] {
+  const timestamp = entry.timestamp ?? new Date().toISOString();
+  const last = list[list.length - 1];
+  if (
+    last &&
+    last.action === entry.action &&
+    (last.detail ?? "") === (entry.detail ?? "") &&
+    new Date(timestamp).getTime() - new Date(last.timestamp).getTime() < DEDUP_MS
+  ) {
+    // Coalesce: update timestamp on last entry
+    return [...list.slice(0, -1), { ...last, timestamp }];
+  }
+  __actSeq += 1;
+  return [
+    ...list,
+    { id: `act-${Date.now()}-${__actSeq}`, timestamp, action: entry.action, detail: entry.detail },
+  ];
+}
+
 type Ctx = {
   consultations: Consultation[];
   get: (id: string) => Consultation | undefined;
@@ -351,19 +446,34 @@ type Ctx = {
   setDraftResponse: (id: string, needId: string, text: string) => void;
   addEvidence: (id: string, needId: string, filename: string) => void;
   removeEvidence: (id: string, needId: string, filename: string) => void;
+  logActivity: (id: string, action: ActivityAction, detail?: string) => void;
 };
 
 const ConsultationsContext = createContext<Ctx | null>(null);
 
 export function ConsultationsProvider({ children }: { children: ReactNode }) {
-  const [consultations, setConsultations] = useState<Consultation[]>(seedConsultations);
+  const [consultations, setConsultations] = useState<Consultation[]>(seedNormalised);
+
+  const withActivity = useCallback(
+    (id: string, action: ActivityAction, detail?: string) =>
+      setConsultations((cs) =>
+        cs.map((c) =>
+          c.id === id ? { ...c, activity: appendActivity(c.activity ?? [], { action, detail }) } : c,
+        ),
+      ),
+    [],
+  );
 
   const value = useMemo<Ctx>(
     () => ({
       consultations,
       get: (id) => consultations.find((c) => c.id === id),
-      setStatus: (id, status) =>
-        setConsultations((cs) => cs.map((c) => (c.id === id ? { ...c, status } : c))),
+      setStatus: (id, status) => {
+        setConsultations((cs) => cs.map((c) => (c.id === id ? { ...c, status } : c)));
+        if (status === "Submitted") {
+          withActivity(id, "submitted", "Response sent");
+        }
+      },
       setCapability: (id, needId, capability) =>
         setConsultations((cs) =>
           cs.map((c) =>
@@ -375,32 +485,41 @@ export function ConsultationsProvider({ children }: { children: ReactNode }) {
               : c,
           ),
         ),
-      setDraftResponse: (id, needId, text) =>
+      setDraftResponse: (id, needId, text) => {
         setConsultations((cs) =>
-          cs.map((c) =>
-            c.id === id
-              ? {
-                  ...c,
-                  needs: c.needs.map((n) => (n.id === needId ? { ...n, draftResponse: text } : n)),
-                }
-              : c,
-          ),
-        ),
-      addEvidence: (id, needId, filename) =>
+          cs.map((c) => {
+            if (c.id !== id) return c;
+            const need = c.needs.find((n) => n.id === needId);
+            const wasEmpty = !need || need.draftResponse.trim().length === 0;
+            const nextActivityAction: ActivityAction = wasEmpty && text.trim().length > 0 ? "draft_started" : "draft_edited";
+            const detail = need ? `“${truncate(need.title, 60)}”` : undefined;
+            return {
+              ...c,
+              needs: c.needs.map((n) => (n.id === needId ? { ...n, draftResponse: text } : n)),
+              activity: appendActivity(c.activity ?? [], { action: nextActivityAction, detail }),
+            };
+          }),
+        );
+      },
+      addEvidence: (id, needId, filename) => {
         setConsultations((cs) =>
-          cs.map((c) =>
-            c.id === id
-              ? {
-                  ...c,
-                  needs: c.needs.map((n) =>
-                    n.id === needId && !n.evidence.includes(filename)
-                      ? { ...n, evidence: [...n.evidence, filename] }
-                      : n,
-                  ),
-                }
-              : c,
-          ),
-        ),
+          cs.map((c) => {
+            if (c.id !== id) return c;
+            const need = c.needs.find((n) => n.id === needId);
+            if (!need || need.evidence.includes(filename)) return c;
+            return {
+              ...c,
+              needs: c.needs.map((n) =>
+                n.id === needId ? { ...n, evidence: [...n.evidence, filename] } : n,
+              ),
+              activity: appendActivity(c.activity ?? [], {
+                action: "evidence_attached",
+                detail: `${filename} → “${truncate(need.title, 50)}”`,
+              }),
+            };
+          }),
+        );
+      },
       removeEvidence: (id, needId, filename) =>
         setConsultations((cs) =>
           cs.map((c) =>
@@ -416,11 +535,16 @@ export function ConsultationsProvider({ children }: { children: ReactNode }) {
               : c,
           ),
         ),
+      logActivity: (id, action, detail) => withActivity(id, action, detail),
     }),
-    [consultations],
+    [consultations, withActivity],
   );
 
   return <ConsultationsContext.Provider value={value}>{children}</ConsultationsContext.Provider>;
+}
+
+function truncate(s: string, n: number): string {
+  return s.length > n ? s.slice(0, n - 1) + "…" : s;
 }
 
 export function useConsultations() {
@@ -432,6 +556,11 @@ export function useConsultations() {
 export function formatDate(iso: string) {
   const d = new Date(iso);
   return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+export function formatDateTime(iso: string) {
+  const d = new Date(iso);
+  return `${d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}, ${d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false })}`;
 }
 
 export function deadlineTone(days: number): "urgent" | "warn" | "ok" {

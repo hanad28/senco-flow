@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
+import { ActivityLog } from "@/components/activity-log";
 import { useConsultations, formatDate, deadlineTone } from "@/lib/consultations-store";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { FileText, Sparkles, ArrowRight, AlertTriangle, Calendar, User2, Building2 } from "lucide-react";
@@ -16,7 +17,7 @@ export const Route = createFileRoute("/consultations/$id/")({
 
 function ConsultationDetail() {
   const { id } = Route.useParams();
-  const { get, setStatus } = useConsultations();
+  const { get, setStatus, logActivity } = useConsultations();
   const c = get(id);
   if (!c) throw notFound();
 
@@ -106,7 +107,12 @@ function ConsultationDetail() {
                         </div>
                         <div className="text-xs text-muted-foreground/80 mt-1 truncate">{d.name}</div>
                       </div>
-                      <button className="text-xs text-muted-foreground hover:text-foreground shrink-0">Open</button>
+                      <button
+                        onClick={() => logActivity(c.id, "document_opened", d.name)}
+                        className="text-xs text-muted-foreground hover:text-foreground shrink-0"
+                      >
+                        Open
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -154,6 +160,8 @@ function ConsultationDetail() {
                 Go to consolidated needs <ArrowRight className="h-4 w-4" />
               </Link>
             </section>
+
+            <ActivityLog entries={c.activity ?? []} />
           </aside>
         </div>
       </div>

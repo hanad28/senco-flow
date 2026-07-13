@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, type NeedCapability } from "@/lib/consultations-store";
 import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft, Info } from "lucide-react";
@@ -21,9 +22,17 @@ const options: { value: NeedCapability; label: string; icon: React.ReactNode; cl
 
 function NeedsView() {
   const { id } = Route.useParams();
-  const { get, setCapability, setStatus } = useConsultations();
+  const { get, setCapability, setStatus, logActivity } = useConsultations();
   const c = get(id);
   if (!c) throw notFound();
+
+  // Log needs_reviewed once per mount; store-side dedup collapses duplicates.
+  const loggedRef = useRef(false);
+  useEffect(() => {
+    if (loggedRef.current) return;
+    loggedRef.current = true;
+    logActivity(id, "needs_reviewed", `Reviewed ${c.needs.length} needs`);
+  }, [id, c.needs.length, logActivity]);
 
   const counts = {
     full: c.needs.filter((n) => n.capability === "full").length,
