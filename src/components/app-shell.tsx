@@ -240,7 +240,7 @@ function NotificationsBell() {
             <div className="px-4 py-3 border-b">
               <div className="text-sm font-semibold">Deadline notifications</div>
               <div className="text-[11px] text-muted-foreground mt-0.5">
-                Open consultations approaching or past the 15-day window
+                Open consultations approaching or past the 15-day window (minimum)
               </div>
             </div>
             {items.length === 0 ? (
