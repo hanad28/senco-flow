@@ -506,6 +506,15 @@ export function ConsultationsProvider({ children }: { children: ReactNode }) {
           }),
         );
       },
+      setCannotRationale: (id, needId, text) => {
+        setConsultations((cs) =>
+          cs.map((c) =>
+            c.id === id
+              ? { ...c, needs: c.needs.map((n) => (n.id === needId ? { ...n, cannotRationale: text } : n)) }
+              : c,
+          ),
+        );
+      },
       addEvidence: (id, needId, filename) => {
         setConsultations((cs) =>
           cs.map((c) => {
