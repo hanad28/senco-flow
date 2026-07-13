@@ -176,46 +176,104 @@ function SubmitView() {
           </div>
           <div className="px-6 pb-6">
             <h3 className="text-sm font-semibold mb-3">Needs & response</h3>
-            <ul className="border rounded-md divide-y">
-              {c.needs.map((n) => (
-                <li key={n.id} className="p-4">
-                  <div className="flex items-start gap-3">
-                    <span className={`mt-1.5 h-2 w-2 rounded-full ${capabilityDot[n.capability]} shrink-0`} />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="text-sm font-medium">{n.title}</div>
-                        <div className="text-xs text-muted-foreground shrink-0">{capabilityLabel[n.capability]}</div>
-                      </div>
-                      <p className="text-sm text-foreground/80 mt-1 leading-relaxed">{n.draftResponse}</p>
-                      {n.evidence.length > 0 && (
-                        <div className="text-xs text-muted-foreground mt-2">
-                          Evidence: {n.evidence.join(", ")}
-                        </div>
+            <ul className="space-y-2">
+              {c.needs.map((n) => {
+                const isCannot = n.capability === "cannot";
+                return (
+                  <li
+                    key={n.id}
+                    className={
+                      isCannot
+                        ? "border-2 border-urgent/50 bg-urgent/5 rounded-md p-4"
+                        : "border rounded-md p-4"
+                    }
+                  >
+                    <div className="flex items-start gap-3">
+                      {isCannot ? (
+                        <XCircle className="mt-0.5 h-5 w-5 text-urgent shrink-0" />
+                      ) : (
+                        <span className={`mt-1.5 h-2 w-2 rounded-full ${capabilityDot[n.capability]} shrink-0`} />
                       )}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className={`text-sm font-medium ${isCannot ? "text-urgent" : ""}`}>{n.title}</div>
+                          <div
+                            className={`text-xs shrink-0 ${
+                              isCannot
+                                ? "font-semibold uppercase tracking-wide text-urgent"
+                                : "text-muted-foreground"
+                            }`}
+                          >
+                            {capabilityLabel[n.capability]}
+                          </div>
+                        </div>
+                        <p className="text-sm text-foreground/80 mt-1 leading-relaxed">{n.draftResponse}</p>
+                        {isCannot && (
+                          <div className="mt-2 rounded border border-urgent/30 bg-surface p-2.5">
+                            <div className="text-[11px] font-semibold text-urgent uppercase tracking-wide">
+                              Rationale
+                            </div>
+                            <p className="text-sm text-foreground/80 mt-0.5 leading-relaxed">
+                              {(n.cannotRationale ?? "").trim() || (
+                                <span className="italic text-urgent">Missing — required before submitting.</span>
+                              )}
+                            </p>
+                          </div>
+                        )}
+                        {n.evidence.length > 0 && (
+                          <div className="text-xs text-muted-foreground mt-2">
+                            Evidence: {n.evidence.join(", ")}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </section>
 
-        <div className="flex items-center justify-between gap-4 bg-surface border rounded-lg p-5">
+        {missingRationale.length > 0 && (
+          <div className="flex items-start gap-3 rounded-lg border border-urgent/40 bg-urgent/10 px-4 py-3 text-sm text-urgent">
+            <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+            <div>
+              <div className="font-semibold">
+                Cannot submit — {missingRationale.length} “Cannot meet” need{missingRationale.length === 1 ? "" : "s"} missing a rationale
+              </div>
+              <div className="text-xs opacity-90 mt-0.5">
+                Return to the draft and add a short rationale for each need the school cannot meet.
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="flex flex-wrap items-center justify-between gap-4 bg-surface border rounded-lg p-5">
           <div className="text-sm text-muted-foreground">
             By submitting, this response will be sent to {c.localAuthority} and recorded on the pupil's file.
           </div>
-          <button
-            onClick={() => {
-              setStatus(c.id, "Submitted");
-              setSubmitted(true);
-              window.scrollTo({ top: 0 });
-              // no-op navigate to make sure route stays
-              navigate({ to: "/consultations/$id/submit", params: { id: c.id } });
-            }}
-            className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90"
-          >
-            <Send className="h-4 w-4" /> Submit response
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onDownload}
+              disabled={downloading}
+              className="inline-flex items-center gap-2 h-10 px-4 rounded-md border bg-surface text-sm font-medium hover:bg-accent disabled:opacity-60"
+            >
+              <Download className="h-4 w-4" />
+              {downloading ? "Preparing…" : "Download .docx"}
+            </button>
+            <button
+              disabled={missingRationale.length > 0}
+              onClick={() => {
+                setStatus(c.id, "Submitted");
+                setSubmitted(true);
+                window.scrollTo({ top: 0 });
+                navigate({ to: "/consultations/$id/submit", params: { id: c.id } });
+              }}
+              className="inline-flex items-center gap-2 h-10 px-5 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Send className="h-4 w-4" /> Submit response
+            </button>
+          </div>
         </div>
       </div>
     </AppShell>
