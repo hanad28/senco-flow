@@ -126,6 +126,7 @@ function DraftView() {
                     <label className="text-xs font-medium text-muted-foreground">School response</label>
                     <TemplateInsertMenu
                       capability={n.capability}
+                      tokens={{ pupil: c.pupilRef, yearGroup: c.yearGroup, localAuthority: c.localAuthority }}
                       onInsert={(text, title) => {
                         const existing = n.draftResponse.trim();
                         const separator = existing ? "\n\n" : "";
@@ -141,6 +142,12 @@ function DraftView() {
                     className="w-full rounded-md border bg-surface p-3 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring/40"
                   />
                   <VaguenessHints text={n.draftResponse} />
+                  {n.capability === "cannot" && (
+                    <CannotRationaleField
+                      value={n.cannotRationale ?? ""}
+                      onChange={(v) => setCannotRationale(c.id, n.id, v)}
+                    />
+                  )}
                   <div className="flex items-center justify-between flex-wrap gap-3">
                     <div className="flex items-center flex-wrap gap-2">
                       {n.evidence.map((e) => (
