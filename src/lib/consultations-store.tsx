@@ -21,10 +21,11 @@ export type ActivityEntry = {
 
 let __actSeq = 0;
 function actEntry(dateIso: string, hh: number, mm: number, action: ActivityAction, detail?: string): ActivityEntry {
-  const d = new Date(dateIso + "T00:00:00");
-  d.setHours(hh, mm, 0, 0);
+  // Use UTC so SSR and client produce identical timestamps (avoids hydration mismatch).
+  const [y, m, day] = dateIso.split("-").map(Number);
+  const t = Date.UTC(y, (m ?? 1) - 1, day ?? 1, hh, mm, 0, 0);
   __actSeq += 1;
-  return { id: `act-${d.getTime()}-${__actSeq}`, timestamp: d.toISOString(), action, detail };
+  return { id: `act-${t}-${__actSeq}`, timestamp: new Date(t).toISOString(), action, detail };
 }
 function addDaysIso(iso: string, n: number): string {
   const d = new Date(iso + "T00:00:00");
