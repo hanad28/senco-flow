@@ -75,21 +75,6 @@ function DraftView() {
         )
       }
     >
-      breadcrumbs={[
-        { label: "Dashboard", to: "/" },
-        { label: c.pupilRef, to: `/consultations/${c.id}` },
-        { label: "Draft response" },
-      ]}
-      actions={
-        <Link
-          to="/consultations/$id/submit"
-          params={{ id: c.id }}
-          className="inline-flex items-center gap-2 h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90"
-        >
-          Review & submit <ArrowRight className="h-4 w-4" />
-        </Link>
-      }
-    >
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-6">
         <div className="flex items-start justify-between gap-4">
           <div>
