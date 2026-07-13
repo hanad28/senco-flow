@@ -113,6 +113,20 @@ function Dashboard() {
     }
   };
 
+  const [page, setPage] = useState(1);
+  useEffect(() => {
+    setPage(1);
+  }, [statusFilter]);
+  const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pageRows = useMemo(
+    () => rows.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [rows, currentPage],
+  );
+  const pageItems = getPageItems(currentPage, totalPages);
+  const rangeStart = rows.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const rangeEnd = Math.min(currentPage * PAGE_SIZE, rows.length);
+
   const urgentCount = withDeadlines.filter((c) => c.status !== "Submitted" && c.daysLeft <= 2).length;
   const openCount = withDeadlines.filter((c) => c.status !== "Submitted").length;
   const submittedCount = withDeadlines.filter(
