@@ -68,11 +68,8 @@ function Dashboard() {
   const rows = useMemo(() => {
     return withDeadlines
       .filter((c) =>
-        (statusFilter === "All" ||
-          (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter)) &&
-        (query === "" ||
-          c.pupilRef.toLowerCase().includes(query.toLowerCase()) ||
-          c.localAuthority.toLowerCase().includes(query.toLowerCase())),
+        statusFilter === "All" ||
+        (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter),
       )
       .slice()
       .sort((a, b) => {
@@ -91,7 +88,7 @@ function Dashboard() {
         }
         return comparison * dir;
       });
-  }, [withDeadlines, query, statusFilter, sortKey, sortDir]);
+  }, [withDeadlines, statusFilter, sortKey, sortDir]);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
