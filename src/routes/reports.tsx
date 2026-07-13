@@ -210,7 +210,7 @@ function ReportsPage() {
             icon={<Percent className="h-4 w-4" />}
             label={`On-time response rate (${termLabel})`}
             value={`${onTimeRate}%`}
-            sub={`${onTimeFlags.filter(Boolean).length} of ${onTimeFlags.length} responses submitted within the statutory 15-day window`}
+            sub={`${onTimeFlags.filter(Boolean).length} of ${onTimeFlags.length} responses submitted within the statutory 15-day window (minimum)`}
           />
           <StatCard
             tone="info"

@@ -119,7 +119,7 @@ function CalendarPage() {
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Calendar</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Every open consultation's 15-day statutory deadline, by month.
+              Every open consultation's 15-day statutory deadline (minimum), by month.
             </p>
           </div>
           <label className="inline-flex items-center gap-2 text-sm bg-surface border rounded-md px-3 h-9">
