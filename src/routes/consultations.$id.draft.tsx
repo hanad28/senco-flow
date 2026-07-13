@@ -266,14 +266,15 @@ function TemplateInsertMenu({
                       <button
                         key={it.id}
                         onClick={() => {
-                          onInsert(it.text, it.title);
+                          const filled = fillTemplateTokens(it.text, tokens);
+                          onInsert(filled, it.title);
                           setOpen(false);
                         }}
                         className="w-full text-left rounded-md hover:bg-accent px-2 py-1.5"
                       >
                         <div className="text-xs font-medium truncate">{it.title}</div>
                         <div className="text-[11px] text-muted-foreground line-clamp-2">
-                          {it.text}
+                          {fillTemplateTokens(it.text, tokens)}
                         </div>
                       </button>
                     ))
