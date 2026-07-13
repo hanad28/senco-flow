@@ -119,3 +119,28 @@
     color: var(--color-foreground);
   }
 }
+
+/* Print stylesheet for the response letter. When printing the Draft or
+   Submitted views, hide app chrome (sidebar, header, breadcrumbs) and
+   show only the letter itself at full page width. */
+@media print {
+  aside, header, nav, [data-print-hide],
+  .print\:hidden { display: none !important; }
+  html, body {
+    background: white !important;
+    color: black !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #response-letter {
+    box-shadow: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    color: black !important;
+    background: white !important;
+  }
+  @page { margin: 20mm; }
+}
