@@ -3,6 +3,11 @@ import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   useConsultations,
   deadlineTone,
   type Consultation,
@@ -71,6 +76,8 @@ function CalendarPage() {
   const { consultations } = useConsultations();
   const [cursor, setCursor] = useState<Date>(startOfMonth(TODAY));
   const [showSubmitted, setShowSubmitted] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerYear, setPickerYear] = useState<number>(TODAY.getFullYear());
 
   const entriesByDay = useMemo(() => {
     const map = new Map<string, Entry[]>();
@@ -143,7 +150,71 @@ function CalendarPage() {
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
-              <div className="text-sm font-semibold ml-2">{monthLabel}</div>
+              <Popover
+                open={pickerOpen}
+                onOpenChange={(o) => {
+                  setPickerOpen(o);
+                  if (o) setPickerYear(cursor.getFullYear());
+                }}
+              >
+                <PopoverTrigger asChild>
+                  <button
+                    className="text-sm font-semibold ml-2 px-2 h-8 rounded-md hover:bg-accent"
+                    aria-label="Pick month and year"
+                  >
+                    {monthLabel}
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent align="start" className="w-64 p-3">
+                  <div className="flex items-center justify-between mb-3">
+                    <button
+                      onClick={() => setPickerYear((y) => y - 1)}
+                      className="h-7 w-7 grid place-items-center rounded-md border hover:bg-accent"
+                      aria-label="Previous year"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <div className="text-sm font-semibold">{pickerYear}</div>
+                    <button
+                      onClick={() => setPickerYear((y) => y + 1)}
+                      className="h-7 w-7 grid place-items-center rounded-md border hover:bg-accent"
+                      aria-label="Next year"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {Array.from({ length: 12 }).map((_, m) => {
+                      const isCurrent =
+                        m === cursor.getMonth() && pickerYear === cursor.getFullYear();
+                      const isToday =
+                        m === TODAY.getMonth() && pickerYear === TODAY.getFullYear();
+                      const label = new Date(pickerYear, m, 1).toLocaleDateString(
+                        "en-GB",
+                        { month: "short" },
+                      );
+                      return (
+                        <button
+                          key={m}
+                          onClick={() => {
+                            setCursor(new Date(pickerYear, m, 1));
+                            setPickerOpen(false);
+                          }}
+                          className={`h-9 rounded-md text-sm font-medium border transition-colors ${
+                            isCurrent
+                              ? "bg-primary text-primary-foreground border-primary"
+                              : isToday
+                                ? "border-primary/40 text-primary hover:bg-accent"
+                                : "border-transparent hover:bg-accent"
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
             <button
               onClick={() => setCursor(startOfMonth(TODAY))}
