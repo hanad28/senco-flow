@@ -114,6 +114,26 @@ function NeedsView() {
                       );
                     })}
                   </div>
+
+                  {n.capability === "cannot" && (
+                    <div className="mt-3 rounded-md border border-urgent/40 bg-urgent/5 p-3 space-y-1.5">
+                      <label className="flex items-center gap-1.5 text-xs font-semibold text-urgent">
+                        <AlertTriangle className="h-3.5 w-3.5" />
+                        Rationale — required
+                      </label>
+                      <textarea
+                        value={n.cannotRationale ?? ""}
+                        onChange={(e) => setCannotRationale(c.id, n.id, e.target.value)}
+                        rows={2}
+                        required
+                        aria-invalid={(n.cannotRationale ?? "").trim().length === 0 || undefined}
+                        placeholder="Briefly explain why the school cannot meet this need."
+                        className={`w-full rounded-md border bg-surface p-2.5 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring/40 ${
+                          (n.cannotRationale ?? "").trim().length === 0 ? "border-urgent/50" : ""
+                        }`}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </li>
