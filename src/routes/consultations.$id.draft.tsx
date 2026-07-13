@@ -467,4 +467,3 @@ function LetterPreview({ c }: { c: Consultation }) {
     </div>
   );
 }
-}
