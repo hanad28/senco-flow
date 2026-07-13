@@ -85,7 +85,7 @@ export function GlobalSearchOverlay() {
         id: s.id,
         title: s.title,
         subtitle: `${domainLabel[s.domain]} · ${capabilityLabel[s.capability]}`,
-        to: { pathname: "/templates", hash: "tab=templates" },
+        to: { pathname: "/templates", hash: `tab=templates&snippet=${s.id}` },
       }));
 
     const er: EvidenceResult[] = evidence
