@@ -126,7 +126,7 @@ function Dashboard() {
   const [page, setPage] = useState(1);
   useEffect(() => {
     setPage(1);
-  }, [statusFilter]);
+  }, [statusFilter, query]);
   const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const pageRows = useMemo(
