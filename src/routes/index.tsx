@@ -135,7 +135,7 @@ function Dashboard() {
               />
             </div>
             <div className="flex gap-1">
-              {(["All", "New", "Reviewing", "Drafting", "Submitted"] as const).map((s) => (
+              {(["Open", "New", "Reviewing", "Drafting", "Submitted", "All"] as const).map((s) => (
                 <button
                   key={s}
                   onClick={() => setStatusFilter(s)}
