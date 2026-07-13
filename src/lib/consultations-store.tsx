@@ -331,6 +331,16 @@ const seedConsultations: Consultation[] = [
       ["Precision teaching for spelling and number facts, 5×10 min weekly", "full", "cognition"],
     ],
   ),
+  hist(
+    "c-2416", "Pupil P", "Year 6", "Lambeth LA", "A. Cole",
+    "2026-05-10", "2026-05-25",
+    "Pupil P (Y6) — SLCN with fine-motor needs. Response filed exactly on the statutory deadline day; provision agreed in full within existing SEN budget.",
+    [
+      ["SaLT-devised individual programme via trained TA, 3×15 min weekly", "full", "communication"],
+      ["OT-devised fine-motor programme, 4×15 min weekly", "full", "sensory"],
+      ["Precision teaching for spelling, 5×10 min weekly", "partial", "cognition"],
+    ],
+  ),
 ];
 
 type Ctx = {

@@ -80,36 +80,45 @@ function ConsultationDetail() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <section className="bg-surface border rounded-lg overflow-hidden">
-              <header className="px-5 py-4 border-b flex items-center justify-between">
-                <div>
-                  <h2 className="font-semibold">Received documents</h2>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {c.documents.length} files — {c.documents.reduce((s, d) => s + d.pages, 0)} pages total
-                  </p>
-                </div>
-              </header>
-              <ul className="divide-y">
-                {c.documents.map((d) => (
-                  <li key={d.id} className="flex items-start gap-4 px-5 py-3 hover:bg-muted/20">
-                    <div className="h-10 w-10 mt-0.5 rounded bg-primary/5 border border-primary/10 grid place-items-center text-primary shrink-0">
-                      <FileText className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium">
-                        {d.author}
-                        <span className="text-muted-foreground font-normal"> · {professionForKind(d.kind)}</span>
+            {c.documents.length > 0 ? (
+              <section className="bg-surface border rounded-lg overflow-hidden">
+                <header className="px-5 py-4 border-b flex items-center justify-between">
+                  <div>
+                    <h2 className="font-semibold">Received documents</h2>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {c.documents.length} files — {c.documents.reduce((s, d) => s + d.pages, 0)} pages total
+                    </p>
+                  </div>
+                </header>
+                <ul className="divide-y">
+                  {c.documents.map((d) => (
+                    <li key={d.id} className="flex items-start gap-4 px-5 py-3 hover:bg-muted/20">
+                      <div className="h-10 w-10 mt-0.5 rounded bg-primary/5 border border-primary/10 grid place-items-center text-primary shrink-0">
+                        <FileText className="h-5 w-5" />
                       </div>
-                      <div className="text-xs text-muted-foreground mt-0.5">
-                        Advice dated {formatDate(d.date)} · {d.pages} pp.
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium">
+                          {d.author}
+                          <span className="text-muted-foreground font-normal"> · {professionForKind(d.kind)}</span>
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-0.5">
+                          Advice dated {formatDate(d.date)} · {d.pages} pp.
+                        </div>
+                        <div className="text-xs text-muted-foreground/80 mt-1 truncate">{d.name}</div>
                       </div>
-                      <div className="text-xs text-muted-foreground/80 mt-1 truncate">{d.name}</div>
-                    </div>
-                    <button className="text-xs text-muted-foreground hover:text-foreground shrink-0">Open</button>
-                  </li>
-                ))}
-              </ul>
-            </section>
+                      <button className="text-xs text-muted-foreground hover:text-foreground shrink-0">Open</button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : (
+              <section className="bg-surface border rounded-lg px-5 py-4">
+                <h2 className="font-semibold text-sm">Received documents</h2>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Documents not retained for historical records.
+                </p>
+              </section>
+            )}
           </div>
 
           <aside className="space-y-6">

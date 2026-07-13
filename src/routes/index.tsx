@@ -55,7 +55,7 @@ function SortHeader({
 function Dashboard() {
   const { consultations } = useConsultations();
   const [query, setQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All">("All");
+  const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All" | "Open">("Open");
   const [sortKey, setSortKey] = useState<SortKey>("daysLeft");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
@@ -67,7 +67,8 @@ function Dashboard() {
   const rows = useMemo(() => {
     return withDeadlines
       .filter((c) =>
-        (statusFilter === "All" || c.status === statusFilter) &&
+        (statusFilter === "All" ||
+          (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter)) &&
         (query === "" ||
           c.pupilRef.toLowerCase().includes(query.toLowerCase()) ||
           c.localAuthority.toLowerCase().includes(query.toLowerCase())),
@@ -134,7 +135,7 @@ function Dashboard() {
               />
             </div>
             <div className="flex gap-1">
-              {(["All", "New", "Reviewing", "Drafting", "Submitted"] as const).map((s) => (
+              {(["Open", "New", "Reviewing", "Drafting", "Submitted", "All"] as const).map((s) => (
                 <button
                   key={s}
                   onClick={() => setStatusFilter(s)}
