@@ -200,9 +200,11 @@ function DraftView() {
 // Compact dropdown of template snippets applicable to this need's capability.
 function TemplateInsertMenu({
   capability,
+  tokens,
   onInsert,
 }: {
   capability: NeedCapability;
+  tokens: { pupil: string; yearGroup: string; localAuthority: string };
   onInsert: (text: string, title: string) => void;
 }) {
   const { snippets } = useTemplates();
