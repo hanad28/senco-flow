@@ -106,6 +106,20 @@ function DraftView() {
           </div>
         </div>
 
+        {missingRationale.length > 0 && (
+          <div className="flex items-start gap-3 rounded-lg border border-urgent/40 bg-urgent/10 px-4 py-3 text-sm text-urgent">
+            <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+            <div>
+              <div className="font-semibold">
+                Rationale required for {missingRationale.length} “Cannot meet” need{missingRationale.length === 1 ? "" : "s"}
+              </div>
+              <div className="text-xs opacity-90 mt-0.5">
+                A short written rationale must be provided for each need the school cannot meet before the response can be submitted.
+              </div>
+            </div>
+          </div>
+        )}
+
         {view === "edit" ? (
           <ol className="space-y-4">
             {c.needs.map((n, i) => (
