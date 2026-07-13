@@ -67,7 +67,8 @@ function Dashboard() {
   const rows = useMemo(() => {
     return withDeadlines
       .filter((c) =>
-        (statusFilter === "All" || c.status === statusFilter) &&
+        (statusFilter === "All" ||
+          (statusFilter === "Open" ? c.status !== "Submitted" : c.status === statusFilter)) &&
         (query === "" ||
           c.pupilRef.toLowerCase().includes(query.toLowerCase()) ||
           c.localAuthority.toLowerCase().includes(query.toLowerCase())),
