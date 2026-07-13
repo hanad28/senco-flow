@@ -55,7 +55,7 @@ function SortHeader({
 function Dashboard() {
   const { consultations } = useConsultations();
   const [query, setQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All">("All");
+  const [statusFilter, setStatusFilter] = useState<ConsultationStatus | "All" | "Open">("Open");
   const [sortKey, setSortKey] = useState<SortKey>("daysLeft");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
