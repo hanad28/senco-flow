@@ -1,7 +1,7 @@
 // FamilyCaseProvider — all state for the family workspace demo.
 // Session-only (no localStorage for case content); includes reset-to-seed.
 
-import { createContext, useCallback, useContext, useMemo, useReducer, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useReducer, type Dispatch, type ReactNode } from "react";
 import { FAMILY_STATUTORY, familyDeadlineIso } from "./family-config";
 
 export type PlanSection = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H1" | "H2" | "I" | "J" | "K";
@@ -522,7 +522,7 @@ function reducer(state: FamilyCase, action: Action): FamilyCase {
 
 type Ctx = {
   state: FamilyCase;
-  dispatch: React.Dispatch<Action>;
+  dispatch: Dispatch<Action>;
   reset: () => void;
 };
 const CaseCtx = createContext<Ctx | null>(null);
