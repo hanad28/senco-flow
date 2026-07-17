@@ -12,13 +12,25 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as FamilyRouteImport } from './routes/family'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FamilyIndexRouteImport } from './routes/family.index'
+import { Route as FamilyHelpRouteImport } from './routes/family.help'
 import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
 import { Route as ConsultationsIdIndexRouteImport } from './routes/consultations.$id.index'
+import { Route as FamilyCasesIdRouteImport } from './routes/family.cases.$id'
 import { Route as ConsultationsIdSubmitRouteImport } from './routes/consultations.$id.submit'
 import { Route as ConsultationsIdNeedsRouteImport } from './routes/consultations.$id.needs'
 import { Route as ConsultationsIdDraftRouteImport } from './routes/consultations.$id.draft'
+import { Route as FamilyCasesIdIndexRouteImport } from './routes/family.cases.$id.index'
+import { Route as FamilyCasesIdSupportRouteImport } from './routes/family.cases.$id.support'
+import { Route as FamilyCasesIdResponseRouteImport } from './routes/family.cases.$id.response'
+import { Route as FamilyCasesIdPlanRouteImport } from './routes/family.cases.$id.plan'
+import { Route as FamilyCasesIdIssuesRouteImport } from './routes/family.cases.$id.issues'
+import { Route as FamilyCasesIdDocumentsRouteImport } from './routes/family.cases.$id.documents'
+import { Route as FamilyCasesIdConfirmationRouteImport } from './routes/family.cases.$id.confirmation'
+import { Route as FamilyCasesIdAssistantRouteImport } from './routes/family.cases.$id.assistant'
 
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
@@ -35,6 +47,11 @@ const ReportsRoute = ReportsRouteImport.update({
   path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FamilyRoute = FamilyRouteImport.update({
+  id: '/family',
+  path: '/family',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
@@ -45,6 +62,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FamilyIndexRoute = FamilyIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FamilyRoute,
+} as any)
+const FamilyHelpRoute = FamilyHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => FamilyRoute,
+} as any)
 const ConsultationsIdRoute = ConsultationsIdRouteImport.update({
   id: '/consultations/$id',
   path: '/consultations/$id',
@@ -54,6 +81,11 @@ const ConsultationsIdIndexRoute = ConsultationsIdIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ConsultationsIdRoute,
+} as any)
+const FamilyCasesIdRoute = FamilyCasesIdRouteImport.update({
+  id: '/cases/$id',
+  path: '/cases/$id',
+  getParentRoute: () => FamilyRoute,
 } as any)
 const ConsultationsIdSubmitRoute = ConsultationsIdSubmitRouteImport.update({
   id: '/submit',
@@ -70,18 +102,71 @@ const ConsultationsIdDraftRoute = ConsultationsIdDraftRouteImport.update({
   path: '/draft',
   getParentRoute: () => ConsultationsIdRoute,
 } as any)
+const FamilyCasesIdIndexRoute = FamilyCasesIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdSupportRoute = FamilyCasesIdSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdResponseRoute = FamilyCasesIdResponseRouteImport.update({
+  id: '/response',
+  path: '/response',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdPlanRoute = FamilyCasesIdPlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdIssuesRoute = FamilyCasesIdIssuesRouteImport.update({
+  id: '/issues',
+  path: '/issues',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdDocumentsRoute = FamilyCasesIdDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdConfirmationRoute =
+  FamilyCasesIdConfirmationRouteImport.update({
+    id: '/confirmation',
+    path: '/confirmation',
+    getParentRoute: () => FamilyCasesIdRoute,
+  } as any)
+const FamilyCasesIdAssistantRoute = FamilyCasesIdAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/family': typeof FamilyRouteWithChildren
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
+  '/family/help': typeof FamilyHelpRoute
+  '/family/': typeof FamilyIndexRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
+  '/family/cases/$id': typeof FamilyCasesIdRouteWithChildren
   '/consultations/$id/': typeof ConsultationsIdIndexRoute
+  '/family/cases/$id/assistant': typeof FamilyCasesIdAssistantRoute
+  '/family/cases/$id/confirmation': typeof FamilyCasesIdConfirmationRoute
+  '/family/cases/$id/documents': typeof FamilyCasesIdDocumentsRoute
+  '/family/cases/$id/issues': typeof FamilyCasesIdIssuesRoute
+  '/family/cases/$id/plan': typeof FamilyCasesIdPlanRoute
+  '/family/cases/$id/response': typeof FamilyCasesIdResponseRoute
+  '/family/cases/$id/support': typeof FamilyCasesIdSupportRoute
+  '/family/cases/$id/': typeof FamilyCasesIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,37 +174,71 @@ export interface FileRoutesByTo {
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/family/help': typeof FamilyHelpRoute
+  '/family': typeof FamilyIndexRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
   '/consultations/$id': typeof ConsultationsIdIndexRoute
+  '/family/cases/$id/assistant': typeof FamilyCasesIdAssistantRoute
+  '/family/cases/$id/confirmation': typeof FamilyCasesIdConfirmationRoute
+  '/family/cases/$id/documents': typeof FamilyCasesIdDocumentsRoute
+  '/family/cases/$id/issues': typeof FamilyCasesIdIssuesRoute
+  '/family/cases/$id/plan': typeof FamilyCasesIdPlanRoute
+  '/family/cases/$id/response': typeof FamilyCasesIdResponseRoute
+  '/family/cases/$id/support': typeof FamilyCasesIdSupportRoute
+  '/family/cases/$id': typeof FamilyCasesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/family': typeof FamilyRouteWithChildren
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
+  '/family/help': typeof FamilyHelpRoute
+  '/family/': typeof FamilyIndexRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
+  '/family/cases/$id': typeof FamilyCasesIdRouteWithChildren
   '/consultations/$id/': typeof ConsultationsIdIndexRoute
+  '/family/cases/$id/assistant': typeof FamilyCasesIdAssistantRoute
+  '/family/cases/$id/confirmation': typeof FamilyCasesIdConfirmationRoute
+  '/family/cases/$id/documents': typeof FamilyCasesIdDocumentsRoute
+  '/family/cases/$id/issues': typeof FamilyCasesIdIssuesRoute
+  '/family/cases/$id/plan': typeof FamilyCasesIdPlanRoute
+  '/family/cases/$id/response': typeof FamilyCasesIdResponseRoute
+  '/family/cases/$id/support': typeof FamilyCasesIdSupportRoute
+  '/family/cases/$id/': typeof FamilyCasesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/calendar'
+    | '/family'
     | '/reports'
     | '/settings'
     | '/templates'
     | '/consultations/$id'
+    | '/family/help'
+    | '/family/'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
+    | '/family/cases/$id'
     | '/consultations/$id/'
+    | '/family/cases/$id/assistant'
+    | '/family/cases/$id/confirmation'
+    | '/family/cases/$id/documents'
+    | '/family/cases/$id/issues'
+    | '/family/cases/$id/plan'
+    | '/family/cases/$id/response'
+    | '/family/cases/$id/support'
+    | '/family/cases/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -127,27 +246,50 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/templates'
+    | '/family/help'
+    | '/family'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
     | '/consultations/$id'
+    | '/family/cases/$id/assistant'
+    | '/family/cases/$id/confirmation'
+    | '/family/cases/$id/documents'
+    | '/family/cases/$id/issues'
+    | '/family/cases/$id/plan'
+    | '/family/cases/$id/response'
+    | '/family/cases/$id/support'
+    | '/family/cases/$id'
   id:
     | '__root__'
     | '/'
     | '/calendar'
+    | '/family'
     | '/reports'
     | '/settings'
     | '/templates'
     | '/consultations/$id'
+    | '/family/help'
+    | '/family/'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
+    | '/family/cases/$id'
     | '/consultations/$id/'
+    | '/family/cases/$id/assistant'
+    | '/family/cases/$id/confirmation'
+    | '/family/cases/$id/documents'
+    | '/family/cases/$id/issues'
+    | '/family/cases/$id/plan'
+    | '/family/cases/$id/response'
+    | '/family/cases/$id/support'
+    | '/family/cases/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
+  FamilyRoute: typeof FamilyRouteWithChildren
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRoute
   TemplatesRoute: typeof TemplatesRoute
@@ -177,6 +319,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/family': {
+      id: '/family'
+      path: '/family'
+      fullPath: '/family'
+      preLoaderRoute: typeof FamilyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/calendar': {
       id: '/calendar'
       path: '/calendar'
@@ -191,6 +340,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/family/': {
+      id: '/family/'
+      path: '/'
+      fullPath: '/family/'
+      preLoaderRoute: typeof FamilyIndexRouteImport
+      parentRoute: typeof FamilyRoute
+    }
+    '/family/help': {
+      id: '/family/help'
+      path: '/help'
+      fullPath: '/family/help'
+      preLoaderRoute: typeof FamilyHelpRouteImport
+      parentRoute: typeof FamilyRoute
+    }
     '/consultations/$id': {
       id: '/consultations/$id'
       path: '/consultations/$id'
@@ -204,6 +367,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/consultations/$id/'
       preLoaderRoute: typeof ConsultationsIdIndexRouteImport
       parentRoute: typeof ConsultationsIdRoute
+    }
+    '/family/cases/$id': {
+      id: '/family/cases/$id'
+      path: '/cases/$id'
+      fullPath: '/family/cases/$id'
+      preLoaderRoute: typeof FamilyCasesIdRouteImport
+      parentRoute: typeof FamilyRoute
     }
     '/consultations/$id/submit': {
       id: '/consultations/$id/submit'
@@ -226,8 +396,105 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsultationsIdDraftRouteImport
       parentRoute: typeof ConsultationsIdRoute
     }
+    '/family/cases/$id/': {
+      id: '/family/cases/$id/'
+      path: '/'
+      fullPath: '/family/cases/$id/'
+      preLoaderRoute: typeof FamilyCasesIdIndexRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/support': {
+      id: '/family/cases/$id/support'
+      path: '/support'
+      fullPath: '/family/cases/$id/support'
+      preLoaderRoute: typeof FamilyCasesIdSupportRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/response': {
+      id: '/family/cases/$id/response'
+      path: '/response'
+      fullPath: '/family/cases/$id/response'
+      preLoaderRoute: typeof FamilyCasesIdResponseRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/plan': {
+      id: '/family/cases/$id/plan'
+      path: '/plan'
+      fullPath: '/family/cases/$id/plan'
+      preLoaderRoute: typeof FamilyCasesIdPlanRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/issues': {
+      id: '/family/cases/$id/issues'
+      path: '/issues'
+      fullPath: '/family/cases/$id/issues'
+      preLoaderRoute: typeof FamilyCasesIdIssuesRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/documents': {
+      id: '/family/cases/$id/documents'
+      path: '/documents'
+      fullPath: '/family/cases/$id/documents'
+      preLoaderRoute: typeof FamilyCasesIdDocumentsRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/confirmation': {
+      id: '/family/cases/$id/confirmation'
+      path: '/confirmation'
+      fullPath: '/family/cases/$id/confirmation'
+      preLoaderRoute: typeof FamilyCasesIdConfirmationRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/assistant': {
+      id: '/family/cases/$id/assistant'
+      path: '/assistant'
+      fullPath: '/family/cases/$id/assistant'
+      preLoaderRoute: typeof FamilyCasesIdAssistantRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
   }
 }
+
+interface FamilyCasesIdRouteChildren {
+  FamilyCasesIdAssistantRoute: typeof FamilyCasesIdAssistantRoute
+  FamilyCasesIdConfirmationRoute: typeof FamilyCasesIdConfirmationRoute
+  FamilyCasesIdDocumentsRoute: typeof FamilyCasesIdDocumentsRoute
+  FamilyCasesIdIssuesRoute: typeof FamilyCasesIdIssuesRoute
+  FamilyCasesIdPlanRoute: typeof FamilyCasesIdPlanRoute
+  FamilyCasesIdResponseRoute: typeof FamilyCasesIdResponseRoute
+  FamilyCasesIdSupportRoute: typeof FamilyCasesIdSupportRoute
+  FamilyCasesIdIndexRoute: typeof FamilyCasesIdIndexRoute
+}
+
+const FamilyCasesIdRouteChildren: FamilyCasesIdRouteChildren = {
+  FamilyCasesIdAssistantRoute: FamilyCasesIdAssistantRoute,
+  FamilyCasesIdConfirmationRoute: FamilyCasesIdConfirmationRoute,
+  FamilyCasesIdDocumentsRoute: FamilyCasesIdDocumentsRoute,
+  FamilyCasesIdIssuesRoute: FamilyCasesIdIssuesRoute,
+  FamilyCasesIdPlanRoute: FamilyCasesIdPlanRoute,
+  FamilyCasesIdResponseRoute: FamilyCasesIdResponseRoute,
+  FamilyCasesIdSupportRoute: FamilyCasesIdSupportRoute,
+  FamilyCasesIdIndexRoute: FamilyCasesIdIndexRoute,
+}
+
+const FamilyCasesIdRouteWithChildren = FamilyCasesIdRoute._addFileChildren(
+  FamilyCasesIdRouteChildren,
+)
+
+interface FamilyRouteChildren {
+  FamilyHelpRoute: typeof FamilyHelpRoute
+  FamilyIndexRoute: typeof FamilyIndexRoute
+  FamilyCasesIdRoute: typeof FamilyCasesIdRouteWithChildren
+}
+
+const FamilyRouteChildren: FamilyRouteChildren = {
+  FamilyHelpRoute: FamilyHelpRoute,
+  FamilyIndexRoute: FamilyIndexRoute,
+  FamilyCasesIdRoute: FamilyCasesIdRouteWithChildren,
+}
+
+const FamilyRouteWithChildren =
+  FamilyRoute._addFileChildren(FamilyRouteChildren)
 
 interface ConsultationsIdRouteChildren {
   ConsultationsIdDraftRoute: typeof ConsultationsIdDraftRoute
@@ -250,6 +517,7 @@ const ConsultationsIdRouteWithChildren = ConsultationsIdRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
+  FamilyRoute: FamilyRouteWithChildren,
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRoute,
   TemplatesRoute: TemplatesRoute,
