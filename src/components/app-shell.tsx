@@ -19,6 +19,7 @@ import { calendarDaysRemaining } from "@/lib/working-days";
 import { useSidebarCollapsed } from "@/hooks/use-sidebar-collapsed";
 import { useSearchOverlay } from "@/lib/search-store";
 import { GlobalSearchOverlay } from "@/components/global-search";
+import { WorkspaceSwitcher } from "@/components/workspace-switcher";
 
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutGrid },
@@ -182,6 +183,7 @@ export function AppShell({
                 ⌘K
               </kbd>
             </button>
+            <WorkspaceSwitcher current="school" />
             {actions}
             <NotificationsBell />
           </div>
