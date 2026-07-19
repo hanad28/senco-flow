@@ -31,10 +31,9 @@ Switch via `WorkspaceSwitcher`. Deadline rule (both workspaces): **15 calendar d
 
 ```
 senco-flow/
-├── README.md                 Points to docs/
+├── README.md                 Product overview + quick start + doc index
 ├── AGENTS.md                 Lovable sync constraints (root — required by Lovable)
-├── docs/                     All project documentation
-│   ├── README.md             Product overview + quick start
+├── docs/                     Project documentation
 │   ├── CODEBASE_MAP.md       This map
 │   ├── ROUTING.md            TanStack route conventions
 │   └── DEADLINES.md          Calendar-day deadline rule
@@ -147,4 +146,4 @@ Routing conventions: `docs/ROUTING.md`. Never invent Next.js `pages/` or `app/` 
 | Exports | `letter-export.ts`, `family-letter-export.ts` |
 | New routes | `src/routes/` + `docs/ROUTING.md` |
 | Agent / Lovable rules | `AGENTS.md` (repo root) |
-| Doc index | `docs/README.md` |
+| Doc index | `README.md` (repo root) |
