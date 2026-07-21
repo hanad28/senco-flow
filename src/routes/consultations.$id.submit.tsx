@@ -169,6 +169,24 @@ function SubmitView() {
           </p>
         </div>
 
+        {c.status !== "Submitted" && !submitted && (
+          <div
+            className={`rounded-md px-4 py-3 border text-sm ${
+              tone === "urgent"
+                ? "bg-urgent/10 border-urgent/30 text-urgent"
+                : tone === "warn"
+                  ? "bg-warn/15 border-warn/40 text-warn-foreground"
+                  : "bg-ok/10 border-ok/30 text-ok"
+            }`}
+          >
+            <div className="flex items-center gap-2 font-semibold">
+              {tone === "urgent" && <AlertTriangle className="h-4 w-4" />}
+              {deadlineLabel}
+            </div>
+            <div className="text-xs opacity-80 mt-0.5">Statutory 15-day response window (minimum)</div>
+          </div>
+        )}
+
         <section className="bg-surface border rounded-lg overflow-hidden">
           <div className="px-6 py-4 border-b grid grid-cols-2 md:grid-cols-4 gap-4">
             <Meta label="Pupil" value={`${c.pupilRef} (${c.yearGroup})`} />
