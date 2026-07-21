@@ -81,20 +81,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "EHCP Response — SENCO consultation workspace" },
+      { title: "Dashboard — EHCP Response" },
       {
         name: "description",
         content:
-          "Manage EHC needs assessment consultations from local authorities: track deadlines, review reports, and draft statutory responses.",
+          "All incoming EHC needs assessment consultations, sorted by deadline.",
       },
-      { property: "og:title", content: "EHCP Response — SENCO consultation workspace" },
+      { property: "og:title", content: "Dashboard — EHCP Response" },
       {
         property: "og:description",
         content:
-          "A calm, professional workspace for school SENCOs to respond to EHC needs assessment consultations within statutory deadlines.",
+          "All incoming EHC needs assessment consultations, sorted by deadline.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Dashboard — EHCP Response" },
+      { name: "twitter:description", content: "All incoming EHC needs assessment consultations, sorted by deadline." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/777ace42-c84a-4a65-95d8-6da2179134ce/id-preview-c5a5e644--87e68ed3-56e3-4b05-ba77-366e450c076e.lovable.app-1784462328007.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/777ace42-c84a-4a65-95d8-6da2179134ce/id-preview-c5a5e644--87e68ed3-56e3-4b05-ba77-366e450c076e.lovable.app-1784462328007.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
