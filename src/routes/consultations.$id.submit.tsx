@@ -141,6 +141,15 @@ function SubmitView() {
     cannot: c.needs.filter((n) => n.capability === "cannot").length,
   };
 
+  const daysLeft = calendarDaysRemaining(c.receivedOn);
+  const tone = deadlineTone(daysLeft);
+  const deadlineLabel =
+    daysLeft < 0
+      ? `Overdue by ${Math.abs(daysLeft)} day${Math.abs(daysLeft) === 1 ? "" : "s"}`
+      : daysLeft === 0
+        ? "Response due today"
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} until response due`;
+
   return (
     <AppShell
       breadcrumbs={[
