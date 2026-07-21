@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
-import { useConsultations, formatDate, type NeedCapability } from "@/lib/consultations-store";
+import { useConsultations, formatDate, deadlineTone, type NeedCapability } from "@/lib/consultations-store";
 import { useSchoolProfile } from "@/lib/school-profile-store";
 import { downloadResponseLetter } from "@/lib/letter-export";
-import { CheckCircle2, ArrowLeft, Send, FileCheck2, AlertTriangle, XCircle, Download } from "lucide-react";
+import { calendarDaysRemaining } from "@/lib/working-days";
+import { CheckCircle2, ArrowLeft, Send, FileCheck2, AlertTriangle, XCircle, Download, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/submit")({
   head: ({ params }) => ({
@@ -140,6 +141,15 @@ function SubmitView() {
     cannot: c.needs.filter((n) => n.capability === "cannot").length,
   };
 
+  const daysLeft = calendarDaysRemaining(c.receivedOn);
+  const tone = deadlineTone(daysLeft);
+  const deadlineLabel =
+    daysLeft < 0
+      ? `Overdue by ${Math.abs(daysLeft)} day${Math.abs(daysLeft) === 1 ? "" : "s"}`
+      : daysLeft === 0
+        ? "Response due today"
+        : `${daysLeft} day${daysLeft === 1 ? "" : "s"} until response due`;
+
   return (
     <AppShell
       breadcrumbs={[
@@ -158,6 +168,24 @@ function SubmitView() {
             Confirm the summary below before submitting your response to {c.localAuthority}.
           </p>
         </div>
+
+        {c.status !== "Submitted" && !submitted && (
+          <div
+            className={`rounded-md px-4 py-3 border text-sm ${
+              tone === "urgent"
+                ? "bg-urgent/10 border-urgent/30 text-urgent"
+                : tone === "warn"
+                  ? "bg-warn/15 border-warn/40 text-warn-foreground"
+                  : "bg-ok/10 border-ok/30 text-ok"
+            }`}
+          >
+            <div className="flex items-center gap-2 font-semibold">
+              {tone === "urgent" && <AlertTriangle className="h-4 w-4" />}
+              {deadlineLabel}
+            </div>
+            <div className="text-xs opacity-80 mt-0.5">Statutory 15-day response window (minimum)</div>
+          </div>
+        )}
 
         <section className="bg-surface border rounded-lg overflow-hidden">
           <div className="px-6 py-4 border-b grid grid-cols-2 md:grid-cols-4 gap-4">
