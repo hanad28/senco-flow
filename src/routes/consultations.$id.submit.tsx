@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
-import { useConsultations, formatDate, type NeedCapability } from "@/lib/consultations-store";
+import { useConsultations, formatDate, deadlineTone, type NeedCapability } from "@/lib/consultations-store";
 import { useSchoolProfile } from "@/lib/school-profile-store";
 import { downloadResponseLetter } from "@/lib/letter-export";
-import { CheckCircle2, ArrowLeft, Send, FileCheck2, AlertTriangle, XCircle, Download } from "lucide-react";
+import { calendarDaysRemaining } from "@/lib/working-days";
+import { CheckCircle2, ArrowLeft, Send, FileCheck2, AlertTriangle, XCircle, Download, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/submit")({
   head: ({ params }) => ({
