@@ -31,8 +31,6 @@ export const Route = createFileRoute("/calendar")({
   component: CalendarPage,
 });
 
-// Fixed "today" for the prototype to match the rest of the app.
-const TODAY = new Date(2026, 6, 12); // 12 July 2026
 
 type Tone = "urgent" | "warn" | "ok";
 
@@ -74,10 +72,10 @@ type Entry = {
 
 function CalendarPage() {
   const { consultations } = useConsultations();
-  const [cursor, setCursor] = useState<Date>(startOfMonth(TODAY));
+  const [cursor, setCursor] = useState<Date>(startOfMonth(new Date()));
   const [showSubmitted, setShowSubmitted] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
-  const [pickerYear, setPickerYear] = useState<number>(TODAY.getFullYear());
+  const [pickerYear, setPickerYear] = useState<number>(new Date().getFullYear());
 
   const entriesByDay = useMemo(() => {
     const map = new Map<string, Entry[]>();
@@ -85,7 +83,7 @@ function CalendarPage() {
       if (!showSubmitted && c.status === "Submitted") continue;
       const dl = calendarDeadlineDate(c.receivedOn);
       const key = isoKey(dl);
-      const daysLeft = calendarDaysRemaining(c.receivedOn, TODAY);
+      const daysLeft = calendarDaysRemaining(c.receivedOn);
       const entry: Entry = { consultation: c, daysLeft, tone: deadlineTone(daysLeft) };
       const arr = map.get(key) ?? [];
       arr.push(entry);
@@ -188,7 +186,7 @@ function CalendarPage() {
                       const isCurrent =
                         m === cursor.getMonth() && pickerYear === cursor.getFullYear();
                       const isToday =
-                        m === TODAY.getMonth() && pickerYear === TODAY.getFullYear();
+                        m === new Date().getMonth() && pickerYear === new Date().getFullYear();
                       const label = new Date(pickerYear, m, 1).toLocaleDateString(
                         "en-GB",
                         { month: "short" },
@@ -217,7 +215,7 @@ function CalendarPage() {
               </Popover>
             </div>
             <button
-              onClick={() => setCursor(startOfMonth(TODAY))}
+              onClick={() => setCursor(startOfMonth(new Date()))}
               className="text-xs font-medium text-primary hover:underline"
             >
               Jump to today
@@ -235,7 +233,7 @@ function CalendarPage() {
           <div className="grid grid-cols-7 grid-rows-6">
             {cells.map((day, i) => {
               const inMonth = day.getMonth() === cursor.getMonth();
-              const isToday = isSameDay(day, TODAY);
+              const isToday = isSameDay(day, new Date());
               const entries = entriesByDay.get(isoKey(day)) ?? [];
               const isWeekend = day.getDay() === 0 || day.getDay() === 6;
               return (
