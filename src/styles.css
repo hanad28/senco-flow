@@ -48,6 +48,21 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Unisen marketing landing (ditto clone) — values set on .unisen-landing */
+  --color-color-001: var(--color-001);
+  --color-color-002: var(--color-002);
+  --color-color-003: var(--color-003);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-clr-0: var(--clr-0);
+  --color-clr-1: var(--clr-1);
+  --color-clr-2: var(--clr-2);
+  --color-clr-3: var(--clr-3);
+  --color-clr-4: var(--clr-4);
+  --color-clr-5: var(--clr-5);
+  --color-clr-6: var(--clr-6);
+  --color-clr-7: var(--clr-7);
 }
 
 :root {

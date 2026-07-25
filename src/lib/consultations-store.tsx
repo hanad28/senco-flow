@@ -1,5 +1,6 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
 import type { NeedDomain } from "@/lib/school-profile-store";
+import { usePersistentSnapshot } from "@/lib/use-persistent-snapshot";
 
 // ---------- Activity log ----------
 export type ActivityAction =
@@ -459,7 +460,7 @@ type Ctx = {
 const ConsultationsContext = createContext<Ctx | null>(null);
 
 export function ConsultationsProvider({ children }: { children: ReactNode }) {
-  const [consultations, setConsultations] = useState<Consultation[]>(seedNormalised);
+  const [consultations, setConsultations] = usePersistentSnapshot<Consultation[]>("consultations", seedNormalised);
 
   const withActivity = useCallback(
     (id: string, action: ActivityAction, detail?: string) =>
@@ -468,7 +469,7 @@ export function ConsultationsProvider({ children }: { children: ReactNode }) {
           c.id === id ? { ...c, activity: appendActivity(c.activity ?? [], { action, detail }) } : c,
         ),
       ),
-    [],
+    [setConsultations],
   );
 
   const value = useMemo<Ctx>(
@@ -553,7 +554,7 @@ export function ConsultationsProvider({ children }: { children: ReactNode }) {
         ),
       logActivity: (id, action, detail) => withActivity(id, action, detail),
     }),
-    [consultations, withActivity],
+    [consultations, setConsultations, withActivity],
   );
 
   return <ConsultationsContext.Provider value={value}>{children}</ConsultationsContext.Provider>;

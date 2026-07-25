@@ -1,4 +1,5 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
+import { usePersistentSnapshot } from "./use-persistent-snapshot";
 
 export type NeedDomain =
   | "communication"
@@ -164,7 +165,7 @@ type Ctx = {
 const SchoolProfileContext = createContext<Ctx | null>(null);
 
 export function SchoolProfileProvider({ children }: { children: ReactNode }) {
-  const [profile, setProfile] = useState<SchoolProfile>(seed);
+  const [profile, setProfile] = usePersistentSnapshot<SchoolProfile>("schoolProfile", seed);
 
   const value = useMemo<Ctx>(
     () => ({
@@ -214,7 +215,7 @@ export function SchoolProfileProvider({ children }: { children: ReactNode }) {
       removeSpecialist: (id) =>
         setProfile((p) => ({ ...p, specialists: p.specialists.filter((s) => s.id !== id) })),
     }),
-    [profile],
+    [profile, setProfile],
   );
 
   return (

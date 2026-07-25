@@ -7,7 +7,16 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
+import {
+  ClerkProvider,
+  OrganizationSwitcher,
+  UserButton,
+  useAuth,
+} from "@clerk/tanstack-react-start";
+import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
+import { ConvexReactClient } from "convex/react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -15,6 +24,10 @@ import { ConsultationsProvider } from "../lib/consultations-store";
 import { SchoolProfileProvider } from "../lib/school-profile-store";
 import { TemplatesProvider } from "../lib/templates-store";
 import { SearchProvider } from "../lib/search-store";
+
+const LandingPage = lazy(() =>
+  import("../landing/landing-page").then((m) => ({ default: m.LandingPage })),
+);
 
 function NotFoundComponent() {
   return (
@@ -81,29 +94,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "EHCP Response — SENCO consultation workspace" },
+      { title: "Unisen — SEND coordination for schools & families" },
       {
         name: "description",
         content:
-          "Manage EHC needs assessment consultations from local authorities: track deadlines, review reports, and draft statutory responses.",
+          "Unisen helps schools and families run EHC needs assessments together — shared timelines, statutory deadlines, and execution assistance.",
       },
-      { property: "og:title", content: "EHCP Response — SENCO consultation workspace" },
+      { property: "og:title", content: "Unisen — SEND coordination for schools & families" },
       {
         property: "og:description",
         content:
-          "A calm, professional workspace for school SENCOs to respond to EHC needs assessment consultations within statutory deadlines.",
+          "Visibility, execution assistance, and clear communication across school and family EHC workspaces.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "512x512" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&display=swap",
       },
     ],
   }),
@@ -127,20 +144,48 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SchoolProfileProvider>
-        <TemplatesProvider>
-          <ConsultationsProvider>
-            <SearchProvider>
-              <Outlet />
-            </SearchProvider>
-          </ConsultationsProvider>
-        </TemplatesProvider>
-      </SchoolProfileProvider>
-    </QueryClientProvider>
+    <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
+      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+        <AuthLoading>
+          <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
+            Loading…
+          </div>
+        </AuthLoading>
+        <Unauthenticated>
+          <Suspense
+            fallback={
+              <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
+                Loading…
+              </div>
+            }
+          >
+            <LandingPage />
+          </Suspense>
+        </Unauthenticated>
+        <Authenticated>
+          <QueryClientProvider client={queryClient}>
+            <SchoolProfileProvider>
+              <TemplatesProvider>
+                <ConsultationsProvider>
+                  <SearchProvider>
+                    <Outlet />
+                    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border bg-background/95 p-2 shadow-lg backdrop-blur">
+                      <OrganizationSwitcher />
+                      <UserButton />
+                    </div>
+                  </SearchProvider>
+                </ConsultationsProvider>
+              </TemplatesProvider>
+            </SchoolProfileProvider>
+          </QueryClientProvider>
+        </Authenticated>
+      </ConvexProviderWithClerk>
+    </ClerkProvider>
   );
 }
