@@ -108,7 +108,7 @@ export default function CtaButton({
           </div>
 
           <p
-            className={`cta-glass-label relative z-[1] w-full px-11 text-center [font-family:var(--font-heading)] text-sm font-bold leading-[1.0625rem] whitespace-nowrap ${labelColor}`}
+            className={`cta-glass-label relative z-[1] w-full text-center [font-family:var(--font-heading)] text-sm font-bold leading-[1.0625rem] whitespace-nowrap ${labelColor}`}
           >
             {label}
           </p>

@@ -21,7 +21,7 @@ export default function TellUnisenOnceSection({
   const current = items[active] ?? items[0]!;
 
   return (
-    <section className="w-full flex relative py-20 px-5 flex-col justify-start items-center content-center shrink-0 max-lg:py-10 max-lg:px-4">
+    <section id="product" className="w-full flex relative py-20 px-5 flex-col justify-start items-center content-center shrink-0 max-lg:py-10 max-lg:px-4">
       <div className="w-full max-w-310 flex relative flex-col justify-center items-center content-center shrink-0 gap-10 overflow-clip max-lg:gap-5">
         <div className="w-full flex relative justify-start items-end content-end shrink-0 gap-5 max-lg:flex-col">
           <div className="w-[64.5%] flex relative flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-3 max-lg:w-full max-lg:grow-[initial] max-lg:basis-[initial]">

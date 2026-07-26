@@ -277,12 +277,12 @@
   mask-image: linear-gradient(180deg, transparent 0%, #000 65%, #000 100%);
 }
 
-/* Slight tuck under the seam only */
+/* Space after hero seam — next section (Why Unisen) sits clear of the edge */
 .unisen-landing .unisen-hero + section {
   position: relative;
   z-index: 2;
-  margin-top: clamp(-1.25rem, -3vh, -0.75rem);
-  padding-top: clamp(1rem, 2.5vh, 1.5rem);
+  margin-top: 0;
+  padding-top: clamp(2.5rem, 6vh, 4.5rem);
   background: transparent;
 }
 
@@ -412,6 +412,10 @@
   filter: drop-shadow(0 0.5px 0 rgba(255, 255, 255, 0.35));
 }
 
+/*
+ * Label sits in the free glass band (not the full pill width).
+ * Rest: clear the left square. Hover: clear the right square after swipe.
+ */
 .unisen-landing a.cta-glass .cta-glass-label {
   position: relative;
   z-index: 1;
@@ -419,6 +423,16 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  box-sizing: border-box;
+  /* square 2.25rem + 0.25rem inset + 0.35rem breathing room */
+  padding-left: 2.85rem;
+  padding-right: 1.1rem;
+  transition: padding var(--cta-swipe-duration) var(--cta-swipe-ease);
+}
+
+.unisen-landing a.cta-glass:hover .cta-glass-label {
+  padding-left: 1.1rem;
+  padding-right: 2.85rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -438,6 +452,13 @@
 
   .unisen-landing a.cta-glass:hover .cta-glass-arrow {
     left: 0.25rem;
+  }
+
+  .unisen-landing a.cta-glass .cta-glass-label,
+  .unisen-landing a.cta-glass:hover .cta-glass-label {
+    transition: none !important;
+    padding-left: 2.85rem;
+    padding-right: 1.1rem;
   }
 }
 
@@ -475,7 +496,8 @@
   }
 }
 
-/* Fixed header: transparent over hero, solid once scrolled */
+/* Fixed header: transparent over hero, solid once scrolled.
+   Content structure is Nexura (logo | pills + Resources | CTA). */
 .unisen-landing .unisen-nav nav {
   background: transparent !important;
   border: 0 !important;
@@ -489,7 +511,7 @@
     padding 180ms ease-out;
 }
 
-/* High-contrast nav type on bright sky (WCAG-minded) */
+/* High-contrast type on bright sky */
 .unisen-landing .unisen-nav {
   --nav-link: #ffffff;
   --nav-link-hover: #ffde59;
@@ -497,25 +519,132 @@
     0 1px 0 rgba(36, 74, 112, 0.35),
     0 1px 3px rgba(36, 74, 112, 0.55),
     0 0 12px rgba(36, 74, 112, 0.25);
+  --nav-menu-color: #ffffff;
 }
 
 .unisen-landing .unisen-nav .unisen-nav-link {
-  color: var(--nav-link) !important;
-  font-weight: 600;
+  background: transparent;
+}
+
+.unisen-landing .unisen-nav .unisen-nav-link-label,
+.unisen-landing .unisen-nav .unisen-nav-chevron {
+  color: var(--nav-link);
   text-shadow: var(--nav-link-shadow);
-  transition: color 150ms ease-out, opacity 150ms ease-out, text-shadow 150ms ease-out;
+  transition: color 150ms ease-out, text-shadow 150ms ease-out;
 }
 
-.unisen-landing .unisen-nav .unisen-nav-link:hover,
-.unisen-landing .unisen-nav .unisen-nav-link:focus-visible {
-  color: var(--nav-link-hover) !important;
+.unisen-landing .unisen-nav .unisen-nav-link:hover .unisen-nav-link-label,
+.unisen-landing .unisen-nav .unisen-nav-link:hover .unisen-nav-chevron,
+.unisen-landing .unisen-nav .unisen-nav-link:focus-visible .unisen-nav-link-label,
+.unisen-landing .unisen-nav .unisen-nav-link:focus-visible .unisen-nav-chevron {
+  color: var(--nav-link-hover);
 }
 
-.unisen-landing .unisen-nav .unisen-nav-dot {
-  background-color: var(--brand-yellow);
+.unisen-landing .unisen-nav .unisen-nav-menu-btn {
+  color: var(--nav-menu-color);
+  text-shadow: var(--nav-link-shadow);
+}
+
+/* Nav CTA — liquid glass pill (different shape from hero glass CTA) */
+.unisen-landing .unisen-nav .unisen-nav-cta-glass {
+  --nav-cta-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.55rem;
+  min-width: 8.5rem;
+  padding: 0 1.35rem;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 999px;
+  color: var(--text-primary, #244a70);
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.0625rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  /* keep label above frost overlay */
+  text-shadow: none;
+  background:
+    linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.22) 42%,
+      rgba(205, 239, 243, 0.28) 72%,
+      rgba(255, 255, 255, 0.38) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
+  -webkit-backdrop-filter: blur(22px) saturate(175%) brightness(1.05);
   box-shadow:
-    0 0 0 1px rgba(36, 74, 112, 0.2),
-    0 1px 3px rgba(36, 74, 112, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(36, 74, 112, 0.06),
+    inset 1px 0 0 rgba(255, 255, 255, 0.35),
+    0 1px 2px rgba(36, 74, 112, 0.08),
+    0 8px 22px rgba(36, 74, 112, 0.14),
+    0 3px 8px rgba(116, 196, 215, 0.16);
+  transition:
+    transform 280ms var(--nav-cta-ease),
+    box-shadow 280ms var(--nav-cta-ease);
+}
+
+.unisen-landing .unisen-nav .unisen-nav-cta-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(255, 255, 255, 0.58) 40%,
+    rgba(248, 252, 253, 0.64) 72%,
+    rgba(255, 255, 255, 0.74) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  opacity: 0;
+  transition: opacity 280ms var(--nav-cta-ease);
+}
+
+.unisen-landing .unisen-nav .unisen-nav-cta-glass:hover,
+.unisen-landing .unisen-nav .unisen-nav-cta-glass:focus-visible {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(36, 74, 112, 0.05),
+    0 4px 10px rgba(36, 74, 112, 0.1),
+    0 12px 28px rgba(36, 74, 112, 0.14);
+}
+
+.unisen-landing .unisen-nav .unisen-nav-cta-glass:hover::before,
+.unisen-landing .unisen-nav .unisen-nav-cta-glass:focus-visible::before {
+  opacity: 1;
+}
+
+.unisen-landing .unisen-nav .unisen-nav-cta-glass:active {
+  transform: translateY(0);
+}
+
+.unisen-landing .unisen-nav .unisen-nav-cta-glass--full {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unisen-landing .unisen-nav .unisen-nav-cta-glass {
+    transition: none;
+  }
+
+  .unisen-landing .unisen-nav .unisen-nav-cta-glass:hover,
+  .unisen-landing .unisen-nav .unisen-nav-cta-glass:focus-visible {
+    transform: none;
+  }
 }
 
 .unisen-landing .unisen-nav .unisen-nav-logo {
@@ -529,6 +658,7 @@
   --nav-link: var(--text-primary, #244a70);
   --nav-link-hover: var(--action-primary, #3b8ac1);
   --nav-link-shadow: none;
+  --nav-menu-color: var(--text-primary, #244a70);
 }
 
 .unisen-landing .unisen-nav.is-scrolled nav {
@@ -537,10 +667,6 @@
   box-shadow: 0 1px 0 rgba(36, 74, 112, 0.04), 0 8px 24px rgba(36, 74, 112, 0.06) !important;
   padding-top: 0.75rem !important;
   padding-bottom: 0.75rem;
-}
-
-.unisen-landing .unisen-nav.is-scrolled .unisen-nav-dot {
-  box-shadow: none;
 }
 
 .unisen-landing .unisen-nav.is-scrolled .unisen-nav-logo {

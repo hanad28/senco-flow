@@ -35,13 +35,13 @@ export default function HeroSection() {
           data-component="heading"
           dir="auto"
         >
-          Help SENCOs answer LA EHC consultations within 15 calendar days
+          One workspace for schools, SENCOs, and families
         </h1>
         <p
-          className="unisen-hero-sub mt-4 max-w-[26rem] [font-family:var(--font-body)] text-center text-balance"
+          className="unisen-hero-sub mt-4 max-w-[30rem] [font-family:var(--font-body)] text-center text-balance"
           dir="auto"
         >
-          Track LA consultations, review needs and advice, and draft statutory responses — all in one calm workspace.
+          Unisen helps everyone involved in a child&apos;s special educational needs plan stay on the same page. Track what&apos;s due, review the evidence, and draft clear responses before deadlines run out.
         </p>
         <div className="unisen-hero-cta mt-7 shrink-0">
           <CtaButton label="Get started" variant="glass" />

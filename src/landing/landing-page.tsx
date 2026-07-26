@@ -41,16 +41,26 @@ export function LandingPage() {
       return;
     }
 
-    // In-page nav anchors only — block dead multi-page Framer routes.
+    // In-page nav anchors — map Nexura-style routes onto landing sections.
+    const sectionByHref: Record<string, string> = {
+      "/pricing": "pricing",
+      "/product": "product",
+      "/integration": "product",
+      "/blog": "features",
+      "/#solution": "product",
+      "/#demo": "pricing",
+    };
+
     if (
       href.startsWith("/workflow") ||
       href === "/workflows" ||
-      href === "/pricing" ||
-      href === "/terms-conditions"
+      href === "/terms-conditions" ||
+      href in sectionByHref
     ) {
       e.preventDefault();
-      if (href === "/pricing") {
-        document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+      const sectionId = sectionByHref[href];
+      if (sectionId) {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
       }
     }
   }

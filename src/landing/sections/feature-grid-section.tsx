@@ -3,7 +3,7 @@ import { features as featuresContent } from "../content";
 /** Feature Grid section. */
 export default function FeatureGridSection({ features = featuresContent } = {}) {
   return (
-    <section className="w-full flex relative py-20 px-5 flex-col justify-start items-center content-center shrink-0 max-lg:py-10 max-lg:px-4">
+    <section id="features" className="w-full flex relative py-20 px-5 flex-col justify-start items-center content-center shrink-0 max-lg:py-10 max-lg:px-4">
       <div className="w-full max-w-310 flex relative flex-col justify-center items-center content-center shrink-0 gap-10 max-lg:gap-5">
         <div className="w-full flex relative justify-between items-end content-end shrink-0 max-lg:flex-col max-lg:justify-start max-lg:gap-5">
           <div className="w-[43.5%] flex relative flex-col justify-start items-start content-start shrink-0 gap-3 max-lg:w-full">
