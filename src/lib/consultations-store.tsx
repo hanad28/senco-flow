@@ -416,7 +416,7 @@ function seedActiveActivity(c: Consultation): ActivityEntry[] {
   return entries;
 }
 
-const seedNormalised: Consultation[] = seedConsultations.map((c) => ({
+export const seedNormalised: Consultation[] = seedConsultations.map((c) => ({
   ...c,
   activity: seedActiveActivity(c),
 }));

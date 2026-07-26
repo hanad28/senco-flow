@@ -23,7 +23,7 @@ export type PartialCannotSnippet = {
   evidenceId?: string; // links to EvidenceDoc.id
 };
 
-const seedEvidence: EvidenceDoc[] = [
+export const seedEvidence: EvidenceDoc[] = [
   {
     id: "ev-provision-map",
     name: "Provision map 2025-26.pdf",
@@ -74,7 +74,7 @@ const seedEvidence: EvidenceDoc[] = [
   },
 ];
 
-const seedSnippets: PartialCannotSnippet[] = [
+export const seedSnippets: PartialCannotSnippet[] = [
   // Communication & Interaction
   {
     id: "sn-comm-partial-1",

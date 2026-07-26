@@ -52,7 +52,7 @@ export type SchoolProfile = {
 
 const uid = (p: string) => `${p}-${Math.random().toString(36).slice(2, 8)}`;
 
-const seed: SchoolProfile = {
+export const seedSchoolProfile: SchoolProfile = {
   schoolName: "Millbrook Primary",
   schoolAddress: "14 Willow Lane, London N1 4AA",
   sendcoName: "S. Ahmed",
@@ -164,7 +164,7 @@ type Ctx = {
 const SchoolProfileContext = createContext<Ctx | null>(null);
 
 export function SchoolProfileProvider({ children }: { children: ReactNode }) {
-  const [profile, setProfile] = useState<SchoolProfile>(seed);
+  const [profile, setProfile] = useState<SchoolProfile>(seedSchoolProfile);
 
   const value = useMemo<Ctx>(
     () => ({
