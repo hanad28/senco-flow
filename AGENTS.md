@@ -30,15 +30,30 @@ Product is **Unisen** (SEND coordination). Temporary hosting + multi-remote git 
 **Demo branch pattern (already used):**
 
 - Local + `origin`: `mikhail/unisen-demo`
-- Demo remote: `unisenofficial` → `main` (same commit for Vercel default branch)
+- Demo remote: `unisenofficial` → `main` (same tree for Vercel default branch)
+
+**Vercel Hobby only builds commits authored by the linked GitHub user** (`unisenofficial`). Work commits may use Mikhail’s identity; always add a separate deploy-author commit before pushing to `unisenofficial` `main`.
 
 ```bash
-# After committing on mikhail/unisen-demo:
+# 1) Work commit (local default author — usually mwijanarko1 / Mikhail)
+git commit -m "Your feature message"
+
+# 2) Separate deploy commit authored as unisenofficial (required for Vercel)
+git -c user.name="unisenofficial" \
+    -c user.email="309063258+unisenofficial@users.noreply.github.com" \
+    commit --allow-empty -m "Trigger Vercel deploy as unisenofficial."
+
+# 3) Push both remotes (gh auth must match the remote owner)
+gh auth switch --user mwijanarko1
 git push origin mikhail/unisen-demo
+
+gh auth switch --user unisenofficial
 git push unisenofficial mikhail/unisen-demo:main
+# optional: keep feature branch tip in sync
+git push unisenofficial mikhail/unisen-demo
 ```
 
-Do **not** force-push (Lovable). Do **not** treat personal accounts as permanent company ownership.
+Do **not** force-push (Lovable). Do **not** treat personal accounts as permanent company ownership. Do **not** amend already-pushed commits just to change author — use a new empty (or real) commit with the `unisenofficial` author instead.
 
 ## Local secrets
 
