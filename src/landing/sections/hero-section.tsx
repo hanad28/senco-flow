@@ -41,7 +41,7 @@ export default function HeroSection() {
           className="unisen-hero-sub mt-4 max-w-[30rem] [font-family:var(--font-body)] text-center text-balance"
           dir="auto"
         >
-          Unisen helps everyone involved in a child&apos;s special educational needs plan stay on the same page. Track what&apos;s due, review the evidence, and draft clear responses before deadlines run out.
+          SEND work is scattered across email, forms, and spreadsheets. Unisen brings it into one place.
         </p>
         <div className="unisen-hero-cta mt-7 shrink-0">
           <CtaButton label="Get started" variant="glass" />
