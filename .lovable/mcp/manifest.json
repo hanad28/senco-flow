@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "sdk_version": "0.24.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "ehcp-response-mcp",
+      "version": "0.1.0",
+      "title": "EHCP Response"
+    },
+    "tools": [
+      {
+        "name": "list_consultations",
+        "title": "List EHC consultations",
+        "description": "List EHC needs-assessment consultations in the school workspace, with pupil ref, LA, status, receipt date, and days remaining against the 15-calendar-day (minimum) statutory window. All data is fictional prototype seed data.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "status": {
+              "default": "All",
+              "description": "Filter by status. 'Open' = not yet submitted.",
+              "type": "string",
+              "enum": [
+                "New",
+                "Reviewing",
+                "Drafting",
+                "Submitted",
+                "Open",
+                "All"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_consultation",
+        "title": "Get consultation detail",
+        "description": "Return the full detail for a single consultation by id: documents, identified needs (with capability, domain, draft response, evidence), activity log, and deadline. Fictional prototype data.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Consultation id, e.g. 'c-pupil-a'."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_section_f_templates",
+        "title": "List Section F template snippets",
+        "description": "Reusable Section F provision-response snippets for 'can meet in part' and 'cannot meet' outcomes, organised by the four statutory areas of need. Snippets may contain {{pupil}}, {{year_group}}, {{LA}} tokens.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "domain": {
+              "default": "all",
+              "description": "Filter by area of need, or 'all'.",
+              "type": "string",
+              "enum": [
+                "communication",
+                "cognition",
+                "semh",
+                "sensory",
+                "all"
+              ]
+            },
+            "capability": {
+              "default": "all",
+              "description": "Filter by outcome.",
+              "type": "string",
+              "enum": [
+                "partial",
+                "cannot",
+                "all"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_evidence",
+        "title": "List evidence documents",
+        "description": "List the school's evidence library — provision maps, staffing records, policies, training certificates — available to attach to Section F responses. Fictional prototype data.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_school_profile",
+        "title": "Get school profile",
+        "description": "Return the school's identity, provision catalogue by area of need, cohort baseline counts, staffing/capacity, and response-style preference. This is the source of truth for what the school currently offers.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
