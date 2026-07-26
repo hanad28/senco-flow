@@ -1,6 +1,5 @@
 import DittoMotion from "./ditto/DittoMotion";
 import LogoCloudSection from "./sections/logo-cloud-section";
-import GalleryShowcaseSection from "./sections/gallery-showcase-section";
 import ProductGridSection from "./sections/product-grid-section";
 import Icon from "./svgs/svg-icon";
 import Tile, { type TileData } from "./components/tile";
@@ -887,48 +886,6 @@ export default function UnisenBody() {
                         </div>
                       </div>
                       <div className="h-px block absolute inset-x-0 z-9 shrink-0">
-                        <div className="h-px flex relative justify-center items-center content-center">
-                          <div className="w-2.5 h-2.5 block relative shrink-0 overflow-hidden bg-background after:content-[''] after:block after:absolute after:inset-0 after:w-2.5 after:h-2.5" />
-                          <div className="w-[98.5%] h-full block relative grow shrink-0 basis-0 overflow-hidden max-md:w-[94.5%] md:max-lg:w-[97.5%] after:content-[''] after:block after:absolute after:top-0 after:-bottom-px after:inset-x-0 after:h-0.5" />
-                          <div className="w-2.5 h-2.5 block relative shrink-0 overflow-hidden bg-background after:content-[''] after:block after:absolute after:inset-0 after:w-2.5 after:h-2.5" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-            <section className="w-full flex relative px-5 justify-center items-center content-center shrink-0 gap-2.5 max-lg:px-1.5 max-lg:flex-col">
-              <div className="w-full max-w-312.5 flex relative py-25 px-16 flex-col justify-start items-center content-center grow shrink-0 basis-0 gap-16 max-lg:py-16 max-lg:px-5 max-lg:grow-[initial] max-lg:basis-[initial]">
-                <div className="contents min-w-0">
-                  <div className="w-full block relative max-w-150 shrink-0">
-                    <div className="flex relative max-w-full flex-col justify-center items-center content-center gap-5">
-                      <div className="w-150 flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem]">
-                        <h2 className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-[2.5rem] font-medium leading-12 tracking-[-1.6px] text-center text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-[1.75rem] max-lg:leading-[2.125rem] max-lg:tracking-[-1.12px]" data-component="heading" dir="auto">
-                          Built with SENCOs, families, and trusts.
-                        </h2>
-                      </div>
-                      <div className="w-120 flex relative flex-col justify-start shrink-0 max-md:w-[16.15rem]">
-                        <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-lg leading-[1.5625rem] tracking-[-0.54px] text-center text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-base max-lg:leading-[1.375rem] max-lg:tracking-[-0.48px]" dir="auto">
-                          From single-school teams to multi-academy trusts — the calm EHC work Unisen is designed for.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="contents min-w-0">
-                  <GalleryShowcaseSection />
-                </div>
-                <div className="contents min-w-0">
-                  <div className="h-[43.9rem] block absolute top-0 inset-x-0 z-0 shrink-0 max-md:h-[216.95rem] md:max-lg:h-[1819.3px]">
-                    <div className="h-full block relative">
-                      <div className="w-px h-[43.4rem] block absolute top-1 left-1 z-8 shrink-0 max-md:h-[216.45rem] md:max-lg:h-[1811.3px]">
-                        <div className="w-px h-full block relative overflow-hidden after:content-[''] after:block after:absolute after:inset-y-0 after:-right-px after:left-0 after:w-0.5" />
-                      </div>
-                      <div className="w-px h-[43.4rem] block absolute top-1 right-1 z-8 shrink-0 max-md:h-[216.45rem] md:max-lg:h-[1811.3px]">
-                        <div className="w-px h-full block relative overflow-hidden after:content-[''] after:block after:absolute after:inset-y-0 after:-right-px after:left-0 after:w-0.5" />
-                      </div>
-                      <div className="h-px block absolute bottom-0 inset-x-0 z-9 shrink-0">
                         <div className="h-px flex relative justify-center items-center content-center">
                           <div className="w-2.5 h-2.5 block relative shrink-0 overflow-hidden bg-background after:content-[''] after:block after:absolute after:inset-0 after:w-2.5 after:h-2.5" />
                           <div className="w-[98.5%] h-full block relative grow shrink-0 basis-0 overflow-hidden max-md:w-[94.5%] md:max-lg:w-[97.5%] after:content-[''] after:block after:absolute after:top-0 after:-bottom-px after:inset-x-0 after:h-0.5" />
