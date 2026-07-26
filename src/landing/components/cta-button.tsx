@@ -83,7 +83,7 @@ export default function CtaButton({
     return (
       <a
         className={[
-          "group/cta cta-glass h-11 flex relative rounded-[14px] justify-start items-center content-center overflow-hidden cursor-pointer",
+          "group/cta cta-glass h-11 flex relative justify-start items-center content-center overflow-hidden cursor-pointer",
           "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-cyan)]",
           fullWidth ? "w-full max-w-full" : "",
           className,
@@ -94,9 +94,9 @@ export default function CtaButton({
         href={href}
       >
         <div className="cta-glass-track relative z-[1] flex h-full w-full min-w-[11.5rem] items-center px-1">
-          {/* Square — equal inset, swipes L→R on hover */}
+          {/* Tile — same corner language as the button (radius − inset), swipes L→R */}
           <div
-            className={`cta-glass-arrow absolute z-[2] flex items-center justify-center overflow-hidden rounded-[8px] ${arrowBg}`}
+            className={`cta-glass-arrow absolute z-[2] flex items-center justify-center overflow-hidden ${arrowBg}`}
             aria-hidden
           >
             <div className="cta-glass-arrow-icon flex h-[1.25rem] w-[1.25rem] items-center justify-center">

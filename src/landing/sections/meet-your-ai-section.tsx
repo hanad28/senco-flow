@@ -30,10 +30,10 @@ export default function MeetYourAiSection() {
                   data-component="heading"
                   dir="auto"
                 >
-                  Meet Unisen.
+                  Your next EHC consultation starts here.
                   <span className="inline font-semibold text-[var(--text-secondary)]">
                     <br className="inline" />
-                    Built for EHC work
+                    Set up in minutes. Keep the clock in view.
                   </span>
                 </h2>
               </div>
@@ -42,11 +42,12 @@ export default function MeetYourAiSection() {
                   className="block text-[var(--text-secondary)] [font-family:var(--font-body)] text-base leading-[1.5] text-center text-balance"
                   dir="auto"
                 >
-                  We're building Unisen with SENCOs and families. Try the prototype. Explore the school consultation workspace or family draft-plan review.
+                  Try the school consultation workspace or family draft-plan review. Built with SENCOs and families — not another generic tracker.
                 </p>
               </div>
-              <div className="block relative shrink-0">
+              <div className="flex relative shrink-0 flex-wrap items-center justify-center gap-3">
                 <CtaButton label="Get started" variant="accent" />
+                <CtaButton label="Talk to us" variant="light" href="/contact" />
               </div>
             </div>
           </div>

@@ -41,14 +41,22 @@ export function LandingPage() {
       return;
     }
 
+    // Hash anchors (#solution-1, etc.) use native scroll + scroll-margin.
+    if (href.startsWith("#") && href.length > 1) {
+      return;
+    }
+
     // In-page nav anchors — map Nexura-style routes onto landing sections.
     const sectionByHref: Record<string, string> = {
       "/pricing": "pricing",
       "/product": "product",
-      "/integration": "product",
-      "/blog": "features",
-      "/#solution": "product",
-      "/#demo": "pricing",
+      "/integration": "integration",
+      "/blog": "solution",
+      "/#solution": "solution",
+      "/#solution-1": "solution-1",
+      "/#solution-2": "solution-2",
+      "/#solution-3": "solution-3",
+      "/#demo": "demo",
     };
 
     if (
@@ -60,7 +68,7 @@ export function LandingPage() {
       e.preventDefault();
       const sectionId = sectionByHref[href];
       if (sectionId) {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
   }
