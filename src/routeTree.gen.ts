@@ -12,17 +12,21 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as FamilyRouteImport } from './routes/family'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FamilyIndexRouteImport } from './routes/family.index'
 import { Route as FamilyHelpRouteImport } from './routes/family.help'
 import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as ConsultationsIdIndexRouteImport } from './routes/consultations.$id.index'
 import { Route as FamilyCasesIdRouteImport } from './routes/family.cases.$id'
 import { Route as ConsultationsIdSubmitRouteImport } from './routes/consultations.$id.submit'
 import { Route as ConsultationsIdNeedsRouteImport } from './routes/consultations.$id.needs'
 import { Route as ConsultationsIdDraftRouteImport } from './routes/consultations.$id.draft'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as FamilyCasesIdIndexRouteImport } from './routes/family.cases.$id.index'
 import { Route as FamilyCasesIdSupportRouteImport } from './routes/family.cases.$id.support'
 import { Route as FamilyCasesIdResponseRouteImport } from './routes/family.cases.$id.response'
@@ -45,6 +49,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FamilyRoute = FamilyRouteImport.update({
@@ -77,6 +86,18 @@ const ConsultationsIdRoute = ConsultationsIdRouteImport.update({
   path: '/consultations/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ConsultationsIdIndexRoute = ConsultationsIdIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -102,6 +123,12 @@ const ConsultationsIdDraftRoute = ConsultationsIdDraftRouteImport.update({
   path: '/draft',
   getParentRoute: () => ConsultationsIdRoute,
 } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const FamilyCasesIdIndexRoute = FamilyCasesIdIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -148,12 +175,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/family': typeof FamilyRouteWithChildren
+  '/mcp': typeof McpRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
   '/family/help': typeof FamilyHelpRoute
   '/family/': typeof FamilyIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
@@ -171,11 +202,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
+  '/mcp': typeof McpRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/family/help': typeof FamilyHelpRoute
   '/family': typeof FamilyIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
@@ -194,12 +229,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/family': typeof FamilyRouteWithChildren
+  '/mcp': typeof McpRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
   '/family/help': typeof FamilyHelpRoute
   '/family/': typeof FamilyIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
   '/consultations/$id/needs': typeof ConsultationsIdNeedsRoute
   '/consultations/$id/submit': typeof ConsultationsIdSubmitRoute
@@ -220,12 +259,16 @@ export interface FileRouteTypes {
     | '/'
     | '/calendar'
     | '/family'
+    | '/mcp'
     | '/reports'
     | '/settings'
     | '/templates'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/consultations/$id'
     | '/family/help'
     | '/family/'
+    | '/.mcp/invoke-tool/$tool'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
@@ -243,11 +286,15 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/calendar'
+    | '/mcp'
     | '/reports'
     | '/settings'
     | '/templates'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/family/help'
     | '/family'
+    | '/.mcp/invoke-tool/$tool'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
@@ -265,12 +312,16 @@ export interface FileRouteTypes {
     | '/'
     | '/calendar'
     | '/family'
+    | '/mcp'
     | '/reports'
     | '/settings'
     | '/templates'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/consultations/$id'
     | '/family/help'
     | '/family/'
+    | '/.mcp/invoke-tool/$tool'
     | '/consultations/$id/draft'
     | '/consultations/$id/needs'
     | '/consultations/$id/submit'
@@ -290,10 +341,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
   FamilyRoute: typeof FamilyRouteWithChildren
+  McpRoute: typeof McpRoute
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRoute
   TemplatesRoute: typeof TemplatesRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ConsultationsIdRoute: typeof ConsultationsIdRouteWithChildren
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -317,6 +372,13 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/family': {
@@ -361,6 +423,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsultationsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/consultations/$id/': {
       id: '/consultations/$id/'
       path: '/'
@@ -395,6 +471,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/consultations/$id/draft'
       preLoaderRoute: typeof ConsultationsIdDraftRouteImport
       parentRoute: typeof ConsultationsIdRoute
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/family/cases/$id/': {
       id: '/family/cases/$id/'
@@ -518,10 +601,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
   FamilyRoute: FamilyRouteWithChildren,
+  McpRoute: McpRoute,
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRoute,
   TemplatesRoute: TemplatesRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   ConsultationsIdRoute: ConsultationsIdRouteWithChildren,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

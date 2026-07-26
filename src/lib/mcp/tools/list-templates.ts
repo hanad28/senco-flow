@@ -10,7 +10,7 @@ export default defineTool({
     "Reusable Section F provision-response snippets for 'can meet in part' and 'cannot meet' outcomes, organised by the four statutory areas of need. Snippets may contain {{pupil}}, {{year_group}}, {{LA}} tokens.",
   inputSchema: {
     domain: z
-      .enum([...domainOrder, "all"] as [string, ...string[]])
+      .enum([...domainOrder, "all"] as unknown as [string, ...string[]])
       .default("all")
       .describe("Filter by area of need, or 'all'."),
     capability: z
