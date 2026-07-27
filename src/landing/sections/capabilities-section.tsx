@@ -23,7 +23,7 @@ export default function CapabilitiesSection({
               className="text-color-001 [font-family:var(--font-heading)] text-[2.5rem] font-bold leading-[1.15] tracking-[-0.04em] text-balance max-lg:text-[1.75rem]"
               data-component="heading"
             >
-              Built for the SENCO job — not generic case tracking.
+              Built for the SENCO job, not generic case tracking.
             </h2>
           </div>
           <p className="max-w-md text-muted-foreground [font-family:var(--font-body)] text-base leading-relaxed text-balance">

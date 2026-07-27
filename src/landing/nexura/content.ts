@@ -52,9 +52,10 @@ export type Tile3DataItem = {
   description: string;
 };
 export const tile3Data: Tile3DataItem[] = [
-    { href: "/#solution-1", description: "For SENCOs" },
-    { href: "/#solution-2", description: "For schools" },
-    { href: "/#solution-3", description: "For families" }
+    { href: "/#solution-1", description: "For schools" },
+    { href: "/#solution-2", description: "For families" },
+    { href: "/#solution-3", description: "For specialists" },
+    { href: "/#solution-4", description: "For councils" }
 ];
 
 export type ProductsItem = {

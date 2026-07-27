@@ -14,36 +14,36 @@ const iconClass = "h-6 w-6 shrink-0";
 
 const FEATURES: FeatureItem[] = [
   {
-    title: "Statutory deadline tracking",
+    title: "Visibility",
     description:
-      "See every 15-day consultation and draft-plan clock in one place. Know what is due before it becomes a crisis.",
+      "A shared timeline of every party's statutory clocks: consultation, advice, and draft-plan deadlines in one place.",
     icon: <Clock className={iconClass} strokeWidth={1.75} aria-hidden />,
     imgSrc: "/assets/nexura/images/b82b7b40401d.png",
     srcSet:
       "/assets/nexura/images/b00e8652ddd0.png 512w, /assets/nexura/images/334ea838e731.png 1024w, /assets/nexura/images/b82b7b40401d.png 1600w",
   },
   {
-    title: "Needs & provision review",
+    title: "Execution assistance",
     description:
-      "Pull professional advice into a single needs view, then draft provision that is specific and quantifiable.",
+      "Draft statutory responses, flag vague provision against IPSEA's specificity standard, and capture a clear cannot-meet rationale.",
     icon: <FileSearch className={iconClass} strokeWidth={1.75} aria-hidden />,
     imgSrc: "/assets/nexura/images/a8be68743346.png",
     srcSet:
       "/assets/nexura/images/7f8142532bd1.png 512w, /assets/nexura/images/00590ae47303.png 1024w, /assets/nexura/images/a8be68743346.png 1600w",
   },
   {
-    title: "School & family workspaces",
+    title: "Communication",
     description:
-      "SENCOs answer LA consultations; families review draft plans. Shared clocks, different responsibilities.",
+      "Evidence, advice, and school forms stay with the case so nothing is re-chased by email, post, or phone.",
     icon: <Building2 className={iconClass} strokeWidth={1.75} aria-hidden />,
     imgSrc: "/assets/nexura/images/c0fd2fc412e0.png",
     srcSet:
       "/assets/nexura/images/01c1424f2fca.png 512w, /assets/nexura/images/bb7bee0f8baf.png 1024w, /assets/nexura/images/c0fd2fc412e0.png 1600w",
   },
   {
-    title: "Evidence in one case file",
+    title: "Built on the law",
     description:
-      "EP, SaLT, OT, parental views and school forms stay with the case so responses stay grounded in the evidence.",
+      "Grounded in IPSEA, the Children and Families Act 2014, and the SEND Code of Practice. AI suggestions cite uploaded sources; they never invent provision.",
     icon: <FolderOpen className={iconClass} strokeWidth={1.75} aria-hidden />,
     imgSrc: "/assets/nexura/images/1326bc88be38.png",
     srcSet:
@@ -84,6 +84,10 @@ export default function FeatureAccordion() {
                       sizes="calc((calc(min(max(100vw - 40px, 1px), 1250px) - 128px) * 0.58 - 32px) * 1.05)"
                       src={f.imgSrc}
                       srcSet={f.srcSet}
+                      // First panel is often LCP on mobile; keep it eager, defer the rest.
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding={i === 0 ? "async" : "async"}
+                      fetchPriority={i === 0 ? "high" : "low"}
                     />
                   </div>
                 </div>

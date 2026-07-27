@@ -1,5 +1,5 @@
-import { useClerk } from "@clerk/tanstack-react-start";
 import type { MouseEvent } from "react";
+import { APP_URL } from "@/lib/site";
 import "./landing.css";
 import "./ditto.css";
 import "./hover.css";
@@ -7,11 +7,13 @@ import Page from "./page";
 
 /**
  * Pre-auth marketing landing (ditto clone of the Parley Framer template,
- * rebranded for Unisen). CTAs open Clerk sign-in / sign-up modals.
+ * rebranded for Unisen).
+ *
+ * Auth CTAs send users to the app host (app.unisen.uk). Sign-in must not run
+ * on the marketing origin — Clerk's __clerk_db_jwt handshake breaks across
+ * subdomains if it starts here.
  */
 export function LandingPage() {
-  const clerk = useClerk();
-
   function onClick(e: MouseEvent<HTMLDivElement>) {
     const target = e.target as HTMLElement | null;
     const anchor = target?.closest?.("a");
@@ -21,23 +23,20 @@ export function LandingPage() {
     const text = (anchor.textContent ?? "").trim().toLowerCase();
 
     const wantsAuth =
-      href === "/contact" ||
-      href.startsWith("/contact") ||
       href.includes("startfrom.co") ||
-      text.includes("get started") ||
       text.includes("sign in") ||
-      text.includes("hire") ||
-      text.includes("chat with");
+      text.includes("log in");
 
     if (wantsAuth) {
       e.preventDefault();
       e.stopPropagation();
-      const preferSignIn = text.includes("sign in");
-      if (preferSignIn) {
-        void clerk.openSignIn({});
-      } else {
-        void clerk.openSignUp({});
-      }
+      window.location.assign(`${APP_URL}/`);
+      return;
+    }
+
+    if (href === "/contact" || href.startsWith("/contact")) {
+      e.preventDefault();
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -51,11 +50,13 @@ export function LandingPage() {
       "/pricing": "pricing",
       "/product": "product",
       "/integration": "integration",
+      "/about": "demo",
       "/blog": "solution",
       "/#solution": "solution",
       "/#solution-1": "solution-1",
       "/#solution-2": "solution-2",
       "/#solution-3": "solution-3",
+      "/#solution-4": "solution-4",
       "/#demo": "demo",
     };
 

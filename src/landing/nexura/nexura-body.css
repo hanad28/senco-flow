@@ -130,7 +130,8 @@
 /* Solution sticky tabs */
 .unisen-landing .nexura-body #solution-1,
 .unisen-landing .nexura-body #solution-2,
-.unisen-landing .nexura-body #solution-3 {
+.unisen-landing .nexura-body #solution-3,
+.unisen-landing .nexura-body #solution-4 {
   scroll-margin-top: 7.5rem;
 }
 

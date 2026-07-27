@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const TABS = [
-  { id: "solution-1", label: "For SENCOs" },
-  { id: "solution-2", label: "For schools" },
-  { id: "solution-3", label: "For families" },
+  { id: "solution-1", label: "For schools" },
+  { id: "solution-2", label: "For families" },
+  { id: "solution-3", label: "For specialists" },
+  { id: "solution-4", label: "For councils" },
 ] as const;
 
 /** Sticky offset under Unisen fixed nav — matches scroll-margin on panels. */

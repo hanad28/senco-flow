@@ -12,8 +12,8 @@ export default function HeroSection() {
     >
       <div className="unisen-hero-media absolute inset-0 z-0" aria-hidden>
         <img
-          src="/assets/brand/hero-park.jpg"
-          srcSet="/assets/brand/hero-park-1280.jpg 1280w, /assets/brand/hero-park-1840.jpg 1840w, /assets/brand/hero-park.jpg 1840w"
+          src="/assets/brand/hero-park-1280.jpg"
+          srcSet="/assets/brand/hero-park-768.jpg 768w, /assets/brand/hero-park-1280.jpg 1280w, /assets/brand/hero-park-1840.jpg 1840w"
           sizes="100vw"
           alt=""
           width={1840}
@@ -35,13 +35,13 @@ export default function HeroSection() {
           data-component="heading"
           dir="auto"
         >
-          One workspace for schools, SENCOs, and families
+          SEND coordination in one workspace.
         </h1>
         <p
-          className="unisen-hero-sub mt-4 max-w-[30rem] [font-family:var(--font-body)] text-center text-balance"
+          className="unisen-hero-sub mt-4 max-w-[32rem] [font-family:var(--font-body)] text-center text-balance"
           dir="auto"
         >
-          SEND work is scattered across email, forms, and spreadsheets. Unisen brings it into one place.
+          For schools, families, specialists, and councils. Track EHC deadlines and share evidence together.
         </p>
         <div className="unisen-hero-cta mt-7 shrink-0">
           <CtaButton label="Get started" variant="glass" />

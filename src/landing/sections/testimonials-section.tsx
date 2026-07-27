@@ -24,7 +24,7 @@ export default function TestimonialsSection({
             Built with SENCOs, families, and trusts.
           </h2>
           <p className="text-muted-foreground [font-family:var(--font-body)] text-base leading-relaxed text-balance">
-            From single-school teams to multi-academy trusts — here is the kind of calm EHC work Unisen is designed for.
+            From single-school teams to multi-academy trusts. Here is the kind of calm EHC work Unisen is designed for.
           </p>
         </div>
 

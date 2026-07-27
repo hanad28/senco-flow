@@ -1,6 +1,5 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import {
-  Outlet,
   Link,
   createRootRouteWithContext,
   useRouter,
@@ -8,25 +7,29 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, type ReactNode } from "react";
-import {
-  ClerkProvider,
-  OrganizationSwitcher,
-  UserButton,
-  useAuth,
-} from "@clerk/tanstack-react-start";
-import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
-import { ConvexProviderWithClerk } from "convex/react-clerk";
-import { ConvexReactClient } from "convex/react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { ConsultationsProvider } from "../lib/consultations-store";
-import { SchoolProfileProvider } from "../lib/school-profile-store";
-import { TemplatesProvider } from "../lib/templates-store";
-import { SearchProvider } from "../lib/search-store";
+import {
+  getLocationSuffix,
+  hasClerkHandshakeParams,
+  needsAuthShell,
+  resolveHostMode,
+} from "../lib/hostname";
+import {
+  SITE_DESCRIPTION,
+  SITE_OG_DESCRIPTION,
+  SITE_OG_IMAGE,
+  SITE_TITLE,
+  SITE_URL,
+  siteJsonLd,
+} from "../lib/site";
+import { LandingPage } from "../landing/landing-page";
 
-const LandingPage = lazy(() =>
-  import("../landing/landing-page").then((m) => ({ default: m.LandingPage })),
+// Auth stack (Clerk/Convex) is a separate chunk — cold marketing visits never download it.
+const AuthShell = lazy(() => import("./auth-shell"));
+const RedirectToApp = lazy(() =>
+  import("./auth-shell").then((m) => ({ default: m.RedirectToApp })),
 );
 
 function NotFoundComponent() {
@@ -94,33 +97,51 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Unisen — SEND coordination for schools & families" },
-      {
-        name: "description",
-        content:
-          "Unisen helps schools and families run EHC needs assessments together — shared timelines, statutory deadlines, and execution assistance.",
-      },
-      { property: "og:title", content: "Unisen — SEND coordination for schools & families" },
-      {
-        property: "og:description",
-        content:
-          "Visibility, execution assistance, and clear communication across school and family EHC workspaces.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_OG_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: SITE_OG_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: SITE_TITLE },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_OG_DESCRIPTION },
+      { name: "twitter:image", content: SITE_OG_IMAGE },
     ],
     links: [
+      { rel: "canonical", href: `${SITE_URL}/` },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
       { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
       { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
       { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "512x512" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      // Hero LCP: discover before JS; mobile PSI typically picks 768–1280w.
+      {
+        rel: "preload",
+        as: "image",
+        href: "/assets/brand/hero-park-768.jpg",
+        imageSrcSet:
+          "/assets/brand/hero-park-768.jpg 768w, /assets/brand/hero-park-1280.jpg 1280w, /assets/brand/hero-park-1840.jpg 1840w",
+        imageSizes: "100vw",
+        fetchPriority: "high",
+      } as Record<string, string>,
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&display=swap",
+        // Slim weights used on marketing + app chrome (display=swap already set).
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(siteJsonLd()),
       },
     ],
   }),
@@ -144,48 +165,34 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const hostMode = resolveHostMode();
+  const locationSuffix = getLocationSuffix();
+  const search = locationSuffix.includes("?")
+    ? locationSuffix.slice(locationSuffix.indexOf("?"))
+    : "";
+  const clerkHandoff = hasClerkHandshakeParams(search);
+
+  // Handshake tokens that landed off the app host must finish on the app host.
+  if (hostMode !== "app" && clerkHandoff) {
+    return (
+      <Suspense fallback={null}>
+        <RedirectToApp reason="clerk-handshake" />
+      </Suspense>
+    );
+  }
+
+  // Marketing + cold combined (no session cookie): paint landing with zero Clerk.
+  // Avoids handshake redirects (~1.7s), unused Clerk UI JS (~300KiB), and CLS
+  // from AuthLoading → landing. Auth CTAs navigate to APP_URL.
+  if (!needsAuthShell()) {
+    return <LandingPage />;
+  }
 
   return (
-    <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
-      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-        <AuthLoading>
-          <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
-            Loading…
-          </div>
-        </AuthLoading>
-        <Unauthenticated>
-          <Suspense
-            fallback={
-              <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
-                Loading…
-              </div>
-            }
-          >
-            <LandingPage />
-          </Suspense>
-        </Unauthenticated>
-        <Authenticated>
-          <QueryClientProvider client={queryClient}>
-            <SchoolProfileProvider>
-              <TemplatesProvider>
-                <ConsultationsProvider>
-                  <SearchProvider>
-                    <Outlet />
-                    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border bg-background/95 p-2 shadow-lg backdrop-blur">
-                      <OrganizationSwitcher />
-                      <UserButton />
-                    </div>
-                  </SearchProvider>
-                </ConsultationsProvider>
-              </TemplatesProvider>
-            </SchoolProfileProvider>
-          </QueryClientProvider>
-        </Authenticated>
-      </ConvexProviderWithClerk>
-    </ClerkProvider>
+    <Suspense fallback={<LandingPage />}>
+      <AuthShell hostMode={hostMode} queryClient={queryClient} />
+    </Suspense>
   );
 }

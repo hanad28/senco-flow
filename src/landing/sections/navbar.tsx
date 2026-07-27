@@ -92,12 +92,13 @@ export default function Navbar() {
             aria-label="Unisen home"
           >
             <img
-              src="/assets/brand/unisen-wordmark.png"
+              src="/assets/brand/unisen-logo-nav.png"
               alt="Unisen"
-              width={1245}
-              height={387}
+              width={280}
+              height={80}
               className="unisen-nav-logo block h-7 w-auto object-contain rounded-md"
               decoding="async"
+              fetchPriority="high"
             />
           </a>
 

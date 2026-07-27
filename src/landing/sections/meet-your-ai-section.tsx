@@ -42,7 +42,7 @@ export default function MeetYourAiSection() {
                   className="block text-[var(--text-secondary)] [font-family:var(--font-body)] text-base leading-[1.5] text-center text-balance"
                   dir="auto"
                 >
-                  Try the school consultation workspace or family draft-plan review. Built with SENCOs and families — not another generic tracker.
+                  Try the school consultation workspace or family draft-plan review. Built with SENCOs and families, not another generic tracker.
                 </p>
               </div>
               <div className="flex relative shrink-0 flex-wrap items-center justify-center gap-3">

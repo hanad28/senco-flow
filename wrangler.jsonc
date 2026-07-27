@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "unisen",
+  "compatibility_date": "2026-07-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": ".output/server/index.mjs",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".output/public"
+  },
+  "observability": {
+    "enabled": true
+  },
+  // Marketing apex/www + app subdomain (same Worker, host-based routing)
+  "routes": [
+    { "pattern": "unisen.uk", "custom_domain": true },
+    { "pattern": "www.unisen.uk", "custom_domain": true },
+    { "pattern": "app.unisen.uk", "custom_domain": true }
+  ]
+}

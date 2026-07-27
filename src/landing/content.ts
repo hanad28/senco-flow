@@ -129,7 +129,7 @@ export const products: ProductsItem[] = [
     variant: "solo",
     title: "Family",
     description:
-      "For parent carers reviewing a draft EHC plan. Free forever — no credit card required.",
+      "For parent carers reviewing a draft EHC plan. Free forever, no credit card required.",
     priceMonthly: "£0",
     priceAnnual: "£0",
     priceNoteMonthly: "Free forever",
@@ -151,7 +151,7 @@ export const products: ProductsItem[] = [
     variant: "pro",
     title: "School",
     description:
-      "The full Unisen workspace for SENCOs answering LA EHC consultations — deadlines, needs review, and draft responses.",
+      "The full Unisen workspace for SENCOs answering LA EHC consultations: deadlines, needs review, draft responses, and vagueness checks.",
     priceMonthly: "£49",
     priceAnnual: "£42",
     priceNoteMonthly: "per month, billed monthly",
@@ -287,10 +287,10 @@ export type SolutionItem = {
 export const solutions: SolutionItem[] = [
   {
     id: "solution-1",
-    tab: "For SENCOs",
+    tab: "For schools",
     title: "Answer LA EHC consultations within 15 calendar days.",
     description:
-      "Unisen surfaces the clock, consolidates needs advice, and helps you draft a clear statutory response without living in email threads.",
+      "Unisen surfaces the clock, consolidates needs advice, flags vague provision, and helps SENCOs draft a clear statutory response, without living in email threads.",
     points: [
       "Consultation inbox with deadline tone",
       "Needs & provision workspace",
@@ -299,18 +299,6 @@ export const solutions: SolutionItem[] = [
   },
   {
     id: "solution-2",
-    tab: "For schools",
-    title: "Give every school the same calm EHC operating system.",
-    description:
-      "Shared templates, visible clocks, and a single workspace so inclusion leads and SENCOs stay aligned without reinventing the process each time.",
-    points: [
-      "School workspace",
-      "Shared templates & reporting",
-      "Deadline oversight",
-    ],
-  },
-  {
-    id: "solution-3",
     tab: "For families",
     title: "Review a draft EHC plan with the same shared timeline.",
     description:
@@ -319,6 +307,30 @@ export const solutions: SolutionItem[] = [
       "Draft-plan review workspace",
       "Issue log & support network",
       "Family response preparation",
+    ],
+  },
+  {
+    id: "solution-3",
+    tab: "For specialists",
+    title: "Submit advice that meets the statutory specificity bar.",
+    description:
+      "EP, SaLT, OT and other professionals share quantified advice on-platform, tied to the case clock, instead of vague reports lost in email.",
+    points: [
+      "Advice requests with clear deadlines",
+      "Specificity checks before submission",
+      "Evidence stays with the case file",
+    ],
+  },
+  {
+    id: "solution-4",
+    tab: "For councils",
+    title: "See every open consultation and response in one place.",
+    description:
+      "Local authority teams issue consultations, track school responses against statutory clocks, and reduce chasing for missing advice or evidence.",
+    points: [
+      "Consultation issuance & tracking",
+      "Cross-case deadline visibility",
+      "Complete response packs in view",
     ],
   },
 ];

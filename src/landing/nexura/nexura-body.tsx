@@ -459,21 +459,21 @@ export default function UnisenBody() {
                   <div className="contents">
                     <div className="h-full block relative overflow-hidden">
                       <div className="h-full block transform-[matrix(1,0,0,1,0,-2.15348)] max-md:transform-[matrix(1,0,0,1,0,-0.0152788)] md:max-lg:transform-[matrix(1,0,0,1,0,11.5616)] 2xl:transform-[matrix(1,0,0,1,0,0.22945)]">
-                        <img className="w-full h-[42.4375rem] block overflow-clip object-contain object-[50%_100%] max-md:h-162.5 md:max-lg:h-133.5 2xl:h-[56.4375rem]" data-component="image" alt="Serene Rural Landscape with Couple" src="/assets/nexura/images/793c7d1c395c.png" />
+                        <img className="w-full h-[42.4375rem] block overflow-clip object-contain object-[50%_100%] max-md:h-162.5 md:max-lg:h-133.5 2xl:h-[56.4375rem]" data-component="image" alt="Serene Rural Landscape with Couple" src="/assets/nexura/images/793c7d1c395c.jpg" width={1600} height={446} loading="lazy" decoding="async" />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </header>
-            <section className="w-full flex relative px-5 justify-center items-center content-center shrink-0 gap-2.5 max-lg:px-1.5 max-lg:flex-col">
+            <section className="w-full flex relative px-5 justify-center items-center content-center shrink-0 gap-2.5 max-lg:px-1.5 max-lg:flex-col" id="product">
               <div className="w-full max-w-312.5 flex relative py-25 px-16 flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-16 max-lg:py-16 max-lg:px-5 max-lg:grow-[initial] max-lg:basis-[initial]">
                 <div className="w-162.5 flex relative max-w-162.5 flex-col justify-center items-center content-center shrink-0 gap-4 max-md:w-[20.1875rem] max-lg:max-w-137.5 md:max-lg:w-137.5">
                   <div className="block relative shrink-0">
                     <div className="contents">
                       <div className="min-h-full block relative">
                         <p className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-[1.75rem] leading-[2.4375rem] tracking-[-1.12px] text-left max-lg:text-xl max-lg:leading-7 max-lg:tracking-[-0.8px]">
-                          Most tools track cases or store documents. Unisen starts with the SENCO job: answer LA EHC consultations on time, then helps with the drafting work.
+                          Evidence scattered across email and paper. Vague provision that fails IPSEA&apos;s specificity bar. No shared view of the statutory clocks. Unisen starts with the SENCO job: answer LA EHC consultations on time, with evidence attached.
                         </p>
                       </div>
                     </div>
@@ -515,7 +515,7 @@ export default function UnisenBody() {
                     <div className="flex relative max-h-162.5 rounded-2xl justify-start items-start content-start gap-2.5 overflow-clip bg-background shadow-[var(--clr-7)_4px_4px_30px_0px] cursor-pointer max-lg:rounded-md">
                       <div className="w-278 h-[654.1px] block relative z-3 opacity-0 grow shrink-0 basis-0 aspect-[1.7/1]">
                         <article className="h-full block relative rounded-xl overflow-hidden" role="presentation">
-                          <img className="w-full h-full block absolute top-0 left-0 overflow-clip object-cover" data-component="image" src="/assets/nexura/images/c110789b4f0c.webp" />
+                          <img className="w-full h-full block absolute top-0 left-0 overflow-clip object-cover" data-component="image" src="/assets/nexura/images/c110789b4f0c.webp" loading="lazy" decoding="async" alt="" />
                           <button className="w-17 h-12 block absolute top-[clamp(96.2px,_50%,_calc(100%_-_96.2px))] left-[clamp(163.5px,_50%,_calc(100%_-_163.5px))] text-center transform-[matrix(1,0,0,1,-34,-24)]" data-component="button" aria-label="Play">
                             <Illustration />
                           </button>
@@ -526,7 +526,7 @@ export default function UnisenBody() {
                       </div>
                       <div className="h-161.5 block absolute top-0.5 inset-x-0.5 z-0 min-w-0 rounded-[14px] shrink-0 max-md:h-[188.3px] max-lg:rounded-sm md:max-lg:h-[419.5px]">
                         <div className="h-full block absolute top-0 inset-x-0 rounded-[14px] max-lg:rounded-sm">
-                          <img className="w-full h-161.5 block rounded-[14px] overflow-clip object-cover object-[50%_0%] aspect-[auto_2880/1920] max-md:h-47 max-lg:rounded-sm md:max-lg:h-105" data-component="image" alt="Sample Dashboard UI" height="1920" sizes="calc(calc(min(max(100vw - 40px, 1px), 1250px) - 128px) - 4px)" src="/assets/nexura/images/4c4da0ccccd6.png" srcSet="/assets/nexura/images/d34dbdc41ccc.png 512w, /assets/nexura/images/511cd48e847b.png 1024w, /assets/nexura/images/ef10884890e7.png 2048w, /assets/nexura/images/4c4da0ccccd6.png 2880w" width="2880" />
+                          <img className="w-full h-161.5 block rounded-[14px] overflow-clip object-cover object-[50%_0%] aspect-[auto_2880/1920] max-md:h-47 max-lg:rounded-sm md:max-lg:h-105" data-component="image" alt="Unisen consultation dashboard (fictional seed data)" height="1920" sizes="calc(calc(min(max(100vw - 40px, 1px), 1250px) - 128px) - 4px)" src="/assets/nexura/images/4c4da0ccccd6.png" srcSet="/assets/nexura/images/d34dbdc41ccc.png 512w, /assets/nexura/images/511cd48e847b.png 1024w, /assets/nexura/images/ef10884890e7.png 2048w, /assets/nexura/images/4c4da0ccccd6.png 2880w" width="2880" loading="lazy" decoding="async" />
                         </div>
                       </div>
                     </div>
@@ -546,14 +546,14 @@ export default function UnisenBody() {
                   <div className="contents">
                     <div className="h-full block relative overflow-hidden">
                       <div className="h-full block transform-[matrix(1.1,0,0,1.1,0,61.1845)] origin-[604px_377px] max-md:transform-[matrix(1.1,0,0,1.1,0,21.5457)] max-md:origin-[179.5px_136.172px] md:max-lg:transform-[matrix(1.1,0,0,1.1,0,27.785)] md:max-lg:origin-[376px_251.758px] 2xl:transform-[matrix(1.1,0,0,1.1,0,48.1575)] 2xl:origin-[609px_377px]">
-                        <img className="w-302 h-188.5 block overflow-clip object-[50%_100%] max-md:w-[22.4375rem] max-md:h-68 md:max-lg:w-188 md:max-lg:h-126 2xl:w-304.5" data-component="image" alt="Countryside Serenity" src="/assets/nexura/images/394b09f2f4e8.webp" />
+                        <img className="w-302 h-188.5 block overflow-clip object-[50%_100%] max-md:w-[22.4375rem] max-md:h-68 md:max-lg:w-188 md:max-lg:h-126 2xl:w-304.5" data-component="image" alt="Countryside Serenity" src="/assets/nexura/images/394b09f2f4e8.jpg" width={1600} height={895} loading="lazy" decoding="async" />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </section>
-            <section className="w-full flex relative px-5 justify-center items-center content-center shrink-0 gap-2.5 max-lg:px-1.5 max-lg:flex-col">
+            <section className="w-full flex relative px-5 justify-center items-center content-center shrink-0 gap-2.5 max-lg:px-1.5 max-lg:flex-col" id="integration">
               <div className="w-full max-w-312.5 flex relative py-25 px-16 justify-center items-center content-center grow shrink-0 basis-0 gap-10 max-lg:py-16 max-lg:px-5 max-lg:flex-col max-lg:justify-start max-lg:items-start max-lg:content-start max-lg:gap-16 max-lg:grow-[initial] max-lg:basis-[initial]">
                 <div className="w-[45%] flex relative z-1 max-w-125 px-6 flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-10 max-md:w-full max-lg:max-w-150 max-lg:px-0 max-lg:grow-[initial] max-lg:basis-[initial] md:max-lg:w-[84%] 2xl:w-[44.5%]">
                   <div className="contents min-w-0">
@@ -566,7 +566,7 @@ export default function UnisenBody() {
                         </div>
                         <div className="w-[22.6rem] flex relative flex-col justify-start shrink-0 max-md:w-[16.15rem] md:max-lg:w-120">
                           <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-lg leading-[1.5625rem] tracking-[-0.54px] text-left text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-base max-lg:leading-[1.375rem] max-lg:tracking-[-0.48px]" dir="auto">
-                            Bring LA portals, professional advice and school forms into one case — no forced migration.
+                            Bring LA portals, professional advice and school forms into one case, with no forced migration.
                           </p>
                         </div>
                       </div>
@@ -642,12 +642,12 @@ export default function UnisenBody() {
                     <div className="flex relative max-w-full flex-col justify-center items-center content-center gap-5">
                       <div className="w-150 flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem]">
                         <h2 className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-[2.5rem] font-medium leading-12 tracking-[-1.6px] text-center text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-[1.75rem] max-lg:leading-[2.125rem] max-lg:tracking-[-1.12px]" data-component="heading" dir="auto">
-                          Built for every party in EHC work.
+                          Four parties, one EHC workspace.
                         </h2>
                       </div>
                       <div className="w-120 flex relative flex-col justify-start shrink-0 max-md:w-[16.15rem]">
                         <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-lg leading-[1.5625rem] tracking-[-0.54px] text-center text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-base max-lg:leading-[1.375rem] max-lg:tracking-[-0.48px]" dir="auto">
-                          Whether you are a school SENCO, a school team, or a parent carer, Unisen adapts to how you work.
+                          Schools, families, specialists, and councils. The school consultation tool ships first; the other workspaces are on the roadmap.
                         </p>
                       </div>
                     </div>
@@ -662,7 +662,7 @@ export default function UnisenBody() {
                           <div className="hidden max-lg:flex max-lg:relative max-lg:py-1 max-lg:px-2.5 max-lg:rounded-[100px] max-lg:flex-col max-lg:justify-center max-lg:items-center max-lg:content-center max-lg:gap-2.5 max-lg:bg-surface-2">
                             <div className="hidden max-lg:w-[113.1px] max-lg:flex max-lg:relative max-lg:flex-col max-lg:justify-start max-lg:shrink-0 max-lg:whitespace-pre max-lg:text-nowrap">
                               <p className="hidden max-lg:block max-lg:text-color-004 max-lg:[font-family:Inter,_'Inter_Placeholder',_sans-serif] max-lg:text-[0.8125rem] max-lg:leading-[1.125rem] max-lg:tracking-[-0.39px] max-lg:[font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                                For SENCOs
+                                For schools
                               </p>
                             </div>
                           </div>
@@ -674,7 +674,7 @@ export default function UnisenBody() {
                         </div>
                         <div className="w-[25.15rem] flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem] md:max-lg:w-179 2xl:w-[25.4rem]">
                           <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                            Unisen surfaces the clock, consolidates needs advice, and helps you draft a clear statutory response.
+                            Unisen surfaces the clock, consolidates needs advice, flags vague provision, and helps SENCOs draft a clear statutory response.
                           </p>
                         </div>
                       </div>
@@ -699,19 +699,19 @@ export default function UnisenBody() {
                       <div className="w-full flex relative flex-col justify-center items-start content-start self-center shrink-0 gap-2.5 max-lg:[align-self:initial]">
                         <div className="w-[25.15rem] flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem] max-lg:order-[1] md:max-lg:w-179 2xl:w-[25.4rem]">
                           <h4 className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-[1.75rem] font-medium leading-[2.4375rem] tracking-[-1.12px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-xl max-lg:leading-7 max-lg:tracking-[-0.8px]" data-component="heading" dir="auto">
-                            Give every school the same calm EHC operating system.
+                            Review a draft EHC plan with the same shared timeline.
                           </h4>
                         </div>
                         <div className="w-[25.15rem] flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem] max-lg:order-[2] md:max-lg:w-179 2xl:w-[25.4rem]">
                           <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                            Shared templates, visible clocks, and a single workspace so inclusion leads and SENCOs stay aligned without reinventing the process each time.
+                            Parents and carers see what is due, capture issues and evidence, and prepare comments on draft provision without chasing paper.
                           </p>
                         </div>
-                        <div className="hidden max-lg:w-[5.2rem] max-lg:block max-lg:relative max-lg:shrink-0">
+                        <div className="hidden max-lg:w-[85.3px] max-lg:block max-lg:relative max-lg:shrink-0">
                           <div className="hidden max-lg:flex max-lg:relative max-lg:py-1 max-lg:px-2.5 max-lg:rounded-[100px] max-lg:flex-col max-lg:justify-center max-lg:items-center max-lg:content-center max-lg:gap-2.5 max-lg:bg-surface-2">
-                            <div className="hidden max-lg:w-[3.95rem] max-lg:flex max-lg:relative max-lg:flex-col max-lg:justify-start max-lg:shrink-0 max-lg:whitespace-pre max-lg:text-nowrap">
+                            <div className="hidden max-lg:w-[65.3px] max-lg:flex max-lg:relative max-lg:flex-col max-lg:justify-start max-lg:shrink-0 max-lg:whitespace-pre max-lg:text-nowrap">
                               <p className="hidden max-lg:block max-lg:text-color-004 max-lg:[font-family:Inter,_'Inter_Placeholder',_sans-serif] max-lg:text-[0.8125rem] max-lg:leading-[1.125rem] max-lg:tracking-[-0.39px] max-lg:[font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                                For schools
+                                For families
                               </p>
                             </div>
                           </div>
@@ -796,19 +796,19 @@ export default function UnisenBody() {
                       <div className="w-full flex relative flex-col justify-center items-start content-start self-center shrink-0 gap-2.5 max-lg:[align-self:initial]">
                         <div className="w-[25.15rem] flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem] max-lg:order-[1] md:max-lg:w-179 2xl:w-[25.4rem]">
                           <h4 className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-[1.75rem] font-medium leading-[2.4375rem] tracking-[-1.12px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-xl max-lg:leading-7 max-lg:tracking-[-0.8px]" data-component="heading" dir="auto">
-                            Review a draft EHC plan with the same shared timeline.
+                            Submit advice that meets the statutory specificity bar.
                           </h4>
                         </div>
                         <div className="w-[25.15rem] flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem] max-lg:order-[2] md:max-lg:w-179 2xl:w-[25.4rem]">
                           <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                            Parents and carers see what is due, capture issues and evidence, and prepare comments on draft provision.
+                            EP, SaLT, OT and other professionals share quantified advice on-platform, tied to the case clock, instead of vague reports lost in email.
                           </p>
                         </div>
                         <div className="hidden max-lg:w-[85.3px] max-lg:block max-lg:relative max-lg:shrink-0">
                           <div className="hidden max-lg:flex max-lg:relative max-lg:py-1 max-lg:px-2.5 max-lg:rounded-[100px] max-lg:flex-col max-lg:justify-center max-lg:items-center max-lg:content-center max-lg:gap-2.5 max-lg:bg-surface-2">
                             <div className="hidden max-lg:w-[65.3px] max-lg:flex max-lg:relative max-lg:flex-col max-lg:justify-start max-lg:shrink-0 max-lg:whitespace-pre max-lg:text-nowrap">
                               <p className="hidden max-lg:block max-lg:text-color-004 max-lg:[font-family:Inter,_'Inter_Placeholder',_sans-serif] max-lg:text-[0.8125rem] max-lg:leading-[1.125rem] max-lg:tracking-[-0.39px] max-lg:[font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                                For families
+                                For specialists
                               </p>
                             </div>
                           </div>
@@ -858,6 +858,81 @@ export default function UnisenBody() {
                                   <div className="w-full block relative shrink-0 aspect-[1.5/1]">
                                     <div className="w-45 h-full block absolute top-0">
                                       <img className="w-full h-30 block overflow-clip object-cover aspect-[auto_540/360]" data-component="image" alt="" height="360" sizes="calc(220px - 40px)" src="/assets/nexura/images/5c45c3d8fa0e.png" srcSet="/assets/nexura/images/5328bd1474ed.png 512w, /assets/nexura/images/5c45c3d8fa0e.png 540w" width="540" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="w-[52.8rem] grid relative justify-center shrink-0 gap-10 [grid-auto-rows:minmax(0px,_1fr)] overflow-clip grid-cols-2 max-md:w-[20.1875rem] max-lg:flex max-lg:flex-col max-lg:items-start max-lg:content-start max-lg:gap-6 max-lg:grid-cols-[repeat(2,_minmax(50px,_1fr))] md:max-lg:w-179 2xl:w-[53.3rem]" id="solution-4" style={{ scrollMarginTop: "7rem" }}>
+                      <div className="w-full flex relative flex-col justify-center items-start content-start self-center shrink-0 gap-2.5 max-lg:[align-self:initial]">
+                        <div className="w-[25.15rem] flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem] max-lg:order-[1] md:max-lg:w-179 2xl:w-[25.4rem]">
+                          <h4 className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-[1.75rem] font-medium leading-[2.4375rem] tracking-[-1.12px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-xl max-lg:leading-7 max-lg:tracking-[-0.8px]" data-component="heading" dir="auto">
+                            See every open consultation and response in one place.
+                          </h4>
+                        </div>
+                        <div className="w-[25.15rem] flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem] max-lg:order-[2] md:max-lg:w-179 2xl:w-[25.4rem]">
+                          <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
+                            Local authority teams issue consultations, track school responses against statutory clocks, and reduce chasing for missing advice or evidence.
+                          </p>
+                        </div>
+                        <div className="hidden max-lg:w-[85.3px] max-lg:block max-lg:relative max-lg:shrink-0">
+                          <div className="hidden max-lg:flex max-lg:relative max-lg:py-1 max-lg:px-2.5 max-lg:rounded-[100px] max-lg:flex-col max-lg:justify-center max-lg:items-center max-lg:content-center max-lg:gap-2.5 max-lg:bg-surface-2">
+                            <div className="hidden max-lg:w-[65.3px] max-lg:flex max-lg:relative max-lg:flex-col max-lg:justify-start max-lg:shrink-0 max-lg:whitespace-pre max-lg:text-nowrap">
+                              <p className="hidden max-lg:block max-lg:text-color-004 max-lg:[font-family:Inter,_'Inter_Placeholder',_sans-serif] max-lg:text-[0.8125rem] max-lg:leading-[1.125rem] max-lg:tracking-[-0.39px] max-lg:[font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
+                                For councils
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="contents min-w-0">
+                        <div className="w-full h-80 block relative [align-self:start] shrink-0 max-lg:[align-self:initial]">
+                          <div className="h-80 flex relative p-6 flex-col justify-center items-center content-center gap-2.5 overflow-clip bg-surface cursor-default">
+                            <div className="w-55 h-[18.05rem] flex absolute top-12.5 right-11.5 min-w-0 rounded-[11px] justify-center items-center content-center shrink-0 gap-2.5 shadow-[var(--clr-7)_-2px_5px_30px_0px] transform-[matrix(0.990268,0.139173,-0.139173,0.990268,0,0)] origin-[110px_144.398px] max-lg:h-71.5 max-lg:top-[2.5625rem] max-lg:right-[2.6875rem] max-lg:origin-[110px_143px]">
+                              <div className="basis-full shrink-0 block relative z-2">
+                                <div className="w-55 flex relative p-5 rounded-xl flex-col justify-start items-center content-center gap-5 overflow-clip bg-background after:content-[''] after:block after:absolute after:inset-0 after:w-55 after:h-[18.05rem] after:rounded-tl-xl max-lg:after:h-71.5">
+                                  <div className="w-full flex relative flex-col justify-center items-start content-start shrink-0 gap-1">
+                                    <div className="w-28 flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap max-lg:w-[99.5px]">
+                                      <p className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-lg leading-[1.5625rem] tracking-[-0.54px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-base max-lg:leading-[1.375rem] max-lg:tracking-[-0.48px]" dir="auto">
+                                        Open cases
+                                      </p>
+                                    </div>
+                                    <div className="w-[64.3px] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
+                                      <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-sm leading-[1.25rem] tracking-[-0.42px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
+                                        This term
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="w-full block relative shrink-0 aspect-square">
+                                    <div className="w-45 h-full block absolute top-0">
+                                      <img className="w-full h-45 block overflow-clip object-cover aspect-[auto_540/540]" data-component="image" alt="Chart UI" height="540" sizes="calc(220px - 40px)" src="/assets/nexura/images/6cda4b092417.png" srcSet="/assets/nexura/images/db6f8c07154b.png 512w, /assets/nexura/images/6cda4b092417.png 540w" width="540" loading="lazy" decoding="async" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="w-55 h-[14.3rem] flex absolute top-[7.0625rem] left-9.5 z-2 min-w-0 rounded-[11px] flex-col justify-center items-center content-center shrink-0 gap-2.5 shadow-[var(--clr-7)_-2px_5px_30px_0px] transform-[matrix(0.997564,-0.0697565,0.0697565,0.997564,0,0)] origin-[110px_114.398px] max-lg:h-56.5 max-lg:origin-[110px_113px]">
+                              <div className="w-55 block relative z-2 shrink-0">
+                                <div className="w-55 flex relative p-5 rounded-xl flex-col justify-start items-center content-center gap-5 overflow-clip bg-background after:content-[''] after:block after:absolute after:inset-0 after:w-55 after:h-[14.3rem] after:rounded-tl-xl max-lg:after:h-56.5">
+                                  <div className="w-full flex relative flex-col justify-center items-start content-start shrink-0 gap-1">
+                                    <div className="w-[142.3px] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap max-lg:w-[126.5px]">
+                                      <p className="block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-lg leading-[1.5625rem] tracking-[-0.54px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-base max-lg:leading-[1.375rem] max-lg:tracking-[-0.48px]" dir="auto">
+                                        Response rate
+                                      </p>
+                                    </div>
+                                    <div className="w-[5.5125rem] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
+                                      <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-sm leading-[1.25rem] tracking-[-0.42px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
+                                        Last 6 months
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="w-full block relative shrink-0 aspect-[1.5/1]">
+                                    <div className="w-45 h-full block absolute top-0">
+                                      <img className="w-full h-30 block overflow-clip object-cover aspect-[auto_540/360]" data-component="image" alt="" height="360" sizes="calc(220px - 40px)" src="/assets/nexura/images/5c45c3d8fa0e.png" srcSet="/assets/nexura/images/5328bd1474ed.png 512w, /assets/nexura/images/5c45c3d8fa0e.png 540w" width="540" loading="lazy" decoding="async" />
                                     </div>
                                   </div>
                                 </div>
@@ -1110,7 +1185,7 @@ export default function UnisenBody() {
                     <div className="w-[17rem] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
                       <p className="block text-clr-16 [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
                         <a className="inline text-clr-17 cursor-pointer hover:border-clr-18 hover:text-clr-18 hover:outline-clr-18 hover:[text-decoration-color:var(--clr-18)] focus:border-clr-20 focus:text-clr-20 focus:outline-clr-20 focus:[text-decoration-color:var(--clr-20)]" data-component="link" href="https://lunisdesign.com/" rel="noopener" target="_blank">
-                          Unisen — built for EHC work.
+                          Unisen, built for EHC work.
                         </a>
                       </p>
                     </div>
