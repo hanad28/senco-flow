@@ -1,4 +1,4 @@
-import CtaButton from "../components/cta-button";
+import EnquiryDialog from "../components/enquiry-dialog";
 
 /**
  * Hero — full-viewport illustration with copy shifted into the upper sky
@@ -44,7 +44,7 @@ export default function HeroSection() {
           For schools, families, specialists, and councils. Track EHC deadlines and share evidence together.
         </p>
         <div className="unisen-hero-cta mt-7 shrink-0">
-          <CtaButton label="Get started" variant="glass" />
+          <EnquiryDialog />
         </div>
       </div>
     </section>

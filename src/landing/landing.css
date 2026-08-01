@@ -311,7 +311,7 @@
 }
 
 /* ── Liquid glass CTA — swipe tile shares button corner language ───────── */
-.unisen-landing a.cta-glass {
+.unisen-landing :is(a, button).cta-glass {
   --cta-swipe-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --cta-swipe-duration: 520ms;
   /*
@@ -379,7 +379,7 @@
   will-change: transform;
 }
 
-.unisen-landing a.cta-glass:hover {
+.unisen-landing :is(a, button).cta-glass:hover {
   transform: translateY(-2px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.85),
@@ -516,7 +516,7 @@
     transition: none !important;
   }
 
-  .unisen-landing a.cta-glass:hover {
+  .unisen-landing :is(a, button).cta-glass:hover {
     transform: none;
   }
 

@@ -13,4 +13,13 @@ export default defineSchema({
     value: v.any(),
     updatedAt: v.number(),
   }).index("by_scope_kind", ["scope", "kind"]),
+  enquiries: defineTable({
+    name: v.string(),
+    email: v.string(),
+    organisationRole: v.string(),
+    needs: v.string(),
+    createdAt: v.number(),
+  })
+    .index("by_email", ["email"])
+    .index("by_created_at", ["createdAt"]),
 });
