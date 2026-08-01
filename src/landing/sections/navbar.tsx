@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { BookOpen, ChevronDown, LifeBuoy, Menu, Sparkles, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import EnquiryDialog from "../components/enquiry-dialog";
 
 const NAV_LINKS = [
@@ -192,16 +193,24 @@ export default function Navbar() {
           </div>
 
           {/* Right CTA + mobile menu toggle */}
-          <div className={`unisen-nav-actions flex shrink-0 items-center justify-end justify-self-end gap-3${heroCtaVisible ? "" : " is-cta-visible"}`}>
-            <button
+          <div
+            className={`unisen-nav-actions flex shrink-0 items-center justify-end justify-self-end gap-3${heroCtaVisible ? "" : " is-cta-visible"}`}
+          >
+            <Button
               type="button"
-              className="unisen-nav-menu-btn hidden max-lg:flex h-10 w-10 items-center justify-center rounded-full"
+              variant="ghost"
+              size="icon"
+              className="unisen-nav-menu-btn hidden h-9 w-9 rounded-full max-lg:flex"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((o) => !o)}
             >
-              {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+              {mobileOpen ? (
+                <X className="h-6 w-6" strokeWidth={2} />
+              ) : (
+                <Menu className="h-6 w-6" strokeWidth={2} />
+              )}
+            </Button>
 
             <EnquiryDialog
               trigger={
@@ -219,14 +228,14 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile sheet */}
+      {/* Simple mobile panel under the banner */}
       {mobileOpen ? (
         <div className="unisen-nav-mobile pointer-events-auto absolute inset-x-0 top-full z-50 border-b border-[var(--border-default)] bg-background px-5 py-4 shadow-[0_12px_32px_rgba(36,74,112,0.08)] lg:hidden">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
-                className="px-1 py-3 text-base font-medium text-foreground [font-family:var(--font-body)]"
+                className="rounded-md px-2 py-3 text-base font-medium text-foreground [font-family:var(--font-body)]"
                 data-component="link"
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
@@ -234,14 +243,15 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
+
             <div className="mt-1 border-t border-[var(--border-default)] pt-3">
-              <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <p className="mb-1 px-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Resources
               </p>
               {RESOURCE_LINKS.map((item) => (
                 <a
                   key={item.href}
-                  className="flex items-center gap-3 rounded-lg px-2 py-2.5 text-foreground hover:bg-surface-2"
+                  className="flex items-center gap-3 rounded-md px-2 py-2.5 text-foreground"
                   data-component="link"
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
@@ -254,14 +264,17 @@ export default function Navbar() {
                 </a>
               ))}
             </div>
+
             <EnquiryDialog
               trigger={
-                <button
+                <Button
                   type="button"
-                  className="unisen-nav-cta-glass unisen-nav-cta-glass--full mt-2"
+                  size="lg"
+                  className="mt-3 h-11 w-full rounded-full bg-[var(--action-primary)] font-bold text-[var(--text-on-brand)] hover:bg-[var(--action-primary-hover)]"
+                  onClick={() => setMobileOpen(false)}
                 >
-                  <span className="relative z-[1]">Register your interest</span>
-                </button>
+                  Register your interest
+                </Button>
               }
             />
           </div>

@@ -18,7 +18,7 @@ export default function HeroSection() {
           alt=""
           width={1840}
           height={1308}
-          className="absolute inset-0 h-full w-full max-w-none object-cover object-[center_42%]"
+          className="absolute inset-0 h-full w-full max-w-none object-cover"
           decoding="async"
           fetchPriority="high"
         />

@@ -110,7 +110,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      // Hero sky match (closest single: #0596F2).
+      { name: "theme-color", content: "#0596F2" },
+      { name: "theme-color", content: "#0596F2", media: "(prefers-color-scheme: light)" },
+      { name: "theme-color", content: "#0596F2", media: "(prefers-color-scheme: dark)" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
       { title: SITE_HOME_TITLE },
       { name: "description", content: SITE_DESCRIPTION },
       { property: "og:title", content: SITE_TITLE },
