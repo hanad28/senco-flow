@@ -15,7 +15,7 @@ const Logo3_data: Logo3Data[] = [
 /** Logo Cloud section. */
 export default function LogoCloudSection({ logo3Data = Logo3_data, logos = logosContent } = {}) {
   return (
-    <div className="w-112.5 h-112.5 block absolute top-0 left-0 z-1 min-w-0 shrink-0 max-md:w-[20.1875rem] max-lg:h-17.5 max-lg:flex max-lg:relative max-lg:right-0 max-lg:bottom-0 max-lg:rounded-[10px] max-lg:justify-start max-lg:items-center max-lg:content-center max-lg:gap-2.5 max-lg:overflow-clip max-lg:z-[initial] md:max-lg:w-179" data-ditto-id="style-div">
+    <div className="w-112.5 h-112.5 block absolute top-0 left-0 z-1 min-w-0 shrink-0 max-md:w-full max-lg:w-full" data-ditto-id="style-div">
       <ul className="hidden max-lg:flex max-lg:relative max-lg:max-w-full max-lg:max-h-full max-lg:justify-start max-lg:items-center max-lg:gap-2.5 max-lg:[list-style-type:none] max-lg:list-outside max-md:transform-[matrix(1,0,0,1,-4.002,0)] md:max-lg:transform-[matrix(1,0,0,1,-7.506,0)]">
         {logo3Data.map((d, i) => <Logo3 key={i} d={d} styles={Logo3_styles[i]} />)}
       </ul>

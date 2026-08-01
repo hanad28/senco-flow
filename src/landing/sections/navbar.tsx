@@ -3,7 +3,6 @@ import { BookOpen, ChevronDown, LifeBuoy, Menu, Sparkles, X } from "lucide-react
 
 const NAV_LINKS = [
   { href: "/product", label: "Product" },
-  { href: "/pricing", label: "Pricing" },
   { href: "/integration", label: "Integration" },
 ] as const;
 
@@ -190,7 +189,7 @@ export default function Navbar() {
             <a
               className="unisen-nav-cta-glass max-lg:hidden"
               data-component="link"
-              href="/pricing"
+              href="/contact"
             >
               <span className="relative z-[1]">Get started</span>
             </a>
@@ -236,7 +235,7 @@ export default function Navbar() {
             <a
               className="unisen-nav-cta-glass unisen-nav-cta-glass--full mt-2"
               data-component="link"
-              href="/pricing"
+              href="/contact"
               onClick={() => setMobileOpen(false)}
             >
               <span className="relative z-[1]">Get started</span>

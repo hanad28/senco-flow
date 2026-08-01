@@ -9,47 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TemplatesRouteImport } from './routes/templates'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as ReportsRouteImport } from './routes/reports'
-import { Route as FamilyRouteImport } from './routes/family'
-import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as FamilyRouteImport } from './routes/family'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
 import { Route as FamilyIndexRouteImport } from './routes/family.index'
 import { Route as FamilyHelpRouteImport } from './routes/family.help'
-import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
 import { Route as ConsultationsIdIndexRouteImport } from './routes/consultations.$id.index'
-import { Route as FamilyCasesIdRouteImport } from './routes/family.cases.$id'
-import { Route as ConsultationsIdSubmitRouteImport } from './routes/consultations.$id.submit'
-import { Route as ConsultationsIdNeedsRouteImport } from './routes/consultations.$id.needs'
 import { Route as ConsultationsIdDraftRouteImport } from './routes/consultations.$id.draft'
+import { Route as ConsultationsIdNeedsRouteImport } from './routes/consultations.$id.needs'
+import { Route as ConsultationsIdSubmitRouteImport } from './routes/consultations.$id.submit'
+import { Route as FamilyCasesIdRouteImport } from './routes/family.cases.$id'
 import { Route as FamilyCasesIdIndexRouteImport } from './routes/family.cases.$id.index'
-import { Route as FamilyCasesIdSupportRouteImport } from './routes/family.cases.$id.support'
-import { Route as FamilyCasesIdResponseRouteImport } from './routes/family.cases.$id.response'
-import { Route as FamilyCasesIdPlanRouteImport } from './routes/family.cases.$id.plan'
-import { Route as FamilyCasesIdIssuesRouteImport } from './routes/family.cases.$id.issues'
-import { Route as FamilyCasesIdDocumentsRouteImport } from './routes/family.cases.$id.documents'
-import { Route as FamilyCasesIdConfirmationRouteImport } from './routes/family.cases.$id.confirmation'
 import { Route as FamilyCasesIdAssistantRouteImport } from './routes/family.cases.$id.assistant'
+import { Route as FamilyCasesIdConfirmationRouteImport } from './routes/family.cases.$id.confirmation'
+import { Route as FamilyCasesIdDocumentsRouteImport } from './routes/family.cases.$id.documents'
+import { Route as FamilyCasesIdIssuesRouteImport } from './routes/family.cases.$id.issues'
+import { Route as FamilyCasesIdPlanRouteImport } from './routes/family.cases.$id.plan'
+import { Route as FamilyCasesIdResponseRouteImport } from './routes/family.cases.$id.response'
+import { Route as FamilyCasesIdSupportRouteImport } from './routes/family.cases.$id.support'
 
-const TemplatesRoute = TemplatesRouteImport.update({
-  id: '/templates',
-  path: '/templates',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FamilyRoute = FamilyRouteImport.update({
-  id: '/family',
-  path: '/family',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -57,9 +42,29 @@ const CalendarRoute = CalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const FamilyRoute = FamilyRouteImport.update({
+  id: '/family',
+  path: '/family',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemplatesRoute = TemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsultationsIdRoute = ConsultationsIdRouteImport.update({
+  id: '/consultations/$id',
+  path: '/consultations/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FamilyIndexRoute = FamilyIndexRouteImport.update({
@@ -72,29 +77,9 @@ const FamilyHelpRoute = FamilyHelpRouteImport.update({
   path: '/help',
   getParentRoute: () => FamilyRoute,
 } as any)
-const ConsultationsIdRoute = ConsultationsIdRouteImport.update({
-  id: '/consultations/$id',
-  path: '/consultations/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ConsultationsIdIndexRoute = ConsultationsIdIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ConsultationsIdRoute,
-} as any)
-const FamilyCasesIdRoute = FamilyCasesIdRouteImport.update({
-  id: '/cases/$id',
-  path: '/cases/$id',
-  getParentRoute: () => FamilyRoute,
-} as any)
-const ConsultationsIdSubmitRoute = ConsultationsIdSubmitRouteImport.update({
-  id: '/submit',
-  path: '/submit',
-  getParentRoute: () => ConsultationsIdRoute,
-} as any)
-const ConsultationsIdNeedsRoute = ConsultationsIdNeedsRouteImport.update({
-  id: '/needs',
-  path: '/needs',
   getParentRoute: () => ConsultationsIdRoute,
 } as any)
 const ConsultationsIdDraftRoute = ConsultationsIdDraftRouteImport.update({
@@ -102,34 +87,29 @@ const ConsultationsIdDraftRoute = ConsultationsIdDraftRouteImport.update({
   path: '/draft',
   getParentRoute: () => ConsultationsIdRoute,
 } as any)
+const ConsultationsIdNeedsRoute = ConsultationsIdNeedsRouteImport.update({
+  id: '/needs',
+  path: '/needs',
+  getParentRoute: () => ConsultationsIdRoute,
+} as any)
+const ConsultationsIdSubmitRoute = ConsultationsIdSubmitRouteImport.update({
+  id: '/submit',
+  path: '/submit',
+  getParentRoute: () => ConsultationsIdRoute,
+} as any)
+const FamilyCasesIdRoute = FamilyCasesIdRouteImport.update({
+  id: '/cases/$id',
+  path: '/cases/$id',
+  getParentRoute: () => FamilyRoute,
+} as any)
 const FamilyCasesIdIndexRoute = FamilyCasesIdIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => FamilyCasesIdRoute,
 } as any)
-const FamilyCasesIdSupportRoute = FamilyCasesIdSupportRouteImport.update({
-  id: '/support',
-  path: '/support',
-  getParentRoute: () => FamilyCasesIdRoute,
-} as any)
-const FamilyCasesIdResponseRoute = FamilyCasesIdResponseRouteImport.update({
-  id: '/response',
-  path: '/response',
-  getParentRoute: () => FamilyCasesIdRoute,
-} as any)
-const FamilyCasesIdPlanRoute = FamilyCasesIdPlanRouteImport.update({
-  id: '/plan',
-  path: '/plan',
-  getParentRoute: () => FamilyCasesIdRoute,
-} as any)
-const FamilyCasesIdIssuesRoute = FamilyCasesIdIssuesRouteImport.update({
-  id: '/issues',
-  path: '/issues',
-  getParentRoute: () => FamilyCasesIdRoute,
-} as any)
-const FamilyCasesIdDocumentsRoute = FamilyCasesIdDocumentsRouteImport.update({
-  id: '/documents',
-  path: '/documents',
+const FamilyCasesIdAssistantRoute = FamilyCasesIdAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
   getParentRoute: () => FamilyCasesIdRoute,
 } as any)
 const FamilyCasesIdConfirmationRoute =
@@ -138,9 +118,29 @@ const FamilyCasesIdConfirmationRoute =
     path: '/confirmation',
     getParentRoute: () => FamilyCasesIdRoute,
   } as any)
-const FamilyCasesIdAssistantRoute = FamilyCasesIdAssistantRouteImport.update({
-  id: '/assistant',
-  path: '/assistant',
+const FamilyCasesIdDocumentsRoute = FamilyCasesIdDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdIssuesRoute = FamilyCasesIdIssuesRouteImport.update({
+  id: '/issues',
+  path: '/issues',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdPlanRoute = FamilyCasesIdPlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdResponseRoute = FamilyCasesIdResponseRouteImport.update({
+  id: '/response',
+  path: '/response',
+  getParentRoute: () => FamilyCasesIdRoute,
+} as any)
+const FamilyCasesIdSupportRoute = FamilyCasesIdSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
   getParentRoute: () => FamilyCasesIdRoute,
 } as any)
 
@@ -298,32 +298,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/templates': {
-      id: '/templates'
-      path: '/templates'
-      fullPath: '/templates'
-      preLoaderRoute: typeof TemplatesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/family': {
-      id: '/family'
-      path: '/family'
-      fullPath: '/family'
-      preLoaderRoute: typeof FamilyRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -333,11 +312,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/family': {
+      id: '/family'
+      path: '/family'
+      fullPath: '/family'
+      preLoaderRoute: typeof FamilyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/templates': {
+      id: '/templates'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consultations/$id': {
+      id: '/consultations/$id'
+      path: '/consultations/$id'
+      fullPath: '/consultations/$id'
+      preLoaderRoute: typeof ConsultationsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/family/': {
@@ -354,39 +361,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FamilyHelpRouteImport
       parentRoute: typeof FamilyRoute
     }
-    '/consultations/$id': {
-      id: '/consultations/$id'
-      path: '/consultations/$id'
-      fullPath: '/consultations/$id'
-      preLoaderRoute: typeof ConsultationsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/consultations/$id/': {
       id: '/consultations/$id/'
       path: '/'
       fullPath: '/consultations/$id/'
       preLoaderRoute: typeof ConsultationsIdIndexRouteImport
-      parentRoute: typeof ConsultationsIdRoute
-    }
-    '/family/cases/$id': {
-      id: '/family/cases/$id'
-      path: '/cases/$id'
-      fullPath: '/family/cases/$id'
-      preLoaderRoute: typeof FamilyCasesIdRouteImport
-      parentRoute: typeof FamilyRoute
-    }
-    '/consultations/$id/submit': {
-      id: '/consultations/$id/submit'
-      path: '/submit'
-      fullPath: '/consultations/$id/submit'
-      preLoaderRoute: typeof ConsultationsIdSubmitRouteImport
-      parentRoute: typeof ConsultationsIdRoute
-    }
-    '/consultations/$id/needs': {
-      id: '/consultations/$id/needs'
-      path: '/needs'
-      fullPath: '/consultations/$id/needs'
-      preLoaderRoute: typeof ConsultationsIdNeedsRouteImport
       parentRoute: typeof ConsultationsIdRoute
     }
     '/consultations/$id/draft': {
@@ -396,6 +375,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsultationsIdDraftRouteImport
       parentRoute: typeof ConsultationsIdRoute
     }
+    '/consultations/$id/needs': {
+      id: '/consultations/$id/needs'
+      path: '/needs'
+      fullPath: '/consultations/$id/needs'
+      preLoaderRoute: typeof ConsultationsIdNeedsRouteImport
+      parentRoute: typeof ConsultationsIdRoute
+    }
+    '/consultations/$id/submit': {
+      id: '/consultations/$id/submit'
+      path: '/submit'
+      fullPath: '/consultations/$id/submit'
+      preLoaderRoute: typeof ConsultationsIdSubmitRouteImport
+      parentRoute: typeof ConsultationsIdRoute
+    }
+    '/family/cases/$id': {
+      id: '/family/cases/$id'
+      path: '/cases/$id'
+      fullPath: '/family/cases/$id'
+      preLoaderRoute: typeof FamilyCasesIdRouteImport
+      parentRoute: typeof FamilyRoute
+    }
     '/family/cases/$id/': {
       id: '/family/cases/$id/'
       path: '/'
@@ -403,39 +403,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FamilyCasesIdIndexRouteImport
       parentRoute: typeof FamilyCasesIdRoute
     }
-    '/family/cases/$id/support': {
-      id: '/family/cases/$id/support'
-      path: '/support'
-      fullPath: '/family/cases/$id/support'
-      preLoaderRoute: typeof FamilyCasesIdSupportRouteImport
-      parentRoute: typeof FamilyCasesIdRoute
-    }
-    '/family/cases/$id/response': {
-      id: '/family/cases/$id/response'
-      path: '/response'
-      fullPath: '/family/cases/$id/response'
-      preLoaderRoute: typeof FamilyCasesIdResponseRouteImport
-      parentRoute: typeof FamilyCasesIdRoute
-    }
-    '/family/cases/$id/plan': {
-      id: '/family/cases/$id/plan'
-      path: '/plan'
-      fullPath: '/family/cases/$id/plan'
-      preLoaderRoute: typeof FamilyCasesIdPlanRouteImport
-      parentRoute: typeof FamilyCasesIdRoute
-    }
-    '/family/cases/$id/issues': {
-      id: '/family/cases/$id/issues'
-      path: '/issues'
-      fullPath: '/family/cases/$id/issues'
-      preLoaderRoute: typeof FamilyCasesIdIssuesRouteImport
-      parentRoute: typeof FamilyCasesIdRoute
-    }
-    '/family/cases/$id/documents': {
-      id: '/family/cases/$id/documents'
-      path: '/documents'
-      fullPath: '/family/cases/$id/documents'
-      preLoaderRoute: typeof FamilyCasesIdDocumentsRouteImport
+    '/family/cases/$id/assistant': {
+      id: '/family/cases/$id/assistant'
+      path: '/assistant'
+      fullPath: '/family/cases/$id/assistant'
+      preLoaderRoute: typeof FamilyCasesIdAssistantRouteImport
       parentRoute: typeof FamilyCasesIdRoute
     }
     '/family/cases/$id/confirmation': {
@@ -445,11 +417,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FamilyCasesIdConfirmationRouteImport
       parentRoute: typeof FamilyCasesIdRoute
     }
-    '/family/cases/$id/assistant': {
-      id: '/family/cases/$id/assistant'
-      path: '/assistant'
-      fullPath: '/family/cases/$id/assistant'
-      preLoaderRoute: typeof FamilyCasesIdAssistantRouteImport
+    '/family/cases/$id/documents': {
+      id: '/family/cases/$id/documents'
+      path: '/documents'
+      fullPath: '/family/cases/$id/documents'
+      preLoaderRoute: typeof FamilyCasesIdDocumentsRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/issues': {
+      id: '/family/cases/$id/issues'
+      path: '/issues'
+      fullPath: '/family/cases/$id/issues'
+      preLoaderRoute: typeof FamilyCasesIdIssuesRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/plan': {
+      id: '/family/cases/$id/plan'
+      path: '/plan'
+      fullPath: '/family/cases/$id/plan'
+      preLoaderRoute: typeof FamilyCasesIdPlanRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/response': {
+      id: '/family/cases/$id/response'
+      path: '/response'
+      fullPath: '/family/cases/$id/response'
+      preLoaderRoute: typeof FamilyCasesIdResponseRouteImport
+      parentRoute: typeof FamilyCasesIdRoute
+    }
+    '/family/cases/$id/support': {
+      id: '/family/cases/$id/support'
+      path: '/support'
+      fullPath: '/family/cases/$id/support'
+      preLoaderRoute: typeof FamilyCasesIdSupportRouteImport
       parentRoute: typeof FamilyCasesIdRoute
     }
   }

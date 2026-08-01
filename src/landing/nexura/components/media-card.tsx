@@ -16,7 +16,7 @@ export type MediaCardData = {
 /** A card with media + heading. */
 export default function MediaCard({ d, styles }: { d: MediaCardData; styles: MediaCardStyles }) {
   return (
-    <div className={cn("block relative shrink-0 max-md:w-[20.1875rem] max-lg:min-w-80 md:max-lg:w-87.5", styles.className)}>
+    <div className={cn("block relative shrink-0 max-md:w-full max-lg:min-w-80 md:max-lg:w-87.5", styles.className)}>
       <div className={cn("h-80 flex relative items-center content-center gap-4 overflow-clip bg-surface max-lg:flex-col", styles.className2)}>
         <div className={cn("w-45 h-80 block relative z-1 shrink-0 overflow-clip max-lg:max-h-112.5", styles.className3)}>
           <div className="h-full block absolute top-0 inset-x-0">
@@ -29,13 +29,13 @@ export default function MediaCard({ d, styles }: { d: MediaCardData; styles: Med
               <img className={styles.className8} data-component={d.kind} alt={d.alt2} height="72" src={d.imgSrc2} width={d.width2} />
             </div>
           </div>
-          <div className={cn("max-md:w-[17.6875rem] md:max-lg:w-77.5", styles.className9)}>
-            <div className={cn("max-md:w-[17.6875rem] md:max-lg:w-77.5", styles.className10)}>
+          <div className={cn("max-md:w-full md:max-lg:w-77.5", styles.className9)}>
+            <div className={cn("max-md:w-full md:max-lg:w-77.5", styles.className10)}>
               <h6 className={cn("max-lg:text-lg max-lg:leading-[1.5625rem] max-lg:tracking-[-0.72px]", styles.className11)} data-component={d.kind2} dir="auto">
                 {d.title}
               </h6>
             </div>
-            <div className={cn("max-md:w-[17.6875rem] md:max-lg:w-77.5", styles.className12)}>
+            <div className={cn("max-md:w-full md:max-lg:w-77.5", styles.className12)}>
               <p className={styles.className13} dir="auto">
                 {d.description}
               </p>

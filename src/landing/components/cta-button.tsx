@@ -33,6 +33,10 @@ type CtaButtonProps = {
   dark?: boolean;
   /** Stretch to parent width (pricing cards). */
   fullWidth?: boolean;
+  /**
+   * Glass only: blue L→R swipe (header solid blue). Default white trail (hero).
+   */
+  brandSlide?: boolean;
   className?: string;
 };
 
@@ -42,6 +46,7 @@ export default function CtaButton({
   variant,
   dark = true,
   fullWidth = false,
+  brandSlide = false,
   className = "",
 }: CtaButtonProps) {
   const resolved: CtaVariant =
@@ -51,7 +56,7 @@ export default function CtaButton({
 
   const shell =
     resolved === "glass"
-      ? "cta-glass"
+      ? `cta-glass${brandSlide ? " cta-glass--brand-slide" : ""}`
       : resolved === "accent"
         ? "bg-[var(--action-accent)] text-[var(--text-on-accent)] hover:brightness-[0.98]"
         : resolved === "light"
@@ -83,7 +88,8 @@ export default function CtaButton({
     return (
       <a
         className={[
-          "group/cta cta-glass h-11 flex relative justify-start items-center content-center overflow-hidden cursor-pointer",
+          "group/cta h-11 flex relative justify-start items-center content-center overflow-hidden cursor-pointer",
+          shell,
           "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-cyan)]",
           fullWidth ? "w-full max-w-full" : "",
           className,

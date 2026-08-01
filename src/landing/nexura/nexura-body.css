@@ -104,10 +104,16 @@
   color: var(--brand-blue, #3b8ac1) !important;
 }
 
-/* Decorative frame ticks / rules — brand border */
+/* Decorative frame ticks / rules — brand border (unused while frames are hidden) */
 .unisen-landing .nexura-body [class*="after:h-0.5"]::after,
 .unisen-landing .nexura-body [class*="after:w-0.5"]::after {
   background-color: var(--border-default, #b7e1e9);
+}
+
+/* Hide Nexura decorative frame borders (side ticks + rules + corners) — all viewports */
+.unisen-landing .nexura-body .z-8,
+.unisen-landing .nexura-body .z-9 {
+  display: none !important;
 }
 
 /* Feature accordion */
@@ -133,6 +139,42 @@
 .unisen-landing .nexura-body #solution-3,
 .unisen-landing .nexura-body #solution-4 {
   scroll-margin-top: 7.5rem;
+}
+
+
+/* Solution-1: Nexura vertical media-tile marquee (upward loop) */
+@keyframes nexura-media-marquee {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-1 * var(--marquee-period, 410px)));
+  }
+}
+
+.unisen-landing .nexura-body .nexura-media-marquee {
+  animation: nexura-media-marquee var(--marquee-duration, 18s) linear infinite;
+}
+
+/* Solution-2: path shimmer along the flow line */
+@keyframes nexura-path-shimmer {
+  from {
+    stroke-dashoffset: 150;
+  }
+  to {
+    stroke-dashoffset: -50;
+  }
+}
+
+.unisen-landing .nexura-body .nexura-path-shimmer {
+  animation: nexura-path-shimmer 2.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unisen-landing .nexura-body .nexura-media-marquee,
+  .unisen-landing .nexura-body .nexura-path-shimmer {
+    animation: none !important;
+  }
 }
 
 /* Cards / media frames */
@@ -241,4 +283,142 @@
 /* Pricing / product cards soft brand treatment */
 .unisen-landing .nexura-body [class*="shadow-\\[var\\(--clr-7\\)"] {
   box-shadow: 0 8px 28px rgba(36, 74, 112, 0.1) !important;
+}
+
+/* ── Mobile layout: fluidize Framer fixed widths ───────────────────────── */
+@media (max-width: 1023px) {
+  .unisen-landing .nexura-body {
+    overflow-x: clip;
+  }
+
+  .unisen-landing .nexura-body > div,
+  .unisen-landing .nexura-body section {
+    max-width: 100%;
+  }
+
+  /* Section shells: readable gutters */
+  .unisen-landing .nexura-body section.w-full {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  .unisen-landing .nexura-body section > .max-w-312\.5,
+  .unisen-landing .nexura-body section > [class*="max-w-312"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Text / panel columns pinned to ~323px in the clone → use full width */
+  .unisen-landing .nexura-body .nexura-mobile-fluid,
+  .unisen-landing .nexura-body [data-nexura-fluid="true"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Feature media + product shots must not spill past the viewport */
+  .unisen-landing .nexura-body img[data-component="image"] {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .unisen-landing .nexura-body .nexura-feature-media,
+  .unisen-landing .nexura-body .nexura-feature-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .unisen-landing .nexura-body .nexura-feature-media {
+    overflow: hidden !important;
+    border-radius: var(--radius-lg, 16px);
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .unisen-landing .nexura-body .nexura-feature-panel {
+    inset: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    border-radius: var(--radius-lg, 16px) !important;
+    box-shadow: none !important;
+  }
+
+  .unisen-landing .nexura-body .nexura-feature-media img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: cover;
+    object-position: top left;
+  }
+
+  /* Solution panels: full-bleed cards, clearer stacking */
+  .unisen-landing .nexura-body #solution-1,
+  .unisen-landing .nexura-body #solution-2,
+  .unisen-landing .nexura-body #solution-3,
+  .unisen-landing .nexura-body #solution-4 {
+    width: 100% !important;
+    max-width: 100% !important;
+    scroll-margin-top: 9.5rem;
+  }
+
+  .unisen-landing .nexura-body #solution {
+    scroll-margin-top: 6rem;
+  }
+
+  /* Sticky mobile solution tabs sit under the fixed nav */
+  .unisen-landing .nexura-body .nexura-solutions-mobile-tabs {
+    top: 4.25rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--background, #fff) 88%, transparent);
+  }
+
+  /* Remove panel / card / divider borders on mobile */
+  .unisen-landing .nexura-body .pricing-card,
+  .unisen-landing .nexura-body .bg-surface-2,
+  .unisen-landing .nexura-body .nexura-feature-media,
+  .unisen-landing .nexura-body .nexura-feature-panel,
+  .unisen-landing .nexura-body .bg-surface {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .unisen-landing .nexura-body .nexura-feature-divider {
+    display: none !important;
+  }
+
+  .unisen-landing .unisen-nav.is-scrolled nav {
+    border-bottom: 0 !important;
+  }
+
+  /* Solution UI panels — drop framed surface chrome */
+  .unisen-landing .nexura-body #solution .bg-surface {
+    background: transparent !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .unisen-landing .nexura-body #product > div > div:first-child,
+  .unisen-landing .nexura-body #integration [class*="w-113"],
+  .unisen-landing .nexura-body #integration [class*="w-\[22"],
+  .unisen-landing .nexura-body #solution [class*="w-150"],
+  .unisen-landing .nexura-body #solution [class*="w-120"],
+  .unisen-landing .nexura-body #solution [class*="w-\[25"],
+  .unisen-landing .nexura-body #solution [class*="w-\[52"],
+  .unisen-landing .nexura-body #solution [class*="max-md\\:w-\\[20"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Demo dashboard frame: keep aspect, avoid fixed desktop height blowout */
+  .unisen-landing .nexura-body #demo img[alt*="dashboard"],
+  .unisen-landing .nexura-body #demo img[alt*="consultation"] {
+    height: auto !important;
+    max-height: none !important;
+  }
 }

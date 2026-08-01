@@ -15,7 +15,7 @@ export default function Tile2({ d, styles }: { d: Tile2Data; styles: Tile2Styles
           </p>
         </div>
       </div>
-      <div className="w-104.5 flex relative flex-col justify-start grow shrink-0 basis-0 max-md:w-[18.0625rem] md:max-lg:w-141.5">
+      <div className="min-w-0 w-full flex relative flex-col justify-start grow shrink-0 basis-0 md:max-lg:w-141.5">
         <p className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
           {d.description2}
         </p>

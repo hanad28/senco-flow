@@ -47,7 +47,6 @@ export function LandingPage() {
 
     // In-page nav anchors — map Nexura-style routes onto landing sections.
     const sectionByHref: Record<string, string> = {
-      "/pricing": "pricing",
       "/product": "product",
       "/integration": "integration",
       "/about": "demo",

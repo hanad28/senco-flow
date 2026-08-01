@@ -6,7 +6,6 @@ export type TileDataItem = {
 };
 export const tileData: TileDataItem[] = [
     { href: "/product", description: "Product" },
-    { href: "/pricing", description: "Pricing" },
     { href: "/integration", description: "Integration" }
 ];
 
@@ -80,7 +79,6 @@ export const tile4Data: Tile4DataItem[] = [
     { href: "/", description: "Home" },
     { href: "/product", description: "Product" },
     { href: "/integration", description: "Integration" },
-    { href: "/pricing", description: "Pricing" },
     { href: "/#demo", description: "Demo" }
 ];
 

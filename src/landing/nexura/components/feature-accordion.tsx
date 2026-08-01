@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { Building2, Clock, FileSearch, FolderOpen } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type FeatureItem = {
@@ -11,6 +12,10 @@ type FeatureItem = {
 };
 
 const iconClass = "h-6 w-6 shrink-0";
+
+/** Nexura Features appear: enter x:80 / opacity 0, 50ms stagger, 0.8s ease. */
+const APPEAR_EASE = [0.2, 0, 0.2, 1] as const;
+const APPEAR_DELAYS = [0, 0.05, 0.1, 0.15] as const;
 
 const FEATURES: FeatureItem[] = [
   {
@@ -52,41 +57,42 @@ const FEATURES: FeatureItem[] = [
 ];
 
 /**
- * Nexura product feature list: exclusive expand + media swap.
- * Framer used variant state; the static clone only captured the open first item.
+ * Nexura product feature list: exclusive expand + media swap on click,
+ * scroll-appear on the four rows (opacity + x slide, staggered).
  */
 export default function FeatureAccordion() {
   const [active, setActive] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   return (
     <div className="contents min-w-0">
       <div className="w-full block relative z-1 shrink-0">
-        <div className="flex relative justify-center items-center content-center gap-16 overflow-clip max-lg:flex-wrap max-lg:gap-10">
+        {/* overflow visible so x:80 enter isn't clipped */}
+        <div className="flex relative w-full justify-center items-center content-center gap-16 overflow-visible max-lg:flex-col max-lg:items-stretch max-lg:gap-8">
           {/* Media panel */}
-          <div className="w-[40.3125rem] h-112.5 block relative shrink-0 overflow-clip bg-clr-6 max-md:w-[20.1875rem] max-lg:h-[20.3125rem] max-lg:min-w-75 max-lg:flex-1 md:max-lg:w-84.5 2xl:w-[40.675rem]">
-            <div className="h-104.5 flex absolute top-8 right-0 left-8 p-1 rounded-tl-xl justify-start items-start content-start shrink-0 gap-2.5 overflow-clip bg-background shadow-[var(--clr-7)_-2px_5px_10px_0px] max-lg:h-[19.0625rem] max-lg:top-5 max-lg:left-5">
+          <div className="nexura-feature-media w-[40.3125rem] h-112.5 block relative shrink-0 overflow-clip bg-clr-6 max-md:w-full max-lg:h-[14.5rem] max-lg:min-w-0 max-lg:w-full md:max-lg:w-full 2xl:w-[40.675rem]">
+            <div className="nexura-feature-panel h-104.5 flex absolute top-8 right-0 left-8 p-1 rounded-tl-xl justify-start items-start content-start shrink-0 gap-2.5 overflow-clip bg-background shadow-[var(--clr-7)_-2px_5px_10px_0px] max-lg:inset-3 max-lg:top-3 max-lg:right-0 max-lg:left-3 max-lg:h-auto max-lg:bottom-0 max-lg:rounded-xl">
               {FEATURES.map((f, i) => (
                 <div
                   key={f.title}
                   className={cn(
-                    "w-[40.225rem] h-[482.7px] block absolute min-w-0 shrink-0 overflow-clip aspect-[1.33333/1] max-md:w-[25.5625rem] max-md:h-[19.175rem] md:max-lg:w-[429.3px] md:max-lg:h-[20.125rem] 2xl:w-[649.7px] 2xl:h-[487.3px] transition-opacity duration-300 ease-out",
+                    "w-[40.225rem] h-[482.7px] block absolute inset-0 min-w-0 shrink-0 overflow-clip max-md:w-full max-md:h-full md:max-lg:w-full md:max-lg:h-full 2xl:w-[649.7px] 2xl:h-[487.3px] transition-opacity duration-300 ease-out",
                     i === active ? "z-4 opacity-100" : "z-1 opacity-0 pointer-events-none",
                   )}
                   aria-hidden={i !== active}
                 >
                   <div className="h-full block absolute top-0 inset-x-0">
                     <img
-                      className="w-full h-[30.1875rem] block overflow-clip object-cover object-[0%_0%] aspect-[auto_1600/1200] max-md:h-[19.1875rem] md:max-lg:h-80.5 2xl:h-[30.4375rem]"
+                      className="w-full h-full block overflow-clip object-cover object-[0%_0%] max-lg:object-left-top"
                       data-component="image"
                       alt=""
                       height={1200}
                       width={1600}
-                      sizes="calc((calc(min(max(100vw - 40px, 1px), 1250px) - 128px) * 0.58 - 32px) * 1.05)"
+                      sizes="(max-width: 1023px) 100vw, calc((min(max(100vw - 40px, 1px), 1250px) - 128px) * 0.58)"
                       src={f.imgSrc}
                       srcSet={f.srcSet}
-                      // First panel is often LCP on mobile; keep it eager, defer the rest.
                       loading={i === 0 ? "eager" : "lazy"}
-                      decoding={i === 0 ? "async" : "async"}
+                      decoding="async"
                       fetchPriority={i === 0 ? "high" : "low"}
                     />
                   </div>
@@ -97,15 +103,27 @@ export default function FeatureAccordion() {
 
           {/* Feature rows */}
           <div
-            className="w-[25.1875rem] flex relative flex-col justify-center items-stretch content-start grow shrink-0 basis-0 gap-0 max-md:w-[20.1875rem] max-lg:min-w-75 max-lg:gap-0 md:max-lg:w-84.5 2xl:w-[407.3px]"
+            className="w-[25.1875rem] flex relative flex-col justify-center items-stretch content-start grow shrink-0 basis-0 gap-0 max-md:w-full max-lg:min-w-0 max-lg:w-full max-lg:gap-0 md:max-lg:w-full 2xl:w-[407.3px]"
             role="list"
           >
             {FEATURES.map((f, i) => {
               const open = i === active;
               return (
-                <div key={f.title} className="w-full block relative shrink-0" role="listitem">
+                <motion.div
+                  key={f.title}
+                  className="w-full block relative shrink-0"
+                  role="listitem"
+                  initial={reduceMotion ? false : { opacity: 0, x: 80 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{
+                    delay: APPEAR_DELAYS[i] ?? 0,
+                    duration: 0.8,
+                    ease: APPEAR_EASE,
+                  }}
+                >
                   {i > 0 ? (
-                    <div className="w-full block relative shrink-0 py-0">
+                    <div className="nexura-feature-divider w-full block relative shrink-0 py-0" aria-hidden>
                       <div className="flex relative justify-center items-center content-center">
                         <div className="basis-0 shrink-0 h-px block relative grow overflow-hidden after:content-[''] after:block after:absolute after:top-0 after:-bottom-px after:inset-x-0 after:h-0.5 after:bg-[var(--clr-12,#b7e1e9)]" />
                       </div>
@@ -115,17 +133,11 @@ export default function FeatureAccordion() {
                   <button
                     type="button"
                     className={cn(
-                      "nexura-feature-row w-full flex relative flex-col justify-center items-start content-start gap-4 overflow-clip text-left cursor-pointer py-5 max-lg:cursor-pointer",
+                      "nexura-feature-row w-full flex relative flex-col justify-center items-start content-start gap-3 overflow-clip text-left cursor-pointer py-4 max-lg:py-3.5 max-lg:cursor-pointer",
                       open ? "nexura-feature-row--open" : "",
                     )}
                     aria-expanded={open}
                     onClick={() => setActive(i)}
-                    onMouseEnter={() => {
-                      // Desktop Nexura: hover switches active feature
-                      if (typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches) {
-                        setActive(i);
-                      }
-                    }}
                   >
                     <div className="w-full flex relative justify-start items-center content-center shrink-0 gap-2.5">
                       <span
@@ -136,7 +148,7 @@ export default function FeatureAccordion() {
                       >
                         {f.icon}
                       </span>
-                      <div className="flex relative max-w-125 flex-col justify-start grow shrink-0 basis-0 whitespace-pre-wrap [word-break:break-word] [overflow-wrap:break-word]">
+                      <div className="flex relative min-w-0 max-w-125 flex-col justify-start grow shrink-0 basis-0 whitespace-normal [word-break:break-word] [overflow-wrap:break-word]">
                         <h6
                           className={cn(
                             "block [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-xl font-medium leading-7 tracking-[-0.8px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-lg max-lg:leading-[1.5625rem] max-lg:tracking-[-0.72px] transition-colors duration-200",
@@ -158,7 +170,7 @@ export default function FeatureAccordion() {
                     >
                       <div className="min-h-0 overflow-hidden">
                         <p
-                          className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']"
+                          className="block text-muted-foreground [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.45] tracking-[-0.48px] text-pretty [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']"
                           dir="auto"
                         >
                           {f.description}
@@ -166,7 +178,7 @@ export default function FeatureAccordion() {
                       </div>
                     </div>
                   </button>
-                </div>
+                </motion.div>
               );
             })}
           </div>

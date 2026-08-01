@@ -6,7 +6,7 @@ import "./nexura/nexura-body.css";
 /**
  * Landing: Unisen hero + nav, then full Nexura body sections
  * (logo cloud → features → integrations → solutions →
- * pricing → CTA → footer) with Unisen/SENCO copy.
+ * CTA → footer) with Unisen/SENCO copy.
  */
 export default function Page() {
   return (
