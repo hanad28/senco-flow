@@ -19,6 +19,7 @@ import { SearchProvider } from "../lib/search-store";
 import { getLocationSuffix } from "../lib/hostname";
 import { APP_URL, SITE_URL, type HostMode } from "../lib/site";
 import { LandingPage } from "../landing/landing-page";
+import { AppHostChrome } from "./app-host-chrome";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
 
@@ -36,35 +37,14 @@ function LoadingScreen() {
 /** Unauthenticated users on app.unisen.uk — Clerk sign-in, not marketing. */
 function AppSignInGate() {
   return (
-    <div className="relative isolate flex min-h-screen flex-col items-center justify-center gap-6 overflow-hidden px-4">
-      <img
-        src="/assets/brand/hero-park-1280.jpg"
-        srcSet="/assets/brand/hero-park-768.jpg 768w, /assets/brand/hero-park-1280.jpg 1280w, /assets/brand/hero-park-1840.jpg 1840w"
-        sizes="100vw"
-        alt=""
-        width={1840}
-        height={1308}
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
-        decoding="async"
-      />
-      <div className="absolute inset-0 -z-10 bg-slate-950/25" aria-hidden />
-      <div className="text-center text-white drop-shadow-sm">
-        <p className="text-lg font-semibold tracking-tight">Unisen</p>
-        <p className="mt-1 text-sm">Sign in to open your dashboard</p>
-      </div>
+    <AppHostChrome>
       <SignIn
         routing="hash"
         forceRedirectUrl={postAuthRedirect}
         signUpForceRedirectUrl={postAuthRedirect}
         fallbackRedirectUrl={postAuthRedirect}
       />
-      <a
-        href={SITE_URL}
-        className="text-sm text-white underline-offset-4 drop-shadow-sm hover:underline"
-      >
-        ← Back to unisen.uk
-      </a>
-    </div>
+    </AppHostChrome>
   );
 }
 
@@ -97,6 +77,35 @@ function MarketingLanding() {
   return <LandingPage />;
 }
 
+/**
+ * App host: do not wait on Convex AuthLoading before showing sign-in.
+ * That serial wait was the main "Clerk is slow" feel for cold visits.
+ * Convex only gates the dashboard after Clerk reports signed-in.
+ */
+function AppHostShell({ queryClient }: { queryClient: QueryClient }) {
+  const { isLoaded, isSignedIn } = useAuth();
+
+  // Clerk still resolving session — chrome only (no SignIn flash for returnees).
+  if (!isLoaded) {
+    return <AppHostChrome />;
+  }
+
+  if (!isSignedIn) {
+    return <AppSignInGate />;
+  }
+
+  return (
+    <>
+      <AuthLoading>
+        <LoadingScreen />
+      </AuthLoading>
+      <Authenticated>
+        <AuthenticatedApp queryClient={queryClient} />
+      </Authenticated>
+    </>
+  );
+}
+
 function HostAwareAuthShell({
   hostMode,
   queryClient,
@@ -104,26 +113,23 @@ function HostAwareAuthShell({
   hostMode: HostMode;
   queryClient: QueryClient;
 }) {
-  // App host: keep a compact loader while Clerk resolves (sign-in gate next).
-  // Combined (e.g. *.vercel.app): show marketing immediately so lab tools and
-  // first visitors never see a blank/loading → full-page layout shift.
-  const loadingFallback =
-    hostMode === "app" ? <LoadingScreen /> : <MarketingLanding />;
+  if (hostMode === "app") {
+    return <AppHostShell queryClient={queryClient} />;
+  }
 
+  // Combined (e.g. *.vercel.app): marketing immediately — no loading → layout shift.
   return (
     <>
-      <AuthLoading>{loadingFallback}</AuthLoading>
+      <AuthLoading>
+        <MarketingLanding />
+      </AuthLoading>
 
       <Unauthenticated>
-        {hostMode === "app" ? <AppSignInGate /> : <MarketingLanding />}
+        <MarketingLanding />
       </Unauthenticated>
 
       <Authenticated>
-        {hostMode === "marketing" ? (
-          <MarketingLanding />
-        ) : (
-          <AuthenticatedApp queryClient={queryClient} />
-        )}
+        <AuthenticatedApp queryClient={queryClient} />
       </Authenticated>
     </>
   );

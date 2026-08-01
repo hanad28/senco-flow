@@ -32,6 +32,33 @@ export const SITE_OG_DESCRIPTION =
 /** Absolute social preview image (icon logo, unprocessed). */
 export const SITE_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
+/**
+ * Clerk Frontend API origin from the publishable key (pk_test_/pk_live_ + base64 host).
+ * Used for preconnect so the first SignIn fetch is not cold DNS+TLS.
+ */
+export function clerkFrontendOrigin(
+  publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string | undefined,
+): string | null {
+  if (!publishableKey) return null;
+  const raw = publishableKey.replace(/^pk_(?:test|live)_/, "").replace(/\$$/, "");
+  if (!raw) return null;
+  try {
+    const padded = raw + "=".repeat((4 - (raw.length % 4)) % 4);
+    const binary =
+      typeof atob === "function"
+        ? atob(padded)
+        : typeof Buffer !== "undefined"
+          ? Buffer.from(padded, "base64").toString("utf8")
+          : null;
+    if (!binary) return null;
+    const clean = binary.replace(/\$$/, "").trim();
+    if (!clean.includes("clerk")) return null;
+    return `https://${clean}`;
+  } catch {
+    return null;
+  }
+}
+
 export function siteJsonLd(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",

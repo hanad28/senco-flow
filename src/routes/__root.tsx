@@ -22,15 +22,28 @@ import {
   SITE_OG_IMAGE,
   SITE_TITLE,
   SITE_URL,
+  clerkFrontendOrigin,
   siteJsonLd,
 } from "../lib/site";
 import { LandingPage } from "../landing/landing-page";
+import { AppHostChrome } from "./app-host-chrome";
 
 // Auth stack (Clerk/Convex) is a separate chunk — cold marketing visits never download it.
-const AuthShell = lazy(() => import("./auth-shell"));
+const loadAuthShell = () => import("./auth-shell");
+const AuthShell = lazy(loadAuthShell);
 const RedirectToApp = lazy(() =>
-  import("./auth-shell").then((m) => ({ default: m.RedirectToApp })),
+  loadAuthShell().then((m) => ({ default: m.RedirectToApp })),
 );
+
+const CLERK_FRONTEND_ORIGIN = clerkFrontendOrigin();
+
+// App host always needs auth — kick off the chunk as soon as this module evaluates.
+if (typeof window !== "undefined") {
+  const host = window.location.hostname.toLowerCase().split(":")[0] ?? "";
+  if (host === "app.unisen.uk" || host === "app.localhost") {
+    void loadAuthShell();
+  }
+}
 
 function NotFoundComponent() {
   return (
@@ -131,6 +144,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       } as Record<string, string>,
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      // Clerk FAPI: warm DNS/TLS before SignIn mounts (app host cold path).
+      ...(CLERK_FRONTEND_ORIGIN
+        ? [
+            { rel: "preconnect", href: CLERK_FRONTEND_ORIGIN, crossOrigin: "anonymous" },
+            { rel: "dns-prefetch", href: CLERK_FRONTEND_ORIGIN },
+          ]
+        : []),
       {
         rel: "stylesheet",
         // Slim weights used on marketing + app chrome (display=swap already set).
@@ -189,8 +209,11 @@ function RootComponent() {
     return <LandingPage />;
   }
 
+  // App host: chrome first (not full marketing) while the auth chunk loads.
+  const fallback = hostMode === "app" ? <AppHostChrome /> : <LandingPage />;
+
   return (
-    <Suspense fallback={<LandingPage />}>
+    <Suspense fallback={fallback}>
       <AuthShell hostMode={hostMode} queryClient={queryClient} />
     </Suspense>
   );
