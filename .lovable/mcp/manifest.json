@@ -3,7 +3,16 @@
   "sdk_version": "0.24.0",
   "path": "/mcp",
   "auth": {
-    "type": "none"
+    "type": "oauth",
+    "issuer": "https://clerk-issuer-unset.invalid",
+    "resource_name": "Unisen EHCP Response workspace",
+    "accepted_audiences": [
+      "http://app.localhost:8080/mcp",
+      "http://localhost:8080/mcp",
+      "https://app.unisen.uk/mcp",
+      "https://unisen.uk/mcp",
+      "https://ehc-clear-path.lovable.app/mcp"
+    ]
   },
   "mcp": {
     "server": {
