@@ -16,10 +16,6 @@ export function AppHostChrome({ children }: { children?: ReactNode }) {
         decoding="async"
       />
       <div className="absolute inset-0 -z-10 bg-slate-950/25" aria-hidden />
-      <div className="text-center text-white drop-shadow-sm">
-        <p className="text-lg font-semibold tracking-tight">Unisen</p>
-        <p className="mt-1 text-sm">Sign in to open your dashboard</p>
-      </div>
       {children ?? (
         <div className="min-h-[28rem] w-full max-w-[25rem] rounded-xl bg-white/10 backdrop-blur-sm" aria-hidden />
       )}
