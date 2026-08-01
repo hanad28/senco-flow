@@ -2,13 +2,14 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppShell } from "@/components/app-shell";
 import { ActivityLog } from "@/components/activity-log";
 import { useConsultations, formatDate, deadlineTone } from "@/lib/consultations-store";
+import { pageTitle } from "@/lib/site";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { FileText, Sparkles, ArrowRight, AlertTriangle, Calendar, User2, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.id.toUpperCase()} — Consultation — EHCP Response` },
+      { title: pageTitle(`Consultation ${params.id.toUpperCase()}`) },
       { name: "robots", content: "noindex" },
     ],
   }),

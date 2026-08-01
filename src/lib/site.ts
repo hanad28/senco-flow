@@ -24,6 +24,11 @@ export function getHostMode(hostname: string): HostMode {
 
 export const SITE_NAME = "Unisen";
 export const SITE_TITLE = "Unisen: SEND coordination for schools & families";
+/** Browser tab titles: `Unisen ⋅ Page`. */
+export function pageTitle(page: string): string {
+  return `${SITE_NAME} ⋅ ${page}`;
+}
+export const SITE_HOME_TITLE = pageTitle("Home");
 export const SITE_DESCRIPTION =
   "Unisen helps schools and families run EHC needs assessments together with shared timelines, statutory deadlines, and execution assistance.";
 export const SITE_OG_DESCRIPTION =

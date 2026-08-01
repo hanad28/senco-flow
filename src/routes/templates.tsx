@@ -4,6 +4,7 @@ import { AppShell } from "@/components/app-shell";
 import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
 import { useTemplates, type EvidenceDoc } from "@/lib/templates-store";
 import type { NeedCapability } from "@/lib/consultations-store";
+import { pageTitle } from "@/lib/site";
 import { segmentText, VAGUENESS_EXPLANATION } from "@/lib/vagueness";
 import {
   CheckCircle2,
@@ -19,7 +20,7 @@ import {
 export const Route = createFileRoute("/templates")({
   head: () => ({
     meta: [
-      { title: "Templates — EHCP Response" },
+      { title: pageTitle("Templates") },
       {
         name: "description",
         content:

@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
+import { resolveHostMode } from "@/lib/hostname";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
+import { pageTitle, SITE_DESCRIPTION, SITE_HOME_TITLE } from "@/lib/site";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+
+const DASHBOARD_TITLE = pageTitle("Dashboard");
 
 const PAGE_SIZE = 10;
 
@@ -20,12 +24,26 @@ function getPageItems(current: number, total: number): (number | "ellipsis-left"
 }
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Dashboard — EHCP Response" },
-      { name: "description", content: "All incoming EHC needs assessment consultations, sorted by deadline." },
-    ],
-  }),
+  head: () => {
+    // Marketing host renders the landing page on `/`; keep the tab title aligned.
+    if (resolveHostMode() === "marketing") {
+      return {
+        meta: [
+          { title: SITE_HOME_TITLE },
+          { name: "description", content: SITE_DESCRIPTION },
+        ],
+      };
+    }
+    return {
+      meta: [
+        { title: DASHBOARD_TITLE },
+        {
+          name: "description",
+          content: "All incoming EHC needs assessment consultations, sorted by deadline.",
+        },
+      ],
+    };
+  },
   component: Dashboard,
 });
 
@@ -72,6 +90,10 @@ function Dashboard() {
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("daysLeft");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
+
+  useEffect(() => {
+    document.title = DASHBOARD_TITLE;
+  }, []);
 
   const withDeadlines = useMemo(
     () => consultations.map((c) => ({ ...c, daysLeft: calendarDaysRemaining(c.receivedOn) })),

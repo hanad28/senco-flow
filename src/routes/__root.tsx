@@ -20,6 +20,7 @@ import {
   SITE_DESCRIPTION,
   SITE_OG_DESCRIPTION,
   SITE_OG_IMAGE,
+  SITE_HOME_TITLE,
   SITE_TITLE,
   SITE_URL,
   clerkFrontendOrigin,
@@ -110,7 +111,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: SITE_TITLE },
+      { title: SITE_HOME_TITLE },
       { name: "description", content: SITE_DESCRIPTION },
       { property: "og:title", content: SITE_TITLE },
       { property: "og:description", content: SITE_OG_DESCRIPTION },

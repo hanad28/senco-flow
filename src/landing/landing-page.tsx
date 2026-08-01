@@ -1,5 +1,5 @@
-import type { MouseEvent, PointerEvent } from "react";
-import { APP_URL, clerkFrontendOrigin } from "@/lib/site";
+import { useEffect, type MouseEvent, type PointerEvent } from "react";
+import { APP_URL, clerkFrontendOrigin, SITE_HOME_TITLE } from "@/lib/site";
 import "./landing.css";
 import "./ditto.css";
 import "./hover.css";
@@ -40,6 +40,10 @@ function warmAuthDestinations() {
 }
 
 export function LandingPage() {
+  useEffect(() => {
+    document.title = SITE_HOME_TITLE;
+  }, []);
+
   function onPointerOver(e: PointerEvent<HTMLDivElement>) {
     const anchor = (e.target as HTMLElement | null)?.closest?.("a");
     if (!anchor) return;

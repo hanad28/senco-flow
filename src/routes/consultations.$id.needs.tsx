@@ -2,12 +2,13 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useConsultations, type NeedCapability } from "@/lib/consultations-store";
+import { pageTitle } from "@/lib/site";
 import { CheckCircle2, MinusCircle, XCircle, ArrowRight, ArrowLeft, Info, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/needs")({
   head: ({ params }) => ({
     meta: [
-      { title: `Consolidated needs — ${params.id.toUpperCase()} — EHCP Response` },
+      { title: pageTitle(`Needs ${params.id.toUpperCase()}`) },
       { name: "robots", content: "noindex" },
     ],
   }),

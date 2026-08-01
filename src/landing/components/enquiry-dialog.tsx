@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, type ReactElement, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,7 +28,7 @@ declare global {
 
 const TURNSTILE_SITE_KEY = "0x4AAAAAAEDsvZ-Bk0UHjXdS";
 
-export default function EnquiryDialog() {
+export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -114,9 +114,15 @@ export default function EnquiryDialog() {
       }}
     >
       <DialogTrigger asChild>
-        <Button type="button" size="lg" className="cta-glass relative h-11 px-6 font-bold">
-          Register your interest
-        </Button>
+        {trigger ?? (
+          <Button
+            type="button"
+            size="lg"
+            className="cta-glass hero-enquiry-trigger relative h-12 min-w-56 px-7 text-base font-bold"
+          >
+            <span className="relative z-[1]">Register your interest</span>
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent
         id="register-interest"

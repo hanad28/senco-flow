@@ -8,12 +8,13 @@ import {
   type NeedDomain,
   type ResponseStyle,
 } from "@/lib/school-profile-store";
+import { pageTitle } from "@/lib/site";
 import { Info, Plus, Trash2, Check, Save } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — School profile — EHCP Response" },
+      { title: pageTitle("Settings") },
       {
         name: "description",
         content:

@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { BookOpen, ChevronDown, LifeBuoy, Menu, Sparkles, X } from "lucide-react";
+import EnquiryDialog from "../components/enquiry-dialog";
 
 const NAV_LINKS = [
   { href: "/product", label: "Product" },
@@ -33,6 +34,7 @@ const RESOURCE_LINKS = [
  */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [heroCtaVisible, setHeroCtaVisible] = useState(true);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const resourcesRef = useRef<HTMLDivElement>(null);
@@ -44,6 +46,21 @@ export default function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const heroCta = document.querySelector(".unisen-hero-cta");
+    if (!heroCta) {
+      setHeroCtaVisible(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroCtaVisible(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(heroCta);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -82,10 +99,10 @@ export default function Navbar() {
         data-component="nav"
         aria-label="Primary"
       >
-        <div className="grid w-full max-w-[78.125rem] grid-cols-[1fr_auto_1fr] items-center gap-x-10 max-lg:flex max-lg:justify-between max-lg:gap-x-0">
+        <div className="grid w-full max-w-[78.125rem] grid-cols-[auto_1fr_auto] items-center max-lg:flex max-lg:justify-between">
           {/* Logo */}
           <a
-            className="flex h-7 shrink-0 items-center justify-self-start cursor-pointer max-lg:justify-self-auto"
+            className="flex h-9 shrink-0 items-center justify-self-start cursor-pointer max-lg:justify-self-auto"
             data-component="link"
             href="/"
             aria-label="Unisen home"
@@ -95,14 +112,14 @@ export default function Navbar() {
               alt="Unisen"
               width={280}
               height={80}
-              className="unisen-nav-logo block h-7 w-auto object-contain rounded-md"
+              className="unisen-nav-logo block h-9 w-auto object-contain rounded-md"
               decoding="async"
               fetchPriority="high"
             />
           </a>
 
           {/* Center links — desktop */}
-          <div className="flex shrink-0 items-center justify-center justify-self-center gap-8 max-lg:hidden">
+          <div className="flex shrink-0 items-center justify-center justify-self-end gap-8 max-lg:hidden">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
@@ -175,7 +192,7 @@ export default function Navbar() {
           </div>
 
           {/* Right CTA + mobile menu toggle */}
-          <div className="flex shrink-0 items-center justify-end justify-self-end gap-3">
+          <div className={`unisen-nav-actions flex shrink-0 items-center justify-end justify-self-end gap-3${heroCtaVisible ? "" : " is-cta-visible"}`}>
             <button
               type="button"
               className="unisen-nav-menu-btn hidden max-lg:flex h-10 w-10 items-center justify-center rounded-full"
@@ -186,13 +203,18 @@ export default function Navbar() {
               {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
 
-            <a
-              className="unisen-nav-cta-glass max-lg:hidden"
-              data-component="link"
-              href="/contact"
-            >
-              <span className="relative z-[1]">Get started</span>
-            </a>
+            <EnquiryDialog
+              trigger={
+                <button
+                  type="button"
+                  className={`unisen-nav-cta-glass max-lg:hidden${heroCtaVisible ? " unisen-nav-cta-glass--hidden" : ""}`}
+                  aria-hidden={heroCtaVisible}
+                  tabIndex={heroCtaVisible ? -1 : undefined}
+                >
+                  <span className="relative z-[1]">Register your interest</span>
+                </button>
+              }
+            />
           </div>
         </div>
       </nav>
@@ -232,14 +254,16 @@ export default function Navbar() {
                 </a>
               ))}
             </div>
-            <a
-              className="unisen-nav-cta-glass unisen-nav-cta-glass--full mt-2"
-              data-component="link"
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
-            >
-              <span className="relative z-[1]">Get started</span>
-            </a>
+            <EnquiryDialog
+              trigger={
+                <button
+                  type="button"
+                  className="unisen-nav-cta-glass unisen-nav-cta-glass--full mt-2"
+                >
+                  <span className="relative z-[1]">Register your interest</span>
+                </button>
+              }
+            />
           </div>
         </div>
       ) : null}

@@ -4,13 +4,14 @@ import { AppShell } from "@/components/app-shell";
 import { useConsultations, formatDate, deadlineTone, type NeedCapability } from "@/lib/consultations-store";
 import { useSchoolProfile } from "@/lib/school-profile-store";
 import { downloadResponseLetter } from "@/lib/letter-export";
+import { pageTitle } from "@/lib/site";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { CheckCircle2, ArrowLeft, Send, FileCheck2, AlertTriangle, XCircle, Download, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/submit")({
   head: ({ params }) => ({
     meta: [
-      { title: `Submit response — ${params.id.toUpperCase()} — EHCP Response` },
+      { title: pageTitle(`Submit ${params.id.toUpperCase()}`) },
       { name: "robots", content: "noindex" },
     ],
   }),
