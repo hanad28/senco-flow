@@ -1174,11 +1174,6 @@
   }
 
   /* Feature media + product shots must not spill past the viewport */
-  .unisen-landing .nexura-body img[data-component="image"] {
-    max-width: 100%;
-    height: auto;
-  }
-
   .unisen-landing .nexura-body .nexura-feature-media,
   .unisen-landing .nexura-body .nexura-feature-panel {
     width: 100% !important;

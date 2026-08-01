@@ -124,7 +124,7 @@ export function MockConsultationsDashboard() {
 export function MockClockPanel() {
   return (
     <Shell
-      title="A.R. — Year 5"
+      title="A.R., Year 5"
       aside={<Pill tone="urgent">2 days left</Pill>}
     >
       <div className="unisen-mock-clock">
@@ -157,12 +157,12 @@ export function MockClockPanel() {
 /** Outcome: vague provision flagged */
 export function MockDraftFlags() {
   return (
-    <Shell title="Response draft — Section F" aside={<Pill tone="warn">3 flags</Pill>}>
+    <Shell title="Response draft: Section F" aside={<Pill tone="warn">3 flags</Pill>}>
       <div className="unisen-mock-draft">
         <div className="unisen-mock-need">
           <header>
             <span>1</span>
-            <strong>Receptive language — needs specific provision</strong>
+            <strong>Receptive language: needs specific provision</strong>
             <Pill tone="ok">Can meet</Pill>
           </header>
           <p className="unisen-mock-draft-text">
@@ -219,7 +219,7 @@ export function MockEvidencePanel() {
       </ul>
       <div className="unisen-mock-ai">
         <Sparkles className="h-3.5 w-3.5" />
-        <span>AI summary cites uploaded sources only — never invents provision.</span>
+        <span>AI summary cites uploaded sources only; it never invents provision.</span>
       </div>
     </Shell>
   );
@@ -248,7 +248,7 @@ export function MockLawPanel() {
             <FileText className="h-3.5 w-3.5" /> SEND Code of Practice 0–25
           </li>
           <li>
-            <CheckCircle2 className="h-3.5 w-3.5" /> IPSEA — specific, quantified provision
+            <CheckCircle2 className="h-3.5 w-3.5" /> IPSEA: specific, quantified provision
           </li>
         </ul>
       </div>

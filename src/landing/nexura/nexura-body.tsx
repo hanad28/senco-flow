@@ -31,7 +31,7 @@ const OUTCOMES: {
   },
   {
     title: "Evidence stays with the case",
-    body: "Advice, school forms, and parent views live on one case — not scattered across email, post, and folders.",
+    body: "Advice, school forms, and parent views live on one case, not scattered across email, post, and folders.",
     icon: <Building2 className={iconClass} strokeWidth={1.75} aria-hidden />,
     mock: "evidence",
   },
@@ -47,12 +47,12 @@ const STEPS = [
   {
     n: "01",
     title: "Open the consultation",
-    body: "Pull in the LA request and attach the evidence you already hold — advice, views, and school forms.",
+    body: "Pull in the LA request and attach the evidence you already hold: advice, views, and school forms.",
   },
   {
     n: "02",
     title: "Draft with the clock in view",
-    body: "Write the response with deadlines, needs, and provision checks alongside the draft — not in a separate spreadsheet.",
+    body: "Write the response with deadlines, needs, and provision checks alongside the draft, not in a separate spreadsheet.",
   },
   {
     n: "03",
@@ -156,7 +156,7 @@ export default function UnisenBody() {
             </ScrollAppear>
             <ScrollAppear y={12} delay={0.08} className="mt-6 max-w-[36rem]">
               <p className="text-muted-foreground text-base leading-relaxed tracking-[-0.01em]">
-                One workspace: open consultations, days left, and case status — so the SENCO never rebuilds the picture from inboxes.
+                One workspace shows open consultations, days left, and case status, so the SENCO never rebuilds the picture from inboxes.
               </p>
             </ScrollAppear>
           </SectionShell>
@@ -203,7 +203,7 @@ export default function UnisenBody() {
           <SectionShell className="unisen-mid-steps py-20 max-lg:py-14">
             <div className="unisen-mid-steps-layout">
               <ScrollAppear y={16} className="unisen-mid-steps-intro">
-                <p className="unisen-mid-kicker mb-3">School workspace — shipping first</p>
+                <p className="unisen-mid-kicker mb-3">School workspace: shipping first</p>
                 <h2 className="unisen-mid-h2" data-component="heading">
                   From LA request to submitted response.
                 </h2>
@@ -295,9 +295,9 @@ export default function UnisenBody() {
                 aria-label="Get started"
               >
                 <div className="w-full max-w-312.5 h-full flex relative py-25 px-16 flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-16 max-lg:py-16 max-lg:px-5">
-                  <div className="w-full max-w-150 flex relative z-1 flex-col justify-center items-start content-start shrink-0 gap-5">
+                  <div className="w-full max-w-150 flex relative z-1 flex-col justify-center items-start content-start shrink-0 gap-5 max-md:px-6">
                     <div className="w-full block relative shrink-0">
-                      <div className="w-150 flex relative flex-col justify-start shrink-0 max-md:w-[20.1875rem]">
+                      <div className="w-150 flex relative flex-col justify-start shrink-0 max-md:w-full">
                         <h2
                           className="block [font-family:var(--font-heading)] text-[2.5rem] font-medium leading-12 tracking-[-1.6px] text-left text-balance max-lg:text-[1.75rem] max-lg:leading-[2.125rem] max-lg:tracking-[-1.12px]"
                           data-component="heading"
@@ -307,9 +307,9 @@ export default function UnisenBody() {
                         </h2>
                       </div>
                     </div>
-                    <div className="w-full flex relative justify-start items-center content-center shrink-0 gap-3 max-lg:flex-wrap">
-                      <CtaButton label="Get started" variant="glass" href="/contact" />
-                      <CtaButton label="Talk to us" variant="glass" href="/contact" />
+                    <div className="w-full flex relative justify-start items-center content-center shrink-0 gap-3 max-lg:flex-wrap max-md:flex-nowrap">
+                      <CtaButton className="max-md:min-w-0 max-md:flex-1 max-md:[&_.cta-glass-track]:min-w-0" label="Get started" variant="glass" href="/contact" />
+                      <CtaButton className="max-md:min-w-0 max-md:flex-1 max-md:[&_.cta-glass-track]:min-w-0" label="Talk to us" variant="glass" href="/contact" />
                     </div>
                   </div>
                   <div className="w-310 h-full block absolute top-0 left-0 z-0 min-w-0 shrink-0 max-md:w-[22.6875rem] md:max-lg:w-189 2xl:w-312.5">
@@ -336,7 +336,7 @@ export default function UnisenBody() {
                       </div>
                     </div>
                   </div>
-                  <div className="w-304 h-116 block absolute top-2 left-3 z-0 min-w-0 shrink-0 overflow-clip rounded-[1.25rem] max-md:w-[21.1875rem] max-md:rounded-xl max-lg:h-108.5 md:max-lg:w-183 2xl:w-306.5">
+                  <div className="w-304 h-116 block absolute top-2 left-3 z-0 min-w-0 shrink-0 overflow-clip rounded-[1.25rem] max-md:right-3 max-md:w-auto max-md:rounded-xl max-lg:h-108.5 md:max-lg:w-183 2xl:w-306.5">
                     <div className="h-full block absolute top-0 inset-x-0">
                       <img
                         className="w-full h-full block overflow-clip object-cover object-[42%_58%] max-lg:h-full"

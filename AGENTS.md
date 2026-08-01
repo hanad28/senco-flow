@@ -55,6 +55,94 @@ git push unisenofficial mikhail/unisen-demo
 
 Do **not** force-push (Lovable). Do **not** treat personal accounts as permanent company ownership. Do **not** amend already-pushed commits just to change author — use a new empty (or real) commit with the `unisenofficial` author instead.
 
+### Synchronize all three repositories
+
+Use this when `origin/main`, `upstream/main`, and `unisenofficial/main` have diverged and the team wants all three to finish on the **same commit SHA**. Obtain team agreement before updating `upstream/main` or triggering the live repository. Never force-push.
+
+1. Fetch all remotes and inspect divergence:
+
+```bash
+git fetch origin --prune
+git fetch upstream --prune
+git fetch unisenofficial --prune
+
+git rev-list --left-right --count upstream/main...unisenofficial/main
+git rev-list --left-right --count origin/main...unisenofficial/main
+git status --short --branch
+```
+
+2. Create an integration branch from Hanad's latest `main`, then merge the current live branch. Starting from `upstream/main` makes Hanad's work the first parent and preserves both histories:
+
+```bash
+SYNC_BRANCH="sync/hanad-with-live-$(date +%Y%m%d-%H%M)"
+git switch -c "$SYNC_BRANCH" upstream/main
+git merge --no-ff unisenofficial/main \
+  -m "Merge live Unisen changes with Hanad repository updates"
+```
+
+Resolve conflicts without discarding either feature set. Typical generated/dependency conflicts are `package.json`, `bun.lock`, `src/routeTree.gen.ts`, and `src/routes/__root.tsx`. Regenerate lock and route output rather than hand-editing generated content when possible:
+
+```bash
+bun install
+bun run build
+```
+
+Smoke-test the marketing route and any newly merged server endpoints. Full lint may be skipped only if it is known to be impractically slow; record that clearly in the PR.
+
+3. Push the integration branch and open a PR into Hanad's `main` for review:
+
+```bash
+gh auth switch --user mwijanarko1
+git push -u upstream "$SYNC_BRANCH"
+gh pr create --repo hanad28/senco-flow \
+  --base main \
+  --head "$SYNC_BRANCH" \
+  --title "Merge live Unisen updates into main" \
+  --body-file /tmp/senco-flow-pr.md
+```
+
+After approval, merge the PR normally. Then fetch the resulting canonical commit and create the required deploy-author commit **on top of it**. Doing this after the PR merge works regardless of whether GitHub created an additional merge commit:
+
+```bash
+git fetch upstream --prune
+DEPLOY_BRANCH="sync/all-mains-$(date +%Y%m%d-%H%M)"
+git switch -c "$DEPLOY_BRANCH" upstream/main
+
+git -c user.name="unisenofficial" \
+    -c user.email="309063258+unisenofficial@users.noreply.github.com" \
+    commit --allow-empty -m "Trigger Vercel deploy as unisenofficial."
+```
+
+4. With explicit team approval, fast-forward all three `main` branches to that exact local tip. Switch `gh` accounts because the private repositories are only visible to their owners:
+
+```bash
+gh auth switch --user mwijanarko1
+git push origin HEAD:main
+git push upstream HEAD:main
+
+gh auth switch --user unisenofficial
+git push unisenofficial HEAD:main
+
+gh auth switch --user mwijanarko1
+```
+
+If any push is rejected as non-fast-forward, stop. Fetch again and repeat the integration; do not force-push.
+
+5. Verify each private remote while authenticated as its owner. All three hashes must be identical:
+
+```bash
+gh auth switch --user mwijanarko1
+git ls-remote origin refs/heads/main
+git ls-remote upstream refs/heads/main
+
+gh auth switch --user unisenofficial
+git ls-remote unisenofficial refs/heads/main
+
+gh auth switch --user mwijanarko1
+```
+
+Keep unrelated untracked files out of the commit. Matching `main` does not imply that historical feature branches are identical.
+
 ## Local secrets
 
 - File: **`.env.local`** (gitignored via `*.local` — never commit)
