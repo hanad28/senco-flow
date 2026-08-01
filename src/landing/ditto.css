@@ -1,0 +1,15 @@
+@media (max-width: 571px) {
+[data-ditto-id="style-div"]{mask-image:url("data:image/svg+xml,<svg display=\"block\" role=\"presentation\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 0 0 L 16 0\" fill=\"transparent\" height=\"1px\" id=\"UuogGuVqf\" stroke-dasharray=\"\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" stroke=\"var(--token-b3948253-5a35-41bf-a13b-4a3dbd2d3470, rgb(148, 139, 129))\" transform=\"translate(3.75 11.75)\" width=\"16px\"/><path d=\"M 0 0 L 16 0\" fill=\"transparent\" height=\"1px\" id=\"l5rHMKMqN\" stroke-dasharray=\"\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" stroke=\"var(--token-b3948253-5a35-41bf-a13b-4a3dbd2d3470, rgb(148, 139, 129))\" transform=\"translate(3.75 7.75)\" width=\"16px\"/><path d=\"M 0 0 L 16 0\" fill=\"transparent\" height=\"1px\" id=\"U6WyJYpD9\" stroke-dasharray=\"\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" stroke=\"var(--token-b3948253-5a35-41bf-a13b-4a3dbd2d3470, rgb(148, 139, 129))\" transform=\"translate(3.75 15.75)\" width=\"16px\"/></svg>"), none}
+}
+@media (min-width: 572px) and (max-width: 1024px) {
+[data-ditto-id="style-div"]{mask-image:url("data:image/svg+xml,<svg display=\"block\" role=\"presentation\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M 0 0 L 16 0\" fill=\"transparent\" height=\"1px\" id=\"UuogGuVqf\" stroke-dasharray=\"\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" stroke=\"var(--token-b3948253-5a35-41bf-a13b-4a3dbd2d3470, rgb(148, 139, 129))\" transform=\"translate(3.75 11.75)\" width=\"16px\"/><path d=\"M 0 0 L 16 0\" fill=\"transparent\" height=\"1px\" id=\"l5rHMKMqN\" stroke-dasharray=\"\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" stroke=\"var(--token-b3948253-5a35-41bf-a13b-4a3dbd2d3470, rgb(148, 139, 129))\" transform=\"translate(3.75 7.75)\" width=\"16px\"/><path d=\"M 0 0 L 16 0\" fill=\"transparent\" height=\"1px\" id=\"U6WyJYpD9\" stroke-dasharray=\"\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" stroke=\"var(--token-b3948253-5a35-41bf-a13b-4a3dbd2d3470, rgb(148, 139, 129))\" transform=\"translate(3.75 15.75)\" width=\"16px\"/></svg>"), none}
+}
+@media (min-width: 572px) and (max-width: 1024px) {
+[data-ditto-id="style-div-2"]{mask-image:radial-gradient(48% 150%, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 90.5405%, rgba(0, 0, 0, 0) 100%)}
+}
+@media (max-width: 571px) {
+[data-ditto-id="style-div-3"]{mask-image:linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.64) 94%, rgba(0, 0, 0, 0) 103%)}
+}
+@media (min-width: 572px) and (max-width: 1024px) {
+[data-ditto-id="style-div-3"]{mask-image:linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.64) 94%, rgba(0, 0, 0, 0) 103%)}
+}

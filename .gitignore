@@ -30,3 +30,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Nexura ditto clone working tree (regenerate via ditto)
+.nexura-clone/
+
+# Local Vercel CLI / deploy output
+.vercel/
+
+# Local Notion exports (sensitive snapshots; re-export with scripts/export-notion.mjs)
+docs/notion/

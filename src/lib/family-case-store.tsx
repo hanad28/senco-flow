@@ -1,8 +1,9 @@
 // FamilyCaseProvider — all state for the family workspace demo.
 // Session-only (no localStorage for case content); includes reset-to-seed.
 
-import { createContext, useCallback, useContext, useMemo, useReducer, type Dispatch, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, type Dispatch, type ReactNode } from "react";
 import { FAMILY_STATUTORY, familyDeadlineIso } from "./family-config";
+import { usePersistentSnapshot } from "./use-persistent-snapshot";
 
 export type PlanSection = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H1" | "H2" | "I" | "J" | "K";
 
@@ -528,9 +529,14 @@ type Ctx = {
 const CaseCtx = createContext<Ctx | null>(null);
 
 export function FamilyCaseProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, undefined, makeSeed);
-  const reset = useCallback(() => dispatch({ type: "reset" }), []);
-  const value = useMemo(() => ({ state, dispatch, reset }), [state, reset]);
+  const initialState = useMemo(makeSeed, []);
+  const [state, setState] = usePersistentSnapshot<FamilyCase>("familyCase", initialState);
+  const dispatch = useCallback<Dispatch<Action>>(
+    (action) => setState((current) => reducer(current, action)),
+    [setState],
+  );
+  const reset = useCallback(() => dispatch({ type: "reset" }), [dispatch]);
+  const value = useMemo(() => ({ state, dispatch, reset }), [state, dispatch, reset]);
   return <CaseCtx.Provider value={value}>{children}</CaseCtx.Provider>;
 }
 

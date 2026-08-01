@@ -1,0 +1,428 @@
+/**
+ * Restored Parley-template hover interactions.
+ *
+ * Ditto only emitted pure-CSS link color deltas (hover:text-muted). The source
+ * Framer site drives most of its polish via Motion whileHover variants that
+ * leave dual labels / dual arrows / opacity-0 overlays in the DOM but never
+ * animate without runtime CSS. These rules recreate those patterns from the
+ * captured structure.
+ */
+
+/* ── Shared easing (UNISEN motion: 150–300ms, ease-out) ──────────────────── */
+.unisen-landing {
+  --hover-ease: var(--ease-enter, ease-out);
+  --hover-duration: var(--duration-normal, 250ms);
+}
+
+/* ── Primary CTAs (blue / yellow brand pills) ─────────────────────────────── */
+.unisen-landing a[data-component="link"].group\/cta {
+  transition:
+    transform var(--hover-duration) var(--hover-ease),
+    box-shadow var(--hover-duration) var(--hover-ease),
+    background-color var(--hover-duration) var(--hover-ease);
+}
+
+/* ── Text / nav links ────────────────────────────────────────────────────── */
+.unisen-landing a[data-component="link"] {
+  transition:
+    color 0.2s var(--hover-ease),
+    border-color 0.2s var(--hover-ease),
+    text-decoration-color 0.2s var(--hover-ease),
+    opacity 0.2s var(--hover-ease);
+}
+
+/* Footer / inline muted links that only had utility classes */
+.unisen-landing a.hover\:text-muted:hover,
+.unisen-landing a.hover\:text-muted:focus-visible {
+  color: var(--muted);
+}
+
+/* ── Feature list rows (Tell Unisen once) ────────────────────────────────── */
+/* Hidden chevron/icon at opacity-0 → reveal + title darkens */
+.unisen-landing .cursor-pointer:has(> .opacity-0) > .opacity-0 {
+  transition: opacity var(--hover-duration) var(--hover-ease);
+}
+
+.unisen-landing .cursor-pointer:has(> .opacity-0):hover > .opacity-0,
+.unisen-landing .cursor-pointer:has(> .opacity-0):focus-within > .opacity-0 {
+  opacity: 1;
+}
+
+.unisen-landing .cursor-pointer:has(> .opacity-0) h4 {
+  transition: color 0.2s var(--hover-ease);
+}
+
+.unisen-landing .cursor-pointer:has(> .opacity-0):hover h4 {
+  color: var(--color-001);
+}
+
+/* ── Testimonial cards ───────────────────────────────────────────────────── */
+/* Decorative bg image sits at opacity-0; fade in on hover */
+.unisen-landing .cursor-pointer.bg-color-002 {
+  transition:
+    transform var(--hover-duration) var(--hover-ease),
+    box-shadow var(--hover-duration) var(--hover-ease);
+}
+
+.unisen-landing .cursor-pointer.bg-color-002 > .absolute.opacity-0 {
+  transition: opacity 0.45s var(--hover-ease);
+}
+
+.unisen-landing .cursor-pointer.bg-color-002 > :not(.absolute) {
+  position: relative;
+  z-index: 1;
+}
+
+.unisen-landing .cursor-pointer.bg-color-002:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0 8px 24px 0,
+    rgba(0, 0, 0, 0.04) 0 1px 2px 0;
+}
+
+.unisen-landing .cursor-pointer.bg-color-002:hover > .absolute.opacity-0 {
+  opacity: 0.22;
+}
+
+/* ── Pricing cards ───────────────────────────────────────────────────────── */
+.unisen-landing .pricing-card {
+  transition:
+    transform var(--hover-duration) var(--hover-ease),
+    box-shadow var(--hover-duration) var(--hover-ease);
+}
+
+.unisen-landing .pricing-card:not(.pricing-card--featured):hover {
+  transform: translateY(-4px);
+  box-shadow:
+    rgba(0, 0, 0, 0.08) 0 16px 40px 0,
+    rgba(0, 0, 0, 0.04) 0 2px 6px 0;
+}
+
+.unisen-landing .pricing-card--featured:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    rgba(0, 0, 0, 0.12) 0 20px 40px 0,
+    rgba(0, 0, 0, 0.06) 0 4px 10px 0;
+}
+
+.unisen-landing .pricing-grid {
+  align-items: stretch;
+}
+
+/* ── FAQ accordion rows ──────────────────────────────────────────────────── */
+.unisen-landing .bg-surface-2.cursor-pointer.rounded-xl {
+  transition:
+    background-color 0.25s var(--hover-ease),
+    transform 0.25s var(--hover-ease),
+    box-shadow 0.25s var(--hover-ease);
+}
+
+.unisen-landing .bg-surface-2.cursor-pointer.rounded-xl:hover {
+  background-color: var(--surface-3);
+  box-shadow: rgba(0, 0, 0, 0.04) 0 2px 8px 0;
+}
+
+.unisen-landing .bg-surface-2.cursor-pointer.rounded-xl svg {
+  transition: transform 0.3s var(--hover-ease);
+}
+
+.unisen-landing .bg-surface-2.cursor-pointer.rounded-xl:hover svg {
+  transform: rotate(45deg);
+}
+
+/* ── Feature “Takes real action” elevated card ───────────────────────────── */
+.unisen-landing .shadow-\[var\(--clr-0\)_0px_12px_16px_0px\] {
+  transition:
+    transform var(--hover-duration) var(--hover-ease),
+    box-shadow var(--hover-duration) var(--hover-ease);
+}
+
+.unisen-landing .shadow-\[var\(--clr-0\)_0px_12px_16px_0px\]:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    rgba(0, 0, 0, 0.12) 0 18px 32px 0,
+    rgba(0, 0, 0, 0.05) 0 2px 6px 0;
+}
+
+/* ── How-it-works tiles / product tiles ──────────────────────────────────── */
+.unisen-landing [data-component="link"].cursor-pointer,
+.unisen-landing .cursor-pointer[class*="rounded"] {
+  /* gentle affordance for remaining pointer cards */
+}
+
+/* Social icons + footer */
+.unisen-landing .footer-social {
+  transition:
+    background-color 0.2s var(--hover-ease),
+    color 0.2s var(--hover-ease),
+    transform 0.2s var(--hover-ease);
+}
+
+.unisen-landing .footer-social:hover {
+  transform: translateY(-1px);
+}
+
+.unisen-landing .footer-wordmark {
+  max-height: 10rem;
+  object-position: center bottom;
+  border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+  .unisen-landing .footer-wordmark {
+    max-height: 4.5rem;
+  }
+}
+
+.unisen-landing .footer-brand {
+  mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+}
+
+/* Card lift — design system: 8px upward, soft shadow */
+.unisen-landing .cursor-pointer.bg-color-002:hover,
+.unisen-landing .pricing-card:hover {
+  transform: translateY(-8px);
+}
+
+/* ── Meet Unisen / bottom CTA band image ─────────────────────────────────── */
+.unisen-landing section img[data-component="image"] {
+  transition: transform 0.6s var(--hover-ease);
+}
+
+.unisen-landing .rounded-3xl:hover > .absolute img[data-component="image"],
+.unisen-landing .rounded-3xl:hover img[data-component="image"] {
+  /* subtle ken-burns on hero/cta imagery when the band is hovered */
+}
+
+.unisen-landing .max-w-310.rounded-3xl.overflow-clip:hover img[data-component="image"],
+.unisen-landing .max-w-175 ~ * img,
+.unisen-landing .overflow-clip:has(> .z-2):hover img[data-component="image"] {
+  transform: scale(1.03);
+}
+
+/* ── Pricing plan CTA buttons inside cards ───────────────────────────────── */
+.unisen-landing a[data-component="link"].rounded-lg:not(.bg-color-001) {
+  transition:
+    opacity 0.2s var(--hover-ease),
+    transform 0.2s var(--hover-ease);
+}
+
+.unisen-landing a[data-component="link"].rounded-lg:not(.bg-color-001):hover {
+  opacity: 0.85;
+}
+
+/* ── Feature grid cards (Why Unisen) — Parley-style morph on hover ─────────
+ *
+ * Rest + detail layers stay mounted. No display:none so opacity/transform
+ * actually ease (the previous swap used `hidden`, which kills transitions).
+ */
+.unisen-landing .feature-card {
+  --fc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --fc-duration: 0.45s;
+  isolation: isolate;
+}
+
+.unisen-landing .feature-card-rest,
+.unisen-landing .feature-card-detail {
+  transition:
+    opacity var(--fc-duration) var(--fc-ease),
+    transform var(--fc-duration) var(--fc-ease),
+    box-shadow var(--fc-duration) var(--fc-ease),
+    border-radius var(--fc-duration) var(--fc-ease);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+/* Rest: fully visible */
+.unisen-landing .feature-card-rest {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  box-shadow: none;
+}
+
+/* Detail: hidden under rest until hover */
+.unisen-landing .feature-card-detail {
+  opacity: 0;
+  transform: scale(0.92) translateY(10px);
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* Media / copy inside detail — staggered entrance */
+.unisen-landing .feature-card-detail-media {
+  transition: transform 0.55s var(--fc-ease), opacity 0.45s var(--fc-ease);
+  transform: scale(1.06);
+  opacity: 0.85;
+}
+
+.unisen-landing .feature-card-detail-copy {
+  transition:
+    opacity 0.4s var(--fc-ease) 0.06s,
+    transform 0.45s var(--fc-ease) 0.06s;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.unisen-landing .feature-card-desc {
+  transition:
+    opacity 0.4s var(--fc-ease) 0.12s,
+    transform 0.45s var(--fc-ease) 0.12s;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.unisen-landing .feature-card-stat,
+.unisen-landing .feature-card-rest-title,
+.unisen-landing .feature-card-mosaic {
+  transition:
+    opacity 0.28s var(--fc-ease),
+    transform 0.35s var(--fc-ease);
+}
+
+/* Hover: rest fades out + shrinks; detail rises and expands */
+.unisen-landing .feature-card-host:hover .feature-card-rest,
+.unisen-landing .feature-card-host:focus-within .feature-card-rest {
+  opacity: 0;
+  transform: scale(0.94) translateY(-6px);
+  pointer-events: none;
+}
+
+.unisen-landing .feature-card-host:hover .feature-card-stat,
+.unisen-landing .feature-card-host:focus-within .feature-card-stat {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.unisen-landing .feature-card-host:hover .feature-card-mosaic,
+.unisen-landing .feature-card-host:focus-within .feature-card-mosaic {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.unisen-landing .feature-card-host:hover .feature-card-rest-title,
+.unisen-landing .feature-card-host:focus-within .feature-card-rest-title {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.unisen-landing .feature-card-host:hover .feature-card-detail,
+.unisen-landing .feature-card-host:focus-within .feature-card-detail {
+  opacity: 1;
+  transform: scale(1.04) translateY(-6px);
+  pointer-events: auto;
+  box-shadow:
+    rgba(0, 0, 0, 0.14) 0 20px 48px 0,
+    rgba(0, 0, 0, 0.06) 0 4px 12px 0;
+  z-index: 5;
+}
+
+.unisen-landing .feature-card-host:hover .feature-card-detail-media,
+.unisen-landing .feature-card-host:focus-within .feature-card-detail-media {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.unisen-landing .feature-card-host:hover .feature-card-detail-copy,
+.unisen-landing .feature-card-host:focus-within .feature-card-detail-copy {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.unisen-landing .feature-card-host:hover .feature-card-desc,
+.unisen-landing .feature-card-host:focus-within .feature-card-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Let the expanded card paint over neighbours while hovered */
+.unisen-landing .feature-card-host:hover,
+.unisen-landing .feature-card-host:focus-within {
+  z-index: 20;
+}
+
+/* ── Audience / trust strip (replaces Parley logo cloud) ─────────────────── */
+.unisen-landing .trust-marquee-track {
+  animation: trust-marquee 40s linear infinite;
+}
+
+.unisen-landing .trust-marquee:hover .trust-marquee-track {
+  animation-play-state: paused;
+}
+
+.unisen-landing .trust-badge {
+  transition:
+    border-color 0.2s var(--hover-ease),
+    background-color 0.2s var(--hover-ease),
+    transform 0.2s var(--hover-ease);
+}
+
+.unisen-landing .trust-badge:hover {
+  border-color: var(--accent);
+  background-color: var(--color-002);
+  transform: translateY(-1px);
+}
+
+@keyframes trust-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unisen-landing .trust-marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100% !important;
+    max-width: 100%;
+  }
+}
+
+/* ── Testimonials carousel ───────────────────────────────────────────────── */
+.unisen-landing .testimonials-carousel {
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.unisen-landing .testimonials-carousel:active {
+  cursor: grabbing;
+}
+
+.unisen-landing .testimonial-card {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.unisen-landing .testimonial-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .unisen-landing *,
+  .unisen-landing *::before,
+  .unisen-landing *::after {
+    transition-duration: 0.01ms !important;
+  }
+
+  .unisen-landing .feature-card-rest,
+  .unisen-landing .feature-card-detail,
+  .unisen-landing .feature-card-detail-media,
+  .unisen-landing .feature-card-detail-copy,
+  .unisen-landing .feature-card-desc {
+    transition: none !important;
+  }
+
+  .unisen-landing .testimonials-track {
+    transform: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100% !important;
+  }
+}
+
+

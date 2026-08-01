@@ -1,6 +1,7 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 import type { NeedCapability } from "./consultations-store";
 import type { NeedDomain } from "./school-profile-store";
+import { usePersistentSnapshot } from "./use-persistent-snapshot";
 
 export type EvidenceDoc = {
   id: string;
@@ -171,9 +172,10 @@ type Ctx = {
 
 const TemplatesContext = createContext<Ctx | null>(null);
 
+const seedTemplates = { evidence: seedEvidence, snippets: seedSnippets };
+
 export function TemplatesProvider({ children }: { children: ReactNode }) {
-  const [evidence] = useState<EvidenceDoc[]>(seedEvidence);
-  const [snippets] = useState<PartialCannotSnippet[]>(seedSnippets);
+  const [{ evidence, snippets }] = usePersistentSnapshot("templates", seedTemplates);
   const value = useMemo<Ctx>(
     () => ({
       evidence,
