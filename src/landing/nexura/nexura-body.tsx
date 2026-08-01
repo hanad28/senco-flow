@@ -81,7 +81,7 @@ export default function UnisenBody() {
                     <div className="w-full block relative shrink-0">
                       <div className="w-150 flex relative flex-col justify-start shrink-0 max-md:w-full">
                         <h2
-                          className="block [font-family:var(--font-heading)] text-[2.5rem] font-medium leading-12 tracking-[-1.6px] text-left text-balance max-lg:text-[1.75rem] max-lg:leading-[2.125rem] max-lg:tracking-[-1.12px]"
+                          className="block [font-family:var(--font-heading)] text-[2.5rem] font-medium leading-12 tracking-[-1.6px] text-left text-balance max-lg:text-center max-lg:text-[1.75rem] max-lg:leading-[2.125rem] max-lg:tracking-[-1.12px]"
                           data-component="heading"
                           dir="auto"
                         >
