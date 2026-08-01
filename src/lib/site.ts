@@ -29,8 +29,8 @@ export const SITE_DESCRIPTION =
 export const SITE_OG_DESCRIPTION =
   "Visibility, execution assistance, and clear communication across school and family EHC workspaces.";
 
-/** Absolute social preview image (1200×630). */
-export const SITE_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+/** Absolute social preview image (icon logo, unprocessed). */
+export const SITE_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export function siteJsonLd(): Record<string, unknown> {
   return {
@@ -41,7 +41,7 @@ export function siteJsonLd(): Record<string, unknown> {
         "@id": `${SITE_URL}/#organization`,
         name: SITE_NAME,
         url: SITE_URL,
-        logo: `${SITE_URL}/favicon.png`,
+        logo: `${SITE_URL}/favicon.ico`,
         description: SITE_DESCRIPTION,
       },
       {

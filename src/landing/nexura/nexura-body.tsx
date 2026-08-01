@@ -16,15 +16,13 @@ import Icon10 from "./svgs/svg-icon10";
 import Illustration2 from "./svgs/svg-illustration2";
 import Icon11 from "./svgs/svg-icon11";
 import Icon12 from "./svgs/svg-icon12";
-import Icon14 from "./svgs/svg-icon14";
-import Logo5, { type Logo5Data } from "./components/logo5";
-import Tile4, { type Tile4Data } from "./components/tile4";
 import FeatureAccordion from "./components/feature-accordion";
 import MediaTileMarquee from "./components/media-tile-marquee";
 import ScrollAppear from "./components/scroll-appear";
 import ScrollRevealText from "./components/scroll-reveal-text";
 import CtaButton from "../components/cta-button";
-import { Tile_styles, Logo_styles, Tile2_styles, MediaTile_styles, Tile4_styles, Tile4_styles2 } from "./_styles";
+import FooterSection2 from "../sections/footer-section2";
+import { Tile_styles, Logo_styles, Tile2_styles, MediaTile_styles } from "./_styles";
 
 const Tile_data: TileData[] = [
     { href: "/product", description: "Product" },
@@ -103,73 +101,6 @@ const MediaTile_data: MediaTileData[] = [
               <use href="#1028000027" />
               </>, description: "Case status", description2: "Draft in progress" }
 ];
-// Brand marks: lucide-react no longer ships logo icons.
-function XIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.727-8.883L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-    </svg>
-  );
-}
-
-function LinkedinIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-    </svg>
-  );
-}
-
-function YoutubeIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
-      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-    </svg>
-  );
-}
-
-function GithubIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="h-5 w-5">
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-    </svg>
-  );
-}
-
-const Logo5_data: Logo5Data[] = [
-  {
-    href: "https://x.com/",
-    label: "X (Twitter)",
-    icon: <XIcon />,
-  },
-  {
-    href: "https://linkedin.com/",
-    label: "LinkedIn",
-    icon: <LinkedinIcon />,
-  },
-  {
-    href: "https://youtube.com/",
-    label: "YouTube",
-    icon: <YoutubeIcon />,
-  },
-  {
-    href: "https://github.com/",
-    label: "GitHub",
-    icon: <GithubIcon />,
-  },
-];
-const Tile4_data: Tile4Data[] = [
-    { href: "/", description: "Home" },
-    { href: "/product", description: "Product" },
-    { href: "/integration", description: "Integration" },
-    { href: "/#demo", description: "Demo" }
-];
-const Tile4_data2: Tile4Data[] = [
-    { href: "/blog", description: "Blog" },
-    { href: "/contact", description: "Contact" },
-    { href: "/#solution", description: "Solutions" }
-];
-
 export default function UnisenBody() {
   return (
     <>
@@ -966,7 +897,7 @@ export default function UnisenBody() {
               </div>
             </section>
             <div className="contents">
-              <div className="w-full h-120 block relative shrink-0 max-lg:h-112.5">
+              <div className="w-full h-120 block relative shrink-0 mb-12 max-lg:h-112.5 max-lg:mb-10">
                 <section className="h-full flex relative px-5 justify-center items-center content-center gap-2.5 max-lg:px-1.5">
                   <div className="w-full max-w-312.5 h-full flex relative py-25 px-16 flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-16 max-lg:py-16 max-lg:px-5">
                     <div className="w-full max-w-150 flex relative z-1 flex-col justify-center items-start content-start shrink-0 gap-5">
@@ -1020,99 +951,7 @@ export default function UnisenBody() {
             </div>
 
           </div>
-          <div className="w-full block relative shrink-0 order-[1002]">
-            <div className="contents">
-              <footer className="flex relative pt-25 flex-col justify-start items-center content-center max-lg:pt-16">
-                <div className="w-full flex relative justify-center items-center content-center shrink-0 gap-2.5 bg-foreground">
-                  <div className="w-full max-w-312.5 flex relative py-20 px-16 flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-16 max-lg:py-10 max-lg:px-5 max-lg:gap-10">
-                    <div className="w-full flex relative justify-between items-start content-start shrink-0 max-lg:flex-col max-lg:justify-start max-lg:gap-16">
-                      <div className="w-full max-w-100 flex relative flex-col justify-start items-start content-start self-stretch grow shrink-0 basis-0 gap-16 max-lg:gap-10 max-lg:[align-self:initial] max-lg:grow-[initial] max-lg:basis-[initial]">
-                        <div className="flex relative flex-col justify-start items-start content-start shrink-0 gap-5">
-                          <a className="h-7 flex relative justify-center items-center content-center shrink-0 gap-0.5 text-primary cursor-pointer" data-component="link" href="/">
-                            <div className="w-7 h-7 block relative shrink-0" aria-hidden="true">
-                              <div className="h-full block">
-                                <Icon14 />
-                              </div>
-                            </div>
-                            <div className="w-[64.5px] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap max-lg:w-[3.625rem]">
-                              <h6 className="block text-background [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-xl font-medium leading-7 tracking-[-0.8px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-lg max-lg:leading-[1.5625rem] max-lg:tracking-[-0.72px]" data-component="heading" dir="auto">
-                                Unisen
-                              </h6>
-                            </div>
-                          </a>
-                          <div className="w-100 flex relative flex-col justify-start shrink-0 max-md:w-[20.9375rem]">
-                            <h4 className="block text-clr-16 [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-[1.75rem] font-medium leading-[2.4375rem] tracking-[-1.12px] text-balance [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11'] max-lg:text-xl max-lg:leading-7 max-lg:tracking-[-0.8px]" data-component="heading" dir="auto">
-                              The workspace built for SENCOs and families.
-                            </h4>
-                          </div>
-                        </div>
-                        <div className="w-full flex relative justify-start items-center content-center shrink-0 gap-2.5">
-                          {Logo5_data.map((d, i) => <Logo5 key={i} d={d} />)}
-                        </div>
-                      </div>
-                      <div className="w-[37%] flex relative justify-end items-start content-start shrink-0 gap-16 max-lg:w-full max-lg:flex-wrap max-lg:justify-start max-lg:gap-10">
-                        <div className="flex relative flex-col justify-start items-start content-start shrink-0 gap-2.5">
-                          <div className="w-[61.3px] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
-                            <p className="block text-color-006 [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base font-medium leading-[1.375rem] tracking-[-0.48px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                              Platform
-                            </p>
-                          </div>
-                          <div className="flex relative flex-col justify-start items-start content-start self-stretch shrink-0 gap-1">
-                            {Tile4_data.map((d, i) => <Tile4 key={i} d={d} styles={Tile4_styles[i]} />)}
-                          </div>
-                        </div>
-                        <div className="w-[76.3px] flex relative flex-col justify-start items-start content-start shrink-0 gap-2.5">
-                          <div className="w-[76.3px] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
-                            <p className="block text-color-006 [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base font-medium leading-[1.375rem] tracking-[-0.48px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                              Resources
-                            </p>
-                          </div>
-                          <div className="flex relative flex-col justify-start items-start content-start self-stretch shrink-0 gap-1">
-                            {Tile4_data2.map((d, i) => <Tile4 key={i} d={d} styles={Tile4_styles2[i]} />)}
-                          </div>
-                        </div>
-                        <div className="flex relative flex-col justify-start items-start content-start shrink-0 gap-2.5">
-                          <div className="w-10 flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
-                            <p className="block text-color-006 [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base font-medium leading-[1.375rem] tracking-[-0.48px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                              Legal
-                            </p>
-                          </div>
-                          <div className="flex relative flex-col justify-start items-start content-start self-stretch shrink-0 gap-1">
-                            <div className="w-[8.325rem] block relative shrink-0">
-                              <a className="h-[1.65rem] flex relative p-0.5 rounded-[30px] justify-center items-center content-center gap-1 text-primary cursor-pointer" data-component="link" href="/legal-terms/terms-of-services">
-                                <div className="w-[8.075rem] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
-                                  <p className="block text-background [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                                    Terms
-                                  </p>
-                                </div>
-                              </a>
-                            </div>
-                            <div className="w-[6.4875rem] block relative shrink-0">
-                              <a className="h-[1.65rem] flex relative p-0.5 rounded-[30px] justify-center items-center content-center gap-1 text-primary cursor-pointer" data-component="link" href="/legal-terms/privacy-policy">
-                                <div className="w-[6.2375rem] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
-                                  <p className="block text-background [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                                    Privacy
-                                  </p>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-full h-px block relative shrink-0 overflow-hidden after:content-[''] after:block after:absolute after:top-0 after:-bottom-px after:inset-x-0 after:h-0.5" />
-                    <div className="w-[17rem] flex relative flex-col justify-start shrink-0 whitespace-pre text-nowrap">
-                      <p className="block text-clr-16 [font-family:Inter,_'Inter_Placeholder',_sans-serif] text-base leading-[1.375rem] tracking-[-0.48px] [font-feature-settings:'blwf',_'cv03',_'cv04',_'cv09',_'cv11']" dir="auto">
-                        <a className="inline text-clr-17 cursor-pointer hover:border-clr-18 hover:text-clr-18 hover:outline-clr-18 hover:[text-decoration-color:var(--clr-18)] focus:border-clr-20 focus:text-clr-20 focus:outline-clr-20 focus:[text-decoration-color:var(--clr-20)]" data-component="link" href="https://lunisdesign.com/" rel="noopener" target="_blank">
-                          Unisen, built for EHC work.
-                        </a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </footer>
-            </div>
-          </div>
+          <FooterSection2 />
         </div>
         <div className="block" id="template-overlay" />
       </div>

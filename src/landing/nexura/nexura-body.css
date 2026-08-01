@@ -1,4 +1,4 @@
-/* Nexura body shell — fully themed with UNISEN-DESIGN.md palette.
+/* Nexura body shell — fully themed with DESIGN.md palette.
    Parent .unisen-landing already sets brand tokens; we only remap clone utilities. */
 
 .unisen-landing .nexura-body {
@@ -197,87 +197,58 @@
   background-color: var(--action-primary-hover, #40689c) !important;
 }
 
-/* ── Footer: Unisen deep blue (not pure black) ─────────────────────────── */
-.unisen-landing .nexura-body footer {
-  --footer-bg: #40689c; /* brand-blue-deep */
-  --foreground: #40689c;
-  --background: #ffffff;
-  --primary: #ffffff;
-  --muted-foreground: rgba(255, 255, 255, 0.78);
-  --surface-3: rgba(255, 255, 255, 0.14);
-  --color-006: rgba(255, 255, 255, 0.72);
-  --clr-16: rgba(255, 255, 255, 0.9);
-  --clr-17: rgba(255, 255, 255, 0.62);
-  --clr-18: #ffde59;
-  --clr-19: #ffffff;
-  --clr-20: #cdeff3;
+/* ── Footer section 2 (ditto: footersection2.framer.website) ─────────────
+   Glass dark footer remapped onto Unisen brand navy + yellow accent. */
+.unisen-landing .footer-section2 {
+  /* Glass panel: brand navy (opaque enough over light landing sections) */
+  --clr-0: color-mix(in srgb, var(--brand-blue-deep, #40689c) 88%, #0b1a2c 12%);
+  --clr-1: rgba(255, 255, 255, 0.62);
+  --clr-2: rgba(10, 26, 44, 0.72);
+  --clr-3: rgba(255, 255, 255, 0.4);
+  --clr-4: rgba(255, 255, 255, 0.92);
+  --clr-5: var(--brand-cyan, #74c4d7);
+
+  --color-001: #ffffff;
+  --color-002: rgba(255, 255, 255, 0.48);
+  --primary: var(--brand-yellow, #ffde59);
+  --border: rgba(255, 255, 255, 0.14);
+  --foreground: #ffffff;
+  --background: var(--brand-blue-deep, #40689c);
+
+  color: #ffffff;
+  /* solid base under blur so glass doesn’t wash out on light sections */
+  background-color: color-mix(in srgb, var(--brand-blue-deep, #40689c) 92%, #0b1a2c) !important;
 }
 
-.unisen-landing .nexura-body footer .bg-foreground {
-  background-color: var(--footer-bg) !important;
+.unisen-landing .footer-section2 .footer-s2-underline {
+  transform: scaleX(0);
+  transition: transform 0.22s ease;
 }
 
-.unisen-landing .nexura-body footer .text-color-006 {
-  color: rgba(255, 255, 255, 0.72) !important;
+.unisen-landing .footer-section2 .footer-s2-link:hover .footer-s2-underline,
+.unisen-landing .footer-section2 .footer-s2-link:focus-visible .footer-s2-underline {
+  transform: scaleX(1);
 }
 
-.unisen-landing .nexura-body footer .text-clr-16 {
-  color: rgba(255, 255, 255, 0.9) !important;
+.unisen-landing .footer-section2 .footer-s2-link:focus-visible {
+  outline: 2px solid var(--brand-cyan, #74c4d7);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-.unisen-landing .nexura-body footer .text-background {
-  color: #ffffff !important;
+.unisen-landing .footer-section2 .footer-s2-social {
+  transition: color 0.18s ease, transform 0.18s ease;
 }
 
-.unisen-landing .nexura-body footer a[data-component="link"] .text-background {
-  color: #ffffff !important;
+.unisen-landing .footer-section2 .footer-s2-social:hover,
+.unisen-landing .footer-section2 .footer-s2-social:focus-visible {
+  color: var(--brand-yellow, #ffde59);
+  transform: translateY(-1px);
 }
 
-.unisen-landing .nexura-body footer a[data-component="link"]:hover .text-background,
-.unisen-landing .nexura-body footer a[data-component="link"]:focus-visible .text-background {
-  color: var(--brand-yellow, #ffde59) !important;
-}
-
-.unisen-landing .nexura-body footer a.text-clr-17,
-.unisen-landing .nexura-body footer .text-clr-17 {
-  color: rgba(255, 255, 255, 0.62) !important;
-}
-
-.unisen-landing .nexura-body footer a.text-clr-17:hover,
-.unisen-landing .nexura-body footer a:hover.text-clr-17 {
-  color: var(--brand-yellow, #ffde59) !important;
-}
-
-.unisen-landing .nexura-body footer .h-px.relative.shrink-0::after {
-  background-color: rgba(255, 255, 255, 0.22);
-}
-
-/* Social pills */
-.unisen-landing .nexura-body footer .nexura-social-pill {
-  background-color: rgba(255, 255, 255, 0.14) !important;
-  color: #ffffff !important;
-  box-shadow: none;
-}
-
-.unisen-landing .nexura-body footer .nexura-social-pill:hover,
-.unisen-landing .nexura-body footer .nexura-social-pill:focus-visible {
-  background-color: rgba(255, 222, 89, 0.95) !important;
-  color: #244a70 !important;
-}
-
-.unisen-landing .nexura-body footer .nexura-social-pill:focus-visible {
+.unisen-landing .footer-section2 .footer-s2-social:focus-visible {
   outline: 2px solid var(--brand-cyan, #74c4d7);
   outline-offset: 2px;
-}
-
-.unisen-landing .nexura-body footer .nexura-social-icon,
-.unisen-landing .nexura-body footer .nexura-social-icon svg {
-  color: currentColor !important;
-  stroke: currentColor;
-}
-
-.unisen-landing .nexura-body footer .nexura-social-icon svg[fill="currentColor"] {
-  fill: currentColor;
 }
 
 /* Pricing / product cards soft brand treatment */

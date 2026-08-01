@@ -1,8 +1,8 @@
-/* Unisen landing — brand tokens from UNISEN-DESIGN.md.
+/* Unisen landing — brand tokens from DESIGN.md.
    Scoped to .unisen-landing so authenticated app chrome is unaffected.
    Tailwind @theme color names live in src/styles.css so utilities generate correctly. */
 
-/* Design tokens — docs/UNISEN-DESIGN.md */
+/* Design tokens — docs/DESIGN.md */
 .unisen-landing {
   /* Brand */
   --brand-cyan: #74c4d7;
