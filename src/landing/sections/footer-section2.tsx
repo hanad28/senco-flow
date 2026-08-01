@@ -171,8 +171,21 @@ function scrollToTop() {
 export default function FooterSection2() {
   return (
     <div className="w-full block relative shrink-0 order-[1002]">
-      <footer className="footer-section2 relative w-full overflow-hidden [font-family:Inter,_'Inter_Placeholder',_sans-serif] bg-clr-0 [backdrop-filter:blur(24px)_saturate(1.8)]">
-        <div className="block max-w-320 pt-16 px-12 mx-auto max-lg:pt-12 max-lg:px-6">
+      <footer className="footer-section2 relative w-full overflow-hidden [font-family:Inter,_'Inter_Placeholder',_sans-serif]">
+        <div className="footer-s2-bg" aria-hidden>
+          <img
+            src="/assets/brand/footer-park-panorama.jpg"
+            srcSet="/assets/brand/footer-park-panorama-768.jpg 768w, /assets/brand/footer-park-panorama-1280.jpg 1280w, /assets/brand/footer-park-panorama.jpg 2000w"
+            sizes="100vw"
+            alt=""
+            width={2000}
+            height={500}
+            decoding="async"
+            loading="lazy"
+          />
+        </div>
+        <div className="footer-s2-scrim" aria-hidden />
+        <div className="footer-s2-content relative z-[1] block max-w-320 pt-16 px-12 mx-auto max-lg:pt-12 max-lg:px-6">
           <div className="flex justify-between max-lg:flex-col max-lg:gap-10">
             <div className="block max-w-70 shrink-0 max-lg:max-w-full">
               <a

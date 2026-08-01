@@ -197,32 +197,110 @@
   background-color: var(--action-primary-hover, #40689c) !important;
 }
 
-/* ── Footer section 2 (ditto: footersection2.framer.website) ─────────────
-   Glass dark footer remapped onto Unisen brand navy + yellow accent. */
+/* ── Footer section 2 — park panorama + high-contrast navy type ──────── */
 .unisen-landing .footer-section2 {
-  /* Glass panel: brand navy (opaque enough over light landing sections) */
-  --clr-0: color-mix(in srgb, var(--brand-blue-deep, #40689c) 88%, #0b1a2c 12%);
-  --clr-1: rgba(255, 255, 255, 0.62);
-  --clr-2: rgba(10, 26, 44, 0.72);
-  --clr-3: rgba(255, 255, 255, 0.4);
-  --clr-4: rgba(255, 255, 255, 0.92);
+  /* Design navy (#18324B) for AA contrast on pale sky */
+  --footer-ink: #18324b;
+  --footer-ink-soft: #243f5c;
+  --clr-0: transparent;
+  --clr-1: var(--footer-ink-soft);
+  --clr-2: rgba(24, 50, 75, 0.14);
+  --clr-3: rgba(24, 50, 75, 0.45);
+  --clr-4: var(--footer-ink);
   --clr-5: var(--brand-cyan, #74c4d7);
 
-  --color-001: #ffffff;
-  --color-002: rgba(255, 255, 255, 0.48);
-  --primary: var(--brand-yellow, #ffde59);
-  --border: rgba(255, 255, 255, 0.14);
-  --foreground: #ffffff;
-  --background: var(--brand-blue-deep, #40689c);
+  --color-001: var(--footer-ink);
+  --color-002: var(--footer-ink-soft);
+  --primary: #1f5f96;
+  --border: color-mix(in srgb, var(--footer-ink) 28%, transparent);
+  --foreground: var(--footer-ink);
+  --background: #cfeef8;
 
-  color: #ffffff;
-  /* solid base under blur so glass doesn’t wash out on light sections */
-  background-color: color-mix(in srgb, var(--brand-blue-deep, #40689c) 92%, #0b1a2c) !important;
+  color: var(--footer-ink);
+  background-color: #cfeef8 !important;
+  isolation: isolate;
+  font-weight: 500;
+}
+
+.unisen-landing .footer-section2 .footer-s2-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.unisen-landing .footer-section2 .footer-s2-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  display: block;
+}
+
+/* Stronger frost so ink sits on a readable plane; art still reads at edges */
+.unisen-landing .footer-section2 .footer-s2-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(255, 255, 255, 0.58) 35%,
+      rgba(255, 255, 255, 0.52) 70%,
+      rgba(255, 255, 255, 0.68) 100%
+    ),
+    radial-gradient(
+      85% 100% at 50% 40%,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.35) 62%,
+      rgba(255, 255, 255, 0.12) 100%
+    );
+}
+
+/* Halo behind type for busy foliage zones */
+.unisen-landing .footer-section2 .footer-s2-content {
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.95),
+    0 0 24px rgba(255, 255, 255, 0.7),
+    0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.unisen-landing .footer-section2 .footer-s2-content img {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+}
+
+.unisen-landing .footer-section2 .text-clr-1 {
+  color: var(--footer-ink-soft) !important;
+  font-weight: 600;
+}
+
+.unisen-landing .footer-section2 .text-color-001 {
+  color: var(--footer-ink) !important;
+  font-weight: 700;
+}
+
+.unisen-landing .footer-section2 .text-color-002 {
+  color: var(--footer-ink-soft) !important;
+  font-weight: 600;
+}
+
+.unisen-landing .footer-section2 .footer-s2-link {
+  color: var(--footer-ink);
+  font-weight: 700;
+}
+
+.unisen-landing .footer-section2 .footer-s2-link.text-color-002 {
+  color: var(--footer-ink-soft) !important;
+  font-weight: 600;
 }
 
 .unisen-landing .footer-section2 .footer-s2-underline {
   transform: scaleX(0);
   transition: transform 0.22s ease;
+  background-color: var(--primary) !important;
 }
 
 .unisen-landing .footer-section2 .footer-s2-link:hover .footer-s2-underline,
@@ -231,29 +309,835 @@
 }
 
 .unisen-landing .footer-section2 .footer-s2-link:focus-visible {
-  outline: 2px solid var(--brand-cyan, #74c4d7);
+  outline: 2px solid var(--brand-blue, #3b8ac1);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
 .unisen-landing .footer-section2 .footer-s2-social {
+  color: var(--footer-ink) !important;
   transition: color 0.18s ease, transform 0.18s ease;
 }
 
 .unisen-landing .footer-section2 .footer-s2-social:hover,
 .unisen-landing .footer-section2 .footer-s2-social:focus-visible {
-  color: var(--brand-yellow, #ffde59);
+  color: #1f5f96 !important;
   transform: translateY(-1px);
 }
 
 .unisen-landing .footer-section2 .footer-s2-social:focus-visible {
-  outline: 2px solid var(--brand-cyan, #74c4d7);
+  outline: 2px solid var(--brand-blue, #3b8ac1);
   outline-offset: 2px;
+}
+
+.unisen-landing .footer-section2 .border-t-border {
+  border-color: color-mix(in srgb, var(--footer-ink) 22%, transparent) !important;
 }
 
 /* Pricing / product cards soft brand treatment */
 .unisen-landing .nexura-body [class*="shadow-\\[var\\(--clr-7\\)"] {
   box-shadow: 0 8px 28px rgba(36, 74, 112, 0.1) !important;
+}
+
+/* ── Unisen middle body (full rewrite) ─────────────────────────────────── */
+
+.unisen-landing .nexura-body .unisen-mid-kicker {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-teal, #179dab);
+}
+
+.unisen-landing .nexura-body .unisen-mid-h2 {
+  font-family: var(--font-heading) !important;
+  font-size: clamp(1.75rem, 2.4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text-primary, #244a70);
+  text-wrap: balance;
+}
+
+.unisen-landing .nexura-body .unisen-mid-h3 {
+  font-family: var(--font-heading) !important;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--text-primary, #244a70);
+  text-wrap: balance;
+}
+
+/* Product frame: soft brand wash + chrome so middle has atmosphere */
+.unisen-landing .nexura-body .unisen-mid-product-frame {
+  position: relative;
+  border-radius: var(--radius-xl, 24px);
+  overflow: hidden;
+  background: linear-gradient(
+    160deg,
+    var(--brand-cyan-pale, #cdeff3) 0%,
+    var(--surface-2, #eaf8fa) 45%,
+    #ffffff 100%
+  );
+  border: 1px solid var(--border-default, #b7e1e9);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 24px 48px -16px rgba(36, 74, 112, 0.18);
+}
+
+.unisen-landing .nexura-body .unisen-mid-product-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem 0.5rem;
+  background: color-mix(in srgb, var(--surface-2, #eaf8fa) 70%, white);
+  border-bottom: 1px solid var(--border-default, #b7e1e9);
+}
+
+.unisen-landing .nexura-body .unisen-mid-product-chrome span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--border-default, #b7e1e9);
+}
+
+.unisen-landing .nexura-body .unisen-mid-product-chrome span:nth-child(1) {
+  background: #f3b8c8;
+}
+.unisen-landing .nexura-body .unisen-mid-product-chrome span:nth-child(2) {
+  background: var(--brand-yellow, #ffde59);
+}
+.unisen-landing .nexura-body .unisen-mid-product-chrome span:nth-child(3) {
+  background: var(--brand-cyan, #74c4d7);
+}
+
+.unisen-landing .nexura-body .unisen-mid-product-shot {
+  position: relative;
+  min-height: 18rem;
+  overflow: hidden;
+  background: #f4f8fb;
+}
+
+.unisen-landing .nexura-body .unisen-mid-product-shot .unisen-mock {
+  min-height: 20rem;
+  height: 100%;
+}
+
+/* ── Unisen product mocks (no Nexura screenshots) ──────────────────────── */
+
+.unisen-landing .unisen-mock {
+  display: grid;
+  grid-template-columns: 7.25rem 1fr;
+  width: 100%;
+  height: 100%;
+  min-height: 14rem;
+  font-family: var(--font-body);
+  color: #244a70;
+  background: #f7fafc;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.unisen-landing .unisen-mock-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.75rem 0.55rem;
+  background: #1c2f45;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.unisen-landing .unisen-mock-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: -0.02em;
+  padding: 0 0.2rem;
+}
+
+.unisen-landing .unisen-mock-mark {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.3rem;
+  background: linear-gradient(145deg, #74c4d7, #3b8ac1);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.unisen-landing .unisen-mock-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.unisen-landing .unisen-mock-nav span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.4rem;
+  border-radius: 0.4rem;
+  color: rgba(255, 255, 255, 0.62);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.unisen-landing .unisen-mock-nav span.is-active {
+  background: rgba(116, 196, 215, 0.22);
+  color: #fff;
+}
+
+.unisen-landing .unisen-mock-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #f7fafc;
+}
+
+.unisen-landing .unisen-mock-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem 0.55rem;
+  border-bottom: 1px solid #d7e5eb;
+  background: #fff;
+}
+
+.unisen-landing .unisen-mock-crumb {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #607586;
+  margin: 0 0 0.15rem;
+}
+
+.unisen-landing .unisen-mock-top h4 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #244a70;
+}
+
+.unisen-landing .unisen-mock-body {
+  padding: 0.65rem 0.85rem 0.85rem;
+  min-width: 0;
+}
+
+.unisen-landing .unisen-mock-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.unisen-landing .unisen-mock-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  background: #eaf8fa;
+  border: 1px solid #b7e1e9;
+  color: #40689c;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.unisen-landing .unisen-mock-meta {
+  color: #607586;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.unisen-landing .unisen-mock-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid #d7e5eb;
+  background: #f0f6f8;
+  color: #40689c;
+  font-size: 0.62rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.unisen-landing .unisen-mock-pill--urgent {
+  background: rgba(220, 80, 60, 0.1);
+  border-color: rgba(220, 80, 60, 0.28);
+  color: #b42318;
+}
+
+.unisen-landing .unisen-mock-pill--warn {
+  background: rgba(255, 222, 89, 0.35);
+  border-color: rgba(180, 140, 20, 0.35);
+  color: #6b4f00;
+}
+
+.unisen-landing .unisen-mock-pill--ok {
+  background: rgba(23, 157, 171, 0.12);
+  border-color: rgba(23, 157, 171, 0.28);
+  color: #0f6f7a;
+}
+
+.unisen-landing .unisen-mock-pill--info {
+  background: rgba(59, 138, 193, 0.12);
+  border-color: rgba(59, 138, 193, 0.28);
+  color: #2a6a9a;
+}
+
+.unisen-landing .unisen-mock-table {
+  border: 1px solid #d7e5eb;
+  border-radius: 0.65rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.unisen-landing .unisen-mock-table-head,
+.unisen-landing .unisen-mock-table-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.2fr 1fr 0.9fr;
+  gap: 0.4rem;
+  padding: 0.45rem 0.65rem;
+  align-items: center;
+}
+
+.unisen-landing .unisen-mock-table-head {
+  background: #eef5f8;
+  color: #607586;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.unisen-landing .unisen-mock-table-row {
+  border-top: 1px solid #e8eef2;
+}
+
+.unisen-landing .unisen-mock-table-row strong {
+  display: block;
+  font-weight: 600;
+  color: #244a70;
+}
+
+.unisen-landing .unisen-mock-table-row em {
+  display: block;
+  font-style: normal;
+  color: #607586;
+  font-size: 0.62rem;
+}
+
+.unisen-landing .unisen-mock-clock-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(220, 80, 60, 0.28);
+  background: rgba(220, 80, 60, 0.08);
+  margin-bottom: 0.65rem;
+}
+
+.unisen-landing .unisen-mock-clock-hero strong {
+  display: block;
+  font-size: 0.78rem;
+  color: #b42318;
+}
+
+.unisen-landing .unisen-mock-clock-hero p {
+  margin: 0.15rem 0 0;
+  color: #8a4b42;
+  font-size: 0.65rem;
+}
+
+.unisen-landing .unisen-mock-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.unisen-landing .unisen-mock-timeline li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid #e8eef2;
+  color: #607586;
+}
+
+.unisen-landing .unisen-mock-timeline li.is-done {
+  color: #0f6f7a;
+}
+
+.unisen-landing .unisen-mock-timeline li.is-active {
+  border-color: #b7e1e9;
+  background: #eaf8fa;
+  color: #244a70;
+  font-weight: 600;
+}
+
+.unisen-landing .unisen-mock-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  border: 1.5px solid #b7e1e9;
+  margin-inline: 0.12rem;
+  flex-shrink: 0;
+}
+
+.unisen-landing .unisen-mock-draft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.unisen-landing .unisen-mock-need {
+  border: 1px solid #d7e5eb;
+  border-radius: 0.65rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.unisen-landing .unisen-mock-need header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.55rem;
+  border-bottom: 1px solid #e8eef2;
+  background: #f4f8fb;
+}
+
+.unisen-landing .unisen-mock-need header > span:first-child {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #e8eef2;
+  color: #607586;
+  font-size: 0.62rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.unisen-landing .unisen-mock-need header strong {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.unisen-landing .unisen-mock-draft-text {
+  margin: 0;
+  padding: 0.5rem 0.55rem 0.55rem;
+  color: #244a70;
+  font-size: 0.68rem;
+}
+
+.unisen-landing .unisen-mock-draft-text.is-muted {
+  color: #8a9aab;
+}
+
+.unisen-landing .unisen-mock-flag {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(180, 140, 20, 0.35);
+  background: rgba(255, 222, 89, 0.22);
+  color: #6b4f00;
+}
+
+.unisen-landing .unisen-mock-flag strong {
+  display: block;
+  font-size: 0.7rem;
+}
+
+.unisen-landing .unisen-mock-flag p {
+  margin: 0.15rem 0 0;
+  font-size: 0.65rem;
+  line-height: 1.4;
+}
+
+.unisen-landing .unisen-mock-docs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.unisen-landing .unisen-mock-docs li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.5rem 0.55rem;
+  border-radius: 0.55rem;
+  border: 1px solid #d7e5eb;
+  background: #fff;
+}
+
+.unisen-landing .unisen-mock-doc-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.4rem;
+  display: grid;
+  place-items: center;
+  background: rgba(59, 138, 193, 0.1);
+  border: 1px solid rgba(59, 138, 193, 0.18);
+  color: #3b8ac1;
+  flex-shrink: 0;
+}
+
+.unisen-landing .unisen-mock-docs strong {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #244a70;
+}
+
+.unisen-landing .unisen-mock-docs em {
+  font-style: normal;
+  font-weight: 400;
+  color: #607586;
+}
+
+.unisen-landing .unisen-mock-docs p {
+  margin: 0.1rem 0 0;
+  color: #607586;
+  font-size: 0.62rem;
+}
+
+.unisen-landing .unisen-mock-ai {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.5rem;
+  background: rgba(59, 138, 193, 0.08);
+  border: 1px solid rgba(59, 138, 193, 0.16);
+  color: #40689c;
+  font-size: 0.65rem;
+}
+
+.unisen-landing .unisen-mock-law {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.unisen-landing .unisen-mock-ai-card {
+  border-radius: 0.65rem;
+  border: 1px solid rgba(59, 138, 193, 0.2);
+  background: linear-gradient(160deg, rgba(59, 138, 193, 0.08), rgba(116, 196, 215, 0.1));
+  padding: 0.65rem 0.7rem;
+}
+
+.unisen-landing .unisen-mock-ai-card header {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #244a70;
+  margin-bottom: 0.35rem;
+}
+
+.unisen-landing .unisen-mock-ai-card header strong {
+  font-size: 0.72rem;
+}
+
+.unisen-landing .unisen-mock-ai-card p {
+  margin: 0;
+  color: #40689c;
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.unisen-landing .unisen-mock-sources {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.unisen-landing .unisen-mock-sources li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  border: 1px solid #e8eef2;
+  color: #244a70;
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .unisen-landing .unisen-mock {
+    grid-template-columns: 1fr;
+  }
+
+  .unisen-landing .unisen-mock-sidebar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .unisen-landing .unisen-mock-nav {
+    flex-direction: row;
+  }
+
+  .unisen-landing .unisen-mock-nav span:not(.is-active) {
+    display: none;
+  }
+
+  .unisen-landing .unisen-mock-table-head,
+  .unisen-landing .unisen-mock-table-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .unisen-landing .unisen-mock-table-head span:nth-child(2),
+  .unisen-landing .unisen-mock-table-row span:nth-child(2) {
+    display: none;
+  }
+}
+
+/* Outcomes: alternating media/copy, clear rhythm */
+.unisen-landing .nexura-body .unisen-mid-outcome-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .unisen-landing .nexura-body .unisen-mid-outcome-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.unisen-landing .nexura-body .unisen-mid-outcome-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-xl, 24px);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--border-default, #b7e1e9);
+  box-shadow: 0 12px 32px -20px rgba(36, 74, 112, 0.2);
+  min-height: 100%;
+}
+
+.unisen-landing .nexura-body .unisen-mid-outcome-media {
+  min-height: 13.5rem;
+  max-height: 16rem;
+  background: #f4f8fb;
+  overflow: hidden;
+}
+
+.unisen-landing .nexura-body .unisen-mid-outcome-media .unisen-mock {
+  min-height: 13.5rem;
+  height: 100%;
+  transform: scale(0.98);
+  transform-origin: top left;
+}
+
+.unisen-landing .nexura-body .unisen-mid-outcome-copy {
+  padding: 1.25rem 1.35rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.unisen-landing .nexura-body .unisen-mid-outcome-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: 0.65rem;
+  border-radius: 0.65rem;
+  color: var(--brand-blue-deep, #40689c);
+  background: var(--surface-2, #eaf8fa);
+  border: 1px solid var(--border-default, #b7e1e9);
+}
+
+/* How-it-works */
+.unisen-landing .nexura-body .unisen-mid-steps-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .unisen-landing .nexura-body .unisen-mid-steps-layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 3.5rem;
+  }
+}
+
+.unisen-landing .nexura-body .unisen-mid-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.unisen-landing .nexura-body .unisen-mid-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem 1.15rem;
+  padding: 1.35rem 0;
+  border-top: 1px solid var(--border-default, #b7e1e9);
+}
+
+.unisen-landing .nexura-body .unisen-mid-step:last-child {
+  border-bottom: 1px solid var(--border-default, #b7e1e9);
+}
+
+.unisen-landing .nexura-body .unisen-mid-step-n {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--brand-blue, #3b8ac1);
+  padding-top: 0.15rem;
+}
+
+/* Parties band — same page background as surrounding sections */
+.unisen-landing .nexura-body .unisen-mid-parties-band {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+}
+
+.unisen-landing .nexura-body .unisen-mid-parties-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.unisen-landing .nexura-body .unisen-mid-parties-intro {
+  width: 100%;
+}
+
+.unisen-landing .nexura-body .unisen-mid-parties-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  width: 100%;
+  max-width: 56rem;
+  margin-inline: auto;
+  justify-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .unisen-landing .nexura-body .unisen-mid-parties-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Glass CTAs on pale middle surfaces: slightly stronger edge so frost reads */
+.unisen-landing .nexura-body .unisen-mid-steps a.cta-glass {
+  border-color: rgba(183, 225, 233, 0.85) !important;
+}
+
+.unisen-landing .nexura-body .unisen-mid-party-card {
+  border-radius: var(--radius-xl, 24px);
+  padding: 1.35rem 1.4rem 1.5rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--border-default, #b7e1e9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 28px -18px rgba(36, 74, 112, 0.2);
+}
+
+.unisen-landing .nexura-body .unisen-mid-party-card--ships {
+  border-color: color-mix(in srgb, var(--brand-blue, #3b8ac1) 45%, var(--border-default, #b7e1e9));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--brand-blue, #3b8ac1) 18%, transparent),
+    0 14px 36px -16px rgba(59, 138, 193, 0.35);
+}
+
+.unisen-landing .nexura-body .unisen-mid-party-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
+  color: var(--brand-blue-deep, #40689c);
+  background: var(--surface-2, #eaf8fa);
+  border: 1px solid var(--border-default, #b7e1e9);
+}
+
+.unisen-landing .nexura-body .unisen-mid-party-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-teal, #179dab);
+}
+
+.unisen-landing .nexura-body .unisen-mid-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary, #40689c);
+  background: var(--surface-2, #eaf8fa);
+  border: 1px solid var(--border-default, #b7e1e9);
+  white-space: nowrap;
+}
+
+.unisen-landing .nexura-body .unisen-mid-badge--ships {
+  color: var(--text-primary, #244a70);
+  background: var(--brand-yellow, #ffde59);
+  border-color: color-mix(in srgb, var(--brand-yellow, #ffde59) 70%, #244a70);
+}
+
+/* Mobile: avoid double horizontal padding from legacy section rules */
+@media (max-width: 1023px) {
+  .unisen-landing .nexura-body section.unisen-mid-section,
+  .unisen-landing .nexura-body section.unisen-mid-parties {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .unisen-landing .nexura-body .unisen-mid-product-shot {
+    min-height: 16rem;
+  }
+
+  .unisen-landing .nexura-body .unisen-mid-outcome-media {
+    max-height: none;
+  }
 }
 
 /* ── Mobile layout: fluidize Framer fixed widths ───────────────────────── */

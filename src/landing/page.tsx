@@ -4,9 +4,9 @@ import NexuraBody from "./nexura/nexura-body";
 import "./nexura/nexura-body.css";
 
 /**
- * Landing: Unisen hero + nav, then full Nexura body sections
- * (logo cloud → features → integrations → solutions →
- * CTA → footer) with Unisen/SENCO copy.
+ * Landing: Unisen hero + nav, then body
+ * (promise → product → outcomes → school flow → parties →
+ * photo CTA → footer).
  */
 export default function Page() {
   return (
