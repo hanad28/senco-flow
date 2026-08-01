@@ -19,7 +19,7 @@ import { SearchProvider } from "../lib/search-store";
 import { getLocationSuffix } from "../lib/hostname";
 import { APP_URL, SITE_URL, type HostMode } from "../lib/site";
 import { LandingPage } from "../landing/landing-page";
-import { AppHostChrome } from "./app-host-chrome";
+import { AppHostChrome } from "./-app-host-chrome";
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
 

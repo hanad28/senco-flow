@@ -95,7 +95,7 @@ export default function Navbar() {
       className={`unisen-nav fixed inset-x-0 top-0 z-50 w-full pointer-events-none${scrolled ? " is-scrolled" : ""}`}
     >
       <nav
-        className="pointer-events-auto flex h-[4.5625rem] w-full items-center justify-center bg-transparent px-5 pt-5 max-lg:px-4 max-lg:pt-4 border-0"
+        className="pointer-events-auto flex h-[4.5625rem] w-full items-center justify-center bg-transparent px-5 pt-5 max-lg:px-4 max-lg:pt-4 border-0 transition-[height,padding] duration-180 ease-out"
         data-component="nav"
         aria-label="Primary"
       >
