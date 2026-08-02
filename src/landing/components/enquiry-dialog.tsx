@@ -200,13 +200,13 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="enquiry-needs">
-                  What would you like to improve in your EHC consultation process?
+                  Tell us about your current EHC process and how it could be improved
                 </Label>
                 <Textarea
                   id="enquiry-needs"
                   name="needs"
                   maxLength={2000}
-                  placeholder="Tell us about your current EHC consultation process"
+                  placeholder="Share any challenges or goals you’d like to discuss"
                   rows={5}
                   required
                 />
