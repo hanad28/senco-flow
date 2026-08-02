@@ -82,7 +82,7 @@ function DraftView() {
             <Link to="/consultations/$id/needs" params={{ id: c.id }} className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <ArrowLeft className="h-3 w-3" /> Back to needs
             </Link>
-            <h1 className="text-2xl font-semibold tracking-tight mt-2">Response draft — Section F provision</h1>
+            <h1 className="text-2xl font-semibold tracking-tight mt-2">Response draft: Section F provision</h1>
             <p className="text-sm text-muted-foreground mt-1">
               For {c.pupilRef} · {c.localAuthority} · received {formatDate(c.receivedOn)}
             </p>
@@ -256,7 +256,7 @@ function TemplateInsertMenu({
           <div className="absolute right-0 top-full mt-1 z-50 w-96 max-h-96 overflow-y-auto rounded-md border bg-surface shadow-lg">
             <div className="px-3 py-2 border-b flex items-center justify-between">
               <span className="text-xs font-medium">
-                Snippets — {capabilityLabel[capability].toLowerCase()}
+                Snippets: {capabilityLabel[capability].toLowerCase()}
               </span>
               <button
                 onClick={() => setOpen(false)}
@@ -324,12 +324,12 @@ function VaguenessHints({ text }: { text: string }) {
     <div className="flex items-start gap-2 rounded-md border border-warn/40 bg-warn/10 px-3 py-2 text-[11px] text-warn-foreground">
       <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
       <div className="space-y-1">
-        <div className="font-medium">Vague wording — consider tightening</div>
+        <div className="font-medium">Vague wording: consider tightening</div>
         <div className="flex flex-wrap gap-1.5">
           {unique.map((m) => (
             <span
               key={m.rule}
-              title={`"${m.phrase}" — ${VAGUENESS_EXPLANATION}`}
+              title={`"${m.phrase}": ${VAGUENESS_EXPLANATION}`}
               className="rounded bg-warn/25 px-1.5 py-0.5 cursor-help underline decoration-dotted underline-offset-2"
             >
               {m.phrase}
@@ -360,7 +360,7 @@ function CannotRationaleField({
     >
       <label className="flex items-center gap-1.5 text-xs font-semibold text-urgent">
         <AlertTriangle className="h-3.5 w-3.5" />
-        Rationale — required for “Cannot meet”
+        Rationale: required for “Cannot meet”
       </label>
       <textarea
         value={value}
@@ -431,7 +431,7 @@ function LetterPreview({ c }: { c: Consultation }) {
           <div className="text-muted-foreground">{c.localAuthority}</div>
         </div>
         <h2 className="mt-8 font-semibold">
-          Re: EHC needs assessment consultation — {c.pupilRef} ({c.yearGroup})
+          Re: EHC needs assessment consultation: {c.pupilRef} ({c.yearGroup})
         </h2>
         <p className="mt-4">Dear {c.caseOfficer.split(".")[1]?.trim() ?? c.caseOfficer},</p>
         <p className="mt-4">

@@ -1,7 +1,7 @@
 import EnquiryDialog from "../components/enquiry-dialog";
 
 /**
- * Hero — full-viewport illustration with copy shifted into the upper sky
+ * Hero: full-viewport illustration with copy shifted into the upper sky
  * (like the reference: open park/city below, compact text above).
  */
 export default function HeroSection() {
@@ -25,10 +25,10 @@ export default function HeroSection() {
         <div className="unisen-hero-scrim absolute inset-0" />
       </div>
 
-      {/* Soft blend into the page — removes the hard hero / content edge */}
+      {/* Soft blend into the page: removes the hard hero / content edge */}
       <div className="unisen-hero-fade" aria-hidden />
 
-      {/* Upper-sky copy block — leaves lower half of the illustration open */}
+      {/* Upper-sky copy block: leaves lower half of the illustration open */}
       <div className="unisen-hero-copy relative z-[2] flex w-full max-w-[40rem] flex-col items-center px-5 max-lg:px-4">
         <h1
           className="unisen-hero-title block w-full [font-family:var(--font-heading)] font-bold text-center text-balance"
@@ -41,7 +41,8 @@ export default function HeroSection() {
           className="unisen-hero-sub mt-4 max-w-[32rem] [font-family:var(--font-body)] text-center text-balance"
           dir="auto"
         >
-          For schools, families, specialists, and councils. Track EHC deadlines and share evidence together.
+          For schools and families, with clearer handoffs for councils and supporting professionals. Track deadlines,
+          organise evidence and prepare clearer responses.
         </p>
         <div className="unisen-hero-cta mt-7 shrink-0">
           <EnquiryDialog />

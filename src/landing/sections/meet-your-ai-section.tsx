@@ -1,6 +1,6 @@
 import CtaButton from "../components/cta-button";
 
-/** Bottom CTA band — brand cyan panel + accent action. */
+/** Bottom CTA band: brand cyan panel + accent action. */
 export default function MeetYourAiSection() {
   return (
     <div className="w-320 block relative shrink-0 max-md:w-[23.4375rem] md:max-lg:w-185 2xl:w-480">

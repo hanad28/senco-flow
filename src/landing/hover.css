@@ -8,7 +8,7 @@
  * captured structure.
  */
 
-/* ── Shared easing (UNISEN motion: 150–300ms, ease-out) ──────────────────── */
+/* ── Shared easing (UNISEN motion: 150 to 300ms, ease-out) ──────────────────── */
 .unisen-landing {
   --hover-ease: var(--ease-enter, ease-out);
   --hover-duration: var(--duration-normal, 250ms);
@@ -179,7 +179,7 @@
   -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
 }
 
-/* Card lift — design system: 8px upward, soft shadow */
+/* Card lift: design system: 8px upward, soft shadow */
 .unisen-landing .cursor-pointer.bg-color-002:hover,
 .unisen-landing .pricing-card:hover {
   transform: translateY(-8px);
@@ -212,7 +212,7 @@
   opacity: 0.85;
 }
 
-/* ── Feature grid cards (Why Unisen) — Parley-style morph on hover ─────────
+/* ── Feature grid cards (Why Unisen): Parley-style morph on hover ─────────
  *
  * Rest + detail layers stay mounted. No display:none so opacity/transform
  * actually ease (the previous swap used `hidden`, which kills transitions).
@@ -249,7 +249,7 @@
   box-shadow: none;
 }
 
-/* Media / copy inside detail — staggered entrance */
+/* Media / copy inside detail: staggered entrance */
 .unisen-landing .feature-card-detail-media {
   transition: transform 0.55s var(--fc-ease), opacity 0.45s var(--fc-ease);
   transform: scale(1.06);

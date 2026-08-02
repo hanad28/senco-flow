@@ -1,8 +1,8 @@
-/* Unisen landing — brand tokens from DESIGN.md.
+/* Unisen landing: brand tokens from DESIGN.md.
    Scoped to .unisen-landing so authenticated app chrome is unaffected.
    Tailwind @theme color names live in src/styles.css so utilities generate correctly. */
 
-/* Design tokens — docs/DESIGN.md */
+/* Design tokens: docs/DESIGN.md */
 .unisen-landing {
   /* Brand */
   --brand-cyan: #74c4d7;
@@ -14,7 +14,7 @@
   --brand-periwinkle: #7ba4db;
   --brand-cyan-pale: #cdeff3;
 
-  /* Surfaces — ~60% white, pale cyan secondary, brand cyan panels */
+  /* Surfaces: ~60% white, pale cyan secondary, brand cyan panels */
   --background: #ffffff;
   --foreground: #244a70;
   --surface: #ffffff;
@@ -120,7 +120,7 @@
   --line-height-006: 24px;
   --line-height-007: 26.4px;
   --line-height-008: 35.2px;
-  /* spacing — 8px system */
+  /* spacing: 8px system */
   --space-001: 4px;
   --space-002: 5px;
   --space-003: 8px;
@@ -288,7 +288,7 @@ body:has(.unisen-landing) {
   );
 }
 
-/* Thin progressive blur — only along the seam */
+/* Thin progressive blur: only along the seam */
 .unisen-landing .unisen-hero-fade::before,
 .unisen-landing .unisen-hero-fade::after {
   content: "";
@@ -314,7 +314,7 @@ body:has(.unisen-landing) {
   mask-image: linear-gradient(180deg, transparent 0%, #000 65%, #000 100%);
 }
 
-/* Space after hero seam — next section (Why Unisen) sits clear of the edge */
+/* Space after hero seam: next section (Why Unisen) sits clear of the edge */
 .unisen-landing .unisen-hero + section {
   position: relative;
   z-index: 2;
@@ -329,7 +329,7 @@ body:has(.unisen-landing) {
   gap: 0;
 }
 
-/* ── Liquid glass CTA — swipe tile shares button corner language ───────── */
+/* ── Liquid glass CTA: swipe tile shares button corner language ───────── */
 .unisen-landing :is(a, button).cta-glass {
   --cta-swipe-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --cta-swipe-duration: 520ms;
@@ -465,7 +465,7 @@ body:has(.unisen-landing) {
   transform: scaleX(1);
 }
 
-/* Brand-blue swipe — matches solid header “Get started” (--action-primary) */
+/* Brand-blue swipe: matches solid header “Get started” (--action-primary) */
 .unisen-landing a.cta-glass.cta-glass--brand-slide::before {
   background: linear-gradient(
     155deg,
@@ -677,7 +677,7 @@ body:has(.unisen-landing) {
   }
 }
 
-/* High-contrast type on bright sky — yellow hover (brand accent) */
+/* High-contrast type on bright sky: yellow hover (brand accent) */
 .unisen-landing .unisen-nav {
   --nav-link: #ffffff;
   --nav-link-hover: var(--brand-yellow, #ffde59);
@@ -711,7 +711,7 @@ body:has(.unisen-landing) {
   text-shadow: var(--nav-link-shadow);
 }
 
-/* Nav CTA — liquid glass pill (different shape from hero glass CTA) */
+/* Nav CTA: liquid glass pill (different shape from hero glass CTA) */
 .unisen-landing .unisen-nav .unisen-nav-cta-glass {
   --nav-cta-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
@@ -828,7 +828,7 @@ body:has(.unisen-landing) {
 .unisen-landing .unisen-nav .unisen-nav-cta-glass--full {
   width: 100%;
   min-width: 0;
-  /* Solid brand blue in the mobile sheet — not liquid glass */
+  /* Solid brand blue in the mobile sheet: not liquid glass */
   color: var(--text-on-brand, #ffffff);
   text-shadow: none;
   background: var(--action-primary, #3b8ac1);
@@ -850,7 +850,7 @@ body:has(.unisen-landing) {
   box-shadow: 0 4px 14px rgba(59, 138, 193, 0.32);
 }
 
-/* CSS display:inline-flex above beats Tailwind max-lg:hidden — hide header CTA on small screens.
+/* CSS display:inline-flex above beats Tailwind max-lg:hidden: hide header CTA on small screens.
    Keep .unisen-nav-cta-glass--full (mobile dropdown) visible. */
 @media (max-width: 1023px) {
   .unisen-landing .unisen-nav nav .unisen-nav-cta-glass:not(.unisen-nav-cta-glass--full) {
@@ -1097,7 +1097,7 @@ body:has(.unisen-landing) {
   color: var(--text-secondary);
 }
 
-/* Pricing cards — Unisen design system */
+/* Pricing cards: Unisen design system */
 .unisen-landing .pricing-card {
   transition:
     transform var(--duration-normal) var(--ease-enter),
@@ -1121,7 +1121,7 @@ body:has(.unisen-landing) {
   align-items: stretch;
 }
 
-/* Pricing CTAs — full-width hero glass slider */
+/* Pricing CTAs: full-width hero glass slider */
 .unisen-landing .pricing-cta.cta-glass,
 .unisen-landing a.pricing-cta.cta-glass {
   width: 100%;
@@ -1133,7 +1133,7 @@ body:has(.unisen-landing) {
   width: 100%;
 }
 
-/* Prefer 16–24px radii on cards used as feature panels */
+/* Prefer 16 to 24px radii on cards used as feature panels */
 .unisen-landing .pricing-card,
 .unisen-landing [class*="rounded-xl"].bg-color-002,
 .unisen-landing [class*="rounded-xl"].bg-surface-2 {

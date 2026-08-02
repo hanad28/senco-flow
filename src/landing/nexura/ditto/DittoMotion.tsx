@@ -16,10 +16,10 @@ const byDittoId = (id: string): HTMLElement | null => document.querySelector('[d
 // while the whole group is already in view. Our replay re-hides each element and replays its
 // entrance on scroll-into-view, preserving the captured per-element delay AND duration. A grid
 // of tiles then either staggers over a long window (captured delays) or each tile plays a long
-// (e.g. 1.25s) entrance as it scrolls in — so a fast scroll / full-page screenshot catches most
+// (e.g. 1.25s) entrance as it scrolls in: so a fast scroll / full-page screenshot catches most
 // tiles mid-entrance, unpainted. Cap the replayed delay AND duration so each tile paints promptly
 // after it enters the viewport, keeping relative order. (The validator settles via
-// __dittoMotionStop and is unaffected — this only bounds the live, un-stopped replay.)
+// __dittoMotionStop and is unaffected: this only bounds the live, un-stopped replay.)
 const REVEAL_MAX_DELAY_MS = 300;
 const REVEAL_MAX_DURATION_MS = 600;
 const parseTimeMs = (raw: string | undefined): number => {
@@ -46,12 +46,12 @@ const clampDuration = (raw: string | undefined): string => {
  *  element.animate), rotating text (interval-cycled), and scroll-triggered reveals (start
  *  hidden, transition in when scrolled into view). Starts on mount. Installs
  *  window.__dittoMotionStop, and honors window.__dittoMotionStopped, so the validator can
- *  restore the fully-settled/revealed base for grading — gates 0–6 measure the static frame.
+ *  restore the fully-settled/revealed base for grading: gates 0 to 6 measure the static frame.
  *  The stopped FLAG (set by the validator even before this mounts) makes a late mount skip
  *  applying any motion, closing the hydration race that could otherwise leave content hidden. */
 export default function DittoMotion({ spec }: { spec: MotionSpec }) {
   useEffect(() => {
-    if ((window as any).__dittoMotionStopped) return; // measurement mode — apply nothing
+    if ((window as any).__dittoMotionStopped) return; // measurement mode: apply nothing
     const intervals: ReturnType<typeof setInterval>[] = [];
     const rotators: Array<{ el: HTMLElement; original: Node[] }> = [];
     const anims: Animation[] = [];
@@ -70,7 +70,7 @@ export default function DittoMotion({ spec }: { spec: MotionSpec }) {
           iterations: w.iterations < 0 ? Infinity : (w.iterations || 1),
           direction: (w.direction as PlaybackDirection) || "normal", fill: (w.fill as FillMode) || "none",
         }));
-      } catch { /* unsupported keyframe shape — leave static */ }
+      } catch { /* unsupported keyframe shape: leave static */ }
     }
 
     // Marquees: rAF-driven continuous tickers, reconstructed as an infinite linear translateX
@@ -93,11 +93,11 @@ export default function DittoMotion({ spec }: { spec: MotionSpec }) {
       const el = byDittoId(r.anchor);
       if (!el || r.texts.length < 2) continue;
       // Defense in depth: a genuine rotating word is a text leaf. If the target has element
-      // children, it was misclassified (its subtree would be destroyed by a text write) — skip it
+      // children, it was misclassified (its subtree would be destroyed by a text write): skip it
       // so the static structure survives even if the emission guard was bypassed.
       if (el.childElementCount > 0) continue;
       // Save the ORIGINAL child nodes (cloned) rather than a flattened textContent string, so the
-      // settle/restore path rebuilds the exact subtree via replaceChildren — never a lossy text
+      // settle/restore path rebuilds the exact subtree via replaceChildren: never a lossy text
       // node. For a real text leaf this is just the single text node round-tripped intact.
       const original = Array.from(el.childNodes).map((n) => n.cloneNode(true));
       const start = r.texts.findIndex((t) => t === (el.textContent || "").replace(/\s+/g, " ").trim());
@@ -108,14 +108,14 @@ export default function DittoMotion({ spec }: { spec: MotionSpec }) {
 
     // Scroll reveals: re-hide each element (JS-applied on mount, so non-JS/SSR still shows
     // the content), then reveal when it scrolls into view. Two families:
-    //   - transition — hide via opacity/transform, reveal by transitioning to full;
-    //   - visibility+entrance-class (Elementor/WOW/AOS) — hide via visibility with the baked
+    //   - transition: hide via opacity/transform, reveal by transitioning to full;
+    //   - visibility+entrance-class (Elementor/WOW/AOS): hide via visibility with the baked
     //     entrance animation suppressed, reveal by restarting the captured @keyframes
     //     (they ship in the page CSS under the captured animation-name).
     // A force-reveal timer guarantees nothing stays hidden if the observer misses.
     if (spec.reveals.length) {
       // Reveal to the full resting state. Setting 1/none (not clearing to base) is correct for
-      // every reveal — the revealed state is always full + un-offset — and is REQUIRED for
+      // every reveal: the revealed state is always full + un-offset: and is REQUIRED for
       // scroll-scrub panels whose captured base CSS is a frozen mid-scrub value (opacity 0.63).
       // animate=false (validator settle path) jumps straight to the settled frame so no
       // measurement can catch a mid-entrance value.

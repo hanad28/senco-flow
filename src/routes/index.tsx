@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { resolveHostMode } from "@/lib/hostname";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
-import { pageTitle, SITE_DESCRIPTION, SITE_HOME_TITLE } from "@/lib/site";
+import { pageTitle, SITE_DESCRIPTION, SITE_HOME_TITLE, SITE_URL } from "@/lib/site";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -32,6 +32,7 @@ export const Route = createFileRoute("/")({
           { title: SITE_HOME_TITLE },
           { name: "description", content: SITE_DESCRIPTION },
         ],
+        links: [{ rel: "canonical", href: `${SITE_URL}/` }],
       };
     }
     return {
@@ -275,7 +276,7 @@ function Dashboard() {
           {rows.length > 0 && (
             <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t bg-muted/20 text-xs text-muted-foreground">
               <div>
-                Showing <span className="font-medium text-foreground">{rangeStart}</span>–
+                Showing <span className="font-medium text-foreground">{rangeStart}</span> to
                 <span className="font-medium text-foreground">{rangeEnd}</span> of{" "}
                 <span className="font-medium text-foreground">{rows.length}</span>
               </div>

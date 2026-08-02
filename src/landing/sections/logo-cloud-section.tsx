@@ -24,7 +24,7 @@ function Badge({ label }: { label: string }) {
   );
 }
 
-/** Audience strip — not a vendor logo cloud. */
+/** Audience strip: not a vendor logo cloud. */
 export default function LogoCloudSection() {
   // Double the list for a seamless CSS marquee
   const loop = [...BADGES, ...BADGES];

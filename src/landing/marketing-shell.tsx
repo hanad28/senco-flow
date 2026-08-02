@@ -4,18 +4,22 @@ import Navbar from "./sections/navbar";
 import "./landing.css";
 import "./nexura/nexura-body.css";
 
-/** Public marketing pages — same header chrome as the home landing (solid bar). */
-export function MarketingShell({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
+export function MarketingFrame({ children }: { children: ReactNode }) {
   return (
     <div className="unisen-landing min-h-screen bg-background text-foreground">
       <Navbar variant="solid" />
+      {children}
+      <div className="nexura-body">
+        <FooterSection2 />
+      </div>
+    </div>
+  );
+}
 
+/** Public marketing pages: same header chrome as the home landing (solid bar). */
+export function MarketingShell({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <MarketingFrame>
       <main className="mx-auto w-full max-w-3xl px-5 pb-16 pt-[calc(4.5rem+env(safe-area-inset-top,0px))]">
         <h1 className="text-3xl font-bold tracking-tight text-[var(--text-primary,#244a70)] [font-family:var(--font-heading)]">
           {title}
@@ -24,10 +28,6 @@ export function MarketingShell({
           {children}
         </div>
       </main>
-
-      <div className="nexura-body">
-        <FooterSection2 />
-      </div>
-    </div>
+    </MarketingFrame>
   );
 }

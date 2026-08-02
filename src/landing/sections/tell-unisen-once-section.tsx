@@ -4,7 +4,7 @@ import MediaCard from "../components/media-card";
 import { MediaCard_styles } from "../_styles";
 import { mediaCardData as mediaCardDataContent } from "../content";
 
-/** How Unisen works — list tabs switch the preview image (Parley Intelligent Delegation). */
+/** How Unisen works: list tabs switch the preview image (Parley Intelligent Delegation). */
 export default function TellUnisenOnceSection({
   mediaCardData = mediaCardDataContent,
 } = {}) {
@@ -121,7 +121,7 @@ export default function TellUnisenOnceSection({
               </div>
             </div>
 
-            {/* Desktop preview — swaps with active item */}
+            {/* Desktop preview: swaps with active item */}
             <div className="w-170.5 block relative rounded-xl shrink-0 overflow-hidden aspect-[1.20922/1] max-lg:hidden bg-surface-2">
               <div className="w-170.5 h-full block absolute top-0 rounded-xl max-lg:hidden">
                 <img

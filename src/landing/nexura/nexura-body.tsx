@@ -30,7 +30,7 @@ const FEATURES: {
   {
     eyebrow: "Response quality",
     title: "Check wording before you submit",
-    body: "Flag vague provision against SEND law and IPSEA-style specificity so responses are clear, quantified, and defensible.",
+    body: "Highlight wording that may be vague or difficult to act on, helping teams prepare clearer and more specific responses for human review.",
     mock: "draft",
   },
 ];
@@ -68,7 +68,7 @@ export default function UnisenBody() {
             </div>
           </section>
 
-          {/* 6. Photo CTA — keep the strong closer */}
+          {/* 6. Photo CTA: keep the strong closer */}
           <div className="contents">
             <div className="w-full h-120 block relative shrink-0 mb-12 max-lg:h-112.5 max-lg:mb-10">
               <section
@@ -85,7 +85,7 @@ export default function UnisenBody() {
                           data-component="heading"
                           dir="auto"
                         >
-                          Your next EHC consultation starts here.
+                          See how Unisen could support your current EHC workflow.
                         </h2>
                       </div>
                     </div>

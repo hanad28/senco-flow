@@ -61,7 +61,7 @@ export default function DropdownMenu({ menus }: { menus: RTMenu[] }) {
       window.addEventListener("resize", place, { signal });
       window.addEventListener("scroll", place, { passive: true, signal });
     }
-    (window as any).__dittoMenuReady = true; // wiring done — lets the gate drive deterministically
+    (window as any).__dittoMenuReady = true; // wiring done: lets the gate drive deterministically
     return () => {
       ac.abort();
       // Remove any still-open panels appended to document.body so unmount leaves no orphan nodes.

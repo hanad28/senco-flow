@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { SITE_URL } from "../lib/site";
 
-/** App-host sign-in chrome — no Clerk/Convex so it can paint before the auth chunk. */
+/** App-host sign-in chrome: no Clerk/Convex so it can paint before the auth chunk. */
 export function AppHostChrome({ children }: { children?: ReactNode }) {
   return (
     <div className="relative isolate flex min-h-screen flex-col items-center justify-center gap-6 overflow-hidden px-4">

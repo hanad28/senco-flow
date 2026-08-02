@@ -34,7 +34,7 @@ function LoadingScreen() {
   );
 }
 
-/** Unauthenticated users on app.unisen.uk — Clerk sign-in, not marketing. */
+/** Unauthenticated users on app.unisen.uk: Clerk sign-in, not marketing. */
 function AppSignInGate() {
   return (
     <AppHostChrome>
@@ -70,7 +70,7 @@ function AuthenticatedApp({ queryClient }: { queryClient: QueryClient }) {
 
 /**
  * Marketing paint must not wait on auth.
- * AuthLoading used to flash a centered "Loading…" then swap in the full landing —
+ * AuthLoading used to flash a centered "Loading…" then swap in the full landing:
  * that single swap was ~0.78 CLS on mobile PageSpeed.
  */
 function MarketingLanding() {
@@ -85,7 +85,7 @@ function MarketingLanding() {
 function AppHostShell({ queryClient }: { queryClient: QueryClient }) {
   const { isLoaded, isSignedIn } = useAuth();
 
-  // Clerk still resolving session — chrome only (no SignIn flash for returnees).
+  // Clerk still resolving session: chrome only (no SignIn flash for returnees).
   if (!isLoaded) {
     return <AppHostChrome />;
   }
@@ -117,7 +117,7 @@ function HostAwareAuthShell({
     return <AppHostShell queryClient={queryClient} />;
   }
 
-  // Combined (e.g. *.vercel.app): marketing immediately — no loading → layout shift.
+  // Combined (e.g. *.vercel.app): marketing immediately: no loading → layout shift.
   return (
     <>
       <AuthLoading>
@@ -135,7 +135,7 @@ function HostAwareAuthShell({
   );
 }
 
-/** Full Clerk + Convex shell — only loaded when a session is expected. */
+/** Full Clerk + Convex shell: only loaded when a session is expected. */
 export default function AuthShell({
   hostMode,
   queryClient,

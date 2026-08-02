@@ -54,7 +54,7 @@ function ConsultationDetail() {
             <div className="text-xs uppercase tracking-wider text-muted-foreground">
               Consultation {c.id.toUpperCase()}
             </div>
-            <h1 className="text-2xl font-semibold tracking-tight mt-1">{c.pupilRef} — {c.yearGroup}</h1>
+            <h1 className="text-2xl font-semibold tracking-tight mt-1">{c.pupilRef}: {c.yearGroup}</h1>
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-3 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5"><Building2 className="h-4 w-4" />{c.localAuthority}</span>
               <span className="inline-flex items-center gap-1.5"><User2 className="h-4 w-4" />Case officer: {c.caseOfficer}</span>
@@ -88,7 +88,7 @@ function ConsultationDetail() {
                   <div>
                     <h2 className="font-semibold">Received documents</h2>
                     <p className="text-xs text-muted-foreground mt-0.5">
-                      {c.documents.length} files — {c.documents.reduce((s, d) => s + d.pages, 0)} pages total
+                      {c.documents.length} files: {c.documents.reduce((s, d) => s + d.pages, 0)} pages total
                     </p>
                   </div>
                 </header>
@@ -143,7 +143,7 @@ function ConsultationDetail() {
                 {c.summary}
               </div>
               <div className="px-5 pb-5 pt-2 border-t border-primary/10 text-[11px] text-muted-foreground">
-                Draft — always verify against source reports. This response informs a future Section I placement decision; no placement is yet in place.
+                Draft: always verify against source reports. This response informs a future Section I placement decision; no placement is yet in place.
               </div>
             </section>
 
@@ -183,9 +183,9 @@ function professionForKind(kind: string): string {
     case "Parental":
       return "Parent / Carer views";
     case "School":
-      return "SENCO — school information";
+      return "SENCO: school information";
     case "LA":
-      return "Local Authority — covering letter";
+      return "Local Authority: covering letter";
     default:
       return kind;
   }

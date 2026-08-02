@@ -9,7 +9,7 @@ const TABS = [
   { id: "solution-4", label: "For councils" },
 ] as const;
 
-/** Sticky offset under Unisen fixed nav — matches scroll-margin on panels. */
+/** Sticky offset under Unisen fixed nav: matches scroll-margin on panels. */
 const SPY_OFFSET_PX = 120;
 const MOBILE_SPY_OFFSET_PX = 160;
 
@@ -60,7 +60,7 @@ export default function SolutionsStickyNav() {
 
   return (
     <>
-      {/* Mobile — sticky horizontal tabs (scrollable, thumb-sized) */}
+      {/* Mobile: sticky horizontal tabs (scrollable, thumb-sized) */}
       <div
         className="nexura-solutions-mobile-tabs sticky z-20 -mx-1 mb-3 w-[calc(100%+0.5rem)] max-w-none shrink-0 overflow-x-auto px-1 py-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden"
         role="navigation"
@@ -77,7 +77,7 @@ export default function SolutionsStickyNav() {
         />
       </div>
 
-      {/* Desktop — vertical sticky sidebar */}
+      {/* Desktop: vertical sticky sidebar */}
       <div
         className="hidden w-[14.2rem] h-auto sticky top-28 z-1 p-2 flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-4 overflow-visible lg:flex 2xl:w-[14.325rem]"
         role="navigation"

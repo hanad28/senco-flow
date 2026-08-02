@@ -1,4 +1,4 @@
-/* Nexura body shell — fully themed with DESIGN.md palette.
+/* Nexura body shell: fully themed with DESIGN.md palette.
    Parent .unisen-landing already sets brand tokens; we only remap clone utilities. */
 
 .unisen-landing .nexura-body {
@@ -11,7 +11,7 @@
   --surface: #ffffff;
   --surface-2: #eaf8fa;
   --surface-3: #cdeff3;
-  --accent: #ffde59; /* brand yellow — focal accents only */
+  --accent: #ffde59; /* brand yellow: focal accents only */
   --color-001: #244a70;
   --color-002: #ffffff;
   --color-003: #40689c;
@@ -104,13 +104,13 @@
   color: var(--brand-blue, #3b8ac1) !important;
 }
 
-/* Decorative frame ticks / rules — brand border (unused while frames are hidden) */
+/* Decorative frame ticks / rules: brand border (unused while frames are hidden) */
 .unisen-landing .nexura-body [class*="after:h-0.5"]::after,
 .unisen-landing .nexura-body [class*="after:w-0.5"]::after {
   background-color: var(--border-default, #b7e1e9);
 }
 
-/* Hide Nexura decorative frame borders (side ticks + rules + corners) — all viewports */
+/* Hide Nexura decorative frame borders (side ticks + rules + corners): all viewports */
 .unisen-landing .nexura-body .z-8,
 .unisen-landing .nexura-body .z-9 {
   display: none !important;
@@ -197,7 +197,7 @@
   background-color: var(--action-primary-hover, #40689c) !important;
 }
 
-/* ── Footer section 2 — park panorama + high-contrast navy type ──────── */
+/* ── Footer section 2: park panorama + high-contrast navy type ──────── */
 .unisen-landing .footer-section2 {
   /* Design navy (#18324B) for AA contrast on pale sky */
   --footer-ink: #18324b;
@@ -964,7 +964,7 @@
   isolation: isolate;
   border: 1px solid rgba(255, 255, 255, 0.78);
   border-radius: var(--radius-xl, 24px);
-  /* Liquid glass — same material language as .cta-glass */
+  /* Liquid glass: same material language as .cta-glass */
   background:
     linear-gradient(
       155deg,
@@ -1213,7 +1213,7 @@
     border-bottom: 0 !important;
   }
 
-  /* Solution UI panels — drop framed surface chrome */
+  /* Solution UI panels: drop framed surface chrome */
   .unisen-landing .nexura-body #solution .bg-surface {
     background: transparent !important;
   }

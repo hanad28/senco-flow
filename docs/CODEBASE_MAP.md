@@ -20,10 +20,10 @@ src/routes/__root.tsx  HTML shell + global providers
 
 Two product surfaces share one app:
 
-| Surface | Shell | State | Routes |
-| --- | --- | --- | --- |
-| **School (SENCO)** | `AppShell` | `ConsultationsProvider`, `SchoolProfileProvider`, `TemplatesProvider`, `SearchProvider` | `/`, `/consultations/$id/*`, `/templates`, `/calendar`, `/reports`, `/settings` |
-| **Family** | `FamilyShell` | `FamilyCaseProvider`, `FamilyI18nProvider` (mounted under `/family`) | `/family`, `/family/cases/$id/*`, `/family/help` |
+| Surface            | Shell         | State                                                                                   | Routes                                                                          |
+| ------------------ | ------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **School (SENCO)** | `AppShell`    | `ConsultationsProvider`, `SchoolProfileProvider`, `TemplatesProvider`, `SearchProvider` | `/`, `/consultations/$id/*`, `/templates`, `/calendar`, `/reports`, `/settings` |
+| **Family**         | `FamilyShell` | `FamilyCaseProvider`, `FamilyI18nProvider` (mounted under `/family`)                    | `/family`, `/family/cases/$id/*`, `/family/help`                                |
 
 Switch via `WorkspaceSwitcher`. Deadline rule (both workspaces): **15 calendar days** from receipt (day 1 = day after receipt). Prefer `calendarDaysRemaining` / `calendarDeadlineDate` / `familyDeadlineIso` — not the unused working-day helpers.
 
@@ -59,53 +59,67 @@ senco-flow/
 
 ### `src/lib/` — domain modules
 
-| Module | Role |
-| --- | --- |
-| `consultations-store.tsx` | Seeded consultations, needs, documents, activity; status transitions |
-| `school-profile-store.tsx` | School identity, provision by need domain, response style |
-| `templates-store.tsx` | Response snippets + token fill; evidence docs |
-| `search-store.tsx` | Global search overlay open/close |
-| `working-days.ts` | Calendar-day deadline API (primary) + unused working-day helpers |
-| `vagueness.ts` | Flag vague statutory wording in drafts |
-| `letter-export.ts` | School DOCX response letter (`docx`) |
-| `family-case-store.tsx` | Seeded family case: plan sections A–K, issues, docs, amendments |
-| `family-config.ts` | Statutory constants + family deadline helpers — single source of truth |
-| `family-i18n.tsx` | en / ar / ur / bn / so + RTL |
-| `family-rag.ts` | Mock AI provider over seeded family docs |
-| `family-letter-export.ts` | Family response DOCX export |
-| `error-*.ts`, `lovable-error-reporting.ts` | SSR/client error surfaces for Lovable |
+| Module                                     | Role                                                                   |
+| ------------------------------------------ | ---------------------------------------------------------------------- |
+| `consultations-store.tsx`                  | Seeded consultations, needs, documents, activity; status transitions   |
+| `school-profile-store.tsx`                 | School identity, provision by need domain, response style              |
+| `templates-store.tsx`                      | Response snippets + token fill; evidence docs                          |
+| `search-store.tsx`                         | Global search overlay open/close                                       |
+| `working-days.ts`                          | Calendar-day deadline API (primary) + unused working-day helpers       |
+| `vagueness.ts`                             | Flag vague statutory wording in drafts                                 |
+| `letter-export.ts`                         | School DOCX response letter (`docx`)                                   |
+| `family-case-store.tsx`                    | Seeded family case: plan sections A–K, issues, docs, amendments        |
+| `family-config.ts`                         | Statutory constants + family deadline helpers — single source of truth |
+| `family-i18n.tsx`                          | en / ar / ur / bn / so + RTL                                           |
+| `family-rag.ts`                            | Mock AI provider over seeded family docs                               |
+| `family-letter-export.ts`                  | Family response DOCX export                                            |
+| `error-*.ts`, `lovable-error-reporting.ts` | SSR/client error surfaces for Lovable                                  |
+
+### Public marketing surface
+
+The public marketing surface is implemented under `src/landing/`. `marketing-shell.tsx` provides the shared header and footer, while `rich-marketing-page.tsx` provides the reusable hero, section, card, list, and walkthrough CTA patterns used by the core marketing pages.
+
+| Path            | File               | Purpose                                                                                |
+| --------------- | ------------------ | -------------------------------------------------------------------------------------- |
+| `/product`      | `product.tsx`      | School and family workflows, platform direction, and responsible-assistance boundaries |
+| `/integrations` | `integrations.tsx` | Prototype handoffs, pilot configuration, and planned integration areas                 |
+| `/pricing`      | `pricing.tsx`      | Family access and tailored organisational pricing approach                             |
+| `/privacy`      | `privacy.tsx`      | Website and enquiry-form privacy notice                                                |
+| `/terms`        | `terms.tsx`        | Public website terms of use                                                            |
+
+Other public routes include `/about`, `/contact`, `/resources`, `/blog`, `/changelog`, `/help`, and `/workshops`. The marketing host renders these routes without loading the Clerk and Convex authentication stack on a cold visit. Host classification and hand-off logic remain in `src/lib/site.ts`, `src/lib/hostname.ts`, and `src/routes/__root.tsx`.
 
 ### Route map
 
 **School**
 
-| Path | File | Purpose |
-| --- | --- | --- |
-| `/` | `index.tsx` | Consultation dashboard (sort/filter/deadline) |
-| `/consultations/$id` | `consultations.$id.tsx` | Layout outlet |
-| `/consultations/$id/` | `…index.tsx` | Overview + documents + activity |
-| `…/needs` | needs review / capability scoring |
-| `…/draft` | Draft responses + templates + vagueness |
-| `…/submit` | Review & submit + letter export |
-| `/templates` | Template library |
-| `/calendar` | Deadline calendar |
-| `/reports` | Capability / domain analytics |
-| `/settings` | School profile |
+| Path                  | File                                    | Purpose                                       |
+| --------------------- | --------------------------------------- | --------------------------------------------- |
+| `/`                   | `index.tsx`                             | Consultation dashboard (sort/filter/deadline) |
+| `/consultations/$id`  | `consultations.$id.tsx`                 | Layout outlet                                 |
+| `/consultations/$id/` | `…index.tsx`                            | Overview + documents + activity               |
+| `…/needs`             | needs review / capability scoring       |
+| `…/draft`             | Draft responses + templates + vagueness |
+| `…/submit`            | Review & submit + letter export         |
+| `/templates`          | Template library                        |
+| `/calendar`           | Deadline calendar                       |
+| `/reports`            | Capability / domain analytics           |
+| `/settings`           | School profile                          |
 
 **Family**
 
-| Path | File | Purpose |
-| --- | --- | --- |
-| `/family` | `family.tsx` | Providers + outlet |
-| `/family/` | `family.index.tsx` | Case home / readiness |
-| `/family/cases/$id/plan` | Plan sections A–K |
-| `…/issues` | Issue triage |
-| `…/assistant` | Mock RAG chat |
-| `…/response` | Assemble & export response |
-| `…/documents` | Case documents |
-| `…/support` | Support network |
-| `…/confirmation` | Post-submit confirmation |
-| `/family/help` | Help / statutory copy |
+| Path                     | File                       | Purpose               |
+| ------------------------ | -------------------------- | --------------------- |
+| `/family`                | `family.tsx`               | Providers + outlet    |
+| `/family/`               | `family.index.tsx`         | Case home / readiness |
+| `/family/cases/$id/plan` | Plan sections A–K          |
+| `…/issues`               | Issue triage               |
+| `…/assistant`            | Mock RAG chat              |
+| `…/response`             | Assemble & export response |
+| `…/documents`            | Case documents             |
+| `…/support`              | Support network            |
+| `…/confirmation`         | Post-submit confirmation   |
+| `/family/help`           | Help / statutory copy      |
 
 Routing conventions: `docs/ROUTING.md`. Never invent Next.js `pages/` or `app/` layouts.
 
@@ -135,15 +149,15 @@ Routing conventions: `docs/ROUTING.md`. Never invent Next.js `pages/` or `app/` 
 
 ## Task-specific guidance
 
-| Need | Go here first |
-| --- | --- |
-| Consultation CRUD / status / activity | `src/lib/consultations-store.tsx` |
-| Deadline math | `src/lib/working-days.ts` + `family-config.ts` + `docs/DEADLINES.md` |
-| School chrome / nav | `src/components/app-shell.tsx` |
-| Family chrome / i18n | `src/components/family-shell.tsx`, `family-i18n.tsx` |
-| Statutory copy | `src/lib/family-config.ts` |
-| Draft quality flags | `src/lib/vagueness.ts` |
-| Exports | `letter-export.ts`, `family-letter-export.ts` |
-| New routes | `src/routes/` + `docs/ROUTING.md` |
-| Agent / Lovable rules | `AGENTS.md` (repo root) |
-| Doc index | `README.md` (repo root) |
+| Need                                  | Go here first                                                        |
+| ------------------------------------- | -------------------------------------------------------------------- |
+| Consultation CRUD / status / activity | `src/lib/consultations-store.tsx`                                    |
+| Deadline math                         | `src/lib/working-days.ts` + `family-config.ts` + `docs/DEADLINES.md` |
+| School chrome / nav                   | `src/components/app-shell.tsx`                                       |
+| Family chrome / i18n                  | `src/components/family-shell.tsx`, `family-i18n.tsx`                 |
+| Statutory copy                        | `src/lib/family-config.ts`                                           |
+| Draft quality flags                   | `src/lib/vagueness.ts`                                               |
+| Exports                               | `letter-export.ts`, `family-letter-export.ts`                        |
+| New routes                            | `src/routes/` + `docs/ROUTING.md`                                    |
+| Agent / Lovable rules                 | `AGENTS.md` (repo root)                                              |
+| Doc index                             | `README.md` (repo root)                                              |

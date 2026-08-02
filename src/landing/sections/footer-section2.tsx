@@ -1,5 +1,5 @@
 /**
- * Home landing footer — real destinations only.
+ * Home landing footer: real destinations only.
  */
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
@@ -55,6 +55,7 @@ const COLUMNS = [
     title: "Product",
     links: [
       { label: "Overview", href: "/product" },
+      { label: "Integrations", href: "/integrations" },
       { label: "Pricing", href: "/pricing" },
       { label: "Home demo", href: "/#product" },
     ],
@@ -177,8 +178,8 @@ export default function FooterSection2() {
                 />
               </a>
               <p className="block mb-5 text-clr-1 text-[0.8125rem] leading-[1.3125rem] max-w-[17.5rem]">
-                SEND coordination for schools and families: shared timelines,
-                statutory deadlines, and execution assistance for EHC work.
+                SEND coordination for schools and families: shared timelines, statutory deadlines,
+                and execution assistance for EHC work.
               </p>
               <div className="flex gap-3.5">
                 {SOCIALS.map((d) => (
@@ -212,10 +213,10 @@ export default function FooterSection2() {
             <div className="flex items-center gap-8 max-lg:gap-5">
               <div className="flex flex-nowrap gap-6">
                 <UnderlineLink href="/privacy" muted>
-                  Privacy Policy
+                  Website Privacy Notice
                 </UnderlineLink>
                 <UnderlineLink href="/terms" muted>
-                  Terms of Service
+                  Website Terms of Use
                 </UnderlineLink>
               </div>
               <button

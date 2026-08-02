@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { solutions as solutionsContent, type SolutionItem } from "../content";
 
-/** Nexura “Built for every marketing team” — Unisen audiences. */
+/** Nexura “Built for every marketing team”: Unisen audiences. */
 export default function SolutionsSection({
   items = solutionsContent,
 }: {

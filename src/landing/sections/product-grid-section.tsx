@@ -2,7 +2,7 @@ import { useState } from "react";
 import ProductCard from "../components/product-card";
 import { products as productsContent } from "../content";
 
-/** Pricing — matches Parley layout: toggle + 3 cards, middle featured with photo. */
+/** Pricing: matches Parley layout: toggle + 3 cards, middle featured with photo. */
 export default function ProductGridSection({ products = productsContent } = {}) {
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
 
@@ -77,7 +77,7 @@ export default function ProductGridSection({ products = productsContent } = {}) 
             </div>
           </div>
 
-          {/* Cards — equal columns, middle featured */}
+          {/* Cards: equal columns, middle featured */}
           <div className="pricing-grid w-full grid grid-cols-1 gap-5 lg:grid-cols-3 lg:items-stretch">
             {products.map((d) => (
               <ProductCard key={d.variant} d={d} billing={billing} />
