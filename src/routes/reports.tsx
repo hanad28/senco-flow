@@ -14,13 +14,14 @@ import {
   domainOrder,
   type NeedDomain,
 } from "@/lib/school-profile-store";
+import { pageTitle } from "@/lib/site";
 import { calendarDeadlineDate } from "@/lib/working-days";
 import { CheckCircle2, Percent, Info } from "lucide-react";
 
 export const Route = createFileRoute("/reports")({
   head: () => ({
     meta: [
-      { title: "Reports — EHCP Response" },
+      { title: pageTitle("Reports") },
       {
         name: "description",
         content:

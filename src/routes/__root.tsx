@@ -20,16 +20,17 @@ import {
   SITE_DESCRIPTION,
   SITE_OG_DESCRIPTION,
   SITE_OG_IMAGE,
+  SITE_HOME_TITLE,
   SITE_TITLE,
   SITE_URL,
   clerkFrontendOrigin,
   siteJsonLd,
 } from "../lib/site";
-import { LandingPage } from "../landing/landing-page";
-import { AppHostChrome } from "./app-host-chrome";
+import { MarketingSurface } from "../landing/marketing-surface";
+import { AppHostChrome } from "./-app-host-chrome";
 
 // Auth stack (Clerk/Convex) is a separate chunk — cold marketing visits never download it.
-const loadAuthShell = () => import("./auth-shell");
+const loadAuthShell = () => import("./-auth-shell");
 const AuthShell = lazy(loadAuthShell);
 const RedirectToApp = lazy(() =>
   loadAuthShell().then((m) => ({ default: m.RedirectToApp })),
@@ -109,8 +110,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: SITE_TITLE },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      // Hero sky match (closest single: #0596F2).
+      { name: "theme-color", content: "#0596F2" },
+      { name: "theme-color", content: "#0596F2", media: "(prefers-color-scheme: light)" },
+      { name: "theme-color", content: "#0596F2", media: "(prefers-color-scheme: dark)" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { title: SITE_HOME_TITLE },
       { name: "description", content: SITE_DESCRIPTION },
       { property: "og:title", content: SITE_TITLE },
       { property: "og:description", content: SITE_OG_DESCRIPTION },
@@ -154,7 +160,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         // Slim weights used on marketing + app chrome (display=swap already set).
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&family=Nunito+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap",
       },
     ],
     scripts: [
@@ -202,15 +208,14 @@ function RootComponent() {
     );
   }
 
-  // Marketing + cold combined (no session cookie): paint landing with zero Clerk.
-  // Avoids handshake redirects (~1.7s), unused Clerk UI JS (~300KiB), and CLS
-  // from AuthLoading → landing. Auth CTAs navigate to APP_URL.
+  // Marketing + cold combined (no session cookie): paint marketing with zero Clerk.
+  // Home = landing; other public routes use Outlet via MarketingSurface.
   if (!needsAuthShell()) {
-    return <LandingPage />;
+    return <MarketingSurface />;
   }
 
   // App host: chrome first (not full marketing) while the auth chunk loads.
-  const fallback = hostMode === "app" ? <AppHostChrome /> : <LandingPage />;
+  const fallback = hostMode === "app" ? <AppHostChrome /> : <MarketingSurface />;
 
   return (
     <Suspense fallback={fallback}>

@@ -10,14 +10,27 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FamilyRouteImport } from './routes/family'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ProductRouteImport } from './routes/product'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WorkshopsRouteImport } from './routes/workshops'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ConsultationsIdRouteImport } from './routes/consultations.$id'
 import { Route as FamilyIndexRouteImport } from './routes/family.index'
 import { Route as FamilyHelpRouteImport } from './routes/family.help'
@@ -41,9 +54,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FamilyRoute = FamilyRouteImport.update({
@@ -51,14 +84,39 @@ const FamilyRoute = FamilyRouteImport.update({
   path: '/family',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductRoute = ProductRouteImport.update({
+  id: '/product',
+  path: '/product',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -69,6 +127,16 @@ const SettingsRoute = SettingsRouteImport.update({
 const TemplatesRoute = TemplatesRouteImport.update({
   id: '/templates',
   path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkshopsRoute = WorkshopsRouteImport.update({
+  id: '/workshops',
+  path: '/workshops',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotmcpChar93ListToolsRoute =
@@ -83,6 +151,16 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const ConsultationsIdRoute = ConsultationsIdRouteImport.update({
   id: '/consultations/$id',
   path: '/consultations/$id',
@@ -173,16 +251,29 @@ const FamilyCasesIdSupportRoute = FamilyCasesIdSupportRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRouteWithChildren
   '/calendar': typeof CalendarRoute
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
   '/family': typeof FamilyRouteWithChildren
+  '/help': typeof HelpRoute
   '/mcp': typeof McpRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/product': typeof ProductRoute
   '/reports': typeof ReportsRoute
+  '/resources': typeof ResourcesRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/terms': typeof TermsRoute
+  '/workshops': typeof WorkshopsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
   '/family/help': typeof FamilyHelpRoute
+  '/blog/': typeof BlogIndexRoute
   '/family/': typeof FamilyIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
@@ -201,14 +292,26 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/calendar': typeof CalendarRoute
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
+  '/help': typeof HelpRoute
   '/mcp': typeof McpRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/product': typeof ProductRoute
   '/reports': typeof ReportsRoute
+  '/resources': typeof ResourcesRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/terms': typeof TermsRoute
+  '/workshops': typeof WorkshopsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/family/help': typeof FamilyHelpRoute
+  '/blog': typeof BlogIndexRoute
   '/family': typeof FamilyIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
@@ -227,16 +330,29 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRouteWithChildren
   '/calendar': typeof CalendarRoute
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
   '/family': typeof FamilyRouteWithChildren
+  '/help': typeof HelpRoute
   '/mcp': typeof McpRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/product': typeof ProductRoute
   '/reports': typeof ReportsRoute
+  '/resources': typeof ResourcesRoute
   '/settings': typeof SettingsRoute
   '/templates': typeof TemplatesRoute
+  '/terms': typeof TermsRoute
+  '/workshops': typeof WorkshopsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/consultations/$id': typeof ConsultationsIdRouteWithChildren
   '/family/help': typeof FamilyHelpRoute
+  '/blog/': typeof BlogIndexRoute
   '/family/': typeof FamilyIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/consultations/$id/draft': typeof ConsultationsIdDraftRoute
@@ -257,16 +373,29 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/blog'
     | '/calendar'
+    | '/changelog'
+    | '/contact'
     | '/family'
+    | '/help'
     | '/mcp'
+    | '/pricing'
+    | '/privacy'
+    | '/product'
     | '/reports'
+    | '/resources'
     | '/settings'
     | '/templates'
+    | '/terms'
+    | '/workshops'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/blog/$slug'
     | '/consultations/$id'
     | '/family/help'
+    | '/blog/'
     | '/family/'
     | '/.mcp/invoke-tool/$tool'
     | '/consultations/$id/draft'
@@ -285,14 +414,26 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/calendar'
+    | '/changelog'
+    | '/contact'
+    | '/help'
     | '/mcp'
+    | '/pricing'
+    | '/privacy'
+    | '/product'
     | '/reports'
+    | '/resources'
     | '/settings'
     | '/templates'
+    | '/terms'
+    | '/workshops'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/blog/$slug'
     | '/family/help'
+    | '/blog'
     | '/family'
     | '/.mcp/invoke-tool/$tool'
     | '/consultations/$id/draft'
@@ -310,16 +451,29 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/blog'
     | '/calendar'
+    | '/changelog'
+    | '/contact'
     | '/family'
+    | '/help'
     | '/mcp'
+    | '/pricing'
+    | '/privacy'
+    | '/product'
     | '/reports'
+    | '/resources'
     | '/settings'
     | '/templates'
+    | '/terms'
+    | '/workshops'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/blog/$slug'
     | '/consultations/$id'
     | '/family/help'
+    | '/blog/'
     | '/family/'
     | '/.mcp/invoke-tool/$tool'
     | '/consultations/$id/draft'
@@ -339,12 +493,23 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CalendarRoute: typeof CalendarRoute
+  ChangelogRoute: typeof ChangelogRoute
+  ContactRoute: typeof ContactRoute
   FamilyRoute: typeof FamilyRouteWithChildren
+  HelpRoute: typeof HelpRoute
   McpRoute: typeof McpRoute
+  PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ProductRoute: typeof ProductRoute
   ReportsRoute: typeof ReportsRoute
+  ResourcesRoute: typeof ResourcesRoute
   SettingsRoute: typeof SettingsRoute
   TemplatesRoute: typeof TemplatesRoute
+  TermsRoute: typeof TermsRoute
+  WorkshopsRoute: typeof WorkshopsRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   ConsultationsIdRoute: typeof ConsultationsIdRouteWithChildren
@@ -360,11 +525,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/calendar': {
       id: '/calendar'
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/family': {
@@ -374,6 +567,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FamilyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
@@ -381,11 +581,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product': {
+      id: '/product'
+      path: '/product'
+      fullPath: '/product'
+      preLoaderRoute: typeof ProductRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reports': {
       id: '/reports'
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -402,6 +630,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TemplatesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workshops': {
+      id: '/workshops'
+      path: '/workshops'
+      fullPath: '/workshops'
+      preLoaderRoute: typeof WorkshopsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/.mcp/list-tools': {
       id: '/.mcp/list-tools'
       path: '/.mcp/list-tools'
@@ -415,6 +657,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/.well-known/oauth-protected-resource'
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
     }
     '/consultations/$id': {
       id: '/consultations/$id'
@@ -538,6 +794,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 interface FamilyCasesIdRouteChildren {
   FamilyCasesIdAssistantRoute: typeof FamilyCasesIdAssistantRoute
   FamilyCasesIdConfirmationRoute: typeof FamilyCasesIdConfirmationRoute
@@ -599,12 +867,23 @@ const ConsultationsIdRouteWithChildren = ConsultationsIdRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BlogRoute: BlogRouteWithChildren,
   CalendarRoute: CalendarRoute,
+  ChangelogRoute: ChangelogRoute,
+  ContactRoute: ContactRoute,
   FamilyRoute: FamilyRouteWithChildren,
+  HelpRoute: HelpRoute,
   McpRoute: McpRoute,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  ProductRoute: ProductRoute,
   ReportsRoute: ReportsRoute,
+  ResourcesRoute: ResourcesRoute,
   SettingsRoute: SettingsRoute,
   TemplatesRoute: TemplatesRoute,
+  TermsRoute: TermsRoute,
+  WorkshopsRoute: WorkshopsRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,

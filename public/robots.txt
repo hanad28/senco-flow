@@ -1,8 +1,7 @@
-# https://senco-flow.vercel.app/robots.txt
+# https://unisen.uk/robots.txt
 User-agent: *
 Allow: /
 
-# Authenticated / app surfaces — not for public indexation
 Disallow: /consultations
 Disallow: /family
 Disallow: /calendar
@@ -10,4 +9,4 @@ Disallow: /templates
 Disallow: /settings
 Disallow: /reports
 
-Sitemap: https://senco-flow.vercel.app/sitemap.xml
+Sitemap: https://unisen.uk/sitemap.xml

@@ -12,6 +12,7 @@ import {
   deadlineTone,
   type Consultation,
 } from "@/lib/consultations-store";
+import { pageTitle } from "@/lib/site";
 import {
   calendarDeadlineDate,
   calendarDaysRemaining,
@@ -20,7 +21,7 @@ import {
 export const Route = createFileRoute("/calendar")({
   head: () => ({
     meta: [
-      { title: "Calendar — EHCP Response" },
+      { title: pageTitle("Calendar") },
       {
         name: "description",
         content:

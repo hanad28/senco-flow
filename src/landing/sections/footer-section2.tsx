@@ -1,6 +1,5 @@
 /**
- * Footer — ditto clone of https://footersection2.framer.website/
- * Structure exact; colors remapped to Unisen brand.
+ * Home landing footer — real destinations only.
  */
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
@@ -9,11 +8,6 @@ type SocialData = {
   ariaLabel: string;
   href: string;
   icon: ReactNode;
-};
-
-type ColumnData = {
-  title: string;
-  links: { label: string; href: string; widthClass: string }[];
 };
 
 const SOCIALS: SocialData[] = [
@@ -56,32 +50,39 @@ const SOCIALS: SocialData[] = [
   },
 ];
 
-const COLUMNS: ColumnData[] = [
+const COLUMNS = [
   {
     title: "Product",
     links: [
-      { label: "School workspace", href: "#pricing", widthClass: "w-[7.5rem]" },
-      { label: "Family workspace", href: "#pricing", widthClass: "w-[7.4rem]" },
-      { label: "Deadlines", href: "#pricing", widthClass: "w-[4.2rem]" },
+      { label: "Overview", href: "/product" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Home demo", href: "/#product" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Pricing", href: "#pricing", widthClass: "w-[3.2rem]" },
-      { label: "Contact", href: "/contact", widthClass: "w-[3.5rem]" },
-      { label: "Demo", href: "#demo", widthClass: "w-[2.6rem]" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { label: "Solutions", href: "#solution", widthClass: "w-[4.2rem]" },
-      { label: "Support", href: "/contact", widthClass: "w-[3.4rem]" },
-      { label: "Changelog", href: "#", widthClass: "w-[4.5rem]" },
+      { label: "Changelog", href: "/changelog" },
+      { label: "Blog", href: "/blog" },
+      { label: "Help", href: "/help" },
+      { label: "Workshops", href: "/workshops" },
     ],
   },
-];
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+    ],
+  },
+] as const;
 
 function SocialLink({ d }: { d: SocialData }) {
   return (
@@ -114,12 +115,10 @@ function SocialLink({ d }: { d: SocialData }) {
 function UnderlineLink({
   href,
   children,
-  widthClass,
   muted,
 }: {
   href: string;
   children: ReactNode;
-  widthClass?: string;
   muted?: boolean;
 }) {
   return (
@@ -127,39 +126,13 @@ function UnderlineLink({
       className={cn(
         "footer-s2-link relative inline-flex whitespace-nowrap pb-0.5 rounded-xs text-sm leading-4 cursor-pointer",
         muted ? "text-color-002" : "text-color-001",
-        widthClass,
       )}
       data-component="link"
       href={href}
     >
       {children}
-      <span
-        className={cn(
-          "footer-s2-underline h-px block absolute bottom-0 left-0 bg-primary origin-[0px_0.5px]",
-          widthClass ?? "w-full",
-        )}
-      />
+      <span className="footer-s2-underline h-px w-full block absolute bottom-0 left-0 bg-primary origin-[0px_0.5px]" />
     </a>
-  );
-}
-
-function BackToTopIcon() {
-  return (
-    <svg
-      className="w-auto h-[0.6875rem] block overflow-hidden"
-      data-component="icon"
-      fill="none"
-      height="11"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      width="11"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M12 19 V5 M5 12 L12 5 L19 12" />
-    </svg>
   );
 }
 
@@ -186,7 +159,7 @@ export default function FooterSection2() {
         </div>
         <div className="footer-s2-scrim" aria-hidden />
         <div className="footer-s2-content relative z-[1] block max-w-320 pt-16 px-12 mx-auto max-lg:pt-12 max-lg:px-6">
-          <div className="flex justify-between max-lg:flex-col max-lg:gap-10">
+          <div className="flex justify-between gap-12 max-lg:flex-col max-lg:gap-10">
             <div className="block max-w-70 shrink-0 max-lg:max-w-full">
               <a
                 className="inline-flex h-7 mb-4 items-center cursor-pointer"
@@ -222,31 +195,13 @@ export default function FooterSection2() {
                   </span>
                   <div className="flex flex-col gap-3">
                     {col.links.map((link) => (
-                      <UnderlineLink
-                        key={link.label}
-                        href={link.href}
-                        widthClass={link.widthClass}
-                      >
+                      <UnderlineLink key={link.label} href={link.href}>
                         {link.label}
                       </UnderlineLink>
                     ))}
                   </div>
                 </div>
               ))}
-
-              <div className="flex flex-col">
-                <span className="block mb-4 text-color-002 text-[0.6875rem] leading-3 tracking-[1.65px] uppercase">
-                  Legal
-                </span>
-                <div className="flex flex-col gap-3">
-                  <UnderlineLink href="/terms-conditions" widthClass="w-[44.3px]">
-                    Privacy
-                  </UnderlineLink>
-                  <UnderlineLink href="/terms-conditions" widthClass="w-[36.3px]">
-                    Terms
-                  </UnderlineLink>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -256,10 +211,10 @@ export default function FooterSection2() {
             </span>
             <div className="flex items-center gap-8 max-lg:gap-5">
               <div className="flex flex-nowrap gap-6">
-                <UnderlineLink href="/terms-conditions" muted>
+                <UnderlineLink href="/privacy" muted>
                   Privacy Policy
                 </UnderlineLink>
-                <UnderlineLink href="/terms-conditions" muted>
+                <UnderlineLink href="/terms" muted>
                   Terms of Service
                 </UnderlineLink>
               </div>
@@ -270,11 +225,21 @@ export default function FooterSection2() {
                 type="button"
                 onClick={scrollToTop}
               >
-                <BackToTopIcon />
-                <span className="block relative pb-0.5 text-sm">
-                  Back to top
-                  <span className="footer-s2-underline w-[62.5px] h-px block absolute bottom-0 left-0 bg-primary origin-[0px_0.5px]" />
-                </span>
+                <svg
+                  className="w-auto h-[0.6875rem] block overflow-hidden"
+                  fill="none"
+                  height="11"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  width="11"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M12 19 V5 M5 12 L12 5 L19 12" />
+                </svg>
+                <span className="block relative pb-0.5 text-sm">Back to top</span>
               </button>
             </div>
           </div>

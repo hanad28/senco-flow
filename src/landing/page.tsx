@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <>
       <div className="block" id="main">
-        <div className="min-h-screen flex relative flex-col justify-start items-stretch content-start overflow-x-clip bg-background">
+        <div className="min-h-screen flex relative flex-col justify-start items-stretch content-start overflow-x-clip">
           <Navbar />
           <HeroSection />
           <NexuraBody />

@@ -8,12 +8,13 @@ import { EvidencePickerDialog } from "./templates";
 import { findVagueness, VAGUENESS_EXPLANATION } from "@/lib/vagueness";
 import { MatchScore } from "./consultations.$id.needs";
 import { downloadResponseLetter } from "@/lib/letter-export";
+import { pageTitle } from "@/lib/site";
 import { Paperclip, ArrowRight, ArrowLeft, FileText, Eye, Pencil, Sparkles, AlertTriangle, X, Download } from "lucide-react";
 
 export const Route = createFileRoute("/consultations/$id/draft")({
   head: ({ params }) => ({
     meta: [
-      { title: `Draft response — ${params.id.toUpperCase()} — EHCP Response` },
+      { title: pageTitle(`Draft ${params.id.toUpperCase()}`) },
       { name: "robots", content: "noindex" },
     ],
   }),
