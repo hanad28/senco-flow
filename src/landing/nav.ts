@@ -6,7 +6,7 @@ export const PRIMARY_NAV = [
   { href: "/about", label: "About" },
 ] as const;
 
-/** Resources that make sense at pilot stage — skip Docs/Community/Forum/Careers for now. */
+/** Resources that make sense at pilot stage: skip Docs/Community/Forum/Careers for now. */
 export const RESOURCE_LINKS = [
   {
     href: "/changelog",

@@ -20,7 +20,7 @@ function SupportScreen() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
         <header>
           <h1 className="text-2xl font-semibold tracking-tight">{t("nav.support")}</h1>
-          <p className="text-sm text-muted-foreground mt-1 max-w-3xl">Everyone involved in Maya's case. Nothing is shared automatically — this is a family view, kept in your browser.</p>
+          <p className="text-sm text-muted-foreground mt-1 max-w-3xl">Everyone involved in Maya's case. Nothing is shared automatically: this is a family view, kept in your browser.</p>
         </header>
 
         <div className="rounded-lg border bg-info/10 border-info/30 p-3 text-xs text-info-foreground flex items-start gap-2">

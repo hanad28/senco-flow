@@ -18,7 +18,7 @@ export const Route = createFileRoute("/settings")({
       {
         name: "description",
         content:
-          "School profile, provision catalogue, cohort baseline, staffing and response style — the source of truth for consultation responses.",
+          "School profile, provision catalogue, cohort baseline, staffing and response style: the source of truth for consultation responses.",
       },
     ],
   }),
@@ -118,7 +118,7 @@ function SettingsPage() {
           <div className="rounded-md border bg-muted/20 px-4 py-3 flex items-start gap-2 text-xs text-muted-foreground">
             <Info className="h-4 w-4 mt-0.5 shrink-0 text-info" />
             <span>
-              A child's needs often span more than one of these areas — treat them as a working
+              A child's needs often span more than one of these areas: treat them as a working
               structure, not a fixed classification.
             </span>
           </div>

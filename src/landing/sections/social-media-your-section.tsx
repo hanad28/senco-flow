@@ -1,5 +1,5 @@
 /**
- * Site footer — logo + socials → tagline + link columns → legal.
+ * Site footer: logo + socials → tagline + link columns → legal.
  */
 
 const FOOTER_COLUMNS = [

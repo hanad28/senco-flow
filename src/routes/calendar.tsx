@@ -281,8 +281,8 @@ function CalendarPage() {
                         }`}
                         title={
                           e.consultation.status === "Submitted" && submittedShort
-                            ? `${e.consultation.pupilRef} — ${e.consultation.localAuthority} · Deadline ${deadlineShort}, submitted ${submittedShort}`
-                            : `${e.consultation.pupilRef} — ${e.consultation.localAuthority}`
+                            ? `${e.consultation.pupilRef}: ${e.consultation.localAuthority} · Deadline ${deadlineShort}, submitted ${submittedShort}`
+                            : `${e.consultation.pupilRef}: ${e.consultation.localAuthority}`
                         }
                       >
                         <div className="font-semibold truncate">
@@ -315,7 +315,7 @@ function CalendarPage() {
         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
           <span className="font-medium text-foreground">Legend:</span>
           <LegendSwatch className="bg-urgent" label="Overdue / due within 2 days" />
-          <LegendSwatch className="bg-warn" label="Due within 3–5 days" />
+          <LegendSwatch className="bg-warn" label="Due within 3 to 5 days" />
           <LegendSwatch className="bg-ok/25 border border-ok/40" label="6+ days" />
           <LegendSwatch className="bg-muted border" label="Submitted" />
         </div>

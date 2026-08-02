@@ -1,5 +1,5 @@
 /**
- * Primary CTA — UNISEN design system.
+ * Primary CTA: UNISEN design system.
  * Blue / accent / light / glass pills.
  * Solid variants: dual-label + dual-arrow hover.
  * Glass: square tile swipes across the pill on hover.
@@ -24,12 +24,12 @@ type CtaButtonProps = {
   href?: string;
   /**
    * primary = brand blue (#3B8AC1) with white label (default)
-   * accent  = yellow (#FFDE59) with deep-blue label — one main action per section
+   * accent  = yellow (#FFDE59) with deep-blue label: one main action per section
    * light   = white pill with blue border (secondary)
    * glass   = liquid frosted glass (hero over imagery)
    */
   variant?: CtaVariant;
-  /** @deprecated use variant — kept for existing call sites */
+  /** @deprecated use variant: kept for existing call sites */
   dark?: boolean;
   /** Stretch to parent width (pricing cards). */
   fullWidth?: boolean;
@@ -100,7 +100,7 @@ export default function CtaButton({
         href={href}
       >
         <div className="cta-glass-track relative z-[1] flex h-full w-full min-w-[11.5rem] items-center px-1">
-          {/* Tile — same corner language as the button (radius − inset), swipes L→R */}
+          {/* Tile: same corner language as the button (radius − inset), swipes L→R */}
           <div
             className={`cta-glass-arrow absolute z-[2] flex items-center justify-center overflow-hidden ${arrowBg}`}
             aria-hidden

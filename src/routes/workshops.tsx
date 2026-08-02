@@ -26,7 +26,7 @@ function WorkshopsPage() {
       </p>
       <p>
         Typical session: 15 minutes on the live product surface, then questions
-        about your current process. No self-serve signup — we schedule with you
+        about your current process. No self-serve signup: we schedule with you
         directly.
       </p>
       <EnquiryDialog

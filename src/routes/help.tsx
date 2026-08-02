@@ -10,7 +10,7 @@ export const Route = createFileRoute("/help")({
       { title: pageTitle("Help") },
       {
         name: "description",
-        content: "Help and FAQs for Unisen — book a walkthrough or email the team.",
+        content: "Help and FAQs for Unisen: book a walkthrough or email the team.",
       },
     ],
   }),
@@ -21,7 +21,7 @@ function HelpPage() {
   return (
     <MarketingShell title="Help">
       <p>
-        Unisen is in pilot validation. There isn’t a full help centre yet — start
+        Unisen is in pilot validation. There isn’t a full help centre yet: start
         here:
       </p>
       <ul className="list-disc space-y-2 pl-5">

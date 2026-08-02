@@ -4,7 +4,7 @@ import TestimonialCard, { type Testimonial } from "../components/testimonial-car
 /**
  * Social-proof carousel under “Built for SENCOs”.
  * Parley used fake SaaS brands (CloudPlex, Tytotone, Bloopglow, ZingZap, Junotwig).
- * These are Unisen-relevant roles instead — not claimed customer logos.
+ * These are Unisen-relevant roles instead: not claimed customer logos.
  */
 const TESTIMONIALS: Testimonial[] = [
   {
@@ -46,7 +46,7 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-/** Built for SENCOs — testimonial carousel (Parley layout, Unisen roles). */
+/** Built for SENCOs: testimonial carousel (Parley layout, Unisen roles). */
 export default function TeamsThatWorkSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);

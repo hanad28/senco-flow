@@ -5,7 +5,7 @@ import {
   type IntegrationStep,
 } from "../content";
 
-/** Nexura “Connects with your stack” — Unisen evidence & systems. */
+/** Nexura “Connects with your stack”: Unisen evidence & systems. */
 export default function IntegrationsSection({
   steps = stepsContent,
   tools = toolsContent,

@@ -19,8 +19,8 @@ const FAQS = [
 const LINKS = [
   { label: "SEND Code of Practice: 0 to 25 years (GOV.UK)", href: "https://www.gov.uk/government/publications/send-code-of-practice-0-to-25" },
   { label: "Children with special educational needs and disabilities (GOV.UK)", href: "https://www.gov.uk/children-with-special-educational-needs" },
-  { label: "IPSEA — Independent Provider of Special Education Advice", href: "https://www.ipsea.org.uk/" },
-  { label: "SENDIASS — Special Educational Needs and Disability Information, Advice and Support", href: "https://cyp.ipsea.org.uk/sendiass" },
+  { label: "IPSEA: Independent Provider of Special Education Advice", href: "https://www.ipsea.org.uk/" },
+  { label: "SENDIASS: Special Educational Needs and Disability Information, Advice and Support", href: "https://cyp.ipsea.org.uk/sendiass" },
 ];
 
 function HelpScreen() {

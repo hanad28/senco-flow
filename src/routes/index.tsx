@@ -276,7 +276,7 @@ function Dashboard() {
           {rows.length > 0 && (
             <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t bg-muted/20 text-xs text-muted-foreground">
               <div>
-                Showing <span className="font-medium text-foreground">{rangeStart}</span>–
+                Showing <span className="font-medium text-foreground">{rangeStart}</span> to
                 <span className="font-medium text-foreground">{rangeEnd}</span> of{" "}
                 <span className="font-medium text-foreground">{rows.length}</span>
               </div>

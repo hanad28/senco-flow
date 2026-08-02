@@ -244,7 +244,7 @@ function SubmitView() {
                             </div>
                             <p className="text-sm text-foreground/80 mt-0.5 leading-relaxed">
                               {(n.cannotRationale ?? "").trim() || (
-                                <span className="italic text-urgent">Missing — required before submitting.</span>
+                                <span className="italic text-urgent">Missing: required before submitting.</span>
                               )}
                             </p>
                           </div>
@@ -268,7 +268,7 @@ function SubmitView() {
             <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
             <div>
               <div className="font-semibold">
-                Cannot submit — {missingRationale.length} “Cannot meet” need{missingRationale.length === 1 ? "" : "s"} missing a rationale
+                Cannot submit: {missingRationale.length} “Cannot meet” need{missingRationale.length === 1 ? "" : "s"} missing a rationale
               </div>
               <div className="text-xs opacity-90 mt-0.5">
                 Return to the draft and add a short rationale for each need the school cannot meet.

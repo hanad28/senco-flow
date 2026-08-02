@@ -3,7 +3,7 @@ import ProductCard from "../components/product-card";
 import { products as productsContent } from "../../content";
 
 /**
- * Pricing grid — Nexura structure (billing toggle + 3 cards) with
+ * Pricing grid: Nexura structure (billing toggle + 3 cards) with
  * Unisen content, monthly/yearly behaviour, and design-system chrome.
  */
 export default function ProductGridSection({ products = productsContent } = {}) {
@@ -11,7 +11,7 @@ export default function ProductGridSection({ products = productsContent } = {}) 
 
   return (
     <div id="pricing" className="w-full relative z-1 flex shrink-0 flex-col items-center gap-8 scroll-mt-28">
-      {/* Monthly / Yearly toggle — Nexura pill track */}
+      {/* Monthly / Yearly toggle: Nexura pill track */}
       <div
         className="relative z-1 flex shrink-0 items-center justify-center gap-[0.1875rem] rounded-[40px] bg-[var(--surface-muted,#EAF8FA)] p-[0.1875rem]"
         role="group"

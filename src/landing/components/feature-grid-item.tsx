@@ -33,7 +33,7 @@ export default function FeatureGridItem({ d }: { d: FeatureGridItemData }) {
           : "block max-lg:flex max-lg:p-2 max-lg:rounded-xl max-lg:flex-col max-lg:overflow-clip"
       }`}
     >
-      {/* Desktop — identical box for every card at rest */}
+      {/* Desktop: identical box for every card at rest */}
       <div className={`feature-card relative max-lg:hidden ${CARD_REST}`}>
         {/* Rest layer */}
         <div className="feature-card-rest absolute inset-0 z-[1] flex flex-col justify-between items-start overflow-clip rounded-xl bg-surface-2 pt-5 pb-10 px-5">
@@ -57,7 +57,7 @@ export default function FeatureGridItem({ d }: { d: FeatureGridItemData }) {
           </h3>
         </div>
 
-        {/* Detail layer — only visible/interactive on hover */}
+        {/* Detail layer: only visible/interactive on hover */}
         <div className="feature-card-detail absolute inset-0 z-[2] flex flex-col justify-between items-stretch overflow-clip rounded-[20px] bg-color-002 p-2">
           <div className="feature-card-detail-media relative w-full shrink-0 overflow-hidden rounded-xl aspect-[1.56911/1]">
             <img

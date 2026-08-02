@@ -172,7 +172,7 @@ function TemplatesTab({
       <div className="rounded-md border bg-muted/20 px-4 py-3 flex items-start gap-2 text-xs text-muted-foreground">
         <Info className="h-4 w-4 mt-0.5 shrink-0 text-info" />
         <span>
-          A child's needs often span more than one developmental area — communication, cognition,
+          A child's needs often span more than one developmental area: communication, cognition,
           sensory or SEMH needs frequently overlap. Treat the categories below as a working
           structure, not a fixed classification.
         </span>
@@ -202,14 +202,14 @@ function TemplatesTab({
                   fullFromCatalogue.map((item) => (
                     <SnippetCard
                       key={item.id}
-                      title="From Settings — provision catalogue"
+                      title="From Settings: provision catalogue"
                       text={item.description}
                     />
                   ))
                 )}
               </OutcomeGroup>
 
-              <OutcomeGroup capability="partial" helper="General boilerplate — customise per case.">
+              <OutcomeGroup capability="partial" helper="General boilerplate: customise per case.">
                 {partial.map((s) => (
                   <SnippetCard
                     key={s.id}
@@ -226,7 +226,7 @@ function TemplatesTab({
                 ))}
               </OutcomeGroup>
 
-              <OutcomeGroup capability="cannot" helper="General boilerplate — customise per case.">
+              <OutcomeGroup capability="cannot" helper="General boilerplate: customise per case.">
                 {cannot.map((s) => (
                   <SnippetCard
                     key={s.id}
@@ -348,7 +348,7 @@ export function FlaggedText({ text }: { text: string }) {
         s.flag ? (
           <span
             key={i}
-            title={`"${s.flag.phrase}" — ${VAGUENESS_EXPLANATION}`}
+            title={`"${s.flag.phrase}": ${VAGUENESS_EXPLANATION}`}
             className="rounded-sm bg-warn/25 text-warn-foreground underline decoration-dotted decoration-warn/70 underline-offset-2 cursor-help"
           >
             {s.text}
@@ -386,7 +386,7 @@ function EvidenceTab({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Pupil-agnostic document store — provision maps, costings, staffing and training records.
+        Pupil-agnostic document store: provision maps, costings, staffing and training records.
         Referenced from templates and attachable from the Draft response screen.
       </p>
       <div className="relative">

@@ -169,7 +169,7 @@ function ReportsPage() {
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Reports</h1>
             <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
-              Aggregate response history, outcomes, and school-level SEND reporting —
+              Aggregate response history, outcomes, and school-level SEND reporting:
               useful for governor packs and LA moderation meetings.
             </p>
           </div>
@@ -204,7 +204,7 @@ function ReportsPage() {
             icon={<CheckCircle2 className="h-4 w-4" />}
             label={`Needs matched in full (${termLabel})`}
             value={`${matchedRate}%`}
-            sub={`${fullNeeds} of ${totalNeeds} needs — a further ${partNeeds} met in part (${matchedOrPartialRate}% full or partial)`}
+            sub={`${fullNeeds} of ${totalNeeds} needs: a further ${partNeeds} met in part (${matchedOrPartialRate}% full or partial)`}
           />
           <StatCard
             tone="info"
@@ -225,7 +225,7 @@ function ReportsPage() {
         {/* LA breakdown */}
         <Section
           title="By local authority"
-          subtitle={`Volume and on-time rate per LA — ${termLabel.toLowerCase()}.`}
+          subtitle={`Volume and on-time rate per LA: ${termLabel.toLowerCase()}.`}
         >
           {laRows.length === 0 ? (
             <EmptyState label="No submitted responses in scope." />
@@ -265,10 +265,10 @@ function ReportsPage() {
         {/* Needs met by domain */}
         <Section
           title="Needs (Section B) met by provision offered (Section F)"
-          subtitle={`Full / part / cannot split per statutory domain — ${termLabel.toLowerCase()}, submitted responses only.`}
+          subtitle={`Full / part / cannot split per statutory domain: ${termLabel.toLowerCase()}, submitted responses only.`}
         >
           <p className="text-xs text-muted-foreground mb-3">
-            Note: needs often span more than one domain — they have been assigned to a
+            Note: needs often span more than one domain: they have been assigned to a
             primary domain for reporting.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

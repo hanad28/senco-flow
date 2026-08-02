@@ -29,7 +29,7 @@ import {
 import { MarketingSurface } from "../landing/marketing-surface";
 import { AppHostChrome } from "./-app-host-chrome";
 
-// Auth stack (Clerk/Convex) is a separate chunk — cold marketing visits never download it.
+// Auth stack (Clerk/Convex) is a separate chunk: cold marketing visits never download it.
 const loadAuthShell = () => import("./-auth-shell");
 const AuthShell = lazy(loadAuthShell);
 const RedirectToApp = lazy(() =>
@@ -38,7 +38,7 @@ const RedirectToApp = lazy(() =>
 
 const CLERK_FRONTEND_ORIGIN = clerkFrontendOrigin();
 
-// App host always needs auth — kick off the chunk as soon as this module evaluates.
+// App host always needs auth: kick off the chunk as soon as this module evaluates.
 if (typeof window !== "undefined") {
   const host = window.location.hostname.toLowerCase().split(":")[0] ?? "";
   if (host === "app.unisen.uk" || host === "app.localhost") {
@@ -137,7 +137,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // User-supplied original at public/favicon.ico (do not reprocess)
       { rel: "icon", href: "/favicon.ico", type: "image/png", sizes: "any" },
       { rel: "apple-touch-icon", href: "/favicon.ico" },
-      // Hero LCP: discover before JS; mobile PSI typically picks 768–1280w.
+      // Hero LCP: discover before JS; mobile PSI typically picks 768 to 1280w.
       {
         rel: "preload",
         as: "image",

@@ -1,5 +1,5 @@
 /**
- * Home landing footer — real destinations only.
+ * Home landing footer: real destinations only.
  */
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";

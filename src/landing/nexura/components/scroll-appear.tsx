@@ -9,7 +9,7 @@ type ScrollAppearProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
-  /** Optional y offset on enter (default 0 — Nexura solutions use pure fade). */
+  /** Optional y offset on enter (default 0: Nexura solutions use pure fade). */
   y?: number;
   as?: "div" | "section";
 } & Omit<HTMLMotionProps<"div">, "children" | "initial" | "whileInView" | "viewport" | "transition">;

@@ -65,7 +65,7 @@ function NeedsView() {
             <Link to="/consultations/$id" params={{ id: c.id }} className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
               <ArrowLeft className="h-3 w-3" /> Back to consultation
             </Link>
-            <h1 className="text-2xl font-semibold tracking-tight mt-2">Consolidated needs — Section B</h1>
+            <h1 className="text-2xl font-semibold tracking-tight mt-2">Consolidated needs: Section B</h1>
             <p className="text-sm text-muted-foreground mt-1">
               {c.needs.length} needs extracted from {c.documents.length} documents. Confirm the Section F provision the school can deliver against each.
             </p>
@@ -76,7 +76,7 @@ function NeedsView() {
         <div className="rounded-md border bg-muted/20 px-4 py-3 flex items-start gap-2 text-xs text-muted-foreground">
           <Info className="h-4 w-4 mt-0.5 shrink-0 text-info" />
           <span>
-            A child's needs often span more than one developmental area — communication, cognition, sensory or SEMH needs frequently overlap. Treat the categories below as a working structure, not a fixed classification.
+            A child's needs often span more than one developmental area: communication, cognition, sensory or SEMH needs frequently overlap. Treat the categories below as a working structure, not a fixed classification.
           </span>
         </div>
 
@@ -120,7 +120,7 @@ function NeedsView() {
                     <div className="mt-3 rounded-md border border-urgent/40 bg-urgent/5 p-3 space-y-1.5">
                       <label className="flex items-center gap-1.5 text-xs font-semibold text-urgent">
                         <AlertTriangle className="h-3.5 w-3.5" />
-                        Rationale — required
+                        Rationale: required
                       </label>
                       <textarea
                         value={n.cannotRationale ?? ""}

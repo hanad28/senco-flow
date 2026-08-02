@@ -16,7 +16,7 @@ export function MarketingFrame({ children }: { children: ReactNode }) {
   );
 }
 
-/** Public marketing pages — same header chrome as the home landing (solid bar). */
+/** Public marketing pages: same header chrome as the home landing (solid bar). */
 export function MarketingShell({ title, children }: { title: string; children: ReactNode }) {
   return (
     <MarketingFrame>

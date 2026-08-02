@@ -7,7 +7,7 @@ export type Logo5Data = {
   label: string;
 };
 
-/** Footer social pill — Nexura: 44px circle, translucent fill, monochrome icon. */
+/** Footer social pill: Nexura: 44px circle, translucent fill, monochrome icon. */
 export default function Logo5({ d }: { d: Logo5Data }) {
   return (
     <div className="w-11 block relative shrink-0">

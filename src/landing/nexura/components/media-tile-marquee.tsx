@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Nexura solution-1 vertical carousel: continuous upward scroll.
- * Ditto froze mid-loop at translateY(-410px) — one period of 5 tiles (70px + 12px gap).
+ * Ditto froze mid-loop at translateY(-410px): one period of 5 tiles (70px + 12px gap).
  */
 const PERIOD_PX = 410; // 5 × (70 + 12)
 const DURATION_S = 18;

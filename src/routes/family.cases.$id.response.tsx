@@ -79,10 +79,10 @@ function ResponseScreen() {
               {view === "side" && lang !== "en" && (
                 <div dir={meta.dir} className="border-s ps-6">
                   <div className="mb-3 flex items-center gap-2"><AiLabel>Translated</AiLabel><span className="text-[11px] text-muted-foreground">{meta.nativeName}</span></div>
-                  <p className="text-sm text-muted-foreground">Headings and section titles below are translated. Detailed clause wording is shown in English for accuracy — download the bilingual copy for a fuller family-language version.</p>
+                  <p className="text-sm text-muted-foreground">Headings and section titles below are translated. Detailed clause wording is shown in English for accuracy: download the bilingual copy for a fuller family-language version.</p>
                   <div className="mt-4 space-y-3">
                     <div><strong>{t("response.title")}</strong></div>
-                    <div>{t("nav.plan")} — {state.childName}</div>
+                    <div>{t("nav.plan")}: {state.childName}</div>
                     {Object.keys(grouped).map((sec) => (
                       <div key={sec}>
                         <div className="font-semibold">Section {sec}</div>

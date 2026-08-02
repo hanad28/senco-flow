@@ -24,19 +24,25 @@ function AboutPage() {
       </p>
       <ul className="list-disc space-y-2 pl-5">
         <li>
-          <strong className="text-foreground">Hanad</strong> — ML/AI and information
-          retrieval; family experience navigating EHC processes.
+          <strong className="text-foreground">Hanad, Co-founder and CEO</strong>
+          <br />
+          Product, AI and information retrieval, informed by family experience navigating EHC
+          processes.
         </li>
         <li>
-          <strong className="text-foreground">Husaam</strong> — ops and business
-          model (Chartered Accountant, CFA candidate).
+          <strong className="text-foreground">Husaam, Co-founder and CFO</strong>
+          <br />
+          Financial planning, commercial strategy, operations and organisational delivery.
         </li>
         <li>
-          <strong className="text-foreground">Iylana</strong> — outreach and product
-          marketing.
+          <strong className="text-foreground">Iylana</strong>
+          <br />
+          Outreach and product marketing.
         </li>
         <li>
-          <strong className="text-foreground">Mikhail</strong> — engineering.
+          <strong className="text-foreground">Mikhail, Co-founder and CTO</strong>
+          <br />
+          Product engineering and technical architecture.
         </li>
       </ul>
       <p>

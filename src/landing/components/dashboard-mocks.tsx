@@ -339,7 +339,7 @@ function LawPanel() {
         </header>
         <p>
           Needs and provision language checked against the SEND Code of Practice and IPSEA
-          specificity guidance. Suggestions link back to the attached EP report (p. 6–8).
+          specificity guidance. Suggestions link back to the attached EP report (p. 6 to 8).
         </p>
       </div>
       <ul className="unisen-mock-sources">
@@ -347,7 +347,7 @@ function LawPanel() {
           <Building2 className="h-3.5 w-3.5" /> Children and Families Act 2014
         </li>
         <li>
-          <FileText className="h-3.5 w-3.5" /> SEND Code of Practice 0–25
+          <FileText className="h-3.5 w-3.5" /> SEND Code of Practice 0 to 25
         </li>
         <li>
           <CheckCircle2 className="h-3.5 w-3.5" /> IPSEA: specific, quantified provision

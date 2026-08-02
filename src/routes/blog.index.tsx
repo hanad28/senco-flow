@@ -8,7 +8,7 @@ export const Route = createFileRoute("/blog/")({
       { title: pageTitle("Blog") },
       {
         name: "description",
-        content: "Notes from building Unisen — SEND coordination for schools and families.",
+        content: "Notes from building Unisen: SEND coordination for schools and families.",
       },
     ],
   }),
