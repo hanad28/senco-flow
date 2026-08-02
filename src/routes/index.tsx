@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { resolveHostMode } from "@/lib/hostname";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
-import { pageTitle, SITE_DESCRIPTION, SITE_HOME_TITLE } from "@/lib/site";
+import { pageTitle, SITE_DESCRIPTION, SITE_HOME_TITLE, SITE_URL } from "@/lib/site";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -32,6 +32,7 @@ export const Route = createFileRoute("/")({
           { title: SITE_HOME_TITLE },
           { name: "description", content: SITE_DESCRIPTION },
         ],
+        links: [{ rel: "canonical", href: `${SITE_URL}/` }],
       };
     }
     return {

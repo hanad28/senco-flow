@@ -213,16 +213,12 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
               </div>
               <div className="absolute -left-[10000px]" aria-hidden="true">
                 <Label htmlFor="enquiry-website">Website</Label>
-                <Input
-                  id="enquiry-website"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
+                <Input id="enquiry-website" name="website" tabIndex={-1} autoComplete="off" />
               </div>
               <p className="text-xs leading-5 text-muted-foreground">
-                Please don’t include children’s names, medical details, or other sensitive information.
-                We’ll only use these details to respond and will delete them after 30 days.
+                Please don’t include children’s names, medical details, or other sensitive
+                information. The website database record is normally deleted after 30 days. Related
+                email correspondence may be kept longer where reasonably necessary to respond.
               </p>
               <div ref={turnstileContainer} className="min-h-[65px]" />
               {error && (

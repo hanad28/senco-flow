@@ -133,7 +133,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: SITE_OG_IMAGE },
     ],
     links: [
-      { rel: "canonical", href: `${SITE_URL}/` },
       { rel: "stylesheet", href: appCss },
       // User-supplied original at public/favicon.ico (do not reprocess)
       { rel: "icon", href: "/favicon.ico", type: "image/png", sizes: "any" },

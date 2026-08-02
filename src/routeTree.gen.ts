@@ -17,6 +17,7 @@ import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FamilyRouteImport } from './routes/family'
 import { Route as HelpRouteImport } from './routes/help'
+import { Route as IntegrationsRouteImport } from './routes/integrations'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -87,6 +88,11 @@ const FamilyRoute = FamilyRouteImport.update({
 const HelpRoute = HelpRouteImport.update({
   id: '/help',
   path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsRoute = IntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -258,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/family': typeof FamilyRouteWithChildren
   '/help': typeof HelpRoute
+  '/integrations': typeof IntegrationsRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -297,6 +304,7 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/help': typeof HelpRoute
+  '/integrations': typeof IntegrationsRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -337,6 +345,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/family': typeof FamilyRouteWithChildren
   '/help': typeof HelpRoute
+  '/integrations': typeof IntegrationsRoute
   '/mcp': typeof McpRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -380,6 +389,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/family'
     | '/help'
+    | '/integrations'
     | '/mcp'
     | '/pricing'
     | '/privacy'
@@ -419,6 +429,7 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/help'
+    | '/integrations'
     | '/mcp'
     | '/pricing'
     | '/privacy'
@@ -458,6 +469,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/family'
     | '/help'
+    | '/integrations'
     | '/mcp'
     | '/pricing'
     | '/privacy'
@@ -500,6 +512,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FamilyRoute: typeof FamilyRouteWithChildren
   HelpRoute: typeof HelpRoute
+  IntegrationsRoute: typeof IntegrationsRoute
   McpRoute: typeof McpRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -572,6 +585,13 @@ declare module '@tanstack/react-router' {
       path: '/help'
       fullPath: '/help'
       preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations': {
+      id: '/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof IntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -874,6 +894,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FamilyRoute: FamilyRouteWithChildren,
   HelpRoute: HelpRoute,
+  IntegrationsRoute: IntegrationsRoute,
   McpRoute: McpRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
