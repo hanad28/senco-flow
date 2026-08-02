@@ -89,6 +89,7 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
       await convex.action(api.enquiries.submit, {
         name: String(data.get("name") ?? ""),
         email: String(data.get("email") ?? ""),
+        phone: String(data.get("phone") ?? ""),
         organisationRole: String(data.get("organisationRole") ?? ""),
         needs: String(data.get("needs") ?? ""),
         turnstileToken,
@@ -120,7 +121,7 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
             size="lg"
             className="cta-glass hero-enquiry-trigger relative h-12 min-w-56 px-7 text-base font-bold"
           >
-            <span className="relative z-[1]">Register your interest</span>
+            <span className="relative z-[1]">Book a 15-min walkthrough</span>
           </Button>
         )}
       </DialogTrigger>
@@ -141,25 +142,48 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
           <>
             <DialogHeader>
               <DialogTitle className="[font-family:var(--font-heading)] text-2xl text-[var(--text-primary)]">
-                Register your interest
+                Book a 15-min walkthrough
               </DialogTitle>
               <DialogDescription>
-                Tell us a little about you and how Unisen could help.
+                Tell us a little about you and how Unisen could help. Prefer email?{" "}
+                <a className="underline" href="mailto:enquiries@unisen.uk">
+                  enquiries@unisen.uk
+                </a>
               </DialogDescription>
             </DialogHeader>
             <form className="grid gap-4" onSubmit={submit}>
               <div className="grid gap-2">
                 <Label htmlFor="enquiry-name">Name</Label>
-                <Input id="enquiry-name" name="name" autoComplete="name" maxLength={100} required />
+                <Input
+                  id="enquiry-name"
+                  name="name"
+                  autoComplete="name"
+                  maxLength={100}
+                  placeholder="Enter your name"
+                  required
+                />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="enquiry-email">Work email</Label>
+                <Label htmlFor="enquiry-email">Email</Label>
                 <Input
                   id="enquiry-email"
                   name="email"
                   type="email"
                   autoComplete="email"
                   maxLength={254}
+                  placeholder="Enter your email address"
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="enquiry-phone">Phone number</Label>
+                <Input
+                  id="enquiry-phone"
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  maxLength={30}
+                  placeholder="Enter your phone number"
                   required
                 />
               </div>
@@ -170,16 +194,19 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
                   name="organisationRole"
                   autoComplete="organization-title"
                   maxLength={160}
-                  placeholder="e.g. SENCO at Oakfield Primary"
+                  placeholder="Enter your organisation and role"
                   required
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="enquiry-needs">What would you like help with?</Label>
+                <Label htmlFor="enquiry-needs">
+                  What would you like to improve in your EHC consultation process?
+                </Label>
                 <Textarea
                   id="enquiry-needs"
                   name="needs"
                   maxLength={2000}
+                  placeholder="Tell us about your current EHC consultation process"
                   rows={5}
                   required
                 />

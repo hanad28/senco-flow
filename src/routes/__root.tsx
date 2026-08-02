@@ -26,7 +26,7 @@ import {
   clerkFrontendOrigin,
   siteJsonLd,
 } from "../lib/site";
-import { LandingPage } from "../landing/landing-page";
+import { MarketingSurface } from "../landing/marketing-surface";
 import { AppHostChrome } from "./-app-host-chrome";
 
 // Auth stack (Clerk/Convex) is a separate chunk — cold marketing visits never download it.
@@ -208,15 +208,14 @@ function RootComponent() {
     );
   }
 
-  // Marketing + cold combined (no session cookie): paint landing with zero Clerk.
-  // Avoids handshake redirects (~1.7s), unused Clerk UI JS (~300KiB), and CLS
-  // from AuthLoading → landing. Auth CTAs navigate to APP_URL.
+  // Marketing + cold combined (no session cookie): paint marketing with zero Clerk.
+  // Home = landing; other public routes use Outlet via MarketingSurface.
   if (!needsAuthShell()) {
-    return <LandingPage />;
+    return <MarketingSurface />;
   }
 
   // App host: chrome first (not full marketing) while the auth chunk loads.
-  const fallback = hostMode === "app" ? <AppHostChrome /> : <LandingPage />;
+  const fallback = hostMode === "app" ? <AppHostChrome /> : <MarketingSurface />;
 
   return (
     <Suspense fallback={fallback}>

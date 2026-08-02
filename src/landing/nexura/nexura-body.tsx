@@ -74,7 +74,7 @@ export default function UnisenBody() {
               <section
                 className="h-full flex relative px-5 justify-center items-center content-center gap-2.5 max-lg:px-1.5"
                 id="contact"
-                aria-label="Register your interest"
+                aria-label="Book a walkthrough"
               >
                 <div className="w-full max-w-312.5 h-full flex relative py-25 px-16 flex-col justify-start items-start content-start grow shrink-0 basis-0 gap-16 max-lg:py-16 max-lg:px-5">
                   <div className="w-full max-w-150 flex relative z-1 flex-col justify-center items-start content-start shrink-0 gap-5 max-md:px-6">
@@ -97,7 +97,7 @@ export default function UnisenBody() {
                             size="lg"
                             className="relative h-11 rounded-full bg-[var(--action-primary)] px-6 font-bold text-[var(--text-on-brand)] shadow-[0_2px_10px_rgba(59,138,193,0.28)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-px hover:bg-[var(--action-primary-hover)] hover:shadow-[0_12px_28px_rgba(36,74,112,0.14)] max-md:min-w-0 max-md:flex-1"
                           >
-                            <span className="relative z-[1]">Register your interest</span>
+                            <span className="relative z-[1]">Book a 15-min walkthrough</span>
                           </Button>
                         }
                       />

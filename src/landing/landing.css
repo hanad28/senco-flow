@@ -720,8 +720,8 @@ body:has(.unisen-landing) {
   align-items: center;
   justify-content: center;
   height: 2.55rem;
-  min-width: 8.5rem;
-  padding: 0 1.35rem;
+  min-width: 14.5rem;
+  padding: 0 1.2rem;
   isolation: isolate;
   overflow: hidden;
   border-radius: 999px;
@@ -768,20 +768,20 @@ body:has(.unisen-landing) {
 @media (min-width: 1024px) {
   .unisen-landing .unisen-nav .unisen-nav-actions {
     --nav-cta-ease: cubic-bezier(0.22, 1, 0.36, 1);
-    width: 0;
+    max-width: 0;
     margin-left: 0;
     overflow: hidden;
     opacity: 0;
     pointer-events: none;
     transition:
-      width 360ms var(--nav-cta-ease),
+      max-width 360ms var(--nav-cta-ease),
       margin-left 360ms var(--nav-cta-ease),
       opacity 220ms ease-out;
   }
 
   .unisen-landing .unisen-nav .unisen-nav-actions.is-cta-visible {
-    width: 12.5rem;
-    margin-left: 2rem;
+    max-width: 16rem;
+    margin-left: 0.25rem;
     opacity: 1;
     pointer-events: auto;
   }
@@ -927,7 +927,7 @@ body:has(.unisen-landing) {
 
 .unisen-landing .unisen-nav.is-scrolled .unisen-nav-cta-glass {
   height: 2.125rem;
-  min-width: 7.75rem;
+  min-width: 14.5rem;
   padding-inline: 1.1rem;
   font-size: 0.8125rem;
 }
@@ -978,8 +978,8 @@ body:has(.unisen-landing) {
 
 @media (min-width: 1024px) {
   .unisen-landing .unisen-nav.is-scrolled .unisen-nav-actions.is-cta-visible {
-    width: 11.25rem;
-    margin-left: 1.25rem;
+    max-width: 16rem;
+    margin-left: 0.25rem;
   }
 }
 
@@ -1031,9 +1031,55 @@ body:has(.unisen-landing) {
 }
 
 .unisen-landing .unisen-nav-resources {
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 12px 32px rgba(36, 74, 112, 0.12);
+  border: 1px solid rgba(36, 74, 112, 0.1);
+  border-radius: 0.875rem;
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(36, 74, 112, 0.04),
+    0 12px 28px rgba(36, 74, 112, 0.1);
+}
+
+.unisen-landing .unisen-nav-resources-item {
+  display: block;
+  border-radius: 0.625rem;
+  padding: 0.7rem 0.8rem;
+  text-decoration: none;
+  transition: background-color 120ms ease-out;
+}
+
+.unisen-landing .unisen-nav-resources-item:hover,
+.unisen-landing .unisen-nav-resources-item:focus-visible {
+  background: #f4f8fb;
+  outline: none;
+}
+
+.unisen-landing .unisen-nav-resources-label {
+  display: block;
+  color: #18324b;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.unisen-landing .unisen-nav-resources-desc {
+  display: block;
+  margin-top: 0.15rem;
+  color: #607586;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.15rem;
+}
+
+.unisen-landing .unisen-nav-resources-item:hover .unisen-nav-resources-label,
+.unisen-landing .unisen-nav-resources-item:focus-visible .unisen-nav-resources-label {
+  color: #18324b;
+}
+
+.unisen-landing .unisen-nav-resources-item:hover .unisen-nav-resources-desc,
+.unisen-landing .unisen-nav-resources-item:focus-visible .unisen-nav-resources-desc {
+  color: #607586;
 }
 
 .unisen-landing .bg-color-002 {

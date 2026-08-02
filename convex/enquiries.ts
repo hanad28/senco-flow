@@ -94,6 +94,7 @@ export const submit = action({
   args: {
     name: v.string(),
     email: v.string(),
+    phone: v.string(),
     organisationRole: v.string(),
     needs: v.string(),
     turnstileToken: v.string(),
@@ -105,6 +106,7 @@ export const submit = action({
 
     const name = required(args.name, 100);
     const email = required(args.email, 254).toLowerCase();
+    const phone = required(args.phone, 30);
     const organisationRole = required(args.organisationRole, 160);
     const needs = required(args.needs, 2_000);
     if (!EMAIL_PATTERN.test(email)) throw new Error("Invalid email address");
@@ -115,6 +117,7 @@ export const submit = action({
     const enquiryId = await ctx.runMutation(internal.enquiries.store, {
       name,
       email,
+      phone,
       organisationRole,
       needs,
     });
@@ -124,7 +127,7 @@ export const submit = action({
         to: [RECIPIENT],
         reply_to: email,
         subject: `New website enquiry from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nOrganisation / role: ${organisationRole}\n\nWhat they need:\n${needs}`,
+        text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nOrganisation / role: ${organisationRole}\n\nWhat they need:\n${needs}`,
       }),
       sendEmail(apiKey, `enquiry-confirmation/${enquiryId}`, {
         from: "Unisen <enquiries@unisen.uk>",
@@ -142,6 +145,7 @@ export const store = internalMutation({
   args: {
     name: v.string(),
     email: v.string(),
+    phone: v.string(),
     organisationRole: v.string(),
     needs: v.string(),
   },
@@ -155,6 +159,7 @@ export const store = internalMutation({
       recent &&
       recent._creationTime > Date.now() - 5 * 60 * 1_000 &&
       recent.name === args.name &&
+      recent.phone === args.phone &&
       recent.organisationRole === args.organisationRole &&
       recent.needs === args.needs
     ) {

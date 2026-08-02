@@ -1,19 +1,23 @@
 # Unisen
 
-> Unisen is SEND coordination software for schools (SENCOs) and families working through EHC needs assessments in England — shared timelines, statutory deadlines, and execution assistance.
-
-Unisen is not a local-authority case system and does not replace statutory processes. It helps schools answer LA consultations and helps families review draft EHC plans in one workspace.
+> Unisen is SEND coordination software for schools (SENCOs) and families working through EHC needs assessments in England.
 
 ## Primary
 
-- [Home](https://senco-flow.vercel.app/): Product overview for schools, SENCOs, and families
-- [Sitemap](https://senco-flow.vercel.app/sitemap.xml): Canonical public URLs
-
-## Product surfaces (authenticated; not for public indexing)
-
-- School workspace: consultations, calendar, templates, reports, school profile
-- Family workspace: draft EHC plan review, issues, response preparation
+- [Home](https://unisen.uk/)
+- [Product](https://unisen.uk/product)
+- [Pricing](https://unisen.uk/pricing)
+- [About](https://unisen.uk/about)
+- [Resources](https://unisen.uk/resources)
+- [Changelog](https://unisen.uk/changelog)
+- [Blog](https://unisen.uk/blog)
+- [Help](https://unisen.uk/help)
+- [Workshops](https://unisen.uk/workshops)
+- [Contact](https://unisen.uk/contact)
+- [Privacy](https://unisen.uk/privacy)
+- [Terms](https://unisen.uk/terms)
+- [Sitemap](https://unisen.uk/sitemap.xml)
 
 ## Contact
 
-- Product site: https://senco-flow.vercel.app/
+- enquiries@unisen.uk

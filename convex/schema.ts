@@ -16,6 +16,7 @@ export default defineSchema({
   enquiries: defineTable({
     name: v.string(),
     email: v.string(),
+    phone: v.optional(v.string()),
     organisationRole: v.string(),
     needs: v.string(),
     createdAt: v.number(),
