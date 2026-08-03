@@ -452,11 +452,96 @@ Motion should feel light and calm.
 }
 ```
 
-## 18. Design Checklist
+## 18. Content Composition Patterns
+
+These patterns adapt structural lessons from Cursor's public website to UNISEN's warmer, community-focused visual language. Reuse the hierarchy and content logic, not Cursor's branding, assets, copy, or monochrome treatment.
+
+### Composition principles
+
+1. **One dominant idea per section.** Give each full-width band one message, task, or decision. Do not combine unrelated features to fill space.
+2. **Show evidence after a claim.** Follow promises with the most relevant proof: a real interface view, programme detail, partner mark, outcome, testimonial, or clear process explanation.
+3. **Match density to intent.** Marketing pages may be wide and visual; articles should use the `720px` reading width; directories should prioritise repeated cards or rows; product screens should prioritise the active task.
+4. **Create deliberate hierarchy.** Mix large feature moments with quieter supporting sections. Do not give every card, heading, or action equal visual weight.
+5. **End with a useful continuation.** Marketing pages end with one CTA, articles with related content, multi-step flows with the next step, and directories with another relevant category or filtered result.
+
+### Approved page structures
+
+#### Marketing homepage
+
+1. Statement hero with one primary CTA and optional secondary action
+2. Partner or trust evidence
+3. Two to four product or service feature bands
+4. Outcome, testimonial, or community evidence
+5. Supporting programme or resource cards
+6. Final CTA
+
+Use the landscape artwork as the main visual stage. Avoid a generic hero followed immediately by three identical feature cards.
+
+#### Programme or service landing page
+
+1. Focused hero naming the audience and outcome
+2. Key facts or eligibility summary
+3. Alternating explanation-and-media sections
+4. Process, timeline, or benefit cards
+5. Questions and answers where genuine uncertainty exists
+6. One clear application, referral, or contact CTA
+
+#### Directory or listing page
+
+Use a clear title, compact filters when needed, and either:
+
+- A uniform card grid for programmes, resources, people, or organisations
+- Category shelves when users browse several distinct content groups
+- Compact rows when comparison and scanning matter more than imagery
+
+Keep card heights consistent within a uniform row. Unequal bento layouts are reserved for curated highlights where size communicates priority.
+
+#### Detail page
+
+Lead with identity and the primary action, then show key metadata, description, requirements, process, supporting resources, and related items. Do not bury eligibility, status, location, dates, or contact information inside long prose.
+
+#### Article or guidance page
+
+Use a narrow reading column with title, summary, clear H2/H3 hierarchy, lists, and inline media. Add a table of contents only when the page has enough sections to justify one. End with related guidance or the next useful action.
+
+#### Form-led page
+
+On desktop, a form may sit beside a short proposition, reassurance, or eligibility summary. Keep the form itself linear, place labels above fields, and avoid unrelated promotional content between fields.
+
+### Reusable section patterns
+
+- **Statement hero:** eyebrow, concise headline, supporting copy, and one or two actions
+- **Split hero:** proposition or reassurance beside a form, illustration, or product view
+- **Trust strip:** a restrained row of partner marks, accreditations, or outcome signals
+- **Alternating feature row:** explanation paired with one meaningful interface or illustration
+- **Bento highlight grid:** intentionally unequal cards for a small set of prioritised capabilities
+- **Uniform card grid:** equal cards for comparable programmes, resources, or people
+- **Category shelf:** titled group of related cards within a larger directory
+- **Metric band:** a small number of clearly sourced outcomes with plain-language labels
+- **Testimonial block:** quote, name, role or relationship, and optional outcome
+- **Process steps:** ordered stages with concise labels and visible current or next state
+- **FAQ accordion:** real recurring questions, not hidden marketing copy
+- **Rich-text reader:** narrow prose with anchored headings and accessible media
+- **Related-content row:** two to four relevant next items after an article or detail page
+- **Final CTA band:** one short action statement immediately before the footer
+
+### Pattern constraints
+
+- Do not copy Cursor's visual identity, dark neutral palette, product screenshots, illustrations, or wording.
+- Apply UNISEN's navy text, pale surfaces, yellow accent, rounded geometry, and calm outdoor imagery to every adopted structure.
+- Use bento grids only when card size reflects content priority; otherwise use a regular grid.
+- Use logos, testimonials, statistics, and partner claims only when they are real and approved.
+- Prefer real product views and programme information over decorative mock interfaces.
+- On mobile, preserve the content order: claim first, evidence second, continuation last.
+
+## 19. Design Checklist
 
 Before approving a screen, confirm that:
 
 - The page has one obvious primary action.
+- Each major section communicates one dominant idea.
+- Important claims are followed by relevant, approved evidence.
+- The page ends with a useful next step rather than a dead end.
 - The logo has not been distorted or given unnecessary effects.
 - The inner area of the puzzle "U" remains transparent.
 - Yellow is used as an accent rather than the main reading surface.
@@ -464,5 +549,6 @@ Before approving a screen, confirm that:
 - The layout has enough white space.
 - Illustration details do not interfere with headings or controls.
 - Components use consistent radii, spacing, and icon styles.
+- Repeated cards are uniform unless size intentionally communicates priority.
 - Focus, hover, loading, empty, error, and disabled states are present.
 - Mobile layouts do not depend on desktop image positioning.

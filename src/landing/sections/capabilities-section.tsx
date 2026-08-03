@@ -1,6 +1,6 @@
 import { capabilities as capabilitiesContent, type CapabilityItem } from "../content";
 
-/** Nexura-style 2×2 capability grid: Unisen product pillars. */
+/** 2×2 capability grid: Unisen product pillars. */
 export default function CapabilitiesSection({
   items = capabilitiesContent,
 }: {

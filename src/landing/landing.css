@@ -655,7 +655,7 @@ body:has(.unisen-landing) {
 }
 
 /* Fixed header: transparent over hero, solid once scrolled.
-   Content structure is Nexura (logo | pills + Resources | CTA). */
+   Content structure is Unisen (logo | pills + Resources | CTA). */
 .unisen-landing .unisen-nav nav {
   background: transparent !important;
   border: 0 !important;
@@ -996,11 +996,6 @@ body:has(.unisen-landing) {
 .unisen-landing .bg-surface-2 {
   background-color: var(--surface-muted);
   border: 1px solid var(--border-default);
-}
-
-/* Brand page rhythm: pale cyan bands alternate gently */
-.unisen-landing .nexura-body > div > section:nth-of-type(even) {
-  background-color: transparent;
 }
 
 /* Buttons (design system) */

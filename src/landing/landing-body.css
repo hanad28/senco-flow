@@ -1,7 +1,7 @@
-/* Nexura body shell: fully themed with DESIGN.md palette.
-   Parent .unisen-landing already sets brand tokens; we only remap clone utilities. */
+/* Landing body shell: themed with DESIGN.md palette.
+   Parent .unisen-landing already sets brand tokens. */
 
-.unisen-landing .nexura-body {
+.unisen-landing .landing-body {
   /* Core (design doc semantic tokens) */
   --background: #ffffff;
   --foreground: #244a70;
@@ -47,154 +47,84 @@
   background-color: var(--background);
 }
 
-.unisen-landing .unisen-hero + .nexura-body,
-.unisen-landing .unisen-hero ~ .nexura-body {
+.unisen-landing .unisen-hero + .landing-body,
+.unisen-landing .unisen-hero ~ .landing-body {
   margin-top: 0;
 }
 
 /* Typography stack */
-.unisen-landing .nexura-body [class*="Inter"],
-.unisen-landing .nexura-body [class*="Geist"] {
+.unisen-landing .landing-body [class*="Inter"],
+.unisen-landing .landing-body [class*="Geist"] {
   font-family: var(--font-body) !important;
 }
 
-.unisen-landing .nexura-body :where(h1, h2, h3, h4, h5, h6, [data-component="heading"]) {
+.unisen-landing .landing-body :where(h1, h2, h3, h4, h5, h6, [data-component="heading"]) {
   font-family: var(--font-heading) !important;
   color: var(--text-primary, #244a70);
   font-weight: 600;
   letter-spacing: -0.025em;
 }
 
-.unisen-landing .nexura-body .text-muted,
-.unisen-landing .nexura-body .text-muted-foreground {
+/* Cursor shells use weight 400 on section titles — match their type scale. */
+.unisen-landing .landing-body :where(
+  .cursor-type-lg,
+  .cursor-type-md,
+  .cursor-type-base,
+  .cursor-type-xl,
+  .cursor-feature-title
+) {
+  font-weight: 400 !important;
+}
+
+.unisen-landing .landing-body .cursor-section--headline .cursor-type-xl {
+  color: #ffffff;
+}
+
+.unisen-landing .landing-body .text-muted,
+.unisen-landing .landing-body .text-muted-foreground {
   color: var(--text-secondary, #40689c) !important;
 }
 
 /* Soft brand surfaces on product / solution panels */
-.unisen-landing .nexura-body .bg-surface {
+.unisen-landing .landing-body .bg-surface {
   background-color: var(--surface-muted, #eaf8fa) !important;
 }
 
-.unisen-landing .nexura-body .bg-surface-2 {
+.unisen-landing .landing-body .bg-surface-2 {
   background-color: var(--surface-muted, #eaf8fa) !important;
   border: 1px solid var(--border-default, #b7e1e9);
 }
 
-.unisen-landing .nexura-body .bg-clr-6 {
+.unisen-landing .landing-body .bg-clr-6 {
   background-color: var(--brand-cyan-pale, #cdeff3) !important;
 }
 
-.unisen-landing .nexura-body .bg-clr-11 {
+.unisen-landing .landing-body .bg-clr-11 {
   background-color: var(--brand-cyan-pale, #cdeff3) !important;
 }
 
-.unisen-landing .nexura-body .bg-accent {
+.unisen-landing .landing-body .bg-accent {
   background-color: var(--brand-yellow, #ffde59) !important;
 }
 
-.unisen-landing .nexura-body .bg-color-005 {
+.unisen-landing .landing-body .bg-color-005 {
   background-color: rgba(116, 196, 215, 0.22) !important;
 }
 
-.unisen-landing .nexura-body .bg-color-001 {
+.unisen-landing .landing-body .bg-color-001 {
   background-color: rgba(36, 74, 112, 0.08) !important;
 }
 
-.unisen-landing .nexura-body .text-color-004 {
+.unisen-landing .landing-body .text-color-004 {
   color: var(--brand-blue, #3b8ac1) !important;
 }
 
-/* Decorative frame ticks / rules: brand border (unused while frames are hidden) */
-.unisen-landing .nexura-body [class*="after:h-0.5"]::after,
-.unisen-landing .nexura-body [class*="after:w-0.5"]::after {
-  background-color: var(--border-default, #b7e1e9);
-}
-
-/* Hide Nexura decorative frame borders (side ticks + rules + corners): all viewports */
-.unisen-landing .nexura-body .z-8,
-.unisen-landing .nexura-body .z-9 {
-  display: none !important;
-}
-
-/* Feature accordion */
-.unisen-landing .nexura-body .nexura-feature-row {
-  background: transparent;
-  border: 0;
-  appearance: none;
-}
-
-.unisen-landing .nexura-body .nexura-feature-row:focus-visible {
-  outline: 2px solid var(--brand-cyan, #74c4d7);
-  outline-offset: 2px;
-  border-radius: var(--radius-md, 12px);
-}
-
-.unisen-landing .nexura-body .nexura-feature-row--open h6 {
-  color: var(--text-primary, #244a70) !important;
-}
-
-/* Solution sticky tabs */
-.unisen-landing .nexura-body #solution-1,
-.unisen-landing .nexura-body #solution-2,
-.unisen-landing .nexura-body #solution-3,
-.unisen-landing .nexura-body #solution-4 {
-  scroll-margin-top: 7.5rem;
-}
-
-
-/* Solution-1: Nexura vertical media-tile marquee (upward loop) */
-@keyframes nexura-media-marquee {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(calc(-1 * var(--marquee-period, 410px)));
-  }
-}
-
-.unisen-landing .nexura-body .nexura-media-marquee {
-  animation: nexura-media-marquee var(--marquee-duration, 18s) linear infinite;
-}
-
-/* Solution-2: path shimmer along the flow line */
-@keyframes nexura-path-shimmer {
-  from {
-    stroke-dashoffset: 150;
-  }
-  to {
-    stroke-dashoffset: -50;
-  }
-}
-
-.unisen-landing .nexura-body .nexura-path-shimmer {
-  animation: nexura-path-shimmer 2.4s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .unisen-landing .nexura-body .nexura-media-marquee,
-  .unisen-landing .nexura-body .nexura-path-shimmer {
-    animation: none !important;
-  }
-}
-
 /* Cards / media frames */
-.unisen-landing .nexura-body .rounded-xl,
-.unisen-landing .nexura-body .rounded-2xl,
-.unisen-landing .nexura-body .rounded-\[14px\],
-.unisen-landing .nexura-body .rounded-tl-xl {
+.unisen-landing .landing-body .rounded-xl,
+.unisen-landing .landing-body .rounded-2xl,
+.unisen-landing .landing-body .rounded-\[14px\],
+.unisen-landing .landing-body .rounded-tl-xl {
   border-radius: var(--radius-lg, 16px);
-}
-
-/* Primary CTAs inside clone (dark fill pills) → brand blue */
-.unisen-landing .nexura-body a[data-component="link"] .bg-foreground,
-.unisen-landing .nexura-body a[data-component="link"] > .bg-foreground {
-  background-color: var(--action-primary, #3b8ac1) !important;
-  box-shadow: 0 2px 10px rgba(59, 138, 193, 0.35) !important;
-}
-
-.unisen-landing .nexura-body a[data-component="link"]:hover .bg-foreground,
-.unisen-landing .nexura-body a[data-component="link"]:focus-visible .bg-foreground {
-  background-color: var(--action-primary-hover, #40689c) !important;
 }
 
 /* ── Footer section 2: park panorama + high-contrast navy type ──────── */
@@ -335,11 +265,11 @@
 }
 
 /* Pricing / product cards soft brand treatment */
-.unisen-landing .nexura-body [class*="shadow-\\[var\\(--clr-7\\)"] {
+.unisen-landing .landing-body [class*="shadow-\\[var\\(--clr-7\\)"] {
   box-shadow: 0 8px 28px rgba(36, 74, 112, 0.1) !important;
 }
 
-/* ── Unisen product mocks (no Nexura screenshots) ──────────────────────── */
+/* ── Unisen product mocks ──────────────────────── */
 
 .unisen-landing .unisen-mock {
   display: grid;
@@ -951,291 +881,269 @@
   }
 }
 
-/* Cursor-inspired product feature stack: alternating copy and large UI demos. */
-.unisen-landing .nexura-body .unisen-feature-card {
-  display: grid;
-  grid-template-columns: minmax(16rem, 0.78fr) minmax(0, 1.7fr);
-  grid-template-areas: "copy media";
-  align-items: center;
-  gap: 2.75rem;
-  min-height: clamp(34rem, calc(100svh - 7.5rem), 44rem);
-  padding: 1rem;
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: var(--radius-xl, 24px);
-  /* Liquid glass: same material language as .cta-glass */
-  background:
-    linear-gradient(
-      155deg,
-      rgba(255, 255, 255, 0.72) 0%,
-      rgba(255, 255, 255, 0.38) 38%,
-      rgba(205, 239, 243, 0.34) 68%,
-      rgba(255, 255, 255, 0.52) 100%
-    );
-  backdrop-filter: blur(28px) saturate(175%) brightness(1.04);
-  -webkit-backdrop-filter: blur(28px) saturate(175%) brightness(1.04);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(36, 74, 112, 0.06),
-    inset 1px 0 0 rgba(255, 255, 255, 0.45),
-    inset -1px 0 0 rgba(255, 255, 255, 0.28),
-    0 0 0 1px rgba(36, 74, 112, 0.06),
-    0 1px 2px rgba(36, 74, 112, 0.08),
-    0 12px 32px rgba(36, 74, 112, 0.12),
-    0 28px 64px rgba(36, 74, 112, 0.1),
-    0 8px 20px rgba(116, 196, 215, 0.16);
+/* ── Cursor.com layout tokens (structure only; Unisen colour roles) ───────
+   Values mirrored from cursor.com marketing CSS (2026-08-03 crawl). */
+.unisen-landing .landing-body {
+  --cursor-g: 0.625rem; /* 10px */
+  --cursor-v: 1.4rem;
+  --cursor-radius: 4px;
+  --cursor-card: #effaff;
+  --cursor-card-on-tint: #ffffff;
+  --cursor-accent: var(--action-primary, #3b8ac1);
 }
 
-.unisen-landing .nexura-body .unisen-feature-card--reverse {
-  grid-template-columns: minmax(0, 1.7fr) minmax(16rem, 0.78fr);
-  grid-template-areas: "media copy";
+.unisen-landing .landing-body .cursor-section {
+  width: 100%;
+  padding: calc(var(--cursor-v) * 3) calc(var(--cursor-g) * 2);
 }
 
-.unisen-landing .nexura-body .unisen-feature-copy {
-  grid-area: copy;
-  max-width: 22rem;
-  padding: 2rem 1.25rem;
+.unisen-landing .landing-body .cursor-section--tint {
+  background-color: #effaff;
 }
 
-.unisen-landing .nexura-body .unisen-feature-eyebrow {
-  margin: 0 0 0.8rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: #60717d;
+.unisen-landing .landing-body .cursor-section--dark {
+  background-color: #15293e;
+  color: #ffffff;
 }
 
-.unisen-landing .nexura-body .unisen-feature-title {
-  margin: 0;
-  font-family: var(--font-heading) !important;
-  font-size: clamp(1.75rem, 2.1vw, 2rem);
-  font-weight: 600;
-  line-height: 1.16;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
+.unisen-landing .landing-body .cursor-section--flush-y {
+  padding-block: 0;
+}
+
+.unisen-landing .landing-body .cursor-section--headline {
+  padding-block: calc(var(--cursor-v) * 3);
+}
+
+.unisen-landing .landing-body .cursor-container {
+  width: 100%;
+  max-width: 1380px;
+  margin-inline: auto;
+}
+
+.unisen-landing .landing-body .cursor-prose-medium-wide {
+  max-width: 80ch;
+}
+
+.unisen-landing .landing-body .cursor-prose-narrow {
+  max-width: 48ch;
+}
+
+.unisen-landing .landing-body .cursor-prose {
+  max-width: 65ch;
+}
+
+.unisen-landing .landing-body .cursor-type-lg {
+  font-size: clamp(1.625rem, 2.4vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   color: var(--text-primary, #244a70);
 }
 
-.unisen-landing .nexura-body .unisen-feature-body {
-  margin: 1rem 0 0;
-  font-family: var(--font-body);
+.unisen-landing .landing-body .cursor-type-md {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  color: var(--text-primary, #244a70);
+}
+
+.unisen-landing .landing-body .cursor-type-base {
   font-size: 1rem;
-  line-height: 1.55;
-  color: #536572;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-primary, #244a70);
 }
 
-.unisen-landing .nexura-body .unisen-feature-media {
-  grid-area: media;
-  align-self: stretch;
+.unisen-landing .landing-body .cursor-type-sm {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-secondary, #40689c);
+}
+
+.unisen-landing .landing-body .cursor-type-xl {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.unisen-landing .landing-body .cursor-gap {
+  gap: var(--cursor-g);
+}
+
+.unisen-landing .landing-body .cursor-mb-v1 {
+  margin-bottom: var(--cursor-v);
+}
+
+.unisen-landing .landing-body .cursor-mb-v2_5 {
+  margin-bottom: calc(var(--cursor-v) * 2.5);
+}
+
+.unisen-landing .landing-body .cursor-mb-v4 {
+  margin-bottom: calc(var(--cursor-v) * 4);
+}
+
+.unisen-landing .landing-body .cursor-mt-link {
+  margin-top: calc(var(--cursor-v) * 8 / 12);
+}
+
+.unisen-landing .landing-body .cursor-pt-media {
+  padding-top: calc(var(--cursor-g) * 1.75);
+}
+
+.unisen-landing .landing-body .cursor-card {
+  position: relative;
   display: flex;
-  min-width: 0;
-  padding-block: 0.75rem;
-}
-
-.unisen-landing .nexura-body .unisen-feature-window {
   width: 100%;
+  flex-direction: column;
   height: 100%;
-  min-height: 29rem;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: var(--radius-lg, 16px);
-  /* Solid-enough pane so the product mock stays crisp */
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.94) 0%,
-      rgba(248, 252, 253, 0.9) 100%
-    );
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 8px 28px rgba(36, 74, 112, 0.08);
+  min-height: 180px;
+  padding: calc(var(--cursor-g) * 1.75 - 0.1rem) calc(var(--cursor-g) * 1.75)
+    calc(var(--cursor-g) * 1.75);
+  background-color: var(--cursor-card);
+  border-radius: var(--cursor-radius);
 }
 
-.unisen-landing .nexura-body .unisen-feature-window .unisen-mock {
-  min-height: 29rem;
+.unisen-landing .landing-body .cursor-card--on-tint {
+  background-color: var(--cursor-card-on-tint);
+}
+
+.unisen-landing .landing-body .cursor-card--large {
+  padding: calc(var(--cursor-g) * 1.75);
+}
+
+.unisen-landing .landing-body .cursor-card--quiet {
+  background-color: #f7fafc;
+  border: 1px dashed var(--border-default, #d7e5eb);
+}
+
+.unisen-landing .landing-body .cursor-btn-tertiary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cursor-accent);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: gap 150ms ease;
+}
+
+.unisen-landing .landing-body .cursor-btn-tertiary:hover {
+  gap: 0.55rem;
+}
+
+.unisen-landing .landing-body .cursor-media {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: var(--cursor-radius);
+  background: #f7fafc;
+}
+
+/* Alternating feature row — Cursor card--feature / grid-cursor anatomy */
+.unisen-landing .landing-body .cursor-feature {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(var(--cursor-g) * 1.75);
+  text-decoration: none;
+  color: inherit;
+}
+
+.unisen-landing .landing-body .cursor-feature-copy {
+  max-width: 65ch;
+}
+
+.unisen-landing .landing-body .cursor-feature-title {
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+  color: var(--text-primary, #244a70);
+}
+
+.unisen-landing .landing-body .cursor-feature-body {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+  color: var(--text-secondary, #40689c);
+}
+
+.unisen-landing .landing-body .cursor-feature-media {
+  min-width: 0;
+}
+
+.unisen-landing .landing-body .cursor-feature-window {
+  overflow: hidden;
+  border-radius: var(--cursor-radius);
+  background: #f7fafc;
+  min-height: 22rem;
+}
+
+.unisen-landing .landing-body .cursor-feature-window .unisen-mock {
+  min-height: 22rem;
   font-size: 0.78rem;
 }
 
 @media (min-width: 1024px) {
-  .unisen-landing .nexura-body .unisen-feature-window .unisen-mock {
-    width: 86.957%;
-    height: 100%;
-    min-height: 100%;
-    transform: scale(1.15);
-    transform-origin: top left;
+  .unisen-landing .landing-body .cursor-feature {
+    grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1.6fr);
+    align-items: center;
+    gap: calc(var(--cursor-g) * 3);
+  }
+
+  .unisen-landing .landing-body .cursor-feature--reverse {
+    grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.9fr);
+  }
+
+  .unisen-landing .landing-body .cursor-feature--reverse .cursor-feature-copy {
+    order: 2;
+  }
+
+  .unisen-landing .landing-body .cursor-feature--reverse .cursor-feature-media {
+    order: 1;
+  }
+
+  .unisen-landing .landing-body .cursor-feature-window {
+    min-height: 28rem;
+  }
+
+  .unisen-landing .landing-body .cursor-feature-window .unisen-mock {
+    min-height: 28rem;
   }
 }
 
 @media (max-width: 1023px) {
-  .unisen-landing .nexura-body .unisen-feature-card,
-  .unisen-landing .nexura-body .unisen-feature-card--reverse {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "copy"
-      "media";
-    gap: 0.25rem;
-    min-height: 0;
-    padding: 0.75rem;
-  }
-
-  .unisen-landing .nexura-body .unisen-feature-copy {
-    max-width: 36rem;
-    padding: 1.4rem 0.65rem 1rem;
-  }
-
-  .unisen-landing .nexura-body .unisen-feature-media {
-    padding-block: 0 0.1rem;
-  }
-
-  .unisen-landing .nexura-body .unisen-feature-window {
-    min-height: 22rem;
-  }
-
-  .unisen-landing .nexura-body .unisen-feature-window .unisen-mock {
-    min-height: 22rem;
-  }
-}
-
-/* Avoid double horizontal padding from the legacy mobile section rule. */
-@media (max-width: 1023px) {
-  .unisen-landing .nexura-body section.w-full.unisen-feature-stack {
+  .unisen-landing .landing-body .cursor-section.cursor-section--flush-y {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+
+  .unisen-landing .landing-body .cursor-section.cursor-section--flush-y .cursor-container {
+    padding-inline: calc(var(--cursor-g) * 2);
+  }
 }
 
-/* ── Mobile layout: fluidize Framer fixed widths ───────────────────────── */
+/* ── Mobile layout ─────────────────────────────────────────────────────── */
 @media (max-width: 1023px) {
-  .unisen-landing .nexura-body {
+  .unisen-landing .landing-body {
     overflow-x: clip;
   }
 
-  .unisen-landing .nexura-body > div,
-  .unisen-landing .nexura-body section {
+  .unisen-landing .landing-body > div,
+  .unisen-landing .landing-body section {
     max-width: 100%;
-  }
-
-  /* Section shells: readable gutters */
-  .unisen-landing .nexura-body section.w-full {
-    padding-left: 1.25rem !important;
-    padding-right: 1.25rem !important;
-  }
-
-  .unisen-landing .nexura-body section > .max-w-312\.5,
-  .unisen-landing .nexura-body section > [class*="max-w-312"] {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* Text / panel columns pinned to ~323px in the clone → use full width */
-  .unisen-landing .nexura-body .nexura-mobile-fluid,
-  .unisen-landing .nexura-body [data-nexura-fluid="true"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  /* Feature media + product shots must not spill past the viewport */
-  .unisen-landing .nexura-body .nexura-feature-media,
-  .unisen-landing .nexura-body .nexura-feature-panel {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  .unisen-landing .nexura-body .nexura-feature-media {
-    overflow: hidden !important;
-    border-radius: var(--radius-lg, 16px);
-    background: transparent !important;
-    padding: 0 !important;
-  }
-
-  .unisen-landing .nexura-body .nexura-feature-panel {
-    inset: 0 !important;
-    top: 0 !important;
-    right: 0 !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    border-radius: var(--radius-lg, 16px) !important;
-    box-shadow: none !important;
-  }
-
-  .unisen-landing .nexura-body .nexura-feature-media > img {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    object-fit: cover;
-    object-position: top left;
-  }
-
-  /* Solution panels: full-bleed cards, clearer stacking */
-  .unisen-landing .nexura-body #solution-1,
-  .unisen-landing .nexura-body #solution-2,
-  .unisen-landing .nexura-body #solution-3,
-  .unisen-landing .nexura-body #solution-4 {
-    width: 100% !important;
-    max-width: 100% !important;
-    scroll-margin-top: 9.5rem;
-  }
-
-  .unisen-landing .nexura-body #solution {
-    scroll-margin-top: 6rem;
-  }
-
-  /* Sticky mobile solution tabs sit under the fixed nav */
-  .unisen-landing .nexura-body .nexura-solutions-mobile-tabs {
-    top: 4.25rem;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: color-mix(in srgb, var(--background, #fff) 88%, transparent);
-  }
-
-  /* Remove panel / card / divider borders on mobile */
-  .unisen-landing .nexura-body .pricing-card,
-  .unisen-landing .nexura-body .bg-surface-2,
-  .unisen-landing .nexura-body .nexura-feature-media,
-  .unisen-landing .nexura-body .nexura-feature-panel,
-  .unisen-landing .nexura-body .bg-surface {
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .unisen-landing .nexura-body .nexura-feature-divider {
-    display: none !important;
   }
 
   .unisen-landing .unisen-nav.is-scrolled nav {
     border-bottom: 0 !important;
-  }
-
-  /* Solution UI panels: drop framed surface chrome */
-  .unisen-landing .nexura-body #solution .bg-surface {
-    background: transparent !important;
-  }
-}
-
-@media (max-width: 767px) {
-  .unisen-landing .nexura-body #product > div > div:first-child,
-  .unisen-landing .nexura-body #integration [class*="w-113"],
-  .unisen-landing .nexura-body #integration [class*="w-\[22"],
-  .unisen-landing .nexura-body #solution [class*="w-150"],
-  .unisen-landing .nexura-body #solution [class*="w-120"],
-  .unisen-landing .nexura-body #solution [class*="w-\[25"],
-  .unisen-landing .nexura-body #solution [class*="w-\[52"],
-  .unisen-landing .nexura-body #solution [class*="max-md\\:w-\\[20"] {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* Demo dashboard frame: keep aspect, avoid fixed desktop height blowout */
-  .unisen-landing .nexura-body #demo img[alt*="dashboard"],
-  .unisen-landing .nexura-body #demo img[alt*="consultation"] {
-    height: auto !important;
-    max-height: none !important;
   }
 }

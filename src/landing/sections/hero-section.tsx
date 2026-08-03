@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { APP_URL } from "@/lib/site";
 import EnquiryDialog from "../components/enquiry-dialog";
 
 /**
@@ -35,17 +37,25 @@ export default function HeroSection() {
           data-component="heading"
           dir="auto"
         >
-          SEND coordination in one workspace.
+          Built on the law, not guesswork.
         </h1>
         <p
-          className="unisen-hero-sub mt-4 max-w-[32rem] [font-family:var(--font-body)] text-center text-balance"
+          className="unisen-hero-sub mt-4 max-w-[36rem] [font-family:var(--font-body)] text-center text-balance"
           dir="auto"
         >
-          For schools and families, with clearer handoffs for councils and supporting professionals. Track deadlines,
-          organise evidence and prepare clearer responses.
+          For schools preparing a legally specific response, and families making sure the plan is right. Unisen flags
+          what&apos;s vague, missing, or wrong, and shows you exactly why.
         </p>
-        <div className="unisen-hero-cta mt-7 shrink-0">
+        <div className="unisen-hero-cta mt-7 flex shrink-0 flex-wrap justify-center gap-3">
           <EnquiryDialog />
+          <Button
+            type="button"
+            size="lg"
+            className="cta-glass hero-enquiry-trigger relative h-12 min-w-56 px-7 text-base font-bold"
+            onClick={() => window.location.assign(`${APP_URL}/family`)}
+          >
+            <span className="relative z-[1]">Try the family demo</span>
+          </Button>
         </div>
       </div>
     </section>

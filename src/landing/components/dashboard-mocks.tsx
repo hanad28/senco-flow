@@ -24,10 +24,42 @@ const NAV: { id: MockKind; label: string; icon: typeof LayoutGrid }[] = [
 ];
 
 const ROWS = [
-  { id: "ar", pupil: "A.R.", year: "Y5", la: "Camden", days: 2, status: "Reviewing", tone: "urgent" as const },
-  { id: "jk", pupil: "J.K.", year: "Y8", la: "Hackney", days: 6, status: "Drafting", tone: "warn" as const },
-  { id: "ms", pupil: "M.S.", year: "Y3", la: "Islington", days: 11, status: "New", tone: "ok" as const },
-  { id: "tb", pupil: "T.B.", year: "Y10", la: "Southwark", days: 0, status: "Drafting", tone: "urgent" as const },
+  {
+    id: "ar",
+    pupil: "A.R.",
+    year: "Y5",
+    la: "Camden",
+    days: 2,
+    status: "Reviewing",
+    tone: "urgent" as const,
+  },
+  {
+    id: "jk",
+    pupil: "J.K.",
+    year: "Y8",
+    la: "Hackney",
+    days: 6,
+    status: "Drafting",
+    tone: "warn" as const,
+  },
+  {
+    id: "ms",
+    pupil: "M.S.",
+    year: "Y3",
+    la: "Islington",
+    days: 11,
+    status: "New",
+    tone: "ok" as const,
+  },
+  {
+    id: "tb",
+    pupil: "T.B.",
+    year: "Y10",
+    la: "Southwark",
+    days: 0,
+    status: "Drafting",
+    tone: "urgent" as const,
+  },
 ];
 
 const TIMELINE = [
@@ -156,9 +188,7 @@ function DashboardPanel({
             </span>
             <span>{row.la}</span>
             <span>
-              <Pill tone={row.tone}>
-                {row.days === 0 ? "Due today" : `${row.days} days left`}
-              </Pill>
+              <Pill tone={row.tone}>{row.days === 0 ? "Due today" : `${row.days} days left`}</Pill>
             </span>
             <span>
               <Pill tone={row.status === "New" ? "info" : "neutral"}>{row.status}</Pill>
@@ -271,8 +301,7 @@ function EvidencePanel({
       <div className="unisen-mock-ai">
         <Sparkles className="h-3.5 w-3.5" />
         <span>
-          Viewing {selected.author}: AI summary cites uploaded sources only; it never invents
-          provision.
+          Viewing {selected.author}: the summary links back to uploaded evidence for human review.
         </span>
       </div>
     </>
@@ -395,7 +424,12 @@ export function DashboardMock({ kind }: { kind: MockKind }) {
       case "law":
         return {
           title: view === "law" ? "Case guidance" : "Response draft: Section F",
-          aside: view === "law" ? <Pill tone="info">Sources cited</Pill> : <Pill tone="warn">3 flags</Pill>,
+          aside:
+            view === "law" ? (
+              <Pill tone="info">Sources cited</Pill>
+            ) : (
+              <Pill tone="warn">3 flags</Pill>
+            ),
         };
     }
   }, [view]);

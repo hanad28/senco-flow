@@ -1,7 +1,7 @@
 import Navbar from "./sections/navbar";
 import HeroSection from "./sections/hero-section";
-import NexuraBody from "./nexura/nexura-body";
-import "./nexura/nexura-body.css";
+import LandingBody from "./landing-body";
+import "./landing-body.css";
 
 /**
  * Landing: Unisen hero + nav, then body
@@ -15,7 +15,7 @@ export default function Page() {
         <div className="min-h-screen flex relative flex-col justify-start items-stretch content-start overflow-x-clip">
           <Navbar />
           <HeroSection />
-          <NexuraBody />
+          <LandingBody />
         </div>
       </div>
     </>

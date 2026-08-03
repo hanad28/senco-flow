@@ -1,6 +1,6 @@
 import { testimonials as testimonialsContent, type TestimonialItem } from "../content";
 
-/** Nexura “Loved by teams”: Unisen social proof. */
+/** Unisen social proof. */
 export default function TestimonialsSection({
   items = testimonialsContent,
 }: {

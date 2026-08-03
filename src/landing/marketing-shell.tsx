@@ -2,14 +2,14 @@ import type { ReactNode } from "react";
 import FooterSection2 from "./sections/footer-section2";
 import Navbar from "./sections/navbar";
 import "./landing.css";
-import "./nexura/nexura-body.css";
+import "./landing-body.css";
 
 export function MarketingFrame({ children }: { children: ReactNode }) {
   return (
     <div className="unisen-landing min-h-screen bg-background text-foreground">
       <Navbar variant="solid" />
       {children}
-      <div className="nexura-body">
+      <div className="landing-body">
         <FooterSection2 />
       </div>
     </div>

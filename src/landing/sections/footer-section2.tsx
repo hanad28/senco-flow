@@ -2,7 +2,7 @@
  * Home landing footer: real destinations only.
  */
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 
 type SocialData = {
   ariaLabel: string;
@@ -142,6 +142,260 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+const LANGUAGES = [
+  { code: "en", label: "English", dir: "ltr" as const },
+  { code: "ar", label: "العربية", dir: "rtl" as const },
+  { code: "ur", label: "اردو", dir: "rtl" as const },
+  { code: "bn", label: "বাংলা", dir: "ltr" as const },
+  { code: "so", label: "Soomaali", dir: "ltr" as const },
+];
+
+function LanguageChanger() {
+  const [open, setOpen] = useState(false);
+  const [current, setCurrent] = useState("en");
+  const ref = useRef<HTMLDivElement>(null);
+  const menuId = useId();
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onPointer = (e: MouseEvent) =>
+      !ref.current?.contains(e.target as Node) && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onPointer);
+    };
+  }, [open]);
+
+  const active = LANGUAGES.find((l) => l.code === current) ?? LANGUAGES[0];
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        className="footer-s2-link flex items-center gap-1.5 text-color-002 text-sm cursor-pointer"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-controls={menuId}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span aria-hidden>🌐</span>
+        <span>{active.label}</span>
+        <svg
+          className="h-3 w-3"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {open ? (
+        <ul
+          id={menuId}
+          role="menu"
+          className="absolute bottom-[calc(100%+8px)] right-0 flex w-40 flex-col gap-0.5 rounded-lg border border-[var(--border-default,#d7e5eb)] bg-white p-1.5 shadow-[0_10px_30px_rgba(24,50,75,0.10)]"
+        >
+          {LANGUAGES.map((lang) => (
+            <li key={lang.code}>
+              <button
+                type="button"
+                role="menuitemradio"
+                aria-checked={lang.code === current}
+                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[var(--text-primary,#18324b)] hover:bg-[#f1f7f9] cursor-pointer"
+                onClick={() => {
+                  setCurrent(lang.code);
+                  setOpen(false);
+                }}
+              >
+                <span>{lang.label}</span>
+                {lang.code === current ? (
+                  <svg
+                    className="h-3.5 w-3.5 text-[var(--action-primary)]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                ) : null}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
+function ThemeChanger() {
+  const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
+  const ref = useRef<HTMLDivElement>(null);
+  const menuId = useId();
+
+  useEffect(() => {
+    const stored = localStorage.getItem("theme") as "system" | "light" | "dark" | null;
+    if (stored) setTheme(stored);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onPointer = (e: MouseEvent) =>
+      !ref.current?.contains(e.target as Node) && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onPointer);
+    };
+  }, [open]);
+
+  function apply(next: "system" | "light" | "dark") {
+    setTheme(next);
+    localStorage.setItem("theme", next);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = next === "dark" || (next === "system" && prefersDark);
+    document.documentElement.classList.toggle("dark", isDark);
+  }
+
+  const ICONS: Record<"system" | "light" | "dark", ReactNode> = {
+    system: (
+      <svg
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+      </svg>
+    ),
+    light: (
+      <svg
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <circle cx="12" cy="12" r="5" />
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+      </svg>
+    ),
+    dark: (
+      <svg
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    ),
+  };
+
+  const LABELS: Record<"system" | "light" | "dark", string> = {
+    system: "System",
+    light: "Light",
+    dark: "Dark",
+  };
+
+  const OPTIONS: ("system" | "light" | "dark")[] = ["system", "light", "dark"];
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        className="footer-s2-link flex items-center gap-1.5 text-color-002 text-sm cursor-pointer"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-controls={menuId}
+        aria-label={`Theme: ${LABELS[theme]}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        {ICONS[theme]}
+        <span>{LABELS[theme]}</span>
+        <svg
+          className="h-3 w-3"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {open ? (
+        <ul
+          id={menuId}
+          role="menu"
+          className="absolute bottom-[calc(100%+8px)] right-0 flex w-36 flex-col gap-0.5 rounded-lg border border-[var(--border-default,#d7e5eb)] bg-white p-1.5 shadow-[0_10px_30px_rgba(24,50,75,0.10)]"
+        >
+          {OPTIONS.map((opt) => (
+            <li key={opt}>
+              <button
+                type="button"
+                role="menuitemradio"
+                aria-checked={opt === theme}
+                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[var(--text-primary,#18324b)] hover:bg-[#f1f7f9] cursor-pointer"
+                onClick={() => {
+                  apply(opt);
+                  setOpen(false);
+                }}
+              >
+                <span className="flex items-center gap-2">
+                  {ICONS[opt]}
+                  {LABELS[opt]}
+                </span>
+                {opt === theme ? (
+                  <svg
+                    className="h-3.5 w-3.5 text-[var(--action-primary)]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                ) : null}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 export default function FooterSection2() {
   return (
     <div className="w-full block relative shrink-0 order-[1002]">
@@ -210,15 +464,9 @@ export default function FooterSection2() {
             <span className="block text-color-002 text-sm">
               © 2026 Unisen. All rights reserved.
             </span>
-            <div className="flex items-center gap-8 max-lg:gap-5">
-              <div className="flex flex-nowrap gap-6">
-                <UnderlineLink href="/privacy" muted>
-                  Website Privacy Notice
-                </UnderlineLink>
-                <UnderlineLink href="/terms" muted>
-                  Website Terms of Use
-                </UnderlineLink>
-              </div>
+            <div className="flex items-center gap-6 max-lg:gap-5">
+              <LanguageChanger />
+              <ThemeChanger />
               <button
                 className="footer-s2-link h-6 flex py-1 px-1.5 rounded-xs items-center gap-1.5 text-color-002 text-center cursor-pointer"
                 data-component="button"

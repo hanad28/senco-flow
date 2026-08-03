@@ -225,7 +225,7 @@ export const tile2Data: Tile2DataItem[] = [
   { href: "/workflow-3", description: "Deadlines" },
 ];
 
-/** Nexura-style capability cards (product grid under Why Unisen). */
+/** Capability cards (product grid under Why Unisen). */
 export type CapabilityItem = {
   title: string;
   description: string;
@@ -254,7 +254,7 @@ export const capabilities: CapabilityItem[] = [
   },
 ];
 
-/** Nexura “Connects with your stack” → Unisen integrations steps. */
+/** Unisen integrations steps. */
 export type IntegrationStep = {
   step: string;
   title: string;
@@ -275,7 +275,7 @@ export const integrationTools: string[] = [
   "Calendar deadlines",
 ];
 
-/** Nexura “Built for every marketing team” → Unisen audiences. */
+/** Unisen audiences. */
 export type SolutionItem = {
   id: string;
   tab: string;
@@ -335,7 +335,7 @@ export const solutions: SolutionItem[] = [
   },
 ];
 
-/** Nexura testimonials strip. */
+/** Testimonials strip. */
 export type TestimonialItem = {
   quote: string;
   name: string;
