@@ -70,7 +70,7 @@ export function LandingPage() {
 
   return (
     <div
-      className="unisen-landing min-h-screen text-color-001"
+      className="unisen-landing flex min-h-dvh flex-col text-color-001"
       onClick={onClick}
       onPointerOver={onPointerOver}
     >

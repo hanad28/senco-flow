@@ -257,10 +257,10 @@ export default function Navbar({ variant = "overlay" }: NavbarProps) {
                 <Button
                   type="button"
                   size="lg"
-                  className="mt-3 h-11 w-full rounded-full bg-[var(--action-primary)] font-bold text-[var(--text-on-brand)] hover:bg-[var(--action-primary-hover)]"
+                  className="cta-glass hero-enquiry-trigger relative mt-3 h-12 w-full px-7 text-base font-bold"
                   onClick={() => setMobileOpen(false)}
                 >
-                  Book a 15-min walkthrough
+                  <span className="relative z-[1]">Book a 15-min walkthrough</span>
                 </Button>
               }
             />

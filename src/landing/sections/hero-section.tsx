@@ -37,14 +37,14 @@ export default function HeroSection() {
           data-component="heading"
           dir="auto"
         >
-          Built on the law, not guesswork.
+          Unisen is the SEND workspace for schools and families.
         </h1>
         <p
           className="unisen-hero-sub mt-4 max-w-[36rem] [font-family:var(--font-body)] text-center text-balance"
           dir="auto"
         >
-          For schools preparing a legally specific response, and families making sure the plan is right. Unisen flags
-          what&apos;s vague, missing, or wrong, and shows you exactly why.
+          Get EHC consultations and draft plans out of scattered inboxes, with the clock, evidence,
+          and work in one place.
         </p>
         <div className="unisen-hero-cta mt-7 flex shrink-0 flex-wrap justify-center gap-3">
           <EnquiryDialog />

@@ -10,14 +10,12 @@ import "./landing-body.css";
  */
 export default function Page() {
   return (
-    <>
-      <div className="block" id="main">
-        <div className="min-h-screen flex relative flex-col justify-start items-stretch content-start overflow-x-clip">
-          <Navbar />
-          <HeroSection />
-          <LandingBody />
-        </div>
+    <div className="flex flex-1 flex-col" id="main">
+      <div className="relative flex min-h-0 flex-1 flex-col items-stretch justify-start content-start overflow-x-clip">
+        <Navbar />
+        <HeroSection />
+        <LandingBody />
       </div>
-    </>
+    </div>
   );
 }

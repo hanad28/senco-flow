@@ -9,18 +9,93 @@ import {
   Building2,
   CheckCircle2,
   Clock,
+  FileSearch,
   FileText,
+  Languages,
   LayoutGrid,
+  MessageSquareText,
   Sparkles,
 } from "lucide-react";
 
 export type MockKind = "dashboard" | "clock" | "draft" | "evidence" | "law";
+export type FamilyMockView = "plan" | "issues" | "documents" | "response";
 
 const NAV: { id: MockKind; label: string; icon: typeof LayoutGrid }[] = [
   { id: "dashboard", label: "Dashboard", icon: LayoutGrid },
   { id: "clock", label: "Case", icon: Clock },
   { id: "evidence", label: "Evidence", icon: FileText },
   { id: "draft", label: "Draft", icon: Sparkles },
+];
+
+const FAMILY_NAV: { id: FamilyMockView; label: string; icon: typeof LayoutGrid }[] = [
+  { id: "plan", label: "Plan", icon: LayoutGrid },
+  { id: "issues", label: "Issues", icon: AlertTriangle },
+  { id: "documents", label: "Documents", icon: FileText },
+  { id: "response", label: "Response", icon: MessageSquareText },
+];
+
+const FAMILY_SECTIONS = [
+  {
+    id: "b",
+    letter: "B",
+    title: "Special educational needs",
+    status: "Reviewed",
+    tone: "ok" as const,
+    quote: "Maya has significant receptive language needs that affect following multi-step instructions.",
+    note: "Matches the EP report (p. 6). Keep the wording linked to evidence.",
+  },
+  {
+    id: "f",
+    letter: "F",
+    title: "Special educational provision",
+    status: "Needs attention",
+    tone: "warn" as const,
+    quote: "Access to regular adult support as appropriate.",
+    note: "Check whether frequency, duration and who delivers the support are clear.",
+  },
+  {
+    id: "i",
+    letter: "I",
+    title: "Placement",
+    status: "In progress",
+    tone: "info" as const,
+    quote: "Maintained mainstream primary school with SEN support.",
+    note: "Confirm preferred school naming before the response is final.",
+  },
+];
+
+const FAMILY_ISSUES = [
+  {
+    id: "vague-f",
+    section: "Section F",
+    title: "Provision is not specific enough",
+    detail: "“As appropriate” does not state frequency, duration or who delivers support.",
+  },
+  {
+    id: "missing-salt",
+    section: "Section B",
+    title: "SaLT advice not reflected",
+    detail: "Weekly group targets from the SaLT report are missing from the draft need wording.",
+  },
+  {
+    id: "source-gap",
+    section: "Section F",
+    title: "No source linked for adult support",
+    detail: "Link the clause back to the school advice form or EP recommendations.",
+  },
+  {
+    id: "placement",
+    section: "Section I",
+    title: "Preferred school not named",
+    detail: "Families can name a preferred school or type of placement in the response.",
+  },
+];
+
+const FAMILY_DOCS = [
+  { id: "draft", title: "Draft EHC plan", meta: "LA document · 18 pp.", status: "Needs review" },
+  { id: "ep", title: "EP advice", meta: "Dr. Patel · 12 pp.", status: "Linked" },
+  { id: "salt", title: "SaLT advice", meta: "S. Khan · 8 pp.", status: "Linked" },
+  { id: "school", title: "School advice form", meta: "SENCO · 4 pp.", status: "Linked" },
 ];
 
 const ROWS = [
@@ -108,24 +183,36 @@ function Shell({
   title,
   children,
   aside,
+  crumb = "School workspace",
+  nav = NAV,
   view,
   onViewChange,
+  ariaLabel = "Unisen product demo",
 }: {
   title: string;
   children: ReactNode;
   aside?: ReactNode;
-  view: MockKind;
-  onViewChange: (view: MockKind) => void;
+  crumb?: string;
+  nav?: { id: string; label: string; icon: typeof LayoutGrid }[];
+  view: string;
+  onViewChange: (view: string) => void;
+  ariaLabel?: string;
 }) {
   return (
-    <div className="unisen-mock" role="region" aria-label="Unisen product demo">
+    <div
+      className="unisen-mock"
+      role="region"
+      aria-label={ariaLabel}
+      onClick={(e) => e.stopPropagation()}
+      onKeyDown={(e) => e.stopPropagation()}
+    >
       <div className="unisen-mock-sidebar">
         <div className="unisen-mock-brand">
           <img className="unisen-mock-mark" src="/favicon.ico" alt="" />
           <span>Unisen</span>
         </div>
         <div className="unisen-mock-nav" role="tablist" aria-label="Demo views">
-          {NAV.map(({ id, label, icon: Icon }) => {
+          {nav.map(({ id, label, icon: Icon }) => {
             const active = view === id || (view === "law" && id === "draft");
             return (
               <button
@@ -146,7 +233,7 @@ function Shell({
       <div className="unisen-mock-main">
         <header className="unisen-mock-top">
           <div>
-            <p className="unisen-mock-crumb">School workspace</p>
+            <p className="unisen-mock-crumb">{crumb}</p>
             <h4>{title}</h4>
           </div>
           {aside}
@@ -435,7 +522,7 @@ export function DashboardMock({ kind }: { kind: MockKind }) {
   }, [view]);
 
   return (
-    <Shell title={meta.title} aside={meta.aside} view={view} onViewChange={setView}>
+    <Shell title={meta.title} aside={meta.aside} view={view} onViewChange={(next) => setView(next as MockKind)}>
       {view === "dashboard" ? (
         <DashboardPanel selectedId={selectedRow} onSelect={setSelectedRow} />
       ) : null}
@@ -449,6 +536,236 @@ export function DashboardMock({ kind }: { kind: MockKind }) {
         <DraftPanel selectedId={selectedNeed} onSelect={setSelectedNeed} />
       ) : null}
       {view === "law" ? <LawPanel /> : null}
+    </Shell>
+  );
+}
+
+function FamilyPlanPanel({
+  selectedId,
+  onSelect,
+}: {
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
+  const selected = FAMILY_SECTIONS.find((section) => section.id === selectedId) ?? FAMILY_SECTIONS[1];
+
+  return (
+    <div className="unisen-mock-draft">
+      <div className="unisen-mock-stats" style={{ marginBottom: "0.55rem" }}>
+        <span>7 of 11 sections</span>
+        <span>
+          <AlertTriangle className="h-3 w-3" /> 4 issues
+        </span>
+        <span>
+          <FileText className="h-3 w-3" /> 9 sources
+        </span>
+      </div>
+      {FAMILY_SECTIONS.map((section) => (
+        <button
+          key={section.id}
+          type="button"
+          className={`unisen-mock-need${selectedId === section.id ? " is-selected" : ""}`}
+          onClick={() => onSelect(section.id)}
+        >
+          <header>
+            <span>{section.letter}</span>
+            <strong>{section.title}</strong>
+            <Pill tone={section.tone}>{section.status}</Pill>
+          </header>
+          <p className={`unisen-mock-draft-text${section.tone === "warn" ? " is-muted" : ""}`}>
+            {section.quote}
+          </p>
+        </button>
+      ))}
+      <div className={`unisen-mock-flag${selected.tone === "ok" ? " is-ok" : ""}`}>
+        {selected.tone === "ok" ? (
+          <CheckCircle2 className="h-3.5 w-3.5" />
+        ) : (
+          <FileSearch className="h-3.5 w-3.5" />
+        )}
+        <div>
+          <strong>
+            Section {selected.letter}: {selected.status}
+          </strong>
+          <p>{selected.note}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FamilyIssuesPanel({
+  selectedId,
+  onSelect,
+}: {
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
+  const selected = FAMILY_ISSUES.find((issue) => issue.id === selectedId) ?? FAMILY_ISSUES[0];
+
+  return (
+    <>
+      <ul className="unisen-mock-docs">
+        {FAMILY_ISSUES.map((issue) => (
+          <li key={issue.id}>
+            <button
+              type="button"
+              className={`unisen-mock-doc-btn${selectedId === issue.id ? " is-selected" : ""}`}
+              onClick={() => onSelect(issue.id)}
+            >
+              <div className="unisen-mock-doc-icon">
+                <AlertTriangle className="h-4 w-4" />
+              </div>
+              <div>
+                <strong>
+                  {issue.title}
+                  <em> · {issue.section}</em>
+                </strong>
+                <p>{issue.detail}</p>
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="unisen-mock-detail" aria-live="polite">
+        <strong>{selected.title}</strong>
+        <span>{selected.section} · open for family comment</span>
+        <button type="button" className="unisen-mock-action">
+          Mark ready
+        </button>
+      </div>
+    </>
+  );
+}
+
+function FamilyDocumentsPanel({
+  selectedId,
+  onSelect,
+}: {
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
+  const selected = FAMILY_DOCS.find((doc) => doc.id === selectedId) ?? FAMILY_DOCS[0];
+
+  return (
+    <>
+      <ul className="unisen-mock-docs">
+        {FAMILY_DOCS.map((doc) => (
+          <li key={doc.id}>
+            <button
+              type="button"
+              className={`unisen-mock-doc-btn${selectedId === doc.id ? " is-selected" : ""}`}
+              onClick={() => onSelect(doc.id)}
+            >
+              <div className="unisen-mock-doc-icon">
+                <FileText className="h-4 w-4" />
+              </div>
+              <div>
+                <strong>{doc.title}</strong>
+                <p>
+                  {doc.meta} · {doc.status}
+                </p>
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div className="unisen-mock-ai">
+        <Sparkles className="h-3.5 w-3.5" />
+        <span>
+          Viewing {selected.title}: quotes and issues stay linked to the source pages for review.
+        </span>
+      </div>
+    </>
+  );
+}
+
+function FamilyResponsePanel() {
+  return (
+    <div className="unisen-mock-law">
+      <div className="unisen-mock-ai-card">
+        <header>
+          <MessageSquareText className="h-3.5 w-3.5" />
+          <strong>Response draft readiness</strong>
+        </header>
+        <p>
+          Comments on Section F and preferred placement are ready. Download an English or bilingual
+          letter when the open issues are marked ready.
+        </p>
+      </div>
+      <ul className="unisen-mock-sources">
+        <li>
+          <CheckCircle2 className="h-3.5 w-3.5" /> Parent views drafted
+        </li>
+        <li>
+          <AlertTriangle className="h-3.5 w-3.5" /> 2 issues still open
+        </li>
+        <li>
+          <Languages className="h-3.5 w-3.5" /> Interface in five languages
+        </li>
+      </ul>
+      <div className="unisen-mock-detail" aria-live="polite">
+        <strong>Continue review</strong>
+        <span>11 days left · statutory draft response window</span>
+        <button type="button" className="unisen-mock-action">
+          Open response
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export function FamilyMock({ kind = "plan" }: { kind?: FamilyMockView }) {
+  const [view, setView] = useState<FamilyMockView>(kind);
+  const [selectedSection, setSelectedSection] = useState(FAMILY_SECTIONS[1].id);
+  const [selectedIssue, setSelectedIssue] = useState(FAMILY_ISSUES[0].id);
+  const [selectedDoc, setSelectedDoc] = useState(FAMILY_DOCS[0].id);
+
+  const meta = useMemo(() => {
+    switch (view) {
+      case "plan":
+        return {
+          title: "Review your plan section by section",
+          aside: <Pill tone="warn">11 days left</Pill>,
+        };
+      case "issues":
+        return {
+          title: "Issues to check",
+          aside: <Pill tone="warn">4 open</Pill>,
+        };
+      case "documents":
+        return {
+          title: "Source documents",
+          aside: <span className="unisen-mock-meta">4 files · 42 pages</span>,
+        };
+      case "response":
+        return {
+          title: "Prepare your response",
+          aside: <Pill tone="info">In progress</Pill>,
+        };
+    }
+  }, [view]);
+
+  return (
+    <Shell
+      title={meta.title}
+      aside={meta.aside}
+      crumb="Family workspace"
+      nav={FAMILY_NAV}
+      view={view}
+      onViewChange={(next) => setView(next as FamilyMockView)}
+      ariaLabel="Unisen family workspace demo"
+    >
+      {view === "plan" ? (
+        <FamilyPlanPanel selectedId={selectedSection} onSelect={setSelectedSection} />
+      ) : null}
+      {view === "issues" ? (
+        <FamilyIssuesPanel selectedId={selectedIssue} onSelect={setSelectedIssue} />
+      ) : null}
+      {view === "documents" ? (
+        <FamilyDocumentsPanel selectedId={selectedDoc} onSelect={setSelectedDoc} />
+      ) : null}
+      {view === "response" ? <FamilyResponsePanel /> : null}
     </Shell>
   );
 }

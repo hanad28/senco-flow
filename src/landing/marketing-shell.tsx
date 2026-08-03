@@ -6,10 +6,10 @@ import "./landing-body.css";
 
 export function MarketingFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="unisen-landing min-h-screen bg-background text-foreground">
+    <div className="unisen-landing flex min-h-dvh flex-col bg-background text-foreground">
       <Navbar variant="solid" />
-      {children}
-      <div className="landing-body">
+      <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+      <div className="landing-body shrink-0">
         <FooterSection2 />
       </div>
     </div>
@@ -20,7 +20,7 @@ export function MarketingFrame({ children }: { children: ReactNode }) {
 export function MarketingShell({ title, children }: { title: string; children: ReactNode }) {
   return (
     <MarketingFrame>
-      <main className="mx-auto w-full max-w-3xl px-5 pb-16 pt-[calc(4.5rem+env(safe-area-inset-top,0px))]">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-5 pb-16 pt-[calc(4.5rem+env(safe-area-inset-top,0px))]">
         <h1 className="text-3xl font-bold tracking-tight text-[var(--text-primary,#244a70)] [font-family:var(--font-heading)]">
           {title}
         </h1>

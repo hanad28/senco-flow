@@ -18,7 +18,7 @@ export function RichMarketingPage({
 }) {
   return (
     <MarketingFrame>
-      <main className="overflow-hidden pt-[calc(4.5625rem+env(safe-area-inset-top,0px))] [font-family:var(--font-body)]">
+      <main className="flex flex-1 flex-col overflow-hidden pt-[calc(4.5625rem+env(safe-area-inset-top,0px))] [font-family:var(--font-body)]">
         <header className="relative border-b border-[var(--border-default)] bg-[linear-gradient(135deg,#effaff_0%,#ffffff_48%,#fff9dc_100%)]">
           <div
             className="absolute -right-24 -top-28 h-80 w-80 rounded-full bg-[#74c4d7]/20 blur-3xl"
@@ -139,9 +139,9 @@ export function WalkthroughButton({ className = "" }: { className?: string }) {
         <Button
           type="button"
           size="lg"
-          className={`h-12 rounded-full bg-[var(--action-primary)] px-7 font-bold text-[var(--text-on-brand)] shadow-[0_8px_24px_rgba(59,138,193,0.22)] hover:bg-[var(--action-primary-hover)] ${className}`}
+          className={`cta-glass hero-enquiry-trigger relative h-12 min-w-56 px-7 text-base font-bold ${className}`}
         >
-          Book a 15-min walkthrough
+          <span className="relative z-[1]">Book a 15-min walkthrough</span>
         </Button>
       }
     />
@@ -158,7 +158,7 @@ export function FinalWalkthroughCta({ title, body }: { title: string; body?: str
           </h2>
           {body ? <p className="mt-3 max-w-2xl text-sm leading-6 text-white/80">{body}</p> : null}
         </div>
-        <WalkthroughButton className="shrink-0 bg-white text-[var(--text-primary)] hover:bg-[#effaff]" />
+        <WalkthroughButton className="shrink-0" />
       </div>
     </section>
   );
