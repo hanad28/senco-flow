@@ -9,7 +9,7 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-# Unisen / senco-flow — agent setup notes
+# Unisen — agent setup notes
 
 Product is **Unisen** (SEND coordination). Temporary hosting + multi-remote git are intentional until the team standardizes on the company GitHub org and Vercel team.
 
@@ -17,9 +17,9 @@ Product is **Unisen** (SEND coordination). Temporary hosting + multi-remote git 
 
 | Remote | Repo | Role |
 | --- | --- | --- |
-| `origin` | `mwijanarko1/senco-flow` (private) | Mikhail’s fork/copy; backup branches |
-| `upstream` | `hanad28/senco-flow` (public) | Co-founder original; **do not push WIP to `main` without agreement** |
-| `unisenofficial` | `unisenofficial/senco-flow` (private) | **Temporary demo host** for Vercel until org move |
+| `origin` | `mwijanarko1/unisen` (private) | Mikhail’s fork/copy; backup branches |
+| `upstream` | `hanad28/unisen` (public) | Co-founder original; **do not push WIP to `main` without agreement** |
+| `unisenofficial` | `unisenofficial/unisen` (private) | **Temporary demo host** for Vercel until org move |
 
 **GitHub Organization (company home — preferred long term):** [`unisen-official`](https://github.com/unisen-official)
 
@@ -94,11 +94,11 @@ Smoke-test the marketing route and any newly merged server endpoints. Full lint 
 ```bash
 gh auth switch --user mwijanarko1
 git push -u upstream "$SYNC_BRANCH"
-gh pr create --repo hanad28/senco-flow \
-  --base main \
-  --head "$SYNC_BRANCH" \
-  --title "Merge live Unisen updates into main" \
-  --body-file /tmp/senco-flow-pr.md
+gh pr create --repo hanad28/unisen \
+ --base main \
+ --head "$SYNC_BRANCH" \
+ --title "Merge live Unisen updates into main" \
+ --body-file /tmp/unisen-pr.md
 ```
 
 After approval, merge the PR normally. Then fetch the resulting canonical commit and create the required deploy-author commit **on top of it**. Doing this after the PR merge works regardless of whether GitHub created an additional merge commit:
@@ -335,7 +335,7 @@ Also in Clerk dashboard (not env):
 ## Vercel / hosting notes
 
 - **Current primary custom-domain host:** Cloudflare Worker `unisen`.
-- **Legacy/secondary demo:** deploy from `unisenofficial/senco-flow` to Vercel.
+- **Legacy/secondary demo:** deploy from `unisenofficial/unisen` to Vercel.
 - **Long term:** company **Vercel Team** + repo under **`unisen-official`** org. Real multi-founder team features need **Pro** (Hobby is free/personal; limited commercial collaboration).
 - Vercel CLI is **one login at a time** (unlike `gh auth switch`). Use `vercel switch` for teams under the current login; logout/login or separate config dirs for multiple accounts.
 - Build: TanStack Start + Nitro. On Vercel (`VERCEL=1`) Nitro targets Vercel; local default via Lovable config is often Cloudflare — that’s expected.
