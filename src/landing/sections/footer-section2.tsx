@@ -413,11 +413,11 @@ export default function FooterSection2() {
           />
         </div>
         <div className="footer-s2-scrim" aria-hidden />
-        <div className="footer-s2-content relative z-[1] block max-w-320 pt-16 px-12 mx-auto max-lg:pt-12 max-lg:px-6">
-          <div className="flex justify-between gap-12 max-lg:flex-col max-lg:gap-10">
+        <div className="footer-s2-content relative z-[1] block max-w-320 pt-16 px-12 mx-auto max-lg:pt-10 max-lg:px-5 max-md:pt-8">
+          <div className="flex justify-between gap-12 max-lg:flex-col max-lg:gap-8 max-md:gap-7">
             <div className="block max-w-70 shrink-0 max-lg:max-w-full">
               <a
-                className="inline-flex h-7 mb-4 items-center cursor-pointer"
+                className="inline-flex h-7 mb-4 items-center cursor-pointer max-md:mb-3 max-md:h-6"
                 data-component="link"
                 href="/"
                 aria-label="Unisen home"
@@ -427,11 +427,11 @@ export default function FooterSection2() {
                   alt="Unisen"
                   width={280}
                   height={80}
-                  className="block h-7 w-auto object-contain"
+                  className="block h-7 w-auto object-contain max-md:h-6"
                   decoding="async"
                 />
               </a>
-              <p className="block mb-5 text-clr-1 text-[0.8125rem] leading-[1.3125rem] max-w-[17.5rem]">
+              <p className="block mb-5 text-clr-1 text-[0.8125rem] leading-[1.3125rem] max-w-[17.5rem] max-md:mb-4 max-md:text-[0.75rem] max-md:leading-5">
                 SEND coordination for schools and families: shared timelines, statutory deadlines,
                 and execution assistance for EHC work.
               </p>
@@ -442,13 +442,13 @@ export default function FooterSection2() {
               </div>
             </div>
 
-            <div className="grid gap-12 grid-cols-4 max-lg:gap-y-8 max-lg:gap-x-6 max-lg:grid-cols-2">
+            <div className="grid gap-12 grid-cols-4 max-lg:gap-y-8 max-lg:gap-x-6 max-lg:grid-cols-2 max-md:gap-y-6 max-md:gap-x-4">
               {COLUMNS.map((col) => (
                 <div key={col.title} className="flex flex-col">
-                  <span className="block mb-4 text-color-002 text-[0.6875rem] leading-3 tracking-[1.65px] uppercase">
+                  <span className="block mb-4 text-color-002 text-[0.6875rem] leading-3 tracking-[1.65px] uppercase max-md:mb-2.5">
                     {col.title}
                   </span>
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3 max-md:gap-2">
                     {col.links.map((link) => (
                       <UnderlineLink key={link.label} href={link.href}>
                         {link.label}
@@ -460,7 +460,7 @@ export default function FooterSection2() {
             </div>
           </div>
 
-          <div className="border-t border-solid border-t-border flex mt-14 py-6 justify-between items-center max-lg:mt-12 max-lg:flex-col max-lg:items-start max-lg:gap-4">
+          <div className="border-t border-solid border-t-border flex mt-14 py-6 justify-between items-center max-lg:mt-10 max-lg:flex-col max-lg:items-start max-lg:gap-4 max-md:mt-8 max-md:py-5">
             <span className="block text-color-002 text-sm">
               © 2026 Unisen. All rights reserved.
             </span>

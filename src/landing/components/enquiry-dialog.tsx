@@ -119,7 +119,7 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
           <Button
             type="button"
             size="lg"
-            className="cta-glass hero-enquiry-trigger relative h-12 min-w-56 px-7 text-base font-bold"
+            className="cta-glass hero-enquiry-trigger relative h-10 w-auto min-w-0 px-5 text-sm font-bold sm:h-12 sm:min-w-56 sm:px-7 sm:text-base"
           >
             <span className="relative z-[1]">Book a 15-min walkthrough</span>
           </Button>

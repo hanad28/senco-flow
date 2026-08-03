@@ -694,16 +694,43 @@ body:has(.unisen-landing) {
 
 @media (max-width: 768px) {
   .unisen-landing .unisen-hero-copy {
-    margin-top: clamp(5rem, 16vh, 7rem);
-    max-width: 22rem;
+    /* Keep family-demo CTA just above the skyline (~y485 on iPhone 17) */
+    margin-top: clamp(5.25rem, 20vh, 11rem);
+    max-width: min(100%, 24rem);
+    padding-inline: 1rem;
   }
 
   .unisen-landing .unisen-hero-title {
-    font-size: clamp(1.625rem, 6.5vw, 2rem);
+    max-width: 20.5rem;
+    margin-inline: auto;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .unisen-landing .unisen-hero-sub {
+    margin-top: 0.5rem;
+    max-width: 17.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
   }
 
   .unisen-landing .unisen-hero-cta {
-    margin-top: 1.5rem;
+    margin-top: 0.875rem;
+    gap: 0.4375rem;
+    width: 100%;
+  }
+
+  /* Compact CTAs: hug label width instead of desktop min-w-56 slabs */
+  .unisen-landing .unisen-hero button.hero-enquiry-trigger {
+    --cta-glass-height: 2.25rem;
+    height: var(--cta-glass-height);
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+    padding-inline: 1rem;
+    font-size: 0.8125rem;
+    letter-spacing: -0.01em;
   }
 }
 

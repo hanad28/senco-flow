@@ -674,7 +674,7 @@ function PartyGraphic({
 function PartiesOrbitGraphic() {
   return (
     <div
-      className="relative mx-auto mb-[calc(var(--cursor-v)*2)] h-52 w-full max-w-xl overflow-hidden rounded-[var(--cursor-card-radius,24px)] border border-[#d7e5f2] bg-[#f8fbff]"
+      className="relative mx-auto mb-[calc(var(--cursor-v)*2)] h-44 w-full max-w-xl overflow-hidden rounded-[var(--cursor-card-radius,24px)] border border-[#d7e5f2] bg-[#f8fbff] sm:h-52"
       aria-hidden="true"
     >
       <div className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#d7e5f2]" />
@@ -704,7 +704,7 @@ function PartiesOrbitGraphic() {
 /** Citation chain for the trust section — flag → source → statute. */
 function TrustCitationGraphic() {
   return (
-    <div className="flex h-full min-h-[18rem] flex-col overflow-hidden rounded-[4px] bg-[#f7fafc] text-[#244a70]">
+    <div className="flex h-full min-h-[15rem] flex-col overflow-hidden rounded-[4px] bg-[#f7fafc] text-[#244a70] sm:min-h-[18rem]">
       <div className="flex items-center justify-between gap-3 border-b border-[#d7e4ec] px-3.5 py-2.5">
         <div>
           <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-[#607586]">
@@ -1092,13 +1092,13 @@ export default function UnisenBody() {
                 >
                   Try Unisen from your side.
                 </h2>
-                <div className="flex flex-wrap items-center justify-center gap-[var(--cursor-g)]">
+                <div className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:flex-wrap sm:gap-[var(--cursor-g)]">
                   <EnquiryDialog
                     trigger={
                       <Button
                         type="button"
                         size="lg"
-                        className="cta-brand relative h-12 min-w-56 px-7 text-base font-bold"
+                        className="cta-brand relative h-10 w-auto min-w-0 px-5 text-sm font-bold sm:h-12 sm:min-w-56 sm:px-7 sm:text-base"
                       >
                         <span className="relative z-[1]">Book a 15-min walkthrough</span>
                       </Button>
@@ -1107,7 +1107,7 @@ export default function UnisenBody() {
                   <Button
                     type="button"
                     size="lg"
-                    className="cta-brand relative h-12 min-w-56 px-7 text-base font-bold"
+                    className="cta-brand relative h-10 w-auto min-w-0 px-5 text-sm font-bold sm:h-12 sm:min-w-56 sm:px-7 sm:text-base"
                     onClick={() => window.location.assign(`${APP_URL}/family`)}
                   >
                     <span className="relative z-[1]">Try the family demo</span>
