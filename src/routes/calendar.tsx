@@ -12,23 +12,18 @@ import {
   deadlineTone,
   type Consultation,
 } from "@/lib/consultations-store";
-import { pageTitle } from "@/lib/site";
+import { appNoIndexHead } from "@/lib/seo";
 import {
   calendarDeadlineDate,
   calendarDaysRemaining,
 } from "@/lib/working-days";
 
 export const Route = createFileRoute("/calendar")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Calendar") },
-      {
-        name: "description",
-        content:
-          "Chronological view of every open consultation's 15-day statutory deadline.",
-      },
-    ],
-  }),
+  head: () =>
+    appNoIndexHead(
+      "Calendar",
+      "Chronological view of every open consultation's 15-day statutory deadline.",
+    ),
   component: CalendarPage,
 });
 

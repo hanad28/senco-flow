@@ -2,9 +2,14 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import {
+  applySecurityHeaders,
+  maybeCanonicalRedirect,
+  maybeRobotsResponse,
+} from "./lib/request-hardening";
 
 type ServerEntry = {
-  fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
+  fetch: (request: Request, ...args: unknown[]) => Promise<Response> | Response;
 };
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
@@ -19,7 +24,7 @@ async function getServerEntry(): Promise<ServerEntry> {
 }
 
 // h3 swallows in-handler throws into a normal 500 Response with body
-// {"unhandled":true,"message":"HTTPError"} — try/catch alone never fires for those.
+// {"unhandled":true,"message":"HTTPError"} - try/catch alone never fires for those.
 async function normalizeCatastrophicSsrResponse(response: Response): Promise<Response> {
   if (response.status < 500) return response;
   const contentType = response.headers.get("content-type") ?? "";
@@ -44,18 +49,33 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+/**
+ * Nested SSR entry for TanStack Start / Nitro.
+ *
+ * Nitro's outer Cloudflare Worker serves matching static assets (and may call
+ * this fetch with only a Request). Do not read Worker `env` / `ASSETS` here.
+ * Host-aware robots must not live in `public/` or the outer asset handler
+ * will serve them before this middleware runs.
+ */
 export default {
-  async fetch(request: Request, env: unknown, ctx: unknown) {
+  async fetch(request: Request) {
     try {
+      const early = maybeCanonicalRedirect(request) ?? maybeRobotsResponse(request);
+      if (early) return applySecurityHeaders(request, early);
+
       const handler = await getServerEntry();
-      const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const response = await handler.fetch(request);
+      const normalized = await normalizeCatastrophicSsrResponse(response);
+      return applySecurityHeaders(request, normalized);
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
-        status: 500,
-        headers: { "content-type": "text/html; charset=utf-8" },
-      });
+      return applySecurityHeaders(
+        request,
+        new Response(renderErrorPage(), {
+          status: 500,
+          headers: { "content-type": "text/html; charset=utf-8" },
+        }),
+      );
     }
   },
 };

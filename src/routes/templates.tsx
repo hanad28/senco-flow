@@ -4,7 +4,7 @@ import { AppShell } from "@/components/app-shell";
 import { useSchoolProfile, domainLabel, domainOrder, type NeedDomain } from "@/lib/school-profile-store";
 import { useTemplates, type EvidenceDoc } from "@/lib/templates-store";
 import type { NeedCapability } from "@/lib/consultations-store";
-import { pageTitle } from "@/lib/site";
+import { appNoIndexHead } from "@/lib/seo";
 import { segmentText, VAGUENESS_EXPLANATION } from "@/lib/vagueness";
 import {
   CheckCircle2,
@@ -18,16 +18,11 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/templates")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Templates") },
-      {
-        name: "description",
-        content:
-          "Reusable Section F provision language and a searchable library of evidence documents.",
-      },
-    ],
-  }),
+  head: () =>
+    appNoIndexHead(
+      "Templates",
+      "Reusable Section F provision language and a searchable library of evidence documents.",
+    ),
   component: TemplatesPage,
 });
 

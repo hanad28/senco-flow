@@ -12,7 +12,7 @@ export const Route = createFileRoute("/consultations/$id/submit")({
   head: ({ params }) => ({
     meta: [
       { title: pageTitle(`Submit ${params.id.toUpperCase()}`) },
-      { name: "robots", content: "noindex" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: SubmitView,

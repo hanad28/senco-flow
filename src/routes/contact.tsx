@@ -2,18 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import EnquiryDialog from "@/landing/components/enquiry-dialog";
 import { MarketingShell } from "@/landing/marketing-shell";
-import { pageTitle } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Contact") },
-      {
-        name: "description",
-        content: "Book a 15-minute Unisen walkthrough or email the team.",
-      },
-    ],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Contact",
+      description: "Book a 15-minute Unisen walkthrough or email the team.",
+      path: "/contact",
+    }),
   component: ContactPage,
 });
 

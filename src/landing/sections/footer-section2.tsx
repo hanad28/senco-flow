@@ -142,99 +142,12 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-const LANGUAGES = [
-  { code: "en", label: "English", dir: "ltr" as const },
-  { code: "ar", label: "العربية", dir: "rtl" as const },
-  { code: "ur", label: "اردو", dir: "rtl" as const },
-  { code: "bn", label: "বাংলা", dir: "ltr" as const },
-  { code: "so", label: "Soomaali", dir: "ltr" as const },
-];
-
 function LanguageChanger() {
-  const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState("en");
-  const ref = useRef<HTMLDivElement>(null);
-  const menuId = useId();
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    const onPointer = (e: MouseEvent) =>
-      !ref.current?.contains(e.target as Node) && setOpen(false);
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("mousedown", onPointer);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("mousedown", onPointer);
-    };
-  }, [open]);
-
-  const active = LANGUAGES.find((l) => l.code === current) ?? LANGUAGES[0];
-
   return (
-    <div className="relative" ref={ref}>
-      <button
-        type="button"
-        className="footer-s2-link flex items-center gap-1.5 text-color-002 text-sm cursor-pointer"
-        aria-expanded={open}
-        aria-haspopup="menu"
-        aria-controls={menuId}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span aria-hidden>🌐</span>
-        <span>{active.label}</span>
-        <svg
-          className="h-3 w-3"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </button>
-      {open ? (
-        <ul
-          id={menuId}
-          role="menu"
-          className="absolute bottom-[calc(100%+8px)] right-0 flex w-40 flex-col gap-0.5 rounded-lg border border-[var(--border-default,#d7e5eb)] bg-white p-1.5 shadow-[0_10px_30px_rgba(24,50,75,0.10)]"
-        >
-          {LANGUAGES.map((lang) => (
-            <li key={lang.code}>
-              <button
-                type="button"
-                role="menuitemradio"
-                aria-checked={lang.code === current}
-                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[var(--text-primary,#18324b)] hover:bg-[#f1f7f9] cursor-pointer"
-                onClick={() => {
-                  setCurrent(lang.code);
-                  setOpen(false);
-                }}
-              >
-                <span>{lang.label}</span>
-                {lang.code === current ? (
-                  <svg
-                    className="h-3.5 w-3.5 text-[var(--action-primary)]"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden
-                  >
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                ) : null}
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </div>
+    <span className="footer-s2-link flex items-center gap-1.5 text-color-002 text-sm" aria-label="Site language: English">
+      <span aria-hidden>🌐</span>
+      <span>English</span>
+    </span>
   );
 }
 

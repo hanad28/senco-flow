@@ -1,18 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MarketingSection, RichMarketingPage } from "@/landing/rich-marketing-page";
-import { pageTitle, SITE_URL } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 const DESCRIPTION =
   "Terms governing use of the public Unisen website, including its informational and demonstration content.";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Website Terms of Use") },
-      { name: "description", content: DESCRIPTION },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/terms` }],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Website Terms of Use",
+      description: DESCRIPTION,
+      path: "/terms",
+    }),
   component: TermsPage,
 });
 

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/consultations/$id/")({
   head: ({ params }) => ({
     meta: [
       { title: pageTitle(`Consultation ${params.id.toUpperCase()}`) },
-      { name: "robots", content: "noindex" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: ConsultationDetail,

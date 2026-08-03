@@ -8,16 +8,18 @@ import {
   RichMarketingPage,
   WalkthroughButton,
 } from "@/landing/rich-marketing-page";
-import { pageTitle, SITE_URL } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 const DESCRIPTION =
   "Explore Unisen's school and family workspaces for clearer EHC needs assessment and draft-plan response workflows.";
 
 export const Route = createFileRoute("/product")({
-  head: () => ({
-    meta: [{ title: pageTitle("Product") }, { name: "description", content: DESCRIPTION }],
-    links: [{ rel: "canonical", href: `${SITE_URL}/product` }],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Product",
+      description: DESCRIPTION,
+      path: "/product",
+    }),
   component: ProductPage,
 });
 

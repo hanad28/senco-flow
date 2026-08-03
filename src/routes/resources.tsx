@@ -1,18 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { RESOURCE_LINKS } from "@/landing/nav";
 import { MarketingShell } from "@/landing/marketing-shell";
-import { pageTitle } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/resources")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Resources") },
-      {
-        name: "description",
-        content: "Changelog, blog, help, and workshops from Unisen.",
-      },
-    ],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Resources",
+      description: "Changelog, blog, help, and workshops from Unisen.",
+      path: "/resources",
+    }),
   component: ResourcesPage,
 });
 

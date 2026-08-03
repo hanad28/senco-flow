@@ -11,6 +11,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Search,
+  Info,
 } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useSchoolProfile } from "@/lib/school-profile-store";
@@ -79,7 +80,7 @@ export function AppShell({
           <div className={`flex items-center ${collapsed ? "justify-center" : "gap-3"}`}>
             <div
               className="h-9 w-9 rounded-md bg-sidebar-primary text-sidebar-primary-foreground grid place-items-center text-sm font-semibold tracking-tight shrink-0"
-              title={collapsed ? `${profile.schoolName} — ${profile.sendcoName}` : undefined}
+              title={collapsed ? `${profile.schoolName} - ${profile.sendcoName}` : undefined}
             >
               {initials || "MP"}
             </div>
@@ -152,6 +153,15 @@ export function AppShell({
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
+        <div className="bg-info/10 border-b border-info/30 text-info-foreground text-xs">
+          <div className="px-4 sm:px-6 py-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <Info className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            <span className="font-medium">
+              Demo workspace - fictional data only. Signed-in edits save a cloud snapshot; do not enter
+              real children&apos;s information.
+            </span>
+          </div>
+        </div>
         <header className="h-14 border-b bg-surface flex items-center justify-between px-6 gap-4">
           <nav className="flex items-center gap-2 text-sm text-muted-foreground min-w-0">
             {(breadcrumbs ?? [{ label: "Dashboard" }]).map((b, i, arr) => (

@@ -1,7 +1,7 @@
 /** Canonical public marketing origin (SEO). Override with VITE_SITE_URL. */
 export const SITE_URL = (
   (import.meta.env.VITE_SITE_URL as string | undefined) ??
-  (import.meta.env.DEV ? "http://localhost:8080" : "https://senco-flow.vercel.app")
+  (import.meta.env.DEV ? "http://localhost:8080" : "https://unisen.uk")
 ).replace(/\/$/, "");
 
 /** Authenticated app origin (dashboard). Override with VITE_APP_URL. */
@@ -73,7 +73,7 @@ export function siteJsonLd(): Record<string, unknown> {
         "@id": `${SITE_URL}/#organization`,
         name: SITE_NAME,
         url: SITE_URL,
-        logo: `${SITE_URL}/favicon.ico`,
+        logo: `${SITE_URL}/og-image.png`,
         description: SITE_DESCRIPTION,
       },
       {

@@ -59,9 +59,10 @@ const DICT_EN: Record<string, string> = {
   "dash.aiSummary": "Five source documents reviewed in this fictional demonstration. Four areas may need your attention.",
 
   // Common
-  "common.demoBanner": "Demo workspace — all names and documents are fictional.",
-  "common.aiDisclosure": "AI demonstration — answers use fictional seeded documents and do not constitute legal advice.",
-  "common.translationDisclosure": "AI-assisted translation — check important wording before relying on it.",
+  "common.demoBanner":
+    "Demo workspace - fictional data only. Signed-in edits save a cloud snapshot; do not enter real children’s information.",
+  "common.aiDisclosure": "AI demonstration - answers use fictional seeded documents and do not constitute legal advice.",
+  "common.translationDisclosure": "AI-assisted translation - check important wording before relying on it.",
   "common.explainInMyLanguage": "Explain in my language",
   "common.showOriginalEnglish": "Show original English",
   "common.notYet": "Not yet recorded",

@@ -10,6 +10,7 @@ export default defineSchema({
       v.literal("templates"),
       v.literal("familyCase"),
     ),
+    // Nested demo shapes vary by kind; mutations enforce structure + size.
     value: v.any(),
     updatedAt: v.number(),
   }).index("by_scope_kind", ["scope", "kind"]),

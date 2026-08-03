@@ -242,22 +242,28 @@ bun run build
 bunx wrangler deploy --keep-vars
 ```
 
-Do not deploy a build that was produced without the two production URL exports: production fallbacks can point at the Vercel demo. The package script `bun run deploy` is safe only when the current shell already contains all required `VITE_*` values; the explicit sequence above is preferred.
+`bun run build` runs `scripts/ensure-wrangler-assets.ts` so Nitro’s generated `.output/server/wrangler.json` keeps `assets.run_worker_first: true`. That flag alone does **not** send static files through the nested TanStack SSR entry: Nitro’s outer Worker still serves matching ASSETS first. Host/scheme consolidation for static files therefore requires Cloudflare platform rules (below). `/robots.txt` is deliberately **not** a static file; the SSR entry serves host-aware robots bodies.
 
-After deployment, Wrangler should report all three custom-domain triggers. Verify without exposing secrets:
+Do not deploy a build that was produced without the two production URL exports: production fallbacks can point at the wrong origin. The package script `bun run deploy` is safe only when the current shell already contains all required `VITE_*` values; the explicit sequence above is preferred.
+
+#### Required Cloudflare platform rules (static + edge)
+
+Workers static `_redirects` cannot do domain-level redirects. Configure these in the Cloudflare dashboard for zone `unisen.uk` before treating production as hardened:
+
+1. **SSL/TLS → Edge Certificates → Always Use HTTPS**: On
+2. **Rules → Redirect Rules** (or Bulk Redirects): `www.unisen.uk/*` → `https://unisen.uk/${1}` with 301 (preserve path and query)
+3. Confirm `public/_headers` is present after build (security headers for static asset responses). SSR responses get the same headers from `src/lib/request-hardening.ts`.
+
+Verify after deploy:
 
 ```bash
-bunx wrangler deployments list --name unisen
-curl -I https://unisen.uk/
-curl -I https://app.unisen.uk/
+curl -sI http://unisen.uk/ | rg -i 'HTTP/|location:|strict-transport'
+curl -sI https://www.unisen.uk/sitemap.xml | rg -i 'HTTP/|location:'
+curl -sL https://app.unisen.uk/robots.txt
+curl -sI https://unisen.uk/og-image.png | rg -i 'x-content-type|content-security-policy|strict-transport'
 ```
 
-Expected result: HTTP 200 from both hosts. For runtime errors:
-
-```bash
-bunx wrangler tail unisen
-```
-
+Expected: HTTP→HTTPS and www→apex redirects; app robots is `Disallow: /`; static responses include nosniff / frame-ancestors / HSTS.
 ### Local host split
 
 The Lovable Vite config uses port `8080`:

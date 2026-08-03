@@ -5,6 +5,10 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": ".output/server/index.mjs",
   "assets": {
+    // Kept for Cloudflare asset binding. Nitro's outer Worker still serves matching
+    // static files before the nested SSR entry; host-aware robots live in SSR, and
+    // static security headers live in public/_headers. See AGENTS.md.
+    "run_worker_first": true,
     "binding": "ASSETS",
     "directory": ".output/public"
   },

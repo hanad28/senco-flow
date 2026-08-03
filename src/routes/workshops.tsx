@@ -2,18 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import EnquiryDialog from "@/landing/components/enquiry-dialog";
 import { MarketingShell } from "@/landing/marketing-shell";
-import { pageTitle } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/workshops")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Workshops") },
-      {
-        name: "description",
-        content: "Book a Unisen walkthrough or pilot session with your SENCO team.",
-      },
-    ],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Workshops",
+      description: "Book a Unisen walkthrough or pilot session with your SENCO team.",
+      path: "/workshops",
+    }),
   component: WorkshopsPage,
 });
 

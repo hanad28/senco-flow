@@ -1,17 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MarketingShell } from "@/landing/marketing-shell";
-import { pageTitle } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("About") },
-      {
-        name: "description",
-        content: "The Unisen team building SEND coordination software for schools and families.",
-      },
-    ],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "About",
+      description: "The Unisen team building SEND coordination software for schools and families.",
+      path: "/about",
+    }),
   component: AboutPage,
 });
 

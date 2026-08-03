@@ -16,6 +16,7 @@ import {
   needsAuthShell,
   resolveHostMode,
 } from "../lib/hostname";
+import { isAppProductPath } from "../lib/request-hardening";
 import {
   SITE_DESCRIPTION,
   SITE_OG_DESCRIPTION,
@@ -123,11 +124,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:image", content: SITE_OG_IMAGE },
-      { property: "og:image:width", content: "562" },
-      { property: "og:image:height", content: "611" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:alt", content: SITE_TITLE },
-      { name: "twitter:card", content: "summary" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: SITE_TITLE },
       { name: "twitter:description", content: SITE_OG_DESCRIPTION },
       { name: "twitter:image", content: SITE_OG_IMAGE },
@@ -203,6 +204,16 @@ function RootComponent() {
     return (
       <Suspense fallback={null}>
         <RedirectToApp reason="clerk-handshake" />
+      </Suspense>
+    );
+  }
+
+  // Product paths on the marketing host belong on the app host (auth + Convex).
+  const pathOnly = locationSuffix.split("?")[0]?.split("#")[0] || "/";
+  if (hostMode === "marketing" && isAppProductPath(pathOnly)) {
+    return (
+      <Suspense fallback={<AppHostChrome />}>
+        <RedirectToApp reason="app-path-on-marketing" />
       </Suspense>
     );
   }

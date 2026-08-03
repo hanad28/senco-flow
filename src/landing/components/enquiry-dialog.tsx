@@ -218,7 +218,12 @@ export default function EnquiryDialog({ trigger }: { trigger?: ReactElement }) {
               <p className="text-xs leading-5 text-muted-foreground">
                 Please don’t include children’s names, medical details, or other sensitive
                 information. The website database record is normally deleted after 30 days. Related
-                email correspondence may be kept longer where reasonably necessary to respond.
+                email correspondence may be kept longer where reasonably necessary to respond. See
+                our{" "}
+                <a className="underline underline-offset-2" href="/privacy">
+                  Website Privacy Notice
+                </a>
+                .
               </p>
               <div ref={turnstileContainer} className="min-h-[65px]" />
               {error && (

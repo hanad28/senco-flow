@@ -1,18 +1,10 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { posts } from "@/content/blog/posts";
 import { MarketingShell } from "@/landing/marketing-shell";
-import { pageTitle } from "@/lib/site";
 
 export const Route = createFileRoute("/blog")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Blog") },
-      {
-        name: "description",
-        content: "Notes from building Unisen: SEND coordination for schools and families.",
-      },
-    ],
-  }),
+  // Index and post children own their head tags. Emitting a parent canonical here
+  // duplicates <link rel="canonical"> on /blog/$slug pages.
   component: BlogLayout,
 });
 

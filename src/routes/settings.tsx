@@ -8,20 +8,15 @@ import {
   type NeedDomain,
   type ResponseStyle,
 } from "@/lib/school-profile-store";
-import { pageTitle } from "@/lib/site";
+import { appNoIndexHead } from "@/lib/seo";
 import { Info, Plus, Trash2, Check, Save } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Settings") },
-      {
-        name: "description",
-        content:
-          "School profile, provision catalogue, cohort baseline, staffing and response style: the source of truth for consultation responses.",
-      },
-    ],
-  }),
+  head: () =>
+    appNoIndexHead(
+      "Settings",
+      "School profile, provision catalogue, cohort baseline, staffing and response style: the source of truth for consultation responses.",
+    ),
   component: SettingsPage,
 });
 

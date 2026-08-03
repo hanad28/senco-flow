@@ -1,5 +1,6 @@
-// FamilyCaseProvider — all state for the family workspace demo.
-// Session-only (no localStorage for case content); includes reset-to-seed.
+// FamilyCaseProvider — family workspace demo state.
+// Case content is not written to localStorage; signed-in users persist a remote
+// Convex snapshot via usePersistentSnapshot (demo/fictional data only).
 
 import { createContext, useCallback, useContext, useMemo, type Dispatch, type ReactNode } from "react";
 import { FAMILY_STATUTORY, familyDeadlineIso } from "./family-config";

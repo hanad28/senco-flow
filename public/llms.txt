@@ -6,6 +6,7 @@
 
 - [Home](https://unisen.uk/)
 - [Product](https://unisen.uk/product)
+- [Integrations](https://unisen.uk/integrations)
 - [Pricing](https://unisen.uk/pricing)
 - [About](https://unisen.uk/about)
 - [Resources](https://unisen.uk/resources)

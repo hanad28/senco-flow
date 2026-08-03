@@ -6,16 +6,18 @@ import {
   RichMarketingPage,
   WalkthroughButton,
 } from "@/landing/rich-marketing-page";
-import { pageTitle, SITE_URL } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 const DESCRIPTION =
   "Core Unisen access is free for families, with tailored pilot or rollout pricing for schools, trusts and local authorities.";
 
 export const Route = createFileRoute("/pricing")({
-  head: () => ({
-    meta: [{ title: pageTitle("Pricing & pilots") }, { name: "description", content: DESCRIPTION }],
-    links: [{ rel: "canonical", href: `${SITE_URL}/pricing` }],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Pricing & pilots",
+      description: DESCRIPTION,
+      path: "/pricing",
+    }),
   component: PricingPage,
 });
 

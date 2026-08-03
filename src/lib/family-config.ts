@@ -16,11 +16,11 @@ export const FAMILY_STATUTORY = {
   disclaimer:
     "This tool supports document organisation and preparation and is not a substitute for independent legal advice or SENDIASS support.",
   demoBanner:
-    "Demo workspace — all names and documents are fictional.",
+    "Demo workspace - fictional data only. Signed-in edits save a cloud snapshot; do not enter real children’s information.",
   aiDisclosure:
-    "AI demonstration — answers use fictional seeded documents and do not constitute legal advice.",
+    "AI demonstration - answers use fictional seeded documents and do not constitute legal advice.",
   translationDisclosure:
-    "AI-assisted translation — check important wording before relying on it.",
+    "AI-assisted translation - check important wording before relying on it.",
 } as const;
 
 // Add N calendar days to an ISO date (received day itself does not count;

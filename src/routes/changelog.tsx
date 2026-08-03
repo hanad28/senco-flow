@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MarketingShell } from "@/landing/marketing-shell";
-import { pageTitle } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 /** Drawn from git history (meaningful subjects only; deploy/noise commits omitted). */
 const ENTRIES = [
@@ -95,12 +95,12 @@ const ENTRIES = [
 ] as const;
 
 export const Route = createFileRoute("/changelog")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Changelog") },
-      { name: "description", content: "What has shipped in Unisen." },
-    ],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Changelog",
+      description: "What has shipped in Unisen.",
+      path: "/changelog",
+    }),
   component: ChangelogPage,
 });
 

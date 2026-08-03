@@ -4,11 +4,20 @@ import { action, internalMutation } from "./_generated/server";
 
 const RECIPIENT = "unisenofficial@gmail.com";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PRODUCTION_TURNSTILE_HOSTS = new Set(["unisen.uk", "www.unisen.uk"]);
 
 function required(value: string, maxLength: number) {
   const clean = value.trim();
   if (!clean || clean.length > maxLength) throw new Error("Invalid enquiry details");
   return clean;
+}
+
+function isDevTurnstileHost(hostname: string): boolean {
+  return (
+    hostname === "localhost" ||
+    hostname.endsWith(".localhost") ||
+    hostname === "127.0.0.1"
+  );
 }
 
 async function verifyTurnstile(token: string) {
@@ -19,8 +28,23 @@ async function verifyTurnstile(token: string) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({ secret, response: token }),
   });
-  const result = (await response.json()) as { success?: boolean };
+  const result = (await response.json()) as {
+    success?: boolean;
+    hostname?: string;
+  };
   if (!result.success) throw new Error("Unable to verify enquiry submission");
+
+  // Fail closed: production must see an approved hostname. Localhost is only
+  // accepted when TURNSTILE_ALLOW_DEV_HOSTS=true is set in Convex.
+  const hostname = result.hostname?.trim().toLowerCase();
+  if (!hostname) throw new Error("Unable to verify enquiry submission");
+
+  if (PRODUCTION_TURNSTILE_HOSTS.has(hostname)) return;
+
+  const allowDevHosts = process.env.TURNSTILE_ALLOW_DEV_HOSTS === "true";
+  if (allowDevHosts && isDevTurnstileHost(hostname)) return;
+
+  throw new Error("Unable to verify enquiry submission");
 }
 
 async function sendEmail(
@@ -172,10 +196,16 @@ export const store = internalMutation({
 export const cleanupExpired = internalMutation({
   args: {},
   handler: async (ctx) => {
-    const expired = await ctx.db
-      .query("enquiries")
-      .withIndex("by_created_at", (q) => q.lt("createdAt", Date.now() - 30 * 24 * 60 * 60 * 1_000))
-      .take(500);
-    await Promise.all(expired.map((enquiry) => ctx.db.delete(enquiry._id)));
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1_000;
+    // Drain in batches so a backlog cannot linger past the retention window.
+    for (let pass = 0; pass < 20; pass += 1) {
+      const expired = await ctx.db
+        .query("enquiries")
+        .withIndex("by_created_at", (q) => q.lt("createdAt", cutoff))
+        .take(500);
+      if (expired.length === 0) break;
+      await Promise.all(expired.map((enquiry) => ctx.db.delete(enquiry._id)));
+      if (expired.length < 500) break;
+    }
   },
 });

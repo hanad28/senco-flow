@@ -20,12 +20,19 @@ function SupportScreen() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
         <header>
           <h1 className="text-2xl font-semibold tracking-tight">{t("nav.support")}</h1>
-          <p className="text-sm text-muted-foreground mt-1 max-w-3xl">Everyone involved in Maya's case. Nothing is shared automatically: this is a family view, kept in your browser.</p>
+          <p className="text-sm text-muted-foreground mt-1 max-w-3xl">
+            Everyone involved in Maya&apos;s fictional case. Support contacts are part of this demo
+            workspace view and are not shared automatically with other organisations.
+          </p>
         </header>
 
         <div className="rounded-lg border bg-info/10 border-info/30 p-3 text-xs text-info-foreground flex items-start gap-2">
           <ShieldCheck className="h-4 w-4 mt-0.5 shrink-0" aria-hidden="true" />
-          <span>Sensitive case content is never stored in your browser. Only names, roles and private notes you add here are held for this session.</span>
+          <span>
+            Demo only: when you are signed in, names, roles and private notes you add here are saved
+            with the fictional case snapshot in Unisen&apos;s cloud (not browser-only / session-only).
+            Do not enter real children&apos;s data.
+          </span>
         </div>
 
         <ul className="space-y-2">

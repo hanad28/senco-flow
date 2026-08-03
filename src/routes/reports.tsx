@@ -14,21 +14,16 @@ import {
   domainOrder,
   type NeedDomain,
 } from "@/lib/school-profile-store";
-import { pageTitle } from "@/lib/site";
+import { appNoIndexHead } from "@/lib/seo";
 import { calendarDeadlineDate } from "@/lib/working-days";
 import { CheckCircle2, Percent, Info } from "lucide-react";
 
 export const Route = createFileRoute("/reports")({
-  head: () => ({
-    meta: [
-      { title: pageTitle("Reports") },
-      {
-        name: "description",
-        content:
-          "Aggregate response history, outcomes, and school-level SEND reporting for governor packs and LA moderation meetings.",
-      },
-    ],
-  }),
+  head: () =>
+    appNoIndexHead(
+      "Reports",
+      "Aggregate response history, outcomes, and school-level SEND reporting for governor packs and LA moderation meetings.",
+    ),
   component: ReportsPage,
 });
 

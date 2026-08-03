@@ -7,16 +7,18 @@ import {
   RichMarketingPage,
   WalkthroughButton,
 } from "@/landing/rich-marketing-page";
-import { pageTitle, SITE_URL } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 const DESCRIPTION =
   "See what Unisen supports in the prototype, what can be configured during a pilot, and which SEND workflow integrations are planned.";
 
 export const Route = createFileRoute("/integrations")({
-  head: () => ({
-    meta: [{ title: pageTitle("Integrations") }, { name: "description", content: DESCRIPTION }],
-    links: [{ rel: "canonical", href: `${SITE_URL}/integrations` }],
-  }),
+  head: () =>
+    marketingPageHead({
+      title: "Integrations",
+      description: DESCRIPTION,
+      path: "/integrations",
+    }),
   component: IntegrationsPage,
 });
 

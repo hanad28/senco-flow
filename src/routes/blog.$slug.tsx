@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getPost } from "@/content/blog/posts";
 import { MarketingShell } from "@/landing/marketing-shell";
-import { pageTitle } from "@/lib/site";
+import { marketingPageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
@@ -9,15 +9,13 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!post) throw notFound();
     return post;
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: pageTitle(loaderData?.title ?? "Blog") },
-      {
-        name: "description",
-        content: loaderData?.description ?? "Unisen blog",
-      },
-    ],
-  }),
+  head: ({ loaderData }) =>
+    marketingPageHead({
+      title: loaderData?.title ?? "Blog",
+      description: loaderData?.description ?? "Unisen blog",
+      path: `/blog/${loaderData?.slug ?? ""}`,
+      ogType: "article",
+    }),
   component: BlogPostPage,
 });
 

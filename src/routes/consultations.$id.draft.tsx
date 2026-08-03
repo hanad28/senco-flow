@@ -15,7 +15,7 @@ export const Route = createFileRoute("/consultations/$id/draft")({
   head: ({ params }) => ({
     meta: [
       { title: pageTitle(`Draft ${params.id.toUpperCase()}`) },
-      { name: "robots", content: "noindex" },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: DraftView,
