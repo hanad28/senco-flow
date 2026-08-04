@@ -4,6 +4,9 @@ export type BlogPost = {
   date: string;
   description: string;
   body: string[];
+  /** Lowercase topic shown in filters, e.g. "company" or "guidance". */
+  topic: string;
+  author: string;
 };
 
 /** On-site posts — plain TS for now; no CMS. */
@@ -19,6 +22,8 @@ export const posts: BlogPost[] = [
       "We’re validating with SENCOs and local authorities first. This blog will share what we learn in public, without naming private contacts or using real pupil data.",
       "If you work in a school or LA and want a short walkthrough, use Book a 15-min walkthrough on the site or email enquiries@unisen.uk.",
     ],
+    topic: "company",
+    author: "Unisen Team",
   },
   {
     slug: "15-day-consultation-window",
@@ -31,9 +36,27 @@ export const posts: BlogPost[] = [
       "In practice the work spans inbox threads, professional reports, and draft wording that has to be specific enough to stand up later. Unisen’s first wedge is making that case work visible and finishable on time.",
       "Nothing here is legal advice — always check the current Code of Practice and your LA’s process.",
     ],
+    topic: "guidance",
+    author: "Unisen Team",
   },
 ];
 
 export function getPost(slug: string) {
   return posts.find((p) => p.slug === slug);
+}
+
+/** Newest first. */
+export const sortedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date));
+
+export function formatDate(iso: string) {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export function readMinutes(post: BlogPost) {
+  const words = post.body.join(" ").split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
 }
