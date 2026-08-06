@@ -91,7 +91,7 @@ export default function SolutionsSection({
             </ul>
           </div>
 
-          <div className="flex min-h-[16rem] flex-col justify-between rounded-[20px] border border-[var(--border-default)] bg-surface-2 p-6 max-lg:min-h-[12rem]">
+          <div className="flex min-h-[16rem] flex-col justify-between rounded-[20px] bg-surface-2 p-6 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8 max-lg:min-h-[12rem]">
             <p className="text-accent [font-family:var(--font-body)] text-xs font-semibold uppercase tracking-wide">
               {current.tab}
             </p>

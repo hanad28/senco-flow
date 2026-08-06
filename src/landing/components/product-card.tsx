@@ -37,7 +37,7 @@ export default function ProductCard({
 
   if (d.featured) {
     return (
-      <article className="pricing-card pricing-card--featured relative flex w-full min-h-[35.3125rem] flex-col justify-end items-stretch gap-5 overflow-hidden rounded-[24px] border border-[var(--border-default)] p-4 max-lg:min-h-[34.5rem]">
+      <article className="pricing-card pricing-card--featured relative flex w-full min-h-[35.3125rem] flex-col justify-end items-stretch gap-5 overflow-hidden rounded-[24px] bg-surface-2 p-4 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8 max-lg:min-h-[34.5rem]">
         <div className="absolute inset-0 z-0 rounded-[24px] overflow-hidden">
           <img
             className="h-full w-full object-cover"
@@ -89,7 +89,7 @@ export default function ProductCard({
   }
 
   return (
-    <article className="pricing-card relative flex w-full min-h-[35.3125rem] flex-col justify-start items-start gap-5 rounded-[16px] border border-[var(--border-default)] bg-surface-2 p-4 max-lg:min-h-0">
+    <article className="pricing-card relative flex w-full min-h-[35.3125rem] flex-col justify-start items-start gap-5 rounded-[16px] bg-surface-2 p-4 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8 max-lg:min-h-0">
       <h4 className="block text-color-001 [font-family:'DM_Sans',_'DM_Sans_Placeholder',_sans-serif] text-2xl font-medium italic leading-[1.625rem] text-balance max-lg:text-xl max-lg:leading-5.5">
         {d.title}
       </h4>

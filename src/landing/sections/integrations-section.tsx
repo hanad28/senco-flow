@@ -42,7 +42,7 @@ export default function IntegrationsSection({
           {steps.map((s) => (
             <div
               key={s.step}
-              className="flex flex-col gap-4 rounded-[20px] border border-[var(--border-default)] bg-background p-6"
+              className="flex flex-col gap-4 rounded-[20px] bg-background p-6 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-clr-0 text-color-001 [font-family:var(--font-heading)] text-base font-bold">
                 {s.step}
@@ -54,7 +54,7 @@ export default function IntegrationsSection({
           ))}
         </div>
 
-        <div className="flex w-full flex-col gap-5 rounded-[24px] border border-[var(--border-default)] bg-surface-2 p-8 max-lg:p-6">
+        <div className="flex w-full flex-col gap-5 rounded-[24px] bg-surface-2 p-8 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8 max-lg:p-6">
           <p className="text-muted-foreground [font-family:var(--font-body)] text-sm font-semibold uppercase tracking-wide">
             Fits alongside
           </p>

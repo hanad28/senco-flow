@@ -935,8 +935,15 @@
   --cursor-card-tint-strong: #dceeff;
   --cursor-card-sage: #d7e8d2;
   --cursor-card-cream: #f7e9c6;
-  --cursor-card-border: 1px solid #d7e5f2;
-  --cursor-card-shadow: none;
+  --cursor-card-border: 0 solid transparent;
+  /* Smooth stacked elevation (shadow-plugin values, Unisen-tinted) */
+  --cursor-card-shadow:
+    0 17.54px 23.39px 0 color-mix(in srgb, #244a70 4%, transparent),
+    0 9.4px 12.5px 0 color-mix(in srgb, #244a70 3%, transparent),
+    0 5.25px 7px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 2.79px 3.72px -2px color-mix(in srgb, #244a70 1%, transparent),
+    0 1.16px 1.5px 0 color-mix(in srgb, #244a70 1%, transparent),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
   --cursor-card-text: #234a6b;
   --cursor-card-text-muted: #607d96;
   --cursor-accent: #5fa9e6;
@@ -951,8 +958,8 @@
   background-color: var(--landing-canvas, #f7f7f4);
   border: 0;
   box-shadow: none;
-  /* Contain glass-card shadows so they don't stain the next section edge */
-  overflow: clip;
+  /* Allow smooth card shadows to paint outside the section */
+  overflow: visible;
 }
 
 /* Feather card-shadow stain back to canvas at top/bottom edges.
@@ -1132,8 +1139,14 @@
 
 .unisen-landing .landing-body a.cursor-card:hover,
 .unisen-landing .landing-body a.cursor-card:focus-visible {
-  border-color: var(--cursor-accent, #5fa9e6);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--cursor-accent, #5fa9e6) 35%, transparent);
+  border-color: transparent;
+  box-shadow:
+    0 25px 50px 0 color-mix(in srgb, #244a70 5%, transparent),
+    0 12px 24px 0 color-mix(in srgb, #244a70 4%, transparent),
+    0 6px 12px 0 color-mix(in srgb, #244a70 3%, transparent),
+    0 3px 6px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 1.5px 3px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--cursor-accent, #5fa9e6) 45%, transparent);
   outline: none;
 }
 

@@ -93,16 +93,25 @@
 
 .unisen-landing .pricing-card:not(.pricing-card--featured):hover {
   transform: translateY(-4px);
+  /* smooth-shadow-ring-lg, Unisen-tinted */
   box-shadow:
-    rgba(0, 0, 0, 0.08) 0 16px 40px 0,
-    rgba(0, 0, 0, 0.04) 0 2px 6px 0;
+    0 25px 50px 0 color-mix(in srgb, #244a70 5%, transparent),
+    0 12px 24px 0 color-mix(in srgb, #244a70 4%, transparent),
+    0 6px 12px 0 color-mix(in srgb, #244a70 3%, transparent),
+    0 3px 6px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 1.5px 3px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 0 0 1px rgba(0, 0, 0, 0.08) !important;
 }
 
 .unisen-landing .pricing-card--featured:hover {
   transform: translateY(-4px);
   box-shadow:
-    rgba(0, 0, 0, 0.12) 0 20px 40px 0,
-    rgba(0, 0, 0, 0.06) 0 4px 10px 0;
+    0 40px 80px 0 color-mix(in srgb, #244a70 6%, transparent),
+    0 20px 40px 0 color-mix(in srgb, #244a70 5%, transparent),
+    0 10px 20px 0 color-mix(in srgb, #244a70 4%, transparent),
+    0 5px 10px 0 color-mix(in srgb, #244a70 3%, transparent),
+    0 2px 4px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 0 0 1px rgba(0, 0, 0, 0.08) !important;
 }
 
 .unisen-landing .pricing-grid {
@@ -234,19 +243,17 @@
   backface-visibility: hidden;
 }
 
-/* Rest: fully visible */
+/* Rest: fully visible — elevation comes from smooth-shadow-ring-* utility */
 .unisen-landing .feature-card-rest {
   opacity: 1;
   transform: scale(1) translateY(0);
-  box-shadow: none;
 }
 
-/* Detail: hidden under rest until hover */
+/* Detail: hidden under rest until hover — keep utility shadow for when it rises */
 .unisen-landing .feature-card-detail {
   opacity: 0;
   transform: scale(0.92) translateY(10px);
   pointer-events: none;
-  box-shadow: none;
 }
 
 /* Media / copy inside detail: staggered entrance */
@@ -311,9 +318,14 @@
   opacity: 1;
   transform: scale(1.04) translateY(-6px);
   pointer-events: auto;
+  /* smooth-shadow-ring-xl */
   box-shadow:
-    rgba(0, 0, 0, 0.14) 0 20px 48px 0,
-    rgba(0, 0, 0, 0.06) 0 4px 12px 0;
+    0 40px 80px 0 color-mix(in srgb, #244a70 6%, transparent),
+    0 20px 40px 0 color-mix(in srgb, #244a70 5%, transparent),
+    0 10px 20px 0 color-mix(in srgb, #244a70 4%, transparent),
+    0 5px 10px 0 color-mix(in srgb, #244a70 3%, transparent),
+    0 2px 4px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 0 0 1px rgba(0, 0, 0, 0.1) !important;
   z-index: 5;
 }
 

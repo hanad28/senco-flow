@@ -35,7 +35,7 @@ export default function CapabilitiesSection({
           {items.map((item) => (
             <article
               key={item.title}
-              className="flex flex-col gap-3 rounded-[20px] border border-[var(--border-default)] bg-surface-2 p-7 max-lg:p-6"
+              className="flex flex-col gap-3 rounded-[20px] bg-surface-2 p-7 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8 max-lg:p-6"
             >
               <h3 className="text-color-001 [font-family:var(--font-heading)] text-xl font-bold tracking-[-0.03em] max-lg:text-lg">
                 {item.title}

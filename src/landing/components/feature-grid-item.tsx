@@ -36,7 +36,7 @@ export default function FeatureGridItem({ d }: { d: FeatureGridItemData }) {
       {/* Desktop: identical box for every card at rest */}
       <div className={`feature-card relative max-lg:hidden ${CARD_REST}`}>
         {/* Rest layer */}
-        <div className="feature-card-rest absolute inset-0 z-[1] flex flex-col justify-between items-start overflow-clip rounded-xl bg-surface-2 pt-5 pb-10 px-5">
+        <div className="feature-card-rest absolute inset-0 z-[1] flex flex-col justify-between items-start overflow-clip rounded-xl bg-surface-2 pt-5 pb-10 px-5 smooth-shadow-ring-sm shadow-[#244a70] smooth-ring-black/8">
           {restStat ? (
             <p className="feature-card-stat block text-color-003 [font-family:'DM_Sans',_'DM_Sans_Placeholder',_sans-serif] text-[3.25rem] font-medium leading-[3.4375rem] text-balance">
               {restStat}
@@ -58,7 +58,7 @@ export default function FeatureGridItem({ d }: { d: FeatureGridItemData }) {
         </div>
 
         {/* Detail layer: only visible/interactive on hover */}
-        <div className="feature-card-detail absolute inset-0 z-[2] flex flex-col justify-between items-stretch overflow-clip rounded-[20px] bg-color-002 p-2">
+        <div className="feature-card-detail absolute inset-0 z-[2] flex flex-col justify-between items-stretch overflow-clip rounded-[20px] bg-color-002 p-2 smooth-shadow-ring-lg shadow-[#244a70] smooth-ring-black/10">
           <div className="feature-card-detail-media relative w-full shrink-0 overflow-hidden rounded-xl aspect-[1.56911/1]">
             <img
               className="absolute inset-0 h-full w-full object-cover"

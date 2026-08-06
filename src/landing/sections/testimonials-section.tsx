@@ -32,7 +32,7 @@ export default function TestimonialsSection({
           {items.map((t) => (
             <figure
               key={t.name}
-              className="flex h-full flex-col justify-between gap-6 rounded-[20px] border border-[var(--border-default)] bg-background p-7 max-lg:p-6"
+              className="flex h-full flex-col justify-between gap-6 rounded-[20px] bg-background p-7 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8 max-lg:p-6"
             >
               <blockquote className="text-color-001 [font-family:var(--font-heading)] text-lg font-semibold leading-snug tracking-[-0.02em] text-balance max-lg:text-base">
                 “{t.quote}”

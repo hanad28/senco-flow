@@ -190,12 +190,17 @@ Use rounded, simple geometry inspired by the puzzle pieces.
 
 ### Borders
 
-- Default border: `1px solid #D7E5EB`
+- Default border: `1px solid #D7E5EB` (flat or inset UI only)
 - Active border: `2px solid #3B8AC1`
 - Avoid heavy dark outlines.
-- Use soft tinted fills before adding shadows.
+- On **elevated cards**, prefer the hairline from `smooth-shadow-ring-*` over a separate border + shadow pair.
+- Soft tinted fills remain fine for non-elevated chips, badges, and quiet surfaces.
 
 ### Shadows
+
+Elevated surfaces use **[shadow-plugin](https://shadow.floriankiem.com/)** (Florian Kiem smooth shadows), imported in `src/styles.css`. Prefer its stacked shadows over ad-hoc `box-shadow` or Tailwind’s default single-layer `shadow-*` on marketing cards.
+
+Legacy design tokens (app chrome / non-plugin surfaces):
 
 ```css
 --shadow-sm: 0 2px 8px rgba(24, 50, 75, 0.08);
@@ -203,7 +208,33 @@ Use rounded, simple geometry inspired by the puzzle pieces.
 --shadow-lg: 0 20px 60px rgba(24, 50, 75, 0.14);
 ```
 
-Use one shadow per surface. Avoid neon glow and strong blurred halos.
+#### Smooth shadow utilities (preferred on cards)
+
+| Class | Use |
+|---|---|
+| `smooth-shadow-sm` … `smooth-shadow-2xl` | Elevation only (no edge stroke) |
+| `smooth-shadow-ring-sm` … `smooth-shadow-ring-2xl` | Elevation + 1px hairline ring in one stroke |
+| `shadow-[#244a70]` | Tint the stacked shadow with Unisen navy |
+| `smooth-ring-black/8` | Soften or strengthen the baked-in ring |
+
+Default marketing card treatment:
+
+```html
+<div class="rounded-[20px] bg-surface-2 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8">
+  …
+</div>
+```
+
+Home landing `.cursor-card` surfaces bake the same md-scale stack into `--cursor-card-shadow` (see `src/landing/landing-body.css`) so the CSS component API stays stable without scattering utility classes.
+
+#### Elevation rules
+
+- **Never** pair a hard `border-*` / `ring-*` with a shadow on the same elevated surface — that creates a double edge. Use `smooth-shadow-ring-*` instead and drop the border.
+- One elevation system per surface: either `smooth-shadow-ring-*` **or** a legacy `--shadow-*` token, not both.
+- Rest state: usually `smooth-shadow-ring-md` (or sm for denser grids). Hover / expanded detail: step up one size (`lg` / `xl`).
+- Quiet / dashed cards stay flat (`box-shadow: none`) so secondary surfaces do not compete.
+- Avoid neon glow, pure black slabs, and strong blurred halos. Tint with `#244a70` / `rgba(24, 50, 75, …)` so shadows stay on-brand.
+- Parent sections must allow overflow (`overflow: visible` where shadows can paint outside the card bounds).
 
 ## 7. Imagery and Illustration
 
@@ -299,16 +330,17 @@ The main image style is a soft hand-painted anime-inspired landscape with modern
 
 ### Standard card
 
-- Background: white
-- Border: `1px solid #D7E5EB`
+- Background: white or `surface-2`
+- Edge: `smooth-shadow-ring-md` (no separate border)
+- Shadow tint: `shadow-[#244a70]` with `smooth-ring-black/8`
 - Radius: 20 px
 - Padding: 24 px
-- Shadow: optional `shadow-sm`
+- Implementation: Tailwind utilities above, or `.cursor-card` on the home landing (tokenised shadow in CSS)
 
 ### Highlight card
 
 - Background: `#FFF6CC`, `#DBF1FC`, or `#CEEEF3`
-- Border: none or a matching low-contrast border
+- Edge: same smooth ring treatment, or no elevation when the fill alone separates the card from the canvas
 - Use one illustration or icon, not several competing decorations.
 
 ### Card rules
@@ -317,6 +349,8 @@ The main image style is a soft hand-painted anime-inspired landscape with modern
 - Place actions at the bottom when cards appear in a grid.
 - Keep card heights consistent within the same row.
 - Use coloured top strips sparingly.
+- Do not stack a 1px border on top of `smooth-shadow-ring-*`.
+- Hover may lift (`translateY`) and step the smooth shadow up one size; keep the motion under ~300ms ease-out.
 
 ## 11. Navigation
 
@@ -446,11 +480,23 @@ Motion should feel light and calm.
   --radius-xl: 28px;
   --radius-pill: 999px;
 
+  /* Legacy single-layer shadows (app chrome). Marketing cards use shadow-plugin. */
   --shadow-sm: 0 2px 8px rgba(24, 50, 75, 0.08);
   --shadow-md: 0 10px 30px rgba(24, 50, 75, 0.1);
   --shadow-lg: 0 20px 60px rgba(24, 50, 75, 0.14);
+
+  /* Marketing / elevated surfaces — mirror shadow-plugin md + hairline ring */
+  --elevation-shadow-md:
+    0 17.54px 23.39px 0 color-mix(in srgb, #244a70 4%, transparent),
+    0 9.4px 12.5px 0 color-mix(in srgb, #244a70 3%, transparent),
+    0 5.25px 7px 0 color-mix(in srgb, #244a70 2%, transparent),
+    0 2.79px 3.72px -2px color-mix(in srgb, #244a70 1%, transparent),
+    0 1.16px 1.5px 0 color-mix(in srgb, #244a70 1%, transparent),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 ```
+
+Package: `shadow-plugin` (`@import "shadow-plugin"` in `src/styles.css`). Live playground: [shadow.floriankiem.com](https://shadow.floriankiem.com/).
 
 ## 18. Content Composition Patterns
 
@@ -549,6 +595,7 @@ Before approving a screen, confirm that:
 - The layout has enough white space.
 - Illustration details do not interfere with headings or controls.
 - Components use consistent radii, spacing, and icon styles.
+- Elevated cards use `smooth-shadow-ring-*` (or the shared `--cursor-card-shadow` token), not border + shadow doubles.
 - Repeated cards are uniform unless size intentionally communicates priority.
 - Focus, hover, loading, empty, error, and disabled states are present.
 - Mobile layouts do not depend on desktop image positioning.

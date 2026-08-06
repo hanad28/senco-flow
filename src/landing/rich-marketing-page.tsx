@@ -96,7 +96,7 @@ export function MarketingCard({
   children: ReactNode;
 }) {
   return (
-    <article className="rounded-[1.25rem] border border-[var(--border-default)] bg-white p-6 shadow-[0_16px_45px_rgba(36,74,112,0.06)] max-md:p-5">
+    <article className="rounded-[1.25rem] bg-white p-6 smooth-shadow-ring-md shadow-[#244a70] smooth-ring-black/8 max-md:p-5">
       {label ? (
         <p className="text-xs font-bold uppercase tracking-[0.1em] text-[var(--action-primary)]">
           {label}
