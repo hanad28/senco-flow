@@ -123,9 +123,14 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: (ctx) => {
-    const isNotFound = ctx?.matches?.some(
-      (m) => m.status === "notFound" || m.globalNotFound === true,
-    );
+    // Prefer ctx.match (store) over ctx.matches: on SSR global-not-found,
+    // updateMatch flags the store while the matches array can still be stale.
+    const isNotFound =
+      ctx?.match?.globalNotFound === true ||
+      ctx?.match?.status === "notFound" ||
+      ctx?.matches?.some(
+        (m) => m.status === "notFound" || m.globalNotFound === true,
+      );
 
     if (isNotFound) {
       return {
