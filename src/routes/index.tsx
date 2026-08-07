@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { AppShell } from "@/components/app-shell";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { resolveHostMode } from "@/lib/hostname";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
 import { marketingPageHead, appNoIndexHead } from "@/lib/seo";
@@ -9,6 +8,12 @@ import { calendarDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
 const PAGE_SIZE = 10;
+
+// AppShell pulls the app-shell/search-store chunks; lazy so marketing visits
+// (which render LandingPage, not Dashboard) never preload them.
+const AppShell = lazy(() =>
+  import("@/components/app-shell").then((m) => ({ default: m.AppShell })),
+);
 
 function getPageItems(current: number, total: number): (number | "ellipsis-left" | "ellipsis-right")[] {
   if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
@@ -160,7 +165,8 @@ function Dashboard() {
   ).length;
 
   return (
-    <AppShell breadcrumbs={[{ label: "Dashboard" }]}>
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">Loading…</div>}>
+      <AppShell breadcrumbs={[{ label: "Dashboard" }]}>
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Consultations</h1>
@@ -318,7 +324,8 @@ function Dashboard() {
           )}
         </div>
       </div>
-    </AppShell>
+      </AppShell>
+    </Suspense>
   );
 }
 
