@@ -95,9 +95,9 @@
 }
 
 .unisen-landing {
-  /* Brand type: Nunito display + Nunito Sans body (docs/DESIGN.md). */
-  --font-body: "Nunito Sans", "Avenir Next", Avenir, Inter, Arial, sans-serif;
-  --font-heading: "Nunito", "Nunito Sans", Arial, sans-serif;
+  /* Brand type: Literata display + Figtree body (docs/DESIGN.md). */
+  --font-body: "Figtree", "Nunito Sans", "Avenir Next", Avenir, Inter, Arial, sans-serif;
+  --font-heading: "Literata", Georgia, "Times New Roman", serif;
   --font-001: var(--font-body);
   --font-002: var(--font-heading);
   --font-003: var(--font-body);
@@ -160,9 +160,9 @@
   letter-spacing: -0.02em;
 }
 
-.unisen-landing :where(h1, h2, h3, h4, [data-component="heading"]) {
+.unisen-landing :where(h1, h2, h3, h4, h5, h6, [data-component="heading"]) {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 700 !important;
   letter-spacing: -0.02em;
   color: inherit;
 }
@@ -676,8 +676,8 @@ body:has(.unisen-landing) {
 .unisen-landing .unisen-hero-title {
   color: #ffffff;
   font-size: clamp(1.75rem, 3.4vw, 2.625rem);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
   font-weight: 700;
   text-shadow:
     0 1px 2px rgba(36, 74, 112, 0.25),

@@ -98,27 +98,27 @@ The palette combines the yellow from the UNISEN logo with sky blue, river blue, 
 
 ### Primary font
 
-Use **Nunito Sans** for the product interface and marketing pages.
+Use **Figtree** for the product interface and marketing body copy.
 
 Reasons:
 
-- Rounded forms match the puzzle logo.
-- It feels warm and approachable.
-- It remains readable in dense product interfaces.
-- It supports a wide range of weights.
+- Soft neo-grotesque forms stay warm next to the park illustration and puzzle logo.
+- High legibility in dense product UI and statutory process copy.
+- Pairs cleanly with a reading-first display serif.
+- Broad weight range for hierarchy without thin strokes.
 
 Fallback stack:
 
 ```css
-font-family: "Nunito Sans", "Avenir Next", Avenir, Inter, Arial, sans-serif;
+font-family: "Figtree", "Nunito Sans", "Avenir Next", Avenir, Inter, Arial, sans-serif;
 ```
 
-### Optional display font
+### Display font
 
-Use **Nunito** for large marketing headlines when a softer voice is needed. Do not mix it into dense dashboards or long-form body copy.
+Use **Literata** for large marketing headlines and section titles. Literata is a reading-first digital serif — calm authority for EHC / SEND content without cold corporate polish. Do not use it for dense dashboard chrome or long multi-paragraph body blocks in the app shell.
 
 ```css
-font-family: "Nunito", "Nunito Sans", Arial, sans-serif;
+font-family: "Literata", Georgia, "Times New Roman", serif;
 ```
 
 ### Type scale
@@ -471,8 +471,8 @@ Motion should feel light and calm.
   --color-error: #c84c4c;
   --color-info: #3b8ac1;
 
-  --font-ui: "Nunito Sans", "Avenir Next", Avenir, Inter, Arial, sans-serif;
-  --font-display: "Nunito", "Nunito Sans", Arial, sans-serif;
+  --font-ui: "Figtree", "Nunito Sans", "Avenir Next", Avenir, Inter, Arial, sans-serif;
+  --font-display: "Literata", Georgia, "Times New Roman", serif;
 
   --radius-sm: 8px;
   --radius-md: 14px;

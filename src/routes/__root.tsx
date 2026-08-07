@@ -160,7 +160,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         // Slim weights used on marketing + app chrome (display=swap already set).
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&family=Nunito+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Literata:opsz,wght@7..72,500;600;700;800&display=swap",
       },
     ],
     scripts: [

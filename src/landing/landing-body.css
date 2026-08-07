@@ -75,7 +75,7 @@
 .unisen-landing .landing-body :where(h1, h2, h3, h4, h5, h6, [data-component="heading"]) {
   font-family: var(--font-heading) !important;
   color: var(--cursor-card-text, #234a6b);
-  font-weight: 600;
+  font-weight: 700 !important;
   letter-spacing: -0.025em;
 }
 
