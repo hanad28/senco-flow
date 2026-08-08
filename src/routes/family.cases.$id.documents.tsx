@@ -31,7 +31,7 @@ function DocumentsScreen() {
 
         <div className="rounded-md bg-info/10 border border-info/30 text-info-foreground text-xs p-3 flex items-start gap-2">
           <Info className="h-4 w-4 mt-0.5 shrink-0" aria-hidden="true" />
-          <span>This is a demonstration. No files leave your browser and no real documents are analysed.</span>
+          <span>This is a demonstration. No files are uploaded or analysed. Document titles and metadata you add are saved with the fictional case snapshot in Unisen&apos;s cloud when you are signed in.</span>
         </div>
 
         <div className="relative">
@@ -117,7 +117,7 @@ function AddDocDialog({ onClose, onAdd }: { onClose: () => void; onAdd: (title: 
     <div role="dialog" aria-modal="true" aria-labelledby="add-doc-title" className="fixed inset-0 z-50 grid place-items-center bg-foreground/40 p-4">
       <div className="w-full max-w-md rounded-lg bg-surface border shadow-lg p-5 space-y-4">
         <h3 id="add-doc-title" className="text-base font-semibold">Add your own document</h3>
-        <p className="text-xs text-muted-foreground">This demo stores only the title in memory. No files are uploaded.</p>
+        <p className="text-xs text-muted-foreground">No file is uploaded. The title and metadata are saved to Unisen&apos;s cloud with the rest of this case when you are signed in.</p>
         <label className="text-xs block">Title
           <input autoFocus value={title} onChange={(e) => setTitle(e.target.value)} className="mt-1 w-full min-h-11 rounded-md border bg-surface px-3 text-sm" />
         </label>

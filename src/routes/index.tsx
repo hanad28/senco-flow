@@ -3,10 +3,11 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { resolveHostMode } from "@/lib/hostname";
 import { useConsultations, formatDate, deadlineTone, isThisTerm, type ConsultationStatus } from "@/lib/consultations-store";
 import { marketingPageHead, appNoIndexHead } from "@/lib/seo";
-import { SITE_DESCRIPTION, SITE_HOME_TITLE } from "@/lib/site";
+import { pageTitle, SITE_DESCRIPTION, SITE_HOME_TITLE } from "@/lib/site";
 import { calendarDaysRemaining } from "@/lib/working-days";
 import { Search, ArrowUpDown, ArrowUp, ArrowDown, AlertTriangle, Clock, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
+const DASHBOARD_TITLE = pageTitle("Dashboard");
 const PAGE_SIZE = 10;
 
 // AppShell pulls the app-shell/search-store chunks; lazy so marketing visits

@@ -132,7 +132,7 @@ const DICT_EN: Record<string, string> = {
 
 // Sample native translations for headline nav + banners so language toggle is
 // visibly effective without shipping ~150 duplicated strings. Missing keys
-// fall back cleanly to English, and are labelled honestly in the UI.
+// fall back to English; use <Tx /> (or isFallback) so fallbacks are labelled.
 const DICT_AR: Record<string, string> = {
   "nav.home": "الرئيسية",
   "nav.case": "قضية مايا",
@@ -288,4 +288,23 @@ export function useFamilyI18n(): Ctx {
   const ctx = useContext(FamilyI18nCtx);
   if (!ctx) throw new Error("useFamilyI18n must be used inside FamilyI18nProvider");
   return ctx;
+}
+
+/** Renders a dictionary string and marks silent English fallbacks. */
+export function Tx({ k, className }: { k: string; className?: string }) {
+  const { t, isFallback } = useFamilyI18n();
+  const fallback = isFallback(k);
+  return (
+    <span className={className} data-i18n-fallback={fallback ? "true" : undefined}>
+      {t(k)}
+      {fallback ? (
+        <span
+          className="ms-1 align-super text-[9px] font-medium tracking-wide text-muted-foreground"
+          title="Shown in English — translation not yet available"
+        >
+          EN
+        </span>
+      ) : null}
+    </span>
+  );
 }

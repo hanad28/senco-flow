@@ -16,6 +16,8 @@ import { ConsultationsProvider } from "../lib/consultations-store";
 import { SchoolProfileProvider } from "../lib/school-profile-store";
 import { TemplatesProvider } from "../lib/templates-store";
 import { SearchProvider } from "../lib/search-store";
+import { DemoSeedBootstrap } from "../lib/demo-seed-bootstrap";
+import { OnboardingGate } from "../components/onboarding-gate";
 import { getLocationSuffix } from "../lib/hostname";
 import { APP_URL, SITE_URL, type HostMode } from "../lib/site";
 import { MarketingSurface } from "../landing/marketing-surface";
@@ -55,7 +57,10 @@ function AuthenticatedApp({ queryClient }: { queryClient: QueryClient }) {
         <TemplatesProvider>
           <ConsultationsProvider>
             <SearchProvider>
-              <Outlet />
+              <DemoSeedBootstrap />
+              <OnboardingGate>
+                <Outlet />
+              </OnboardingGate>
               <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border bg-background/95 p-2 shadow-lg backdrop-blur">
                 <OrganizationSwitcher />
                 <UserButton afterSignOutUrl={postSignOutUrl} />

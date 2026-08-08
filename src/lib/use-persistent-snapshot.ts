@@ -11,6 +11,11 @@ import { api } from "../../convex/_generated/api";
 
 export type SnapshotKind = "consultations" | "schoolProfile" | "templates" | "familyCase";
 
+/**
+ * Hydrate from Convex when a snapshot exists. When remote is null, keep the
+ * local initial value and do not auto-write — new users stay blank until they
+ * edit (or the demo-account seed bootstrap runs).
+ */
 export function usePersistentSnapshot<T>(
   kind: SnapshotKind,
   initialValue: T,
@@ -23,12 +28,13 @@ export function usePersistentSnapshot<T>(
   useEffect(() => {
     if (remote === undefined) return;
     if (remote === null) {
-      void save({ kind, value: initialValue });
+      stateRef.current = initialValue;
+      setLocalState(initialValue);
       return;
     }
     stateRef.current = remote;
     setLocalState(remote);
-  }, [initialValue, kind, remote, save]);
+  }, [initialValue, remote]);
 
   const setState = useCallback<Dispatch<SetStateAction<T>>>(
     (update) => {

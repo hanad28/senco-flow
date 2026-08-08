@@ -52,6 +52,10 @@ export function AppShell({
     .join("")
     .toUpperCase();
 
+  const sidebarTitle = [profile.schoolName || "Your school", profile.sendcoName || "Set up in Settings"]
+    .filter(Boolean)
+    .join(" - ");
+
   const isActive = (to: string) => {
     if (to === "/") return pathname === "/" || pathname.startsWith("/consultations");
     return pathname === to || pathname.startsWith(to + "/");
@@ -80,15 +84,21 @@ export function AppShell({
           <div className={`flex items-center ${collapsed ? "justify-center" : "gap-3"}`}>
             <div
               className="h-9 w-9 rounded-md bg-sidebar-primary text-sidebar-primary-foreground grid place-items-center text-sm font-semibold tracking-tight shrink-0"
-              title={collapsed ? `${profile.schoolName} - ${profile.sendcoName}` : undefined}
+              title={collapsed ? sidebarTitle : undefined}
             >
-              {initials || "MP"}
+              {initials || "—"}
             </div>
             {!collapsed && (
               <div className="min-w-0">
-                <div className="text-sm font-semibold truncate">{profile.schoolName}</div>
-                <div className="text-xs text-sidebar-foreground/60 truncate">{profile.sendcoName}</div>
-                <div className="text-[11px] text-sidebar-foreground/50 truncate">{profile.sendcoRole}</div>
+                <div className="text-sm font-semibold truncate">
+                  {profile.schoolName || "Your school"}
+                </div>
+                <div className="text-xs text-sidebar-foreground/60 truncate">
+                  {profile.sendcoName || "Add your name in Settings"}
+                </div>
+                {profile.sendcoRole ? (
+                  <div className="text-[11px] text-sidebar-foreground/50 truncate">{profile.sendcoRole}</div>
+                ) : null}
               </div>
             )}
           </div>

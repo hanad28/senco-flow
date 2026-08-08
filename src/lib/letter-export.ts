@@ -13,6 +13,7 @@ import {
 } from "docx";
 import type { Consultation, NeedCapability } from "./consultations-store";
 import { formatDate } from "./consultations-store";
+import { triggerBlobDownload } from "./trigger-blob-download";
 
 const capabilityLabel: Record<NeedCapability, string> = {
   full: "Can meet in full",
@@ -159,12 +160,8 @@ export function buildResponseLetterDoc(c: Consultation, school: SchoolBits): Doc
 export async function downloadResponseLetter(c: Consultation, school: SchoolBits): Promise<void> {
   const doc = buildResponseLetterDoc(c, school);
   const blob = await Packer.toBlob(doc);
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `EHCP-response-${c.id.toUpperCase()}-${c.pupilRef.replace(/\s+/g, "-")}.docx`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  triggerBlobDownload(
+    blob,
+    `EHCP-response-${c.id.toUpperCase()}-${c.pupilRef.replace(/\s+/g, "-")}.docx`,
+  );
 }

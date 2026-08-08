@@ -1,0 +1,98 @@
+/* 404-only overrides: full photo edge-to-edge, larger sky type.
+   hero-enquiry-trigger styles in landing.css target button only — mirror for the Link. */
+
+.unisen-not-found a.hero-enquiry-trigger {
+  --cta-glass-height: 3rem;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(24, 50, 75, 0.9);
+  border-radius: 12px;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.22) 42%,
+    rgba(205, 239, 243, 0.28) 72%,
+    rgba(255, 255, 255, 0.38) 100%
+  ) !important;
+  border-color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.unisen-not-found a.hero-enquiry-trigger::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(255, 255, 255, 0.58) 40%,
+    rgba(247, 247, 244, 0.64) 72%,
+    rgba(255, 255, 255, 0.74) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  opacity: 0;
+  transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.unisen-not-found a.hero-enquiry-trigger:hover,
+.unisen-not-found a.hero-enquiry-trigger:focus-visible {
+  transform: translateY(-5px) scale(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(36, 74, 112, 0.04),
+    0 2px 4px rgba(36, 74, 112, 0.1),
+    0 14px 32px rgba(36, 74, 112, 0.18),
+    0 32px 64px rgba(36, 74, 112, 0.2),
+    0 8px 18px rgba(116, 196, 215, 0.22);
+}
+
+.unisen-not-found a.hero-enquiry-trigger:hover::before,
+.unisen-not-found a.hero-enquiry-trigger:focus-visible::before {
+  opacity: 1;
+}
+
+.unisen-not-found a.hero-enquiry-trigger:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+html:has(.unisen-not-found),
+body:has(.unisen-not-found) {
+  background-color: transparent !important;
+}
+
+.unisen-not-found .unisen-hero {
+  background: none;
+}
+
+/* Drop the bottom fade that reveals the sky gradient under the photo. */
+.unisen-not-found .unisen-hero-media {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.unisen-not-found .unisen-hero-title {
+  font-size: clamp(3.5rem, 12vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.unisen-not-found .unisen-hero-sub {
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  line-height: 1.45;
+  max-width: 28rem;
+}
+
+@media (max-width: 768px) {
+  .unisen-not-found .unisen-hero-title {
+    max-width: none;
+    font-size: clamp(3rem, 18vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .unisen-not-found .unisen-hero-sub {
+    max-width: 20rem;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+}

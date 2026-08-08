@@ -49,7 +49,7 @@ const SEEDS: Seed[] = [
       { id: "c2", label: "SEND Code of Practice", kind: "verified_guidance", extract: "Provision in Section F should be specified in terms of type, hours and frequency." },
     ],
     confidence: "high",
-    limitations: "Automatic matching only. Please review the pairings screen for context.",
+    limitations: "Automatic matching only. Open Plan review → Needs and provision (B ↔ F) to check each pairing against Section F.",
     suggestedAction: "Add the missing-provision issue to your response.",
   },
   {

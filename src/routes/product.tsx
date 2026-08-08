@@ -34,7 +34,7 @@ function ProductPage() {
           <WalkthroughButton />
           <a
             href="/#product"
-            className="inline-flex h-12 items-center justify-center rounded-full border border-[var(--border-default)] bg-white px-7 text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-[#effaff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-2"
+            className="inline-flex h-12 items-center justify-center rounded-xl border border-[var(--border-default)] bg-white px-7 text-sm font-bold text-[var(--text-primary)] transition-colors hover:bg-[#effaff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-focus)] focus-visible:ring-offset-2"
           >
             View the home page demo
           </a>

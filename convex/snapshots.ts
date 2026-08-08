@@ -1,5 +1,11 @@
 import { v } from "convex/values";
-import { mutation, query, type MutationCtx, type QueryCtx } from "./_generated/server";
+import {
+  internalMutation,
+  mutation,
+  query,
+  type MutationCtx,
+  type QueryCtx,
+} from "./_generated/server";
 
 const kind = v.union(
   v.literal("consultations"),
@@ -350,6 +356,12 @@ function assertFamilyCase(value: Record<string, unknown>) {
   assertString(value.parent, "parent");
   assertString(value.caseOfficer, "caseOfficer");
   assertString(value.stage, "stage");
+  if (value.rightsHolder !== undefined) {
+    assertString(value.rightsHolder, "rightsHolder");
+    if (value.rightsHolder !== "parent" && value.rightsHolder !== "young_person") {
+      throw new Error("Snapshot rightsHolder is invalid");
+    }
+  }
   assertString(value.draftReceivedIso, "draftReceivedIso");
   assertString(value.deadlineIso, "deadlineIso");
   assertArray(value.documents, "documents", MAX_FAMILY_LIST);
@@ -491,5 +503,109 @@ export const save = mutation({
       return snapshot._id;
     }
     return await ctx.db.insert("snapshots", { scope, kind: args.kind, ...patch });
+  },
+});
+
+/** Clerk user id that receives the fictional demo caseload on first login.
+ * Keep in sync with `src/lib/demo-account.ts`. */
+export const DEMO_CLERK_USER_ID = "user_3H00chWDFb5d61UkU3xdPTPm3Ud";
+
+async function upsertSnapshot(
+  ctx: MutationCtx,
+  snapshotKind: Kind,
+  value: unknown,
+) {
+  assertValidSnapshotValue(snapshotKind, value);
+  const scope = await scopeFor(ctx, snapshotKind);
+  const existing = await ctx.db
+    .query("snapshots")
+    .withIndex("by_scope_kind", (q) => q.eq("scope", scope).eq("kind", snapshotKind))
+    .unique();
+  const patch = { value, updatedAt: Date.now() };
+  if (existing) {
+    await ctx.db.patch(existing._id, patch);
+    return { kind: snapshotKind, seeded: false as const, id: existing._id };
+  }
+  const id = await ctx.db.insert("snapshots", { scope, kind: snapshotKind, ...patch });
+  return { kind: snapshotKind, seeded: true as const, id };
+}
+
+/**
+ * Seed / refresh workspace snapshots for the designated demo Clerk account only.
+ * Consultations + familyCase are always overwritten so deadline dates stay fresh
+ * relative to today. School profile + templates are only inserted when missing.
+ */
+export const ensureDemoSeed = mutation({
+  args: {
+    consultations: v.any(),
+    schoolProfile: v.any(),
+    templates: v.any(),
+    familyCase: v.any(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+    if (
+      identity.subject !== DEMO_CLERK_USER_ID &&
+      !identity.tokenIdentifier.endsWith(`|${DEMO_CLERK_USER_ID}`)
+    ) {
+      return { ok: false as const, reason: "not_demo_account" as const, results: [] };
+    }
+
+    const alwaysRefresh = new Set<Kind>(["consultations", "familyCase"]);
+    const results = [];
+    for (const [snapshotKind, value] of [
+      ["consultations", args.consultations],
+      ["schoolProfile", args.schoolProfile],
+      ["templates", args.templates],
+      ["familyCase", args.familyCase],
+    ] as const) {
+      const scope = await scopeFor(ctx, snapshotKind);
+      const existing = await ctx.db
+        .query("snapshots")
+        .withIndex("by_scope_kind", (q) => q.eq("scope", scope).eq("kind", snapshotKind))
+        .unique();
+      if (existing && !alwaysRefresh.has(snapshotKind)) {
+        results.push({ kind: snapshotKind, seeded: false as const, id: existing._id });
+        continue;
+      }
+      results.push(await upsertSnapshot(ctx, snapshotKind, value));
+    }
+
+    return { ok: true as const, reason: "demo_account" as const, results };
+  },
+});
+
+/**
+ * One-shot / admin: delete every snapshot whose scope is not the demo Clerk user.
+ * Keeps rows where scope contains DEMO_CLERK_USER_ID (user:…|user_…).
+ * Org-scoped snapshots are cleared (they are not user-addressable for keep).
+ */
+export const clearNonDemoSnapshots = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const rows = await ctx.db.query("snapshots").collect();
+    let deleted = 0;
+    let kept = 0;
+    const deletedScopes = new Set<string>();
+    const keptScopes = new Set<string>();
+
+    for (const row of rows) {
+      if (row.scope.includes(DEMO_CLERK_USER_ID)) {
+        kept += 1;
+        keptScopes.add(`${row.scope} (${row.kind})`);
+        continue;
+      }
+      await ctx.db.delete(row._id);
+      deleted += 1;
+      deletedScopes.add(`${row.scope} (${row.kind})`);
+    }
+
+    return {
+      deleted,
+      kept,
+      deletedScopes: [...deletedScopes].sort(),
+      keptScopes: [...keptScopes].sort(),
+    };
   },
 });

@@ -62,7 +62,7 @@ export default function IntegrationsSection({
             {tools.map((tool) => (
               <li
                 key={tool}
-                className="rounded-full border border-[var(--border-default)] bg-background px-4 py-2 text-sm font-medium text-color-001 [font-family:var(--font-body)]"
+                className="rounded-xl border border-[var(--border-default)] bg-background px-4 py-2 text-sm font-medium text-color-001 [font-family:var(--font-body)]"
               >
                 {tool}
               </li>

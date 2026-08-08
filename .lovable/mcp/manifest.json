@@ -4,7 +4,7 @@
   "path": "/mcp",
   "auth": {
     "type": "oauth",
-    "issuer": "https://clerk-issuer-unset.invalid",
+    "issuer": "https://driving-sunbird-13.clerk.accounts.dev",
     "resource_name": "Unisen EHCP Response workspace",
     "accepted_audiences": [
       "http://app.localhost:8080/mcp",

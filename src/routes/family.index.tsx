@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2, Circle, AlertTriangle, ArrowRight, MessageCircle, FileText, Users, Calendar, FolderOpen } from "lucide-react";
 import { FamilyShell, AiLabel } from "@/components/family-shell";
-import { useFamilyI18n } from "@/lib/family-i18n";
+import { useFamilyI18n, Tx } from "@/lib/family-i18n";
 import { useFamilyCase, readinessScore, readinessChecks } from "@/lib/family-case-store";
 import { FAMILY_STATUTORY, familyDaysRemaining } from "@/lib/family-config";
 
@@ -36,7 +36,7 @@ function DashboardBody() {
   const tasks = [
     { label: t("dash.task.reviewIssues"), done: openIssues === 0, to: `${caseBase}/issues` },
     { label: t("dash.task.addViews"), done: state.notes.some((n) => n.section === "A"), to: `${caseBase}/plan` },
-    { label: t("dash.task.checkAdvice"), done: state.needPairings.every((p) => p.status !== "not_reviewed"), to: `${caseBase}/plan` },
+    { label: t("dash.task.checkAdvice"), done: state.needPairings.every((p) => p.status !== "not_reviewed"), to: `${caseBase}/plan#pairings` },
     { label: t("dash.task.placement"), done: state.placement.preferredSchool.length > 0 || state.placement.preferredType.length > 0, to: `${caseBase}/response` },
     { label: t("dash.task.reviewResponse"), done: readinessChecks(state).every((c) => c.passed), to: `${caseBase}/response` },
   ];
@@ -44,8 +44,12 @@ function DashboardBody() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
       <header className="space-y-1">
-        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">{t("dash.greeting")}</h1>
-        <p className="text-sm md:text-base text-muted-foreground max-w-3xl">{t("dash.subtitle")}</p>
+        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight"><Tx k="dash.greeting" /></h1>
+        <p className="text-sm md:text-base text-muted-foreground max-w-3xl"><Tx k="dash.subtitle" /></p>
+        <p className="text-xs text-muted-foreground">
+          Rights holder (tracking): {state.rightsHolder === "young_person" ? "Young person" : "Parent / carer"}
+          {state.age > 0 ? ` · child age ${state.age}` : null}
+        </p>
       </header>
 
       {/* Deadline banner */}

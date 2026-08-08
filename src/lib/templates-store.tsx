@@ -172,10 +172,10 @@ type Ctx = {
 
 const TemplatesContext = createContext<Ctx | null>(null);
 
-const seedTemplates = { evidence: seedEvidence, snippets: seedSnippets };
+const emptyTemplates = { evidence: [] as EvidenceDoc[], snippets: [] as PartialCannotSnippet[] };
 
 export function TemplatesProvider({ children }: { children: ReactNode }) {
-  const [{ evidence, snippets }] = usePersistentSnapshot("templates", seedTemplates);
+  const [{ evidence, snippets }] = usePersistentSnapshot("templates", emptyTemplates);
   const value = useMemo<Ctx>(
     () => ({
       evidence,

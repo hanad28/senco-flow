@@ -43,7 +43,7 @@ export default function HeroSection() {
           className="unisen-hero-sub mt-4 max-w-[36rem] [font-family:var(--font-body)] text-center text-balance"
           dir="auto"
         >
-          Get EHC consultations and draft plans out of scattered inboxes, with the clock, evidence,
+          Get EHC consultations and draft plans out of scattered inboxes, with the timeline, evidence,
           and work in one place.
         </p>
         <div className="unisen-hero-cta mt-7 flex shrink-0 flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">

@@ -414,7 +414,7 @@ body:has(.unisen-landing) {
   --cta-glass-height: 3rem;
   color: var(--text-primary, #244a70);
   text-shadow: none;
-  border-radius: 999px;
+  border-radius: var(--cta-glass-radius, 12px);
   background:
     linear-gradient(
       155deg,
@@ -477,7 +477,7 @@ body:has(.unisen-landing) {
   isolation: isolate;
   box-sizing: border-box;
   height: 3rem;
-  border-radius: 999px;
+  border-radius: var(--cta-glass-radius, 12px);
   color: var(--text-on-brand, #ffffff) !important;
   text-shadow: none;
   background: var(--action-primary, #3b8ac1) !important;
@@ -826,7 +826,7 @@ body:has(.unisen-landing) {
   text-shadow: var(--nav-link-shadow);
 }
 
-/* Nav CTA: liquid glass pill (different shape from hero glass CTA) */
+/* Nav CTA: liquid glass (same 12px corner language as hero glass CTA) */
 .unisen-landing .unisen-nav .unisen-nav-cta-glass {
   --nav-cta-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
@@ -839,7 +839,7 @@ body:has(.unisen-landing) {
   padding: 0 1.2rem;
   isolation: isolate;
   overflow: hidden;
-  border-radius: 999px;
+  border-radius: 12px;
   color: #ffffff;
   font-family: var(--font-heading);
   font-size: 0.875rem;

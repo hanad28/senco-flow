@@ -17,14 +17,18 @@ import {
   RotateCcw,
   Languages,
 } from "lucide-react";
-import { useFamilyI18n, FAMILY_LANGS, type FamilyLang } from "@/lib/family-i18n";
-import { useFamilyCase, issueSectionCount } from "@/lib/family-case-store";
+import { useUser } from "@clerk/tanstack-react-start";
+import { useFamilyI18n, FAMILY_LANGS, Tx, type FamilyLang } from "@/lib/family-i18n";
+import { useFamilyCase } from "@/lib/family-case-store";
 import { FAMILY_STATUTORY } from "@/lib/family-config";
 import { WorkspaceSwitcher } from "@/components/workspace-switcher";
+import { isDemoClerkUser } from "@/lib/demo-account";
 
 export function FamilyShell({ children }: { children: ReactNode }) {
   const { lang, meta, setLang, t } = useFamilyI18n();
   const { state, reset } = useFamilyCase();
+  const { user } = useUser();
+  const isDemo = isDemoClerkUser(user?.id);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const caseBase = `/family/cases/${state.id}`;
 
@@ -53,7 +57,7 @@ export function FamilyShell({ children }: { children: ReactNode }) {
       <div className="bg-info/10 border-b border-info/30 text-info-foreground text-xs">
         <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center gap-x-4 gap-y-1">
           <Info className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-          <span className="font-medium">{t("common.demoBanner")}</span>
+          <span className="font-medium"><Tx k="common.demoBanner" /></span>
           <span className="opacity-75">{FAMILY_STATUTORY.aiDisclosure}</span>
         </div>
       </div>
@@ -63,23 +67,25 @@ export function FamilyShell({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-3 min-w-0">
             <Link to="/family" className="flex items-center gap-2 font-semibold tracking-tight text-primary">
               <span aria-hidden="true" className="inline-grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground text-xs">EHC</span>
-              <span className="truncate">{t("workspace.family")}</span>
+              <span className="truncate"><Tx k="workspace.family" /></span>
             </Link>
           </div>
           <div className="flex items-center gap-2">
             <WorkspaceSwitcher current="family" />
             <LanguagePicker lang={lang} setLang={setLang} />
-            <button
-              type="button"
-              onClick={() => {
-                if (window.confirm(t("common.resetDemoConfirm"))) reset();
-              }}
-              className="hidden sm:inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border text-xs text-muted-foreground hover:text-foreground hover:bg-accent"
-              aria-label={t("common.resetDemo")}
-            >
-              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-              <span>{t("common.resetDemo")}</span>
-            </button>
+            {isDemo && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (window.confirm(t("common.resetDemoConfirm"))) reset("demo");
+                }}
+                className="hidden sm:inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border text-xs text-muted-foreground hover:text-foreground hover:bg-accent"
+                aria-label={t("common.resetDemo")}
+              >
+                <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
+                <span><Tx k="common.resetDemo" /></span>
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -103,7 +109,7 @@ export function FamilyShell({ children }: { children: ReactNode }) {
                   aria-current={active ? "page" : undefined}
                 >
                   <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span className="truncate">{t(item.key)}</span>
+                  <span className="truncate"><Tx k={item.key} /></span>
                   {"count" in item && item.count ? (
                     <span className="ms-auto inline-flex items-center justify-center min-w-5 h-5 px-1.5 rounded-full bg-warn text-warn-foreground text-[10px] font-semibold">
                       {item.count}

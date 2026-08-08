@@ -149,6 +149,33 @@ export const seedSchoolProfile: SchoolProfile = {
   responseStyle: "formal",
 };
 
+/** Blank school profile for new (non-demo) accounts. */
+export const emptySchoolProfile: SchoolProfile = {
+  schoolName: "",
+  schoolAddress: "",
+  sendcoName: "",
+  sendcoRole: "",
+  provision: {
+    communication: [],
+    cognition: [],
+    semh: [],
+    sensory: [],
+  },
+  cohort: {
+    communication: 0,
+    cognition: 0,
+    semh: 0,
+    sensory: 0,
+  },
+  staffing: {
+    taCount: 0,
+    typicalGroupSize: "",
+    sensorySpace: "",
+  },
+  specialists: [],
+  responseStyle: "plain",
+};
+
 type Ctx = {
   profile: SchoolProfile;
   update: (patch: Partial<SchoolProfile>) => void;
@@ -167,7 +194,7 @@ const SchoolProfileContext = createContext<Ctx | null>(null);
 export function SchoolProfileProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = usePersistentSnapshot<SchoolProfile>(
     "schoolProfile",
-    seedSchoolProfile,
+    emptySchoolProfile,
   );
 
   const value = useMemo<Ctx>(

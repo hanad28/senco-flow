@@ -5,6 +5,13 @@
 import { createContext, useCallback, useContext, useMemo, type Dispatch, type ReactNode } from "react";
 import { FAMILY_STATUTORY, familyDeadlineIso } from "./family-config";
 import { usePersistentSnapshot } from "./use-persistent-snapshot";
+import {
+  DEMO_FAMILY_DAYS_LEFT,
+  isoDaysFromToday,
+  receivedOnForDaysRemaining,
+} from "./demo-seed-dates";
+import { deriveSectionKStatus } from "./family-advice-coverage";
+import { PROVISION_SPECIFICITY_STANDARD } from "./family-specificity";
 
 export type PlanSection = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H1" | "H2" | "I" | "J" | "K";
 
@@ -144,6 +151,9 @@ export type FamActivity = {
   message: string;
 };
 
+/** Who currently holds draft-response / naming rights for this case (tracking only). */
+export type RightsHolder = "parent" | "young_person";
+
 export type FamilyCase = {
   id: string;
   childName: string;
@@ -153,6 +163,8 @@ export type FamilyCase = {
   parent: string;
   caseOfficer: string;
   stage: string;
+  /** Tracking field only — not capacity assessment. Defaults to parent for under-16 demos. */
+  rightsHolder: RightsHolder;
   draftReceivedIso: string;
   deadlineIso: string;
   documents: FamilyDoc[];
@@ -169,18 +181,20 @@ export type FamilyCase = {
 };
 
 // ---------- Seed ----------
-function actIso(dayOffset: number, hh = 10, mm = 0): string {
-  const base = Date.UTC(2026, 6, 14, hh, mm); // 14 July 2026 UTC
+function actIsoFromDraft(draftIso: string, dayOffset: number, hh = 10, mm = 0): string {
+  const [y, m, d] = draftIso.split("-").map(Number);
+  const base = Date.UTC(y, (m ?? 1) - 1, d ?? 1, hh, mm);
   return new Date(base + dayOffset * 24 * 60 * 60 * 1000).toISOString();
 }
 
-const seedDocs: FamilyDoc[] = [
+function buildSeedDocs(draftIso: string, today: Date = new Date()): FamilyDoc[] {
+  return [
   {
     id: "doc-draft",
     title: "Draft EHC Plan",
     professional: "Camden Local Authority",
     kind: "Draft plan",
-    date: "2026-07-14",
+    date: draftIso,
     pages: 31,
     status: "reviewed",
     extractedCount: 12,
@@ -197,7 +211,7 @@ const seedDocs: FamilyDoc[] = [
     title: "Educational Psychology Advice",
     professional: "Dr Priya Shah, Educational Psychologist",
     kind: "Professional advice",
-    date: "2026-06-02",
+    date: isoDaysFromToday(-67, today),
     pages: 8,
     status: "reviewed",
     extractedCount: 9,
@@ -212,7 +226,7 @@ const seedDocs: FamilyDoc[] = [
     title: "Speech and Language Therapy Report",
     professional: "Emma Collins, SaLT",
     kind: "Professional advice",
-    date: "2026-06-10",
+    date: isoDaysFromToday(-59, today),
     pages: 6,
     status: "reviewed",
     extractedCount: 7,
@@ -227,7 +241,7 @@ const seedDocs: FamilyDoc[] = [
     title: "School SEN Support Summary",
     professional: "S. Ahmed, SENDCO",
     kind: "School evidence",
-    date: "2026-05-28",
+    date: isoDaysFromToday(-72, today),
     pages: 4,
     status: "reviewed",
     extractedCount: 5,
@@ -239,15 +253,15 @@ const seedDocs: FamilyDoc[] = [
     title: "Parent and Child Views Form",
     professional: "Jordan and Maya Lewis",
     kind: "Family evidence",
-    date: "2026-06-20",
+    date: isoDaysFromToday(-49, today),
     pages: 3,
     status: "needs_attention",
     extractedCount: 3,
     issueRefs: ["iss-4"],
     extracts: [{ page: 1, text: "Maya said: I like when the teacher shows me the pictures first." }],
   },
-];
-
+  ];
+}
 const seedIssues: Issue[] = [
   {
     id: "iss-1",
@@ -272,12 +286,11 @@ const seedIssues: Issue[] = [
     category: "vague_wording",
     title: "Vague provision wording",
     currentDraft: "Maya will receive access to regular adult support as appropriate.",
-    why: "This wording does not identify frequency, duration, who delivers it, or the training required to be enforceable.",
+    why: `Flagged phrases: "access to", "regular", "as appropriate". The legal standard expects provision to specify ${PROVISION_SPECIFICITY_STANDARD.join(", ")}. This tool does not invent replacement wording or hours — write your own request below, drawing only on facts already in Maya's documents or advice from a professional.`,
     sourceDocId: "doc-draft",
     sourcePage: 12,
-    proposedAmendment:
-      "Maya will receive 20 minutes of individual language-support practice four times each week, delivered by a trained teaching assistant under termly supervision from a speech and language therapist.",
-    status: "drafted",
+    proposedAmendment: "",
+    status: "not_started",
   },
   {
     id: "iss-3",
@@ -393,17 +406,22 @@ const seedSupport: SupportMember[] = [
   { id: "sup-7", name: "SENDIASS adviser", role: "Independent adviser", access: "Not yet added" },
 ];
 
-const seedActivity: FamActivity[] = [
-  { id: "a1", timestamp: actIso(0, 9, 15), actor: "local_authority", message: "Draft EHC plan received." },
-  { id: "a2", timestamp: actIso(0, 9, 20), actor: "system", message: "Five documents added to the case." },
-  { id: "a3", timestamp: actIso(1, 10, 0), actor: "family", message: "Jordan began reviewing Section A." },
-  { id: "a4", timestamp: actIso(1, 10, 45), actor: "system", message: "Potential Section B/F gap highlighted." },
-  { id: "a5", timestamp: actIso(2, 11, 30), actor: "family", message: "Proposed amendment saved for vague wording in Section F." },
-  { id: "a6", timestamp: actIso(2, 12, 0), actor: "system", message: "Preferred setting not yet recorded." },
-];
+function buildSeedActivity(draftIso: string): FamActivity[] {
+  return [
+    { id: "a1", timestamp: actIsoFromDraft(draftIso, 0, 9, 15), actor: "local_authority", message: "Draft EHC plan received." },
+    { id: "a2", timestamp: actIsoFromDraft(draftIso, 0, 9, 20), actor: "system", message: "Five documents added to the case." },
+    { id: "a3", timestamp: actIsoFromDraft(draftIso, 1, 10, 0), actor: "family", message: "Jordan began reviewing Section A." },
+    { id: "a4", timestamp: actIsoFromDraft(draftIso, 1, 10, 45), actor: "system", message: "Potential Section B/F gap highlighted." },
+    { id: "a5", timestamp: actIsoFromDraft(draftIso, 2, 11, 30), actor: "family", message: "Proposed amendment saved for vague wording in Section F." },
+    { id: "a6", timestamp: actIsoFromDraft(draftIso, 2, 12, 0), actor: "system", message: "Preferred setting not yet recorded." },
+  ];
+}
 
-function makeSeed(): FamilyCase {
-  const draft = "2026-07-14";
+/** Demo-only seed. Uses DEMO_FAMILY_DAYS_LEFT so the demo always shows a mid-window clock.
+ * Do not call for real/blank accounts — use emptyFamilyCase() instead. */
+function makeSeed(today: Date = new Date()): FamilyCase {
+  const draft = receivedOnForDaysRemaining(DEMO_FAMILY_DAYS_LEFT, today);
+  const documents = buildSeedDocs(draft, today);
   return {
     id: "maya-lewis",
     childName: "Maya Lewis",
@@ -413,9 +431,10 @@ function makeSeed(): FamilyCase {
     parent: "Jordan Lewis",
     caseOfficer: "Rachel Morgan",
     stage: "Draft EHC plan received",
+    rightsHolder: "parent",
     draftReceivedIso: draft,
     deadlineIso: familyDeadlineIso(draft, FAMILY_STATUTORY.draftResponsePeriodDays),
-    documents: seedDocs,
+    documents,
     sectionStatus: {
       A: "needs_attention",
       B: "needs_attention",
@@ -428,35 +447,96 @@ function makeSeed(): FamilyCase {
       H2: "not_applicable",
       I: "expected_blank",
       J: "not_applicable",
-      K: "needs_attention",
+      K: deriveSectionKStatus(documents),
     },
     notes: [],
-    amendments: [
-      {
-        id: "am-seed-2",
-        section: "F",
-        currentWording: "Maya will receive access to regular adult support as appropriate.",
-        proposedWording:
-          "Maya will receive 20 minutes of individual language-support practice four times each week, delivered by a trained teaching assistant under termly supervision from a speech and language therapist.",
-        source: "workflow",
-        approved: false,
-        sourceDocId: "doc-draft",
-        sourcePage: 12,
-      },
-    ],
+    amendments: [],
     issues: seedIssues,
     needPairings: seedPairings,
     outcomes: seedOutcomes,
-    placement: { preferredSchool: "", preferredType: "", reasons: "", travelNotes: "", meetingRequested: false },
+    placement: {
+      preferredSchool: "",
+      preferredType: "",
+      reasons: "",
+      travelNotes: "",
+      meetingRequested: false,
+    },
     support: seedSupport,
     assistant: [],
-    activity: seedActivity,
+    activity: buildSeedActivity(draft),
+  };
+}
+
+/** Public demo payload for the designated demo-account seed bootstrap. */
+export function demoFamilyCase(today: Date = new Date()): FamilyCase {
+  return makeSeed(today);
+}
+
+/** Blank family workspace for new (non-demo) accounts.
+ * Deadline is computed from the stored received date — never from DEMO_FAMILY_DAYS_LEFT. */
+export function emptyFamilyCase(today: Date = new Date()): FamilyCase {
+  const draft = today.toISOString().slice(0, 10);
+  return {
+    id: "empty-case",
+    childName: "",
+    age: 0,
+    yearGroup: "",
+    localAuthority: "",
+    parent: "",
+    caseOfficer: "",
+    stage: "Not started",
+    rightsHolder: "parent",
+    draftReceivedIso: draft,
+    deadlineIso: familyDeadlineIso(draft, FAMILY_STATUTORY.draftResponsePeriodDays),
+    documents: [],
+    sectionStatus: {
+      A: "not_reviewed",
+      B: "not_reviewed",
+      C: "not_applicable",
+      D: "not_applicable",
+      E: "not_reviewed",
+      F: "not_reviewed",
+      G: "not_applicable",
+      H1: "not_applicable",
+      H2: "not_applicable",
+      I: "expected_blank",
+      J: "not_applicable",
+      K: deriveSectionKStatus([]),
+    },
+    notes: [],
+    amendments: [],
+    issues: [],
+    needPairings: [],
+    outcomes: [],
+    placement: {
+      preferredSchool: "",
+      preferredType: "",
+      reasons: "",
+      travelNotes: "",
+      meetingRequested: false,
+    },
+    support: [],
+    assistant: [],
+    activity: [],
+  };
+}
+
+/** Normalize snapshots that pre-date rightsHolder / derived Section K. */
+export function normalizeFamilyCase(raw: FamilyCase): FamilyCase {
+  const documents = raw.documents ?? [];
+  return {
+    ...raw,
+    rightsHolder: raw.rightsHolder === "young_person" ? "young_person" : "parent",
+    sectionStatus: {
+      ...raw.sectionStatus,
+      K: deriveSectionKStatus(documents),
+    },
   };
 }
 
 // ---------- Reducer ----------
 type Action =
-  | { type: "reset" }
+  | { type: "reset"; mode?: "demo" | "empty" }
   | { type: "setSectionStatus"; section: PlanSection; status: ReviewStatus }
   | { type: "addNote"; section: PlanSection; text: string }
   | { type: "addAmendment"; a: Omit<Amendment, "id"> }
@@ -464,7 +544,9 @@ type Action =
   | { type: "removeAmendment"; id: string }
   | { type: "updateIssue"; id: string; patch: Partial<Issue> }
   | { type: "addIssue"; issue: Omit<Issue, "id"> }
+  | { type: "updateNeedPairing"; id: string; patch: Partial<NeedPairing> }
   | { type: "setPlacement"; patch: Partial<PlacementPref> }
+  | { type: "setRightsHolder"; rightsHolder: RightsHolder }
   | { type: "addSupport"; m: Omit<SupportMember, "id"> }
   | { type: "updateSupport"; id: string; patch: Partial<SupportMember> }
   | { type: "addAssistant"; m: Omit<AssistantMsg, "id"> }
@@ -477,10 +559,17 @@ type Action =
 let _seq = 0;
 const nid = (p: string) => `${p}-${Date.now().toString(36)}-${(_seq += 1)}`;
 
+function withDerivedK(state: FamilyCase): FamilyCase {
+  return {
+    ...state,
+    sectionStatus: { ...state.sectionStatus, K: deriveSectionKStatus(state.documents) },
+  };
+}
+
 function reducer(state: FamilyCase, action: Action): FamilyCase {
   switch (action.type) {
     case "reset":
-      return makeSeed();
+      return action.mode === "empty" ? emptyFamilyCase() : makeSeed();
     case "setSectionStatus":
       return { ...state, sectionStatus: { ...state.sectionStatus, [action.section]: action.status } };
     case "addNote":
@@ -498,8 +587,15 @@ function reducer(state: FamilyCase, action: Action): FamilyCase {
       return { ...state, issues: state.issues.map((i) => (i.id === action.id ? { ...i, ...action.patch } : i)) };
     case "addIssue":
       return { ...state, issues: [...state.issues, { ...action.issue, id: nid("iss") }] };
+    case "updateNeedPairing":
+      return {
+        ...state,
+        needPairings: state.needPairings.map((p) => (p.id === action.id ? { ...p, ...action.patch } : p)),
+      };
     case "setPlacement":
       return { ...state, placement: { ...state.placement, ...action.patch } };
+    case "setRightsHolder":
+      return { ...state, rightsHolder: action.rightsHolder };
     case "addSupport":
       return { ...state, support: [...state.support, { ...action.m, id: nid("sup"), addedByFamily: true }] };
     case "updateSupport":
@@ -509,9 +605,9 @@ function reducer(state: FamilyCase, action: Action): FamilyCase {
     case "clearAssistant":
       return { ...state, assistant: [] };
     case "addDocument":
-      return { ...state, documents: [...state.documents, { ...action.d, id: nid("doc") }] };
+      return withDerivedK({ ...state, documents: [...state.documents, { ...action.d, id: nid("doc") }] });
     case "removeDocument":
-      return { ...state, documents: state.documents.filter((d) => d.id !== action.id) };
+      return withDerivedK({ ...state, documents: state.documents.filter((d) => d.id !== action.id) });
     case "renameDocument":
       return { ...state, documents: state.documents.map((d) => (d.id === action.id ? { ...d, title: action.title } : d)) };
     case "logActivity":
@@ -525,19 +621,27 @@ function reducer(state: FamilyCase, action: Action): FamilyCase {
 type Ctx = {
   state: FamilyCase;
   dispatch: Dispatch<Action>;
-  reset: () => void;
+  reset: (mode?: "demo" | "empty") => void;
 };
 const CaseCtx = createContext<Ctx | null>(null);
 
 export function FamilyCaseProvider({ children }: { children: ReactNode }) {
-  const initialState = useMemo(makeSeed, []);
+  const initialState = useMemo(() => emptyFamilyCase(), []);
   const [state, setState] = usePersistentSnapshot<FamilyCase>("familyCase", initialState);
+
   const dispatch = useCallback<Dispatch<Action>>(
-    (action) => setState((current) => reducer(current, action)),
+    (action) =>
+      setState((current) => {
+        const base = normalizeFamilyCase(current);
+        return normalizeFamilyCase(reducer(base, action));
+      }),
     [setState],
   );
-  const reset = useCallback(() => dispatch({ type: "reset" }), [dispatch]);
-  const value = useMemo(() => ({ state, dispatch, reset }), [state, dispatch, reset]);
+  const reset = useCallback(
+    (mode: "demo" | "empty" = "demo") => dispatch({ type: "reset", mode }),
+    [dispatch],
+  );
+  const value = useMemo(() => ({ state: normalizeFamilyCase(state), dispatch, reset }), [state, dispatch, reset]);
   return <CaseCtx.Provider value={value}>{children}</CaseCtx.Provider>;
 }
 
@@ -554,7 +658,16 @@ export function issueSectionCount(state: FamilyCase, section: PlanSection): numb
 export function readinessChecks(state: FamilyCase): { label: string; passed: boolean; blocking: boolean }[] {
   const included = state.issues.filter((i) => i.status === "ready");
   return [
-    { label: "Every highlighted issue has been reviewed.", passed: state.issues.every((i) => i.status !== "not_started"), blocking: false },
+    {
+      label: "At least one amendment is marked Ready to include.",
+      passed: included.length > 0,
+      blocking: true,
+    },
+    {
+      label: "Every highlighted issue has been reviewed or dismissed.",
+      passed: state.issues.every((i) => i.status !== "not_started"),
+      blocking: true,
+    },
     { label: "Every included amendment contains wording.", passed: included.every((i) => i.proposedAmendment.trim().length > 0), blocking: true },
     { label: "Child and family views have been considered.", passed: state.sectionStatus.A !== "not_reviewed", blocking: false },
     { label: "School or setting preference has been considered.", passed: state.placement.preferredSchool.trim().length > 0 || state.placement.preferredType.trim().length > 0, blocking: false },

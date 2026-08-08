@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Download, FileText, Printer, CheckCircle2, AlertTriangle, Info } from "lucide-react";
+import { Download, Printer, CheckCircle2, AlertTriangle, Info } from "lucide-react";
 import { FamilyShell, AiLabel } from "@/components/family-shell";
 import { useFamilyI18n } from "@/lib/family-i18n";
 import { useFamilyCase, readinessChecks, readinessScore } from "@/lib/family-case-store";
 import { FAMILY_STATUTORY, familyDaysRemaining } from "@/lib/family-config";
 import { downloadFamilyResponseEnglish, downloadFamilyResponseBilingual } from "@/lib/family-letter-export";
+import { buildFamilyResponseModel } from "@/lib/family-response-model";
 
 export const Route = createFileRoute("/family/cases/$id/response")({
   component: ResponseScreen,
@@ -169,29 +170,26 @@ function ResponseScreen() {
 }
 
 function ResponseBody({ state }: { state: ReturnType<typeof useFamilyCase>["state"] }) {
-  const grouped: Record<string, typeof state.issues> = {};
-  for (const i of state.issues.filter((x) => x.status === "ready")) (grouped[i.section] ||= []).push(i);
+  const m = buildFamilyResponseModel(state);
 
   return (
     <div className="text-sm leading-relaxed space-y-4">
       <h2 className="text-lg font-semibold">Family response to draft EHC plan</h2>
       <dl className="grid grid-cols-2 gap-2 text-xs">
-        <dt className="text-muted-foreground">For</dt><dd>{state.childName} ({state.yearGroup})</dd>
-        <dt className="text-muted-foreground">Local authority</dt><dd>{state.localAuthority}</dd>
-        <dt className="text-muted-foreground">Case officer</dt><dd>{state.caseOfficer}</dd>
-        <dt className="text-muted-foreground">Draft received</dt><dd>{state.draftReceivedIso}</dd>
+        <dt className="text-muted-foreground">For</dt><dd>{m.childName} ({m.yearGroup})</dd>
+        <dt className="text-muted-foreground">Local authority</dt><dd>{m.localAuthority}</dd>
+        <dt className="text-muted-foreground">Case officer</dt><dd>{m.caseOfficer}</dd>
+        <dt className="text-muted-foreground">Draft received</dt><dd>{m.draftReceivedIso}</dd>
       </dl>
-      <p>
-        Thank you for the draft EHC plan for {state.childName}. We have reviewed the draft together with the supporting advice and set out below the amendments we would like the local authority to consider.
-      </p>
-      {Object.keys(grouped).length === 0 ? (
+      <p>{m.intro}</p>
+      {m.amendmentsBySection.length === 0 ? (
         <p className="text-muted-foreground italic">No requested amendments have been marked ready yet. Return to Issues to mark items as “Ready to include”.</p>
       ) : (
-        Object.keys(grouped).sort().map((sec) => (
-          <div key={sec}>
-            <h3 className="font-semibold text-base mt-4">Section {sec}</h3>
+        m.amendmentsBySection.map((group) => (
+          <div key={group.section}>
+            <h3 className="font-semibold text-base mt-4">Section {group.section}</h3>
             <ol className="list-decimal list-inside space-y-3">
-              {grouped[sec].map((i) => (
+              {group.items.map((i) => (
                 <li key={i.id}>
                   <div className="font-medium">{i.title}</div>
                   {i.currentDraft && <div className="text-xs text-muted-foreground mt-0.5">Current: {i.currentDraft}</div>}
@@ -204,14 +202,47 @@ function ResponseBody({ state }: { state: ReturnType<typeof useFamilyCase>["stat
         ))
       )}
       <div>
+        <h3 className="font-semibold text-base mt-4">Child&apos;s views and aspirations</h3>
+        {m.childViews.length === 0 ? (
+          <p className="text-muted-foreground italic">{m.childViewsPlaceholder}</p>
+        ) : (
+          <ul className="list-disc list-inside space-y-1">
+            {m.childViews.map((text, idx) => (
+              <li key={idx}>{text}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div>
         <h3 className="font-semibold text-base mt-4">School or setting preference</h3>
-        {(state.placement.preferredSchool || state.placement.preferredType) ? (
-          <p>{state.placement.preferredSchool || state.placement.preferredType}. {state.placement.reasons}</p>
+        {m.placement.recorded ? (
+          <div className="space-y-1">
+            <p>{m.placement.preferredSchool || m.placement.preferredType}. {m.placement.reasons}</p>
+            {m.placement.travelNotes ? (
+              <p className="text-xs"><span className="font-medium">Travel/accessibility: </span>{m.placement.travelNotes}</p>
+            ) : null}
+          </div>
         ) : (
           <p className="text-muted-foreground italic">Not yet recorded.</p>
         )}
       </div>
-      <p className="italic text-xs text-muted-foreground pt-3 border-t">{FAMILY_STATUTORY.disclaimer}</p>
+      <div>
+        <h3 className="font-semibold text-base mt-4">Meeting request</h3>
+        <p>{m.meetingLine}</p>
+      </div>
+      <div>
+        <h3 className="font-semibold text-base mt-4">Supporting documents referenced</h3>
+        {m.documents.length === 0 ? (
+          <p className="text-muted-foreground italic">None listed.</p>
+        ) : (
+          <ul className="list-disc list-inside text-xs space-y-1">
+            {m.documents.map((d) => (
+              <li key={`${d.title}-${d.date}`}>{d.title} — {d.professional} ({d.date}, {d.pages}pp)</li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <p className="italic text-xs text-muted-foreground pt-3 border-t">{m.disclaimer}</p>
     </div>
   );
 }

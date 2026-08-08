@@ -778,7 +778,7 @@
 .unisen-landing .unisen-mock-action {
   margin-left: auto;
   border: 0;
-  border-radius: 999px;
+  border-radius: 12px;
   background: #3b8ac1;
   color: #fff;
   font: inherit;

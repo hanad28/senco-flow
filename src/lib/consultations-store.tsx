@@ -1,6 +1,11 @@
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
 import type { NeedDomain } from "@/lib/school-profile-store";
 import { usePersistentSnapshot } from "@/lib/use-persistent-snapshot";
+import {
+  DEMO_OPEN_DAYS_LEFT,
+  isoDaysFromToday,
+  receivedOnForDaysRemaining,
+} from "@/lib/demo-seed-dates";
 
 // ---------- Activity log ----------
 export type ActivityAction =
@@ -186,25 +191,36 @@ const hist = (
   ],
 });
 
-const seedConsultations: Consultation[] = [
+function buildSeedConsultations(today: Date = new Date()): Consultation[] {
+  const openRecv = (id: keyof typeof DEMO_OPEN_DAYS_LEFT) =>
+    receivedOnForDaysRemaining(DEMO_OPEN_DAYS_LEFT[id], today);
+  const past = (daysAgo: number) => isoDaysFromToday(-daysAgo, today);
 
+  const aRecv = openRecv("c-2401");
+  const bRecv = openRecv("c-2402");
+  const cRecv = openRecv("c-2403");
+  const dRecv = openRecv("c-2404");
+  const eRecv = past(45);
+  const eSubmitted = past(23);
+
+  return [
   {
     id: "c-2401",
     pupilRef: "Pupil A",
     yearGroup: "Year 4",
     localAuthority: "Camden LA",
     caseOfficer: "R. Owusu",
-    receivedOn: "2026-07-01",
+    receivedOn: aRecv,
     status: "Reviewing",
     summary:
       "Pupil A (Y4) presents with a specific learning difficulty affecting literacy, alongside emerging sensory processing needs and mild social communication difficulties. The EP identifies four primary areas of need: literacy (decoding & spelling), sensory regulation, expressive language, and peer interaction. All reports converge on the need for structured, low-arousal learning environments and consistent adult support. No safeguarding concerns raised. Parental views align with professional recommendations.",
     documents: [
-      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 18, author: "Dr. M. Alvarez", date: "2026-06-12" },
-      { id: "d2", name: "Speech & Language Therapy Report.pdf", kind: "SaLT", pages: 9, author: "J. Patel", date: "2026-06-04" },
-      { id: "d3", name: "Occupational Therapy Report.pdf", kind: "OT", pages: 7, author: "S. Nguyen", date: "2026-05-28" },
-      { id: "d4", name: "Parental Views.pdf", kind: "Parental", pages: 3, author: "Family", date: "2026-06-20" },
-      { id: "d5", name: "School Information Form (Appendix A).pdf", kind: "School", pages: 5, author: "SENCO", date: "2026-06-22" },
-      { id: "d6", name: "Local Authority covering letter.pdf", kind: "LA", pages: 2, author: "Camden LA", date: "2026-07-01" },
+      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 18, author: "Dr. M. Alvarez", date: past(57) },
+      { id: "d2", name: "Speech & Language Therapy Report.pdf", kind: "SaLT", pages: 9, author: "J. Patel", date: past(65) },
+      { id: "d3", name: "Occupational Therapy Report.pdf", kind: "OT", pages: 7, author: "S. Nguyen", date: past(72) },
+      { id: "d4", name: "Parental Views.pdf", kind: "Parental", pages: 3, author: "Family", date: past(49) },
+      { id: "d5", name: "School Information Form (Appendix A).pdf", kind: "School", pages: 5, author: "SENCO", date: past(47) },
+      { id: "d6", name: "Local Authority covering letter.pdf", kind: "LA", pages: 2, author: "Camden LA", date: aRecv },
     ],
     needs: seedNeeds("a"),
   },
@@ -214,15 +230,15 @@ const seedConsultations: Consultation[] = [
     yearGroup: "Year 7",
     localAuthority: "Hackney LA",
     caseOfficer: "L. Hassan",
-    receivedOn: "2026-06-30",
+    receivedOn: bRecv,
     status: "Drafting",
     summary:
       "Pupil B (Y7) has a diagnosis of ASD with significant anxiety around transitions. Assessment identifies needs across communication, emotional regulation, and access to curriculum. EP recommends a graduated timetable and named key adult.",
     documents: [
-      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 22, author: "Dr. K. Ito", date: "2026-06-01" },
-      { id: "d2", name: "CAMHS Letter.pdf", kind: "Health", pages: 2, author: "CAMHS", date: "2026-05-19" },
-      { id: "d3", name: "Parental Views.pdf", kind: "Parental", pages: 4, author: "Family", date: "2026-06-18" },
-      { id: "d4", name: "School Information Form.pdf", kind: "School", pages: 5, author: "SENCO", date: "2026-06-24" },
+      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 22, author: "Dr. K. Ito", date: past(68) },
+      { id: "d2", name: "CAMHS Letter.pdf", kind: "Health", pages: 2, author: "CAMHS", date: past(81) },
+      { id: "d3", name: "Parental Views.pdf", kind: "Parental", pages: 4, author: "Family", date: past(51) },
+      { id: "d4", name: "School Information Form.pdf", kind: "School", pages: 5, author: "SENCO", date: past(45) },
     ],
     needs: seedNeeds("b"),
   },
@@ -232,15 +248,15 @@ const seedConsultations: Consultation[] = [
     yearGroup: "Year 2",
     localAuthority: "Islington LA",
     caseOfficer: "T. Bright",
-    receivedOn: "2026-06-24",
+    receivedOn: cRecv,
     status: "New",
     summary:
       "Pupil C (Y2) — global developmental delay with associated speech and motor needs. Provision to date has been via SEN Support. Reports recommend a step-up to EHCP-level provision including daily fine-motor programme and small-group phonics.",
     documents: [
-      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 14, author: "Dr. F. Ahmed", date: "2026-06-05" },
-      { id: "d2", name: "Speech & Language Therapy Report.pdf", kind: "SaLT", pages: 8, author: "H. Green", date: "2026-06-02" },
-      { id: "d3", name: "Paediatrician Letter.pdf", kind: "Health", pages: 2, author: "Dr. P. Costa", date: "2026-05-15" },
-      { id: "d4", name: "Parental Views.pdf", kind: "Parental", pages: 3, author: "Family", date: "2026-06-17" },
+      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 14, author: "Dr. F. Ahmed", date: past(64) },
+      { id: "d2", name: "Speech & Language Therapy Report.pdf", kind: "SaLT", pages: 8, author: "H. Green", date: past(67) },
+      { id: "d3", name: "Paediatrician Letter.pdf", kind: "Health", pages: 2, author: "Dr. P. Costa", date: past(85) },
+      { id: "d4", name: "Parental Views.pdf", kind: "Parental", pages: 3, author: "Family", date: past(52) },
     ],
     needs: seedNeeds("c"),
   },
@@ -250,15 +266,15 @@ const seedConsultations: Consultation[] = [
     yearGroup: "Year 9",
     localAuthority: "Southwark LA",
     caseOfficer: "M. Reyes",
-    receivedOn: "2026-06-18",
+    receivedOn: dRecv,
     status: "New",
     summary:
       "Pupil D (Y9) — SEMH needs with a history of school avoidance. Reports emphasise the importance of a consistent key adult, low-arousal environment, and a phased reintegration plan.",
     documents: [
-      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 16, author: "Dr. N. Berg", date: "2026-06-08" },
-      { id: "d2", name: "CAMHS Report.pdf", kind: "Health", pages: 6, author: "CAMHS", date: "2026-05-30" },
-      { id: "d3", name: "Parental Views.pdf", kind: "Parental", pages: 5, author: "Family", date: "2026-06-15" },
-      { id: "d4", name: "School Information Form.pdf", kind: "School", pages: 5, author: "SENCO", date: "2026-06-20" },
+      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 16, author: "Dr. N. Berg", date: past(61) },
+      { id: "d2", name: "CAMHS Report.pdf", kind: "Health", pages: 6, author: "CAMHS", date: past(70) },
+      { id: "d3", name: "Parental Views.pdf", kind: "Parental", pages: 5, author: "Family", date: past(54) },
+      { id: "d4", name: "School Information Form.pdf", kind: "School", pages: 5, author: "SENCO", date: past(49) },
     ],
     needs: seedNeeds("d"),
   },
@@ -268,24 +284,23 @@ const seedConsultations: Consultation[] = [
     yearGroup: "Year 5",
     localAuthority: "Lambeth LA",
     caseOfficer: "A. Cole",
-    receivedOn: "2026-06-10",
-    submittedOn: "2026-07-02",
+    receivedOn: eRecv,
+    submittedOn: eSubmitted,
     status: "Submitted",
     summary:
-      "Pupil E (Y5) — moderate learning difficulty with associated speech needs. Response submitted 2 July confirming full provision within existing SEN budget with 6 hours of TA support redirected.",
+      "Pupil E (Y5) — moderate learning difficulty with associated speech needs. Response submitted confirming full provision within existing SEN budget with 6 hours of TA support redirected.",
     documents: [
-      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 15, author: "Dr. R. Lin", date: "2026-05-25" },
-      { id: "d2", name: "Speech & Language Therapy Report.pdf", kind: "SaLT", pages: 8, author: "P. Shah", date: "2026-05-22" },
-      { id: "d3", name: "Parental Views.pdf", kind: "Parental", pages: 3, author: "Family", date: "2026-06-04" },
+      { id: "d1", name: "Educational Psychologist Report.pdf", kind: "EP", pages: 15, author: "Dr. R. Lin", date: past(75) },
+      { id: "d2", name: "Speech & Language Therapy Report.pdf", kind: "SaLT", pages: 8, author: "P. Shah", date: past(78) },
+      { id: "d3", name: "Parental Views.pdf", kind: "Parental", pages: 3, author: "Family", date: past(60) },
     ],
     needs: seedNeeds("e"),
   },
   // ---------- Historical (already-submitted) consultations ----------
-  // These power aggregates on Reports and appear in Calendar's "show submitted"
-  // toggle and Dashboard's Submitted status filter. Documents omitted by design.
+  // Relative offsets so Reports/Calendar stay believable vs "today".
   hist(
     "c-2406", "Pupil F", "Year 3", "Camden LA", "R. Owusu",
-    "2026-04-25", "2026-05-08",
+    past(105), past(92),
     "Pupil F (Y3) — dyslexia and mild sensory processing needs. Response confirmed structured literacy and daily sensory circuit.",
     [
       ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
@@ -295,7 +310,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2407", "Pupil G", "Year 6", "Hackney LA", "L. Hassan",
-    "2026-05-02", "2026-05-19",
+    past(98), past(81),
     "Pupil G (Y6) — SEMH with school avoidance. Named key adult and reintegration plan agreed; SaLT input outside school scope.",
     [
       ["Named key adult and daily meet-and-greet", "full", "semh"],
@@ -305,7 +320,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2408", "Pupil H", "Year 1", "Islington LA", "T. Bright",
-    "2026-05-14", "2026-05-27",
+    past(86), past(73),
     "Pupil H (Y1) — global developmental delay. Fine-motor programme and phonics intervention agreed.",
     [
       ["OT-devised fine-motor programme, 4×15 min weekly", "partial", "sensory"],
@@ -314,7 +329,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2409", "Pupil I", "Year 8", "Southwark LA", "M. Reyes",
-    "2026-05-20", "2026-06-02",
+    past(80), past(67),
     "Pupil I (Y8) — ASD with anxiety around transitions. Graduated timetable and ELSA sessions agreed.",
     [
       ["ELSA 1:1 sessions, weekly for 6-week blocks", "full", "semh"],
@@ -324,7 +339,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2410", "Pupil J", "Year 10", "Lambeth LA", "A. Cole",
-    "2026-05-28", "2026-06-12",
+    past(72), past(58),
     "Pupil J (Y10) — moderate learning difficulty. Exam access arrangements and small-group maths intervention agreed.",
     [
       ["Numicon small-group maths intervention, 3×30 min weekly", "full", "cognition"],
@@ -333,7 +348,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2411", "Pupil K", "Year 5", "Camden LA", "R. Owusu",
-    "2026-06-01", "2026-06-20",
+    past(68), past(49),
     "Pupil K (Y5) — SLCN and specific literacy difficulty. Response late owing to half-term staffing gap. Direct weekly SaLT declined.",
     [
       ["Weekly direct SaLT, 30 min", "cannot", "communication"],
@@ -341,17 +356,17 @@ const seedConsultations: Consultation[] = [
       ["Zones of Regulation and named key adult", "partial", "semh"],
     ],
     [
-      actEntry("2026-06-01", 9, 15, "received", "Consultation received from Camden LA"),
-      actEntry("2026-06-03", 10, 30, "needs_reviewed", "Confirmed provision against 3 needs"),
-      actEntry("2026-06-05", 14, 0, "draft_started"),
-      actEntry("2026-06-08", 16, 45, "draft_edited", "Draft paused — half-term staffing gap"),
-      actEntry("2026-06-19", 15, 30, "draft_edited", "Draft resumed and finalised after half-term"),
-      actEntry("2026-06-20", 10, 15, "submitted", "Response sent to Camden LA (5 days late — half-term staffing gap)"),
+      actEntry(past(68), 9, 15, "received", "Consultation received from Camden LA"),
+      actEntry(past(66), 10, 30, "needs_reviewed", "Confirmed provision against 3 needs"),
+      actEntry(past(64), 14, 0, "draft_started"),
+      actEntry(past(61), 16, 45, "draft_edited", "Draft paused — half-term staffing gap"),
+      actEntry(past(50), 15, 30, "draft_edited", "Draft resumed and finalised after half-term"),
+      actEntry(past(49), 10, 15, "submitted", "Response sent to Camden LA (late — half-term staffing gap)"),
     ],
   ),
   hist(
     "c-2412", "Pupil L", "Year 2", "Hackney LA", "L. Hassan",
-    "2026-06-15", "2026-06-28",
+    past(54), past(41),
     "Pupil L (Y2) — moderate learning difficulty with fine-motor needs. Full provision agreed within existing SEN budget.",
     [
       ["Precision teaching for spelling, 5×10 min weekly", "full", "cognition"],
@@ -360,7 +375,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2413", "Pupil M", "Year 4", "Islington LA", "T. Bright",
-    "2026-02-10", "2026-02-24",
+    past(179), past(165),
     "Pupil M (Y4) — communication and interaction needs alongside emerging SEMH. Full provision agreed.",
     [
       ["1:1 structured literacy programme, 4×20 min weekly", "full", "cognition"],
@@ -370,7 +385,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2414", "Pupil N", "Year 7", "Southwark LA", "M. Reyes",
-    "2026-03-02", "2026-03-20",
+    past(159), past(141),
     "Pupil N (Y7) — sensory and physical needs; late response owing to LA information gap. OT input outside school scope.",
     [
       ["Weekly on-site OT input, 45 min", "cannot", "sensory"],
@@ -379,7 +394,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2415", "Pupil O", "Year 9", "Camden LA", "R. Owusu",
-    "2026-03-15", "2026-03-29",
+    past(146), past(132),
     "Pupil O (Y9) — SEMH with anxiety-based non-attendance. Reintegration plan and ELSA blocks agreed.",
     [
       ["Named key adult and daily meet-and-greet", "full", "semh"],
@@ -388,7 +403,7 @@ const seedConsultations: Consultation[] = [
   ),
   hist(
     "c-2416", "Pupil P", "Year 6", "Lambeth LA", "A. Cole",
-    "2026-05-10", "2026-05-25",
+    past(90), past(75),
     "Pupil P (Y6) — SLCN with fine-motor needs. Response filed exactly on the statutory deadline day; provision agreed in full within existing SEN budget.",
     [
       ["SaLT-devised individual programme via trained TA, 3×15 min weekly", "full", "communication"],
@@ -396,7 +411,8 @@ const seedConsultations: Consultation[] = [
       ["Precision teaching for spelling, 5×10 min weekly", "partial", "cognition"],
     ],
   ),
-];
+  ];
+}
 
 // Seed activity for active (non-submitted) consultations. Historical entries
 // already carry a full trail via hist(). For active ones, seed a minimal
@@ -417,10 +433,16 @@ function seedActiveActivity(c: Consultation): ActivityEntry[] {
   return entries;
 }
 
-export const seedNormalised: Consultation[] = seedConsultations.map((c) => ({
-  ...c,
-  activity: seedActiveActivity(c),
-}));
+/** Fresh demo caseload relative to `today` (used when seeding the demo account). */
+export function buildSeedNormalised(today: Date = new Date()): Consultation[] {
+  return buildSeedConsultations(today).map((c) => ({
+    ...c,
+    activity: seedActiveActivity(c),
+  }));
+}
+
+/** @deprecated Prefer buildSeedNormalised() so dates stay relative to today. */
+export const seedNormalised: Consultation[] = buildSeedNormalised();
 
 // Dedup window: repeated same (action, detail) within 10 min collapses into
 // a single entry with updated timestamp — avoids per-keystroke spam.
@@ -460,7 +482,10 @@ type Ctx = {
 const ConsultationsContext = createContext<Ctx | null>(null);
 
 export function ConsultationsProvider({ children }: { children: ReactNode }) {
-  const [consultations, setConsultations] = usePersistentSnapshot<Consultation[]>("consultations", seedNormalised);
+  const [consultations, setConsultations] = usePersistentSnapshot<Consultation[]>(
+    "consultations",
+    [],
+  );
 
   const withActivity = useCallback(
     (id: string, action: ActivityAction, detail?: string) =>

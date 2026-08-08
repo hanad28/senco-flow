@@ -49,7 +49,7 @@ export default function SolutionsSection({
                 id={`${item.id}-tab`}
                 aria-controls={item.id}
                 className={[
-                  "rounded-full px-4 py-2 text-sm font-semibold [font-family:var(--font-body)] transition-colors duration-150 cursor-pointer",
+                  "rounded-xl px-4 py-2 text-sm font-semibold [font-family:var(--font-body)] transition-colors duration-150 cursor-pointer",
                   selected
                     ? "bg-color-001 text-background"
                     : "bg-clr-0 text-color-001 hover:bg-surface-3",
